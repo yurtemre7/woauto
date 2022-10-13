@@ -48,3 +48,4 @@ app.*.map.json
 lib/key.dart
 .fleet/settings.json
 android/app/src/AndroidManifest.xml
+android/app/src/main/AndroidManifest.xml
