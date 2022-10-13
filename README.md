@@ -1,3 +1,19 @@
 # woauto
 
-Nie wieder Parkplätze suchen! Woauto ist eine App, die dir hilft, deinen Parkplatz zu finden.
+
+## Short:
+
+Nie wieder dein Auto suchen! Woauto ist eine App, die dir hilft, deinen Parkplatz zu finden.
+
+## Long:
+
+Hast du schonmal vergessen wo du geparkt hast?
+Oder teilst du regelmäßig dein Auto mit anderen und musst immer wieder nachfragen, wo dein Auto steht?
+
+Mit WoAuto kannst du deinen Parkplatz speichern und später wieder finden.
+Teile deinen Parkplatz mit anderen um somit die Suche nach dem Auto zu erleichtern.
+
+PS: Du braucht kein Auto dafür, du kannst die App auch für dein Fahrrad, deinen Anhänger oder sogar deinen Hund benutzen.
+
+Lass uns deine Parkplatzsorgen vergessen!
+
