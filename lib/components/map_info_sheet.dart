@@ -341,9 +341,19 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                           onPressed: () async {
                             GoogleMapController controller =
                                 woAuto.mapController.value!;
-                            await controller.animateCamera(
+                            controller.animateCamera(
                               CameraUpdate.newCameraPosition(
                                 woAuto.currentPosition.value,
+                              ),
+                            );
+
+                            snappingSheetController.snapToPosition(
+                              SnappingPosition.factor(
+                                positionFactor: 0.0,
+                                snappingCurve: Curves.easeOutExpo,
+                                snappingDuration: 1300.milliseconds,
+                                grabbingContentOffset:
+                                    GrabbingContentOffset.top,
                               ),
                             );
                           },
@@ -363,7 +373,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                     onPressed: () async {
                                       GoogleMapController controller =
                                           woAuto.mapController.value!;
-                                      await controller.animateCamera(
+                                      controller.animateCamera(
                                         CameraUpdate.newCameraPosition(
                                           CameraPosition(
                                             target: LatLng(
@@ -372,6 +382,15 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                             ),
                                             zoom: 18,
                                           ),
+                                        ),
+                                      );
+                                      snappingSheetController.snapToPosition(
+                                        SnappingPosition.factor(
+                                          positionFactor: 0.0,
+                                          snappingCurve: Curves.easeOutExpo,
+                                          snappingDuration: 1300.milliseconds,
+                                          grabbingContentOffset:
+                                              GrabbingContentOffset.top,
                                         ),
                                       );
                                     },
