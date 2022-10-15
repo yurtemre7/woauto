@@ -3,7 +3,7 @@
 
 ## Short:
 
-Nie wieder dein Auto suchen! Woauto ist eine App, die dir hilft, deinen Parkplatz zu finden.
+Nie wieder dein Auto suchen! Woauto hilft dir deinen Parkplatz zu finden.
 
 ## Long:
 
