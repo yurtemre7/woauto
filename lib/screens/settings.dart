@@ -182,7 +182,8 @@ class _SettingsState extends State<Settings> {
                           leading: Icon(Icons.volunteer_activism_outlined),
                           title: Text('Credits'),
                           subtitle: Text(
-                              'Icon von Icons8.com, Google Maps API und natürlich der Flutter-Community.'),
+                            'Google Maps API und natürlich der Flutter-Community.',
+                          ),
                         ),
                         const Div(),
                         ListTile(
