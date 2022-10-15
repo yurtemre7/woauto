@@ -107,33 +107,7 @@ class WoAuto extends GetxController {
               ),
             ),
           );
-          Get.dialog(
-            AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              title: Text(woAuto.subText.value),
-              content: Text(
-                'Du hast ${formatDateTimeAndTime(woAuto.datum.value)}.\n\nDein Auto steht an folgender Adresse: ${woAuto.positionAddress.value}',
-              ),
-              actions: [
-                TextButton(
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.red,
-                  ),
-                  onPressed: () {
-                    woAuto.latitude.value = null;
-                    woAuto.longitude.value = null;
-                    woAuto.parkings.clear();
-                    woAuto.positionAddress.value = '';
-                    woAuto.save();
-                    Get.back();
-                  },
-                  child: const Text('Parkplatz löschen'),
-                ),
-              ],
-            ),
-          );
+          woAuto.showParkingDialog();
         },
       );
 
@@ -198,6 +172,36 @@ class WoAuto extends GetxController {
     Get.offAll(() => const Home());
   }
 
+  showParkingDialog() {
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        title: Text(woAuto.subText.value),
+        content: Text(
+          'Du hast ${formatDateTimeAndTime(woAuto.datum.value)}.\n\nDein Auto steht an folgender Adresse:\n${woAuto.positionAddress.value} und ist ca. ${woAuto.distance.value} Meter entfernt.',
+        ),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.red,
+            ),
+            onPressed: () {
+              woAuto.latitude.value = null;
+              woAuto.longitude.value = null;
+              woAuto.parkings.clear();
+              woAuto.positionAddress.value = '';
+              woAuto.save();
+              Get.back();
+            },
+            child: const Text('Parkplatz löschen'),
+          ),
+        ],
+      ),
+    );
+  }
+
   // Adds a marker to the (google) map, and clears the old ones
   void addMarker(LatLng newPosition) {
     woAuto.parkings.clear();
@@ -214,33 +218,7 @@ class WoAuto extends GetxController {
             ),
           ),
         );
-        Get.dialog(
-          AlertDialog(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(12),
-            ),
-            title: Text(subText.value),
-            content: Text(
-              'Du hast ${formatDateTimeAndTime(woAuto.datum.value)}.\n\nDein Auto steht an folgender Adresse: ${positionAddress.value}',
-            ),
-            actions: [
-              TextButton(
-                style: TextButton.styleFrom(
-                  foregroundColor: Colors.red,
-                ),
-                onPressed: () {
-                  woAuto.latitude.value = null;
-                  woAuto.longitude.value = null;
-                  woAuto.parkings.clear();
-                  woAuto.positionAddress.value = '';
-                  woAuto.save();
-                  Get.back();
-                },
-                child: const Text('Parkplatz löschen'),
-              ),
-            ],
-          ),
-        );
+        showParkingDialog();
       },
     );
     woAuto.latitude.value = newPosition.latitude;
