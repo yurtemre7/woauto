@@ -36,7 +36,7 @@ class _SettingsState extends State<Settings> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const Divider(),
+                const SizedBox(height: 8),
                 Expanded(
                   child: Scrollbar(
                     child: ListView(
@@ -159,18 +159,9 @@ class _SettingsState extends State<Settings> {
                                   ),
                                   title: const Text('App Info'),
                                   content: const Text(
-                                    'Diese App wurde von Emre Yurtseven entwickelt, ist Open-Source und natürlich auf Github verfügbar. Trete gern unserem Telegram-Channel bei, um über Updates informiert zu werden.',
+                                    'Diese App wurde von Emre Yurtseven entwickelt, ist Open-Source und natürlich auf Github verfügbar.',
                                   ),
                                   actions: [
-                                    ElevatedButton(
-                                      child: const Text('Telegram'),
-                                      onPressed: () {
-                                        launchUrl(
-                                          Uri.parse('https://t.me/programmiererfreunde'),
-                                          mode: LaunchMode.externalApplication,
-                                        );
-                                      },
-                                    ),
                                     ElevatedButton(
                                       child: const Text('Github'),
                                       onPressed: () {
@@ -199,15 +190,142 @@ class _SettingsState extends State<Settings> {
                           title: const Text('Teilen'),
                           subtitle: const Text('Teile unsere App mit deinen Freunden'),
                           onTap: () {
-                            Share.share('Hast du auch vergessen wo du zuletzt geparkt hast?');
+                            Share.share(
+                              'Hast du auch vergessen wo du zuletzt geparkt hast? '
+                              'Nun ist schluss. '
+                              'Mit WoAuto kannst du deinen Parkplatz ganz leicht speichern und nachher einsehen, teilen und sogar hinnavigieren.\n'
+                              'Dein Parkplatz ist sicher und bleibt immer auf deinem Gerät.\n\n'
+                              'Downloade es dir doch und probiere es selbst: https://play.google.com/store/apps/details?id=de.emredev.woauto',
+                            );
                           },
                         ),
                         const Div(),
                         ListTile(
-                          leading: const Icon(Icons.people),
+                          leading: const Icon(Icons.feedback_outlined),
+                          title: const Text('Feedback'),
+                          subtitle: const Text(
+                              'Hast du Verbesserungsvorschläge, Fehler oder etwas anderes zu sagen?'),
+                          onTap: () {
+                            Get.dialog(
+                              AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                title: const Text('Feedback'),
+                                content: const Text(
+                                  'Schreibe mir gerne eine E-Mail, trete unserem Telegram-Channel bei oder schreibe mir eine private Nachricht auf Telegram:',
+                                ),
+                                actions: [
+                                  ElevatedButton(
+                                    child: const Text('Telegram-Channel'),
+                                    onPressed: () {
+                                      launchUrl(
+                                        Uri.parse('https://t.me/programmiererfreunde'),
+                                        mode: LaunchMode.externalApplication,
+                                      );
+                                    },
+                                  ),
+                                  ElevatedButton(
+                                    child: const Text('Telegram (Privat)'),
+                                    onPressed: () {
+                                      launchUrl(
+                                        Uri.parse('https://t.me/emredev'),
+                                        mode: LaunchMode.externalApplication,
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        const Div(),
+                        ListTile(
+                          leading: const Icon(Icons.gpp_good_sharp),
+                          title: const Text('Datenschutz und Impressum'),
+                          subtitle: const Text('Teile unsere App mit deinen Freunden'),
+                          onTap: () {
+                            Get.dialog(
+                              AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                title: const Text('Datenschutz und Impressum'),
+                                content: SingleChildScrollView(
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: const [
+                                      Text(
+                                        'Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 14.10.2022):',
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        '- Die App kommuniziert mit Google Maps, um die Karte anzuzeigen.',
+                                      ),
+                                      SizedBox(height: 5),
+                                      Text(
+                                        '- Die App speichert keine Meta-Daten, wie z.B. die IP-Adresse, Gerätename oder Betriebssystemversion.',
+                                      ),
+                                      SizedBox(height: 5),
+                                      Text.rich(
+                                        TextSpan(
+                                          text:
+                                              '- Die App speichert natürlich, unter anderem, deinen Standort, Name des Parkplatzes und die Koordinaten, aber teilt diese ',
+                                          children: [
+                                            TextSpan(
+                                              text: 'weder mit Dritten, als auch nicht uns selbst.',
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                decoration: TextDecoration.underline,
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  ' Es gibt tatsächlich keinen Datenaustausch mit einem Server, außer den Google Servern beim Bereitstellen der Google Maps Karten. ',
+                                            ),
+                                            TextSpan(
+                                              text:
+                                                  'Die App speichert die Daten nur auf deinem Gerät, welche du jederzeit (in den Einstellungen ganz unten) löschen kannst.',
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                actions: [
+                                  ElevatedButton(
+                                    child: const Text('Impressum'),
+                                    onPressed: () {
+                                      launchUrl(
+                                        Uri.parse('https://www.yurtemre.de/impressum'),
+                                        mode: LaunchMode.externalApplication,
+                                      );
+                                    },
+                                  ),
+                                  ElevatedButton(
+                                    child: const Text('Datenschutz'),
+                                    onPressed: () {
+                                      launchUrl(
+                                        Uri.parse('https://www.yurtemre.de/datenschutz'),
+                                        mode: LaunchMode.externalApplication,
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        const Div(),
+                        ListTile(
+                          leading: const Icon(Icons.delete_forever_outlined),
                           title: const Text('Lösche alle App-Daten'),
                           subtitle: const Text(
-                              'Halte hier gedrückt um all deine App-Daten zu löschen. App-Daten sind nicht wiederherstellbar.'),
+                              'Halte hier gedrückt um all deine App-Daten zu löschen. App-Daten sind dann nicht mehr wiederherstellbar.'),
                           onLongPress: () {
                             Get.dialog(
                               AlertDialog(
@@ -237,7 +355,6 @@ class _SettingsState extends State<Settings> {
                             );
                           },
                         ),
-                        const Div(),
                       ],
                     ),
                   ),
