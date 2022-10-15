@@ -481,6 +481,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                             Uri.parse(
                                               'https://en.wikipedia.org/wiki/Haversine_formula',
                                             ),
+                                            mode: LaunchMode.externalApplication,
                                           );
                                         },
                                         backgroundColor:
