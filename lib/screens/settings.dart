@@ -149,7 +149,7 @@ class _SettingsState extends State<Settings> {
                         Obx(
                           () => ListTile(
                             leading: const Icon(Icons.info_outline),
-                            title: const Text('App Info und Github'),
+                            title: const Text('App Info'),
                             subtitle: Text('Version ${woAuto.appVersion}+${woAuto.appBuildNumber}'),
                             onTap: () {
                               Get.dialog(
@@ -157,7 +157,7 @@ class _SettingsState extends State<Settings> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12),
                                   ),
-                                  title: const Text('App Info und Github'),
+                                  title: const Text('App Info'),
                                   content: const Text(
                                     'Diese App wurde von Emre Yurtseven entwickelt, ist Open-Source und natürlich auf Github verfügbar. Trete gern unserem Telegram-Channel bei, um über Updates informiert zu werden.',
                                   ),
