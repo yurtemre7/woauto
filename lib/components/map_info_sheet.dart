@@ -117,8 +117,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                   child: InkWell(
                     borderRadius: BorderRadius.circular(5),
                     onTap: () {
-                      var snapPos =
-                          snappingSheetController.currentSnappingPosition;
+                      var snapPos = snappingSheetController.currentSnappingPosition;
                       var offset = snapPos.grabbingContentOffset;
 
                       scrollController.animateTo(
@@ -183,9 +182,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                     woAuto.addMarker(
                                       woAuto.currentPosition.value.target,
                                     );
-                                    getAddress(
-                                            woAuto.currentPosition.value.target)
-                                        .then((value) {
+                                    getAddress(woAuto.currentPosition.value.target).then((value) {
                                       woAuto.positionAddress.value = value;
                                       woAuto.save();
                                     });
@@ -194,8 +191,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                       return;
                                     }
 
-                                    var snapPos = snappingSheetController
-                                        .currentSnappingPosition;
+                                    var snapPos = snappingSheetController.currentSnappingPosition;
                                     var offset = snapPos.grabbingContentOffset;
                                     if (offset < 0) {
                                       snappingSheetController.snapToPosition(
@@ -203,8 +199,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                           positionFactor: 0.0,
                                           snappingCurve: Curves.easeOutExpo,
                                           snappingDuration: 1300.milliseconds,
-                                          grabbingContentOffset:
-                                              GrabbingContentOffset.top,
+                                          grabbingContentOffset: GrabbingContentOffset.top,
                                         ),
                                       );
                                     }
@@ -212,8 +207,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                     woAuto.mapController.value!.animateCamera(
                                       CameraUpdate.newCameraPosition(
                                         CameraPosition(
-                                          target: woAuto
-                                              .currentPosition.value.target,
+                                          target: woAuto.currentPosition.value.target,
                                           zoom: 18,
                                         ),
                                       ),
@@ -229,13 +223,11 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                           woAuto.addMarker(
                             woAuto.currentPosition.value.target,
                           );
-                          getAddress(woAuto.currentPosition.value.target)
-                              .then((value) {
+                          getAddress(woAuto.currentPosition.value.target).then((value) {
                             woAuto.positionAddress.value = value;
                             woAuto.save();
                           });
-                          var snapPos =
-                              snappingSheetController.currentSnappingPosition;
+                          var snapPos = snappingSheetController.currentSnappingPosition;
                           var offset = snapPos.grabbingContentOffset;
                           if (offset < 0) {
                             snappingSheetController.snapToPosition(
@@ -243,8 +235,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                 positionFactor: 0.0,
                                 snappingCurve: Curves.easeOutExpo,
                                 snappingDuration: 1300.milliseconds,
-                                grabbingContentOffset:
-                                    GrabbingContentOffset.top,
+                                grabbingContentOffset: GrabbingContentOffset.top,
                               ),
                             );
                           }
@@ -274,7 +265,6 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
         ),
         sheetBelow: SnappingSheetContent(
           childScrollController: scrollController,
-          draggable: true,
           child: Container(
             margin: const EdgeInsets.only(left: 5, right: 5, bottom: 10),
             decoration: BoxDecoration(
@@ -294,8 +284,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20),
                 ),
-                padding:
-                    const EdgeInsets.only(left: 14.0, right: 14.0, top: 10),
+                padding: const EdgeInsets.only(left: 14.0, right: 14.0, top: 10),
                 child: Scrollbar(
                   child: SingleChildScrollView(
                     controller: scrollController,
@@ -328,8 +317,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                               );
                               return;
                             }
-                            LatLng myCar =
-                                woAuto.parkings.elementAt(0).position;
+                            LatLng myCar = woAuto.parkings.elementAt(0).position;
                             String link =
                                 'https://www.google.com/maps?q=${myCar.latitude},${myCar.longitude}';
 
@@ -339,8 +327,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
 
                         TextButton.icon(
                           onPressed: () async {
-                            GoogleMapController controller =
-                                woAuto.mapController.value!;
+                            GoogleMapController controller = woAuto.mapController.value!;
                             controller.animateCamera(
                               CameraUpdate.newCameraPosition(
                                 woAuto.currentPosition.value,
@@ -352,8 +339,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                 positionFactor: 0.0,
                                 snappingCurve: Curves.easeOutExpo,
                                 snappingDuration: 1300.milliseconds,
-                                grabbingContentOffset:
-                                    GrabbingContentOffset.top,
+                                grabbingContentOffset: GrabbingContentOffset.top,
                               ),
                             );
                           },
@@ -371,8 +357,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                 children: [
                                   TextButton.icon(
                                     onPressed: () async {
-                                      GoogleMapController controller =
-                                          woAuto.mapController.value!;
+                                      GoogleMapController controller = woAuto.mapController.value!;
                                       controller.animateCamera(
                                         CameraUpdate.newCameraPosition(
                                           CameraPosition(
@@ -389,16 +374,14 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                           positionFactor: 0.0,
                                           snappingCurve: Curves.easeOutExpo,
                                           snappingDuration: 1300.milliseconds,
-                                          grabbingContentOffset:
-                                              GrabbingContentOffset.top,
+                                          grabbingContentOffset: GrabbingContentOffset.top,
                                         ),
                                       );
                                     },
                                     icon: const Icon(
                                       Icons.local_parking_rounded,
                                     ),
-                                    label:
-                                        const Text('Gehe zu meinem Parkplatz'),
+                                    label: const Text('Gehe zu meinem Parkplatz'),
                                   ),
                                   const Div(),
                                   const SizedBox(height: 5),
@@ -446,16 +429,66 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                           );
                                           return;
                                         }
-                                        LatLng myCar = woAuto.parkings
-                                            .elementAt(0)
-                                            .position;
+                                        LatLng myCar = woAuto.parkings.elementAt(0).position;
                                         String link =
                                             'https://www.google.com/maps?q=${myCar.latitude},${myCar.longitude}';
                                         await launchUrl(Uri.parse(link),
-                                            mode:
-                                                LaunchMode.externalApplication);
+                                            mode: LaunchMode.externalApplication);
                                       },
                                     ),
+                                  const SizedBox(height: 5),
+                                  TextButton.icon(
+                                    icon: const Icon(Icons.question_mark),
+                                    label: Text(
+                                      'Parkplatz ist π-mal-Daumen\n${woAuto.distance.value} Meter entfernt',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    onPressed: () {
+                                      Get.snackbar(
+                                        'Wie wird die Entfernung berechnet?',
+                                        'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        titleText: const Text(
+                                          'Wie wird die Entfernung berechnet?',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        messageText: Column(
+                                          children: const [
+                                            Text(
+                                              'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                            SizedBox(height: 10),
+                                            Text(
+                                              'Tippe um mehr zu erfahren.',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                decoration: TextDecoration.underline,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        borderRadius: 12,
+                                        margin: const EdgeInsets.all(20),
+                                        duration: 10.seconds,
+                                        onTap: (snack) {
+                                          launchUrl(
+                                            Uri.parse(
+                                              'https://en.wikipedia.org/wiki/Haversine_formula',
+                                            ),
+                                          );
+                                        },
+                                        backgroundColor:
+                                            getBackgroundColor(context)?.withOpacity(0.5),
+                                      );
+                                    },
+                                  ),
+                                  const SizedBox(height: 10),
                                 ],
                               ),
                             );

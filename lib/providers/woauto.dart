@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,6 +23,8 @@ class WoAuto extends GetxController {
   ).obs;
   final latitude = RxnDouble();
   final longitude = RxnDouble();
+
+  final distance = 0.0.obs;
 
   final positionAddress = RxnString();
   final parkings = <Marker>{}.obs;
@@ -280,5 +283,25 @@ class WoAuto extends GetxController {
     } catch (e) {
       log(e.toString(), name: 'Error @ WoAuto.fetchPackageInfo');
     }
+  }
+
+  /// Spuckt die Distanz in Metern aus
+  getDistanceToCurrentPosition() async {
+    if (latitude.value == null || longitude.value == null) {
+      distance.value = 0;
+      return;
+    }
+    var myLat = currentPosition.value.target.latitude;
+    var myLng = currentPosition.value.target.longitude;
+    distance.value =
+        calculateDistance(latitude.value, longitude.value, myLat, myLng).toPrecision(1);
+  }
+
+  double calculateDistance(lat1, lon1, lat2, lon2) {
+    var p = 0.017453292519943295;
+    var a = 0.5 -
+        math.cos((lat2 - lat1) * p) / 2 +
+        math.cos(lat1 * p) * math.cos(lat2 * p) * (1 - math.cos((lon2 - lon1) * p)) / 2;
+    return 12742 * math.asin(math.sqrt(a)) * 1000;
   }
 }

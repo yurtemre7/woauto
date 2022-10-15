@@ -127,11 +127,11 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         ),
         zoom: 18,
       );
+      woAuto.getDistanceToCurrentPosition();
     });
 
     if (woAuto.latitude.value != null && woAuto.longitude.value != null) {
-      getAddress(LatLng(woAuto.latitude.value!, woAuto.longitude.value!))
-          .then((value) {
+      getAddress(LatLng(woAuto.latitude.value!, woAuto.longitude.value!)).then((value) {
         woAuto.positionAddress.value = value;
         woAuto.save();
       });
@@ -151,8 +151,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                 await loadMapStyles();
                 await Future.delayed(2.seconds);
                 mapLoading.value = false;
-                bool hasReadPermission =
-                    woAuto.sp.getBool('hasReadPermission') ?? false;
+                bool hasReadPermission = woAuto.sp.getBool('hasReadPermission') ?? false;
                 if (!hasReadPermission) {
                   return;
                 }
@@ -209,8 +208,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                           });
 
                           pop();
-                          GoogleMapController controller =
-                              woAuto.mapController.value!;
+                          GoogleMapController controller = woAuto.mapController.value!;
                           await controller.animateCamera(
                             CameraUpdate.newCameraPosition(
                               CameraPosition(target: newPosition, zoom: 18),
