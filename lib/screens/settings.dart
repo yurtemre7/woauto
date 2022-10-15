@@ -44,14 +44,12 @@ class _SettingsState extends State<Settings> {
                       children: [
                         ListTile(
                           title: Obx(
-                            () => Text(
-                                'Parkplatz-Titel: ${woAuto.subText.value}'),
+                            () => Text('Parkplatz-Titel: ${woAuto.subText.value}'),
                           ),
                           subtitle: const Text(
                               'Verändere hiermit den Text, welcher bei deinem Parkplatz steht, z B.: Mercedes, Audi oder BMW'),
                           onTap: () {
-                            var tec = TextEditingController(
-                                text: woAuto.subText.value);
+                            var tec = TextEditingController(text: woAuto.subText.value);
                             Get.dialog(
                               AlertDialog(
                                 shape: RoundedRectangleBorder(
@@ -75,9 +73,8 @@ class _SettingsState extends State<Settings> {
                                     child: const Text('OK'),
                                     onPressed: () async {
                                       woAuto.subText.value = tec.text.trim();
-                                      woAuto.addMarker(LatLng(
-                                          woAuto.latitude.value!,
-                                          woAuto.longitude.value!));
+                                      woAuto.addMarker(
+                                          LatLng(woAuto.latitude.value!, woAuto.longitude.value!));
                                       await woAuto.save();
                                       Get.back();
                                     },
@@ -108,8 +105,7 @@ class _SettingsState extends State<Settings> {
                         Obx(
                           () {
                             var themeMode = woAuto.themeMode.value;
-                            DropdownButton<int> dropdownButton =
-                                DropdownButton<int>(
+                            DropdownButton<int> dropdownButton = DropdownButton<int>(
                               value: themeMode,
                               items: const [
                                 DropdownMenuItem(
@@ -150,35 +146,45 @@ class _SettingsState extends State<Settings> {
                           },
                         ),
                         const Div(),
-                        ListTile(
-                          leading: const Icon(Icons.info_outline),
-                          title: const Text('App Info und Github'),
-                          subtitle: const Text('Version 1.0.0'),
-                          onTap: () {
-                            Get.dialog(
-                              AlertDialog(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                title: const Text('App Info und Github'),
-                                content: const Text(
-                                  'Diese App wurde von Emre Yurtseven entwickelt, ist Open-Source und natürlich auf Github verfügbar.',
-                                ),
-                                actions: [
-                                  ElevatedButton(
-                                    child: const Text('Github'),
-                                    onPressed: () {
-                                      launchUrl(
-                                        Uri.parse(
-                                            'https://github.com/yurtemre7/woauto'),
-                                        mode: LaunchMode.externalApplication,
-                                      );
-                                    },
+                        Obx(
+                          () => ListTile(
+                            leading: const Icon(Icons.info_outline),
+                            title: const Text('App Info und Github'),
+                            subtitle: Text('Version ${woAuto.appVersion}+${woAuto.appBuildNumber}'),
+                            onTap: () {
+                              Get.dialog(
+                                AlertDialog(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12),
                                   ),
-                                ],
-                              ),
-                            );
-                          },
+                                  title: const Text('App Info und Github'),
+                                  content: const Text(
+                                    'Diese App wurde von Emre Yurtseven entwickelt, ist Open-Source und natürlich auf Github verfügbar. Trete gern unserem Telegram-Channel bei, um über Updates informiert zu werden.',
+                                  ),
+                                  actions: [
+                                    ElevatedButton(
+                                      child: const Text('Telegram'),
+                                      onPressed: () {
+                                        launchUrl(
+                                          Uri.parse('https://t.me/programmiererfreunde'),
+                                          mode: LaunchMode.externalApplication,
+                                        );
+                                      },
+                                    ),
+                                    ElevatedButton(
+                                      child: const Text('Github'),
+                                      onPressed: () {
+                                        launchUrl(
+                                          Uri.parse('https://github.com/yurtemre7/woauto'),
+                                          mode: LaunchMode.externalApplication,
+                                        );
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          ),
                         ),
                         const Div(),
                         const ListTile(
@@ -191,11 +197,9 @@ class _SettingsState extends State<Settings> {
                         ListTile(
                           leading: const Icon(Icons.share),
                           title: const Text('Teilen'),
-                          subtitle: const Text(
-                              'Teile unsere App mit deinen Freunden'),
+                          subtitle: const Text('Teile unsere App mit deinen Freunden'),
                           onTap: () {
-                            Share.share(
-                                'Hast du auch vergessen wo du zuletzt geparkt hast?');
+                            Share.share('Hast du auch vergessen wo du zuletzt geparkt hast?');
                           },
                         ),
                         const Div(),
@@ -211,8 +215,7 @@ class _SettingsState extends State<Settings> {
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 title: const Text('App-Daten löschen'),
-                                content: const Text(
-                                    'Möchtest du alle App-Daten löschen?'),
+                                content: const Text('Möchtest du alle App-Daten löschen?'),
                                 actions: [
                                   TextButton(
                                     style: TextButton.styleFrom(

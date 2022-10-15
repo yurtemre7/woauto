@@ -9,6 +9,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/screens/home.dart';
 import 'package:woauto/utils/utilities.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 /// The WoAuto GetXController class
 class WoAuto extends GetxController {
@@ -29,6 +30,9 @@ class WoAuto extends GetxController {
 
   final datum = DateTime.now().obs;
   final subText = 'Mein Auto'.obs;
+
+  final appVersion = ''.obs;
+  final appBuildNumber = ''.obs;
 
   // settings
   final android13Theme = false.obs;
@@ -147,11 +151,15 @@ class WoAuto extends GetxController {
   static Future<WoAuto> load() async {
     var sp = await SharedPreferences.getInstance();
     String? jsonString = sp.getString('woauto');
+    WoAuto woAuto;
     if (jsonString == null) {
-      return WoAuto(sp);
+      woAuto = WoAuto(sp);
     } else {
-      return await fromJson(jsonString);
+      woAuto = await fromJson(jsonString);
     }
+    woAuto.fetchPackageInfo();
+
+    return woAuto;
   }
 
   /// Bebug the current state of the Appmelder
@@ -261,6 +269,16 @@ class WoAuto extends GetxController {
       controller.setMapStyle(darkMapStyle);
     } else {
       controller.setMapStyle(lightMapStyle);
+    }
+  }
+
+  fetchPackageInfo() async {
+    try {
+      PackageInfo packageInfo = await PackageInfo.fromPlatform();
+      appVersion.value = packageInfo.version;
+      appBuildNumber.value = packageInfo.buildNumber;
+    } catch (e) {
+      log(e.toString(), name: 'Error @ WoAuto.fetchPackageInfo');
     }
   }
 }
