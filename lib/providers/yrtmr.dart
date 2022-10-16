@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uni_links/uni_links.dart';
+import 'package:woauto/main.dart';
 
 class YrtmrDeeplinks {
   static YrtmrDeeplinks? _instance;
@@ -92,6 +94,20 @@ class YrtmrDeeplinks {
       return;
     }
     log('Adding pin: $title, $lat, $long');
+    await woAuto.addPin(LatLng(double.parse(lat), double.parse(long)), title);
+    if (woAuto.mapController.value != null) {
+      woAuto.mapController.value!.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(
+              double.parse(lat),
+              double.parse(long),
+            ),
+            zoom: 18,
+          ),
+        ),
+      );
+    }
   }
 
   YrtmrDeeplink parseUri(Uri deeplink) {

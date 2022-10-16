@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/div.dart';
@@ -73,8 +72,11 @@ class _SettingsState extends State<Settings> {
                                     child: const Text('OK'),
                                     onPressed: () async {
                                       woAuto.subText.value = tec.text.trim();
-                                      woAuto.addMarker(
-                                          LatLng(woAuto.latitude.value!, woAuto.longitude.value!));
+                                      if (woAuto.parkings.isNotEmpty) {
+                                        var myCar = woAuto.parkings.first;
+                                        woAuto.addMarker(myCar.position);
+                                      }
+
                                       await woAuto.save();
                                       Get.back();
                                     },

@@ -21,17 +21,16 @@ class WoAuto extends GetxController {
     ),
     zoom: 16,
   ).obs;
-  final latitude = RxnDouble();
-  final longitude = RxnDouble();
 
-  final distance = 0.0.obs;
-
-  final positionAddress = RxnString();
   final parkings = <Marker>{}.obs;
+  final pins = <Marker>{}.obs;
+  final markers = <Marker>{}.obs;
+
+  final parkingList = [].obs;
+  final pinList = [].obs;
 
   var mapController = Rxn<GoogleMapController?>();
 
-  final datum = DateTime.now().obs;
   final subText = 'Mein Auto'.obs;
 
   final appVersion = ''.obs;
@@ -52,13 +51,11 @@ class WoAuto extends GetxController {
   // to json string
   String toJson() {
     return json.encode({
-      'langitude': latitude.value,
-      'longitude': longitude.value,
-      'datum': datum.value.millisecondsSinceEpoch,
-      'address': positionAddress.value,
       'subText': subText.value,
       'android13Theme': android13Theme.value,
       'themeMode': themeMode.value,
+      'parkings': parkingList,
+      'pins': pinList,
     });
   }
 
@@ -68,52 +65,72 @@ class WoAuto extends GetxController {
 
     WoAuto woAuto = WoAuto(await SharedPreferences.getInstance());
 
-    woAuto.latitude.value = jsonMap['langitude'];
-    woAuto.longitude.value = jsonMap['longitude'];
-    woAuto.datum.value = DateTime.fromMillisecondsSinceEpoch(
-      jsonMap['datum'] ?? 0,
-    );
-    woAuto.positionAddress.value = jsonMap['address'];
+    woAuto.parkingList.value = jsonMap['parkings'] ?? [];
+    woAuto.pinList.value = jsonMap['pins'] ?? [];
+
+    for (int i = 0; i < woAuto.parkingList.length; i++) {
+      var park = woAuto.parkingList[i];
+
+      woAuto.parkings.add(woAuto.makeMarker(park, 'park,$i'));
+    }
+
+    for (int i = 0; i < woAuto.pinList.length; i++) {
+      var pin = woAuto.pinList[i];
+
+      woAuto.pins.add(woAuto.makeMarker(pin, 'pin,$i'));
+    }
+
+    woAuto.markers.addAll(woAuto.parkings);
+    woAuto.markers.addAll(woAuto.pins);
+
+    if (woAuto.parkings.isNotEmpty) {
+      var myCar = woAuto.parkings.first;
+      woAuto.currentPosition.value = CameraPosition(
+        target: myCar.position,
+        zoom: 16,
+      );
+    }
+
     woAuto.subText.value = jsonMap['subText'] ?? 'Mein Auto';
     // settings
     woAuto.android13Theme.value = jsonMap['android13Theme'] ?? false;
     woAuto.themeMode.value = jsonMap['themeMode'] ?? 0;
 
-    if (woAuto.longitude.value != null && woAuto.latitude.value != null) {
-      woAuto.currentPosition.value = CameraPosition(
-        target: LatLng(
-          woAuto.latitude.value!,
-          woAuto.longitude.value!,
-        ),
-        zoom: 16,
-      );
+    // if (woAuto.longitude.value != null && woAuto.latitude.value != null) {
+    //   woAuto.currentPosition.value = CameraPosition(
+    //     target: LatLng(
+    //       woAuto.latitude.value!,
+    //       woAuto.longitude.value!,
+    //     ),
+    //     zoom: 16,
+    //   );
 
-      Marker m = Marker(
-        markerId: const MarkerId('1'),
-        position: LatLng(
-          woAuto.latitude.value!,
-          woAuto.longitude.value!,
-        ),
-        consumeTapEvents: true,
-        onTap: () async {
-          woAuto.mapController.value?.animateCamera(
-            CameraUpdate.newCameraPosition(
-              CameraPosition(
-                target: LatLng(
-                  woAuto.latitude.value!,
-                  woAuto.longitude.value!,
-                ),
-                zoom: 18,
-              ),
-            ),
-          );
-          woAuto.showParkingDialog();
-        },
-      );
+    //   Marker m = Marker(
+    //     markerId: const MarkerId('1'),
+    //     position: LatLng(
+    //       woAuto.latitude.value!,
+    //       woAuto.longitude.value!,
+    //     ),
+    //     consumeTapEvents: true,
+    //     onTap: () async {
+    //       woAuto.mapController.value?.animateCamera(
+    //         CameraUpdate.newCameraPosition(
+    //           CameraPosition(
+    //             target: LatLng(
+    //               woAuto.latitude.value!,
+    //               woAuto.longitude.value!,
+    //             ),
+    //             zoom: 18,
+    //           ),
+    //         ),
+    //       );
+    //       woAuto.showParkingDialog();
+    //     },
+    //   );
+    //   woAuto.parkings.add(m);
+    // }
 
-      woAuto.parkings.clear();
-      woAuto.parkings.add(m);
-    }
+    // woAuto.pins.addAll(woAuto.parkings);
 
     return woAuto;
   }
@@ -142,13 +159,17 @@ class WoAuto extends GetxController {
   /// Bebug the current state of the Appmelder
   printWoAuto() {
     log('WoAuto', name: 'GetX Controller');
-    log(latitude.value.toString(), name: 'GetX Controller');
-    log(longitude.value.toString(), name: 'GetX Controller');
-    log(datum.value.toString(), name: 'GetX Controller');
     log(subText.value, name: 'GetX Controller');
     log(currentPosition.value.target.toString(), name: 'GetX Controller');
     if (parkings.isNotEmpty) {
-      log(parkings.elementAt(0).position.toString(), name: 'GetX Controller');
+      for (var m in parkings) {
+        log(m.position.toString(), name: 'GetX Controller');
+      }
+    }
+    if (pins.isNotEmpty) {
+      for (var pin in pins) {
+        log(pin.position.toString(), name: 'GetX Controller');
+      }
     }
     log(android13Theme.value.toString(), name: 'GetX Controller');
     log(themeMode.value.toString(), name: 'GetX Controller');
@@ -158,41 +179,85 @@ class WoAuto extends GetxController {
 
   /// Resets the WoAuto provider
   reset() async {
-    latitude.value = null;
-    longitude.value = null;
-    datum.value = DateTime.now();
     subText.value = 'Mein Auto';
     android13Theme.value = false;
     themeMode.value = 0;
 
+    parkingList.value = [];
+    pinList.value = [];
     parkings.clear();
-    positionAddress.value = '';
+    pins.clear();
+    markers.clear();
+
     sp.clear();
     await woAuto.save();
     Get.offAll(() => const Home());
   }
 
-  showParkingDialog() {
+  makeMarker(var park, String id) {
+    return Marker(
+      markerId: MarkerId(id),
+      position: LatLng(
+        park['lat'],
+        park['long'],
+      ),
+      consumeTapEvents: true,
+      onTap: () async {
+        woAuto.mapController.value?.animateCamera(
+          CameraUpdate.newCameraPosition(
+            CameraPosition(
+              target: LatLng(
+                park['lat'],
+                park['long'],
+              ),
+              zoom: 18,
+            ),
+          ),
+        );
+        woAuto.showParkingDialog(park, id);
+      },
+    );
+  }
+
+  showParkingDialog(var park, String id) {
+    var datum =
+        park['datum'] == null ? DateTime.now() : DateTime.fromMillisecondsSinceEpoch(park['datum']);
     Get.dialog(
       AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        title: Text(woAuto.subText.value),
-        content: Text(
-          'Du hast ${formatDateTimeAndTime(woAuto.datum.value)}.\n\nDein Auto steht an folgender Adresse:\n${woAuto.positionAddress.value} und ist ca. ${woAuto.distance.value} Meter entfernt.',
-        ),
+        title: Text(park['name'] ?? woAuto.subText.value),
+        content: park['shared'] ?? false
+            ? Text(
+                'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${park['adresse'] ?? 'Adresse konnte nicht gefunden werden.'}.')
+            : Text(
+                'Du hast ${formatDateTimeAndTime(datum)}.\n\nDein Auto steht an folgender Adresse:\n${park['adresse'] ?? 'Adresse konnte nicht gefunden werden.'}.',
+              ),
         actions: [
           TextButton(
             style: TextButton.styleFrom(
               foregroundColor: Colors.red,
             ),
             onPressed: () {
-              woAuto.latitude.value = null;
-              woAuto.longitude.value = null;
-              woAuto.parkings.clear();
-              woAuto.positionAddress.value = '';
+              // split id by ,
+              var ids = id.split(',');
+              int num = int.parse(ids[1]);
+              String type = ids[0];
+              if (type == 'park') {
+                woAuto.parkingList.removeAt(num);
+                woAuto.parkings.removeWhere((Marker element) => element.markerId.value == id);
+              } else {
+                woAuto.pinList.removeAt(num);
+                woAuto.pins.removeWhere((Marker element) => element.markerId.value == id);
+              }
+
+              markers.clear();
+              markers.addAll(woAuto.pins);
+              markers.addAll(woAuto.parkings);
+
               woAuto.save();
+
               Get.back();
             },
             child: const Text('Parkplatz löschen'),
@@ -203,29 +268,58 @@ class WoAuto extends GetxController {
   }
 
   // Adds a marker to the (google) map, and clears the old ones
-  void addMarker(LatLng newPosition) {
+  Future<void> addMarker(LatLng newPosition) async {
+    // if has premium, dont clear
     woAuto.parkings.clear();
-    Marker m = Marker(
-      markerId: const MarkerId('1'),
-      position: newPosition,
-      consumeTapEvents: true,
-      onTap: () async {
-        woAuto.mapController.value?.animateCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target: newPosition,
-              zoom: 18,
-            ),
-          ),
-        );
-        showParkingDialog();
-      },
-    );
-    woAuto.latitude.value = newPosition.latitude;
-    woAuto.longitude.value = newPosition.longitude;
-    woAuto.datum.value = DateTime.now();
+    woAuto.parkingList.clear();
+
+    var adresse = await getAddress(newPosition);
+    var park = <dynamic, dynamic>{
+      'id': 'park,${woAuto.parkingList.length}',
+      'lat': newPosition.latitude,
+      'long': newPosition.longitude,
+      'name': woAuto.subText.value,
+      'adresse': adresse,
+      'datum': DateTime.now().millisecondsSinceEpoch,
+      'shared': false,
+      'distance': woAuto.getDistance(newPosition),
+    };
+
+    woAuto.parkings.add(woAuto.makeMarker(park, 'park,${woAuto.parkingList.length}'));
+    woAuto.parkingList.add(park);
+
+    markers.clear();
+    markers.addAll(woAuto.pins);
+    markers.addAll(woAuto.parkings);
     woAuto.save();
-    woAuto.parkings.add(m);
+  }
+
+  // Adds a pin to the (google) map, and clears the old ones
+  Future<void> addPin(LatLng newPosition, String title) async {
+    // if has premium, dont clear
+    woAuto.pins.clear();
+    woAuto.pinList.clear();
+
+    var adresse = await getAddress(newPosition);
+
+    var pin = <dynamic, dynamic>{
+      'id': 'pin,${woAuto.pinList.length}',
+      'lat': newPosition.latitude,
+      'long': newPosition.longitude,
+      'datum': DateTime.now().millisecondsSinceEpoch,
+      'name': title,
+      'adresse': adresse,
+      'shared': true,
+      'distance': woAuto.getDistance(newPosition),
+    };
+
+    woAuto.pins.add(woAuto.makeMarker(pin, 'pin,${woAuto.pinList.length}'));
+    woAuto.pinList.add(pin);
+
+    markers.clear();
+    markers.addAll(woAuto.pins);
+    markers.addAll(woAuto.parkings);
+    woAuto.save();
   }
 
   Future setMapStyle({Brightness? brightness}) async {
@@ -263,16 +357,15 @@ class WoAuto extends GetxController {
     }
   }
 
-  /// Spuckt die Distanz in Metern aus
-  getDistanceToCurrentPosition() async {
-    if (latitude.value == null || longitude.value == null) {
-      distance.value = 0;
-      return;
-    }
+  double getDistance(LatLng pos) {
     var myLat = currentPosition.value.target.latitude;
     var myLng = currentPosition.value.target.longitude;
-    distance.value =
-        calculateDistance(latitude.value, longitude.value, myLat, myLng).toPrecision(1);
+    return calculateDistance(
+      myLat,
+      myLng,
+      pos.latitude,
+      pos.longitude,
+    ).toPrecision(1);
   }
 
   double calculateDistance(lat1, lon1, lat2, lon2) {

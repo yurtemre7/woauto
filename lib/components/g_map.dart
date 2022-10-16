@@ -128,6 +128,18 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         ),
         zoom: 18,
       );
+      var tempParkList = woAuto.parkingList.toList();
+      for (int i = 0; i < tempParkList.length; i++) {
+        var park = tempParkList[i];
+        tempParkList[i]['distance'] = woAuto.getDistance(LatLng(park['lat'], park['long']));
+      }
+      woAuto.parkingList.value = tempParkList;
+      tempParkList = woAuto.pinList.toList();
+      for (int i = 0; i < tempParkList.length; i++) {
+        var park = tempParkList[i];
+        tempParkList[i]['distance'] = woAuto.getDistance(LatLng(park['lat'], park['long']));
+      }
+      woAuto.pinList.value = tempParkList;
     });
   }
 
