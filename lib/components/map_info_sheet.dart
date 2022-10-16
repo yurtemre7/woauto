@@ -318,10 +318,15 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                               return;
                             }
                             LatLng myCar = woAuto.parkings.elementAt(0).position;
+                            String website = 'https://yurtemre.de';
                             String link =
                                 'https://www.google.com/maps?q=${myCar.latitude},${myCar.longitude}';
+                            String woLink =
+                                '$website/deeplink?title=${Uri.encodeFull(woAuto.subText.value)}&lat=${Uri.encodeFull(myCar.latitude.toString())}&long=${Uri.encodeFull(myCar.longitude.toString())}';
 
-                            Share.share('Ich habe hier geparkt: $link');
+                            Share.share(
+                              'Ich habe hier geparkt:\n\nÖffnet GoogleMaps: $link\n\nÖffnet WoAuto: $woLink',
+                            );
                           },
                         ),
 
@@ -432,8 +437,10 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                         LatLng myCar = woAuto.parkings.elementAt(0).position;
                                         String link =
                                             'https://www.google.com/maps?q=${myCar.latitude},${myCar.longitude}';
-                                        await launchUrl(Uri.parse(link),
-                                            mode: LaunchMode.externalApplication);
+                                        await launchUrl(
+                                          Uri.parse(link),
+                                          mode: LaunchMode.externalApplication,
+                                        );
                                       },
                                     ),
                                   const SizedBox(height: 5),
