@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/utilities.dart';
@@ -524,6 +525,59 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                       },
                                     ),
                                   ],
+                                  const SizedBox(height: 10),
+                                  TextButton.icon(
+                                    icon: const Icon(Icons.question_mark),
+                                    label: const Text(
+                                      'Wie wird die Entfernung berechnet, fragst du dich?',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    onPressed: () {
+                                      Get.snackbar(
+                                        'Wie wird die Entfernung berechnet?',
+                                        'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
+                                        snackPosition: SnackPosition.BOTTOM,
+                                        titleText: const Text(
+                                          'Wie wird die Entfernung berechnet?',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                        messageText: Column(
+                                          children: const [
+                                            Text(
+                                              'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                              ),
+                                            ),
+                                            SizedBox(height: 10),
+                                            Text(
+                                              'Tippe um mehr zu erfahren.',
+                                              style: TextStyle(
+                                                fontSize: 14,
+                                                decoration: TextDecoration.underline,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        borderRadius: 12,
+                                        margin: const EdgeInsets.all(20),
+                                        duration: 10.seconds,
+                                        onTap: (snack) {
+                                          launchUrl(
+                                            Uri.parse(
+                                              'https://en.wikipedia.org/wiki/Haversine_formula',
+                                            ),
+                                            mode: LaunchMode.externalApplication,
+                                          );
+                                        },
+                                        backgroundColor:
+                                            getBackgroundColor(context)?.withOpacity(0.5),
+                                      );
+                                    },
+                                  ),
                                   const SizedBox(height: 10),
 
                                   //   Text(
