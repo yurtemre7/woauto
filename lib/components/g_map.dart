@@ -174,12 +174,13 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                   ),
                   zoom: 18,
                 );
-
-                woAuto.mapController.value!.animateCamera(
-                  CameraUpdate.newCameraPosition(
-                    woAuto.currentPosition.value,
-                  ),
-                );
+                if (woAuto.mapController.value != null) {
+                  woAuto.mapController.value!.animateCamera(
+                    CameraUpdate.newCameraPosition(
+                      woAuto.currentPosition.value,
+                    ),
+                  );
+                }
               },
               myLocationEnabled: true,
               myLocationButtonEnabled: false,
