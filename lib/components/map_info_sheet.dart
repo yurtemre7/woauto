@@ -363,13 +363,27 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                         );
                                         return;
                                       }
+                                      if (woAuto.parkings.isEmpty) {
+                                        // show snackbar error
+                                        Get.snackbar(
+                                          'Fehler',
+                                          'Keinen Parkplatz gespeichert',
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          backgroundColor: Colors.redAccent,
+                                          borderRadius: 10,
+                                          margin: const EdgeInsets.all(10),
+                                          duration: 2.seconds,
+                                        );
+                                        return;
+                                      }
                                       LatLng myCar = woAuto.parkings.elementAt(0).position;
                                       String website = 'https://yurtemre.de';
                                       String link =
                                           'https://www.google.com/maps?q=${myCar.latitude},${myCar.longitude}';
                                       String woLink =
                                           '$website/deeplink?title=${Uri.encodeFull(textEditing.text)}&lat=${Uri.encodeFull(myCar.latitude.toString())}&long=${Uri.encodeFull(myCar.longitude.toString())}';
-                                      String text = 'Ich habe meinen Wagen hier geparkt: $woLink\n';
+                                      String text =
+                                          'Ich habe meinen Wagen hier geparkt: $woLink\n\n';
 
                                       text +=
                                           'Alternativ kannst du ihn auch über Google Maps einsehen: $link';
