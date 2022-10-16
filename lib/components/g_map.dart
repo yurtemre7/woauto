@@ -17,6 +17,7 @@ class GMap extends StatefulWidget {
 
 class _GMapState extends State<GMap> with WidgetsBindingObserver {
   final mapLoading = true.obs;
+
   @override
   void initState() {
     super.initState();
@@ -127,15 +128,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         ),
         zoom: 18,
       );
-      woAuto.getDistanceToCurrentPosition();
     });
-
-    if (woAuto.latitude.value != null && woAuto.longitude.value != null) {
-      getAddress(LatLng(woAuto.latitude.value!, woAuto.longitude.value!)).then((value) {
-        woAuto.positionAddress.value = value;
-        woAuto.save();
-      });
-    }
   }
 
   @override
@@ -179,7 +172,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               myLocationEnabled: true,
               myLocationButtonEnabled: false,
               zoomControlsEnabled: false,
-              markers: woAuto.parkings.toSet(),
+              markers: woAuto.markers.toSet(),
               onTap: (LatLng newPosition) {
                 if (kDebugMode) {
                   woAuto.printWoAuto();
@@ -202,10 +195,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                         child: const Text('SPEICHERN'),
                         onPressed: () async {
                           woAuto.addMarker(newPosition);
-                          getAddress(newPosition).then((value) {
-                            woAuto.positionAddress.value = value;
-                            woAuto.save();
-                          });
 
                           pop();
                           GoogleMapController controller = woAuto.mapController.value!;
