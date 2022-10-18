@@ -293,7 +293,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                         const SizedBox(height: 5),
                         TextButton.icon(
                           icon: const Icon(Icons.share),
-                          label: const Text('Standort Teilen'),
+                          label: const Text('Parkplatz Teilen'),
                           onPressed: () {
                             // share parking location to whatsapp, telegram etc.
                             if (woAuto.parkings.isEmpty) {
