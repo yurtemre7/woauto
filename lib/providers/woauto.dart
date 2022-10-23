@@ -9,7 +9,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:woauto/main.dart';
-import 'package:woauto/screens/intro.dart';
 import 'package:woauto/utils/utilities.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -152,7 +151,6 @@ class WoAuto extends GetxController {
     subText.value = 'Mein Auto';
     android13Theme.value = false;
     themeMode.value = 0;
-    welcome.value = true;
 
     parkingList.value = [];
     pinList.value = [];
@@ -161,8 +159,9 @@ class WoAuto extends GetxController {
     markers.clear();
 
     sp.clear();
+    welcome.value = true;
+
     await woAuto.save();
-    Get.offAll(() => const Intro());
   }
 
   makeMarker(var park, String id) {
