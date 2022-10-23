@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:location/location.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
-import 'package:woauto/screens/home.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class Intro extends StatefulWidget {
@@ -169,14 +166,6 @@ class _IntroState extends State<Intro> {
                               ],
                               onChanged: (v) async {
                                 woAuto.themeMode.value = v!;
-                                // if (woAuto.mapController.value == null) return;
-                                // await woAuto.setMapStyle(
-                                //   brightness: v == 1
-                                //       ? Brightness.light
-                                //       : v == 2
-                                //           ? Brightness.dark
-                                //           : null,
-                                // );
                                 await woAuto.save();
                               },
                             );
@@ -199,7 +188,6 @@ class _IntroState extends State<Intro> {
                           onChanged: (v) async {
                             woAuto.android13Theme.value = v;
                             await woAuto.save();
-                            pop();
                           },
                         ),
                       ),
@@ -229,7 +217,7 @@ class _IntroState extends State<Intro> {
                         value: allowed.value,
                         onChanged: (val) async {
                           if (val == null) return;
-                          log(val.toString());
+
                           if (!val) {
                             allowed.value = val;
                             return;
@@ -261,8 +249,6 @@ class _IntroState extends State<Intro> {
             woAuto.welcome.value = false;
 
             await woAuto.save();
-
-            pushReplacement(const Home());
           },
           isTopSafeArea: true,
           next: const Text(
