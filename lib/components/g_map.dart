@@ -43,76 +43,10 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
 
   loadPositionData() async {
     mapLoading.value = true;
-    bool hasReadPermission = woAuto.sp.getBool('hasReadPermission') ?? false;
-    bool? skip;
-    if (!hasReadPermission) {
-      mapLoading.value = false;
-      await Future.delayed(
-        0.seconds,
-        () async {
-          skip = await Get.dialog<bool>(
-            AlertDialog(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              title: const Text('Zugriff auf Standortdaten'),
-              content: const Text(
-                'Damit WoAuto deine jetzige Position und andere Positionen korrekt errechnen kann, brauchen wir deine Standortdaten während der Appnutzung.\n\nBitte erlaube WoAuto den Zugriff auf deine Standortdaten.',
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => pop(result: true),
-                  child: const Text('Abbrechen'),
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    woAuto.sp.setBool('hasReadPermission', true);
-                    pop(result: false);
-                    if (mounted) {
-                      setState(() {});
-                    }
-                    LocationData? locationData;
-                    try {
-                      locationData = await Location().getLocation();
-                    } catch (e) {
-                      return;
-                    }
-
-                    woAuto.currentPosition.value = CameraPosition(
-                      target: LatLng(
-                        locationData.latitude ?? 0,
-                        locationData.longitude ?? 0,
-                      ),
-                      zoom: 18,
-                    );
-
-                    if (woAuto.mapController.value != null) {
-                      woAuto.mapController.value!.animateCamera(
-                        CameraUpdate.newCameraPosition(
-                          woAuto.currentPosition.value,
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text('Erlauben'),
-                ),
-              ],
-            ),
-            barrierDismissible: false,
-          );
-        },
-      );
-    }
-
-    if (skip != null && skip == true) {
-      mapLoading.value = false;
-      return;
-    }
 
     Location location = Location();
 
     bool serviceEnabled;
-
     serviceEnabled = await location.serviceEnabled();
     if (!serviceEnabled) {
       serviceEnabled = await location.requestService();
