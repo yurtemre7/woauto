@@ -28,10 +28,11 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
 
   @override
   void didChangePlatformBrightness() {
-    setState(() {
-      if (woAuto.mapController.value == null) return;
-      woAuto.setMapStyle();
-    });
+    if (mounted) {
+      setState(() {
+        woAuto.setMapStyle();
+      });
+    }
     super.didChangePlatformBrightness();
   }
 
