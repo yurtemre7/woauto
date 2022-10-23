@@ -42,6 +42,7 @@ class WoAuto extends GetxController {
   // settings
   final android13Theme = false.obs;
   final themeMode = 0.obs;
+  final mapType = MapType.normal.obs;
 
   late SharedPreferences sp;
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/div.dart';
@@ -91,7 +92,7 @@ class _SettingsState extends State<Settings> {
                           Obx(
                             () => SwitchListTile(
                               value: woAuto.android13Theme.value,
-                              title: const Text('Android 13 Design nutzen'),
+                              title: const Text('Android 13 Design'),
                               subtitle: const Text(
                                 'Entscheide selbst, ob du das neue Android 13 Design benutzen möchtest.',
                               ),
@@ -149,6 +150,45 @@ class _SettingsState extends State<Settings> {
                         ),
                         const Div(),
                         Obx(
+                          () {
+                            var mapType = woAuto.mapType.value;
+                            DropdownButton<MapType> dropdownButton = DropdownButton<MapType>(
+                              value: mapType,
+                              items: const [
+                                DropdownMenuItem(
+                                  value: MapType.normal,
+                                  child: Text('Normal'),
+                                ),
+                                DropdownMenuItem(
+                                  value: MapType.satellite,
+                                  child: Text('Satellit'),
+                                ),
+                                DropdownMenuItem(
+                                  value: MapType.hybrid,
+                                  child: Text('Hybrid'),
+                                ),
+                                DropdownMenuItem(
+                                  value: MapType.terrain,
+                                  child: Text('Terrain'),
+                                ),
+                              ],
+                              onChanged: (v) async {
+                                woAuto.mapType.value = v!;
+                                pop();
+                              },
+                            );
+
+                            return ListTile(
+                              title: const Text('Map-Typ'),
+                              subtitle: const Text(
+                                'Zeigt die Karte in verschiedenen Typen an.',
+                              ),
+                              trailing: dropdownButton,
+                            );
+                          },
+                        ),
+                        const Div(),
+                        Obx(
                           () => ListTile(
                             leading: const Icon(Icons.info_outline),
                             title: const Text('App Info'),
@@ -191,7 +231,8 @@ class _SettingsState extends State<Settings> {
                         ListTile(
                           leading: const Icon(Icons.share),
                           title: const Text('Teilen'),
-                          subtitle: const Text('Teile unsere App mit deinen Freunden'),
+                          subtitle: const Text(
+                              'Teile die App doch mit deinen Freunden und deiner Familie.'),
                           onTap: () {
                             Share.share(
                               'Hast du auch vergessen wo du zuletzt geparkt hast? '
@@ -246,7 +287,7 @@ class _SettingsState extends State<Settings> {
                         ListTile(
                           leading: const Icon(Icons.gpp_good_sharp),
                           title: const Text('Datenschutz und Impressum'),
-                          subtitle: const Text('Teile unsere App mit deinen Freunden'),
+                          subtitle: const Text('Erfahre wie deine Daten geschützt werden.'),
                           onTap: () {
                             Get.dialog(
                               AlertDialog(
@@ -327,8 +368,8 @@ class _SettingsState extends State<Settings> {
                         ListTile(
                           leading: const Icon(Icons.delete_forever_outlined),
                           title: const Text('Lösche alle App-Daten'),
-                          subtitle: const Text(
-                              'Halte hier gedrückt um all deine App-Daten zu löschen. App-Daten sind dann nicht mehr wiederherstellbar.'),
+                          subtitle:
+                              const Text('Halte hier gedrückt, um all deine App-Daten zu löschen.'),
                           onLongPress: () {
                             Get.dialog(
                               AlertDialog(

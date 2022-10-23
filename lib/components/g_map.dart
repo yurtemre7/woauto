@@ -183,6 +183,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                   );
                 }
               },
+              mapType: woAuto.mapType.value,
               myLocationEnabled: true,
               myLocationButtonEnabled: false,
               zoomControlsEnabled: false,
