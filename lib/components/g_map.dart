@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -189,6 +190,21 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               onTap: (LatLng newPosition) {
                 if (kDebugMode) {
                   woAuto.printWoAuto();
+                }
+                if (woAuto.snappingSheetController.value.isAttached) {
+                  var snapPos = woAuto.snappingSheetController.value.currentSnappingPosition;
+                  var offset = snapPos.grabbingContentOffset;
+                  if (offset < 0) {
+                    woAuto.snappingSheetController.value.snapToPosition(
+                      SnappingPosition.factor(
+                        positionFactor: 0.0,
+                        snappingCurve: Curves.easeOutExpo,
+                        snappingDuration: 1300.milliseconds,
+                        grabbingContentOffset: GrabbingContentOffset.top,
+                      ),
+                    );
+                    return;
+                  }
                 }
                 Get.dialog(
                   AlertDialog(

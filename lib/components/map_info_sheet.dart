@@ -16,14 +16,15 @@ class MapInfoSheet extends StatefulWidget {
 }
 
 class _MapInfoSheetState extends State<MapInfoSheet> {
-  SnappingSheetController snappingSheetController = SnappingSheetController();
   ScrollController scrollController = ScrollController();
+  late SnappingSheetController snappingSheetController;
 
   bool up = false;
 
   @override
   void initState() {
     super.initState();
+    snappingSheetController = woAuto.snappingSheetController.value;
   }
 
   @override
