@@ -73,6 +73,9 @@ class _SettingsState extends State<Settings> {
                                     child: const Text('OK'),
                                     onPressed: () async {
                                       woAuto.subText.value = tec.text.trim();
+                                      if (woAuto.subText.value.isEmpty) {
+                                        woAuto.subText.value = 'Mein Auto';
+                                      }
                                       if (woAuto.parkings.isNotEmpty) {
                                         var myCar = woAuto.parkings.first;
                                         woAuto.addMarker(myCar.position);

@@ -351,7 +351,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                   ElevatedButton(
                                     child: const Text('TEILEN'),
                                     onPressed: () async {
-                                      if (textEditing.text.isEmpty) {
+                                      if (textEditing.text.replaceAll(' ', '').trim().isEmpty) {
                                         // show snackbar error
                                         Get.snackbar(
                                           'Fehler',
@@ -382,7 +382,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                       String link =
                                           'https://www.google.com/maps?q=${myCar.latitude},${myCar.longitude}';
                                       String woLink =
-                                          '$website/deeplink?title=${Uri.encodeFull(textEditing.text)}&lat=${Uri.encodeFull(myCar.latitude.toString())}&long=${Uri.encodeFull(myCar.longitude.toString())}';
+                                          '$website/deeplink?title=${Uri.encodeFull(textEditing.text.trim())}&lat=${Uri.encodeFull(myCar.latitude.toString())}&long=${Uri.encodeFull(myCar.longitude.toString())}';
                                       String text =
                                           'Ich habe meinen Wagen hier geparkt: $woLink\n\n';
 
