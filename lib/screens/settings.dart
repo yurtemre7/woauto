@@ -388,6 +388,8 @@ class _SettingsState extends State<Settings> {
                                     ),
                                     child: const Text('Löschen'),
                                     onPressed: () async {
+                                      pop();
+                                      pop();
                                       await woAuto.reset();
                                     },
                                   ),
