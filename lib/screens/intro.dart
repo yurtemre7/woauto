@@ -178,9 +178,6 @@ class _IntroState extends State<Intro> {
                                 //           : null,
                                 // );
                                 await woAuto.save();
-                                if (mounted) {
-                                  setState(() {});
-                                }
                               },
                             );
 
@@ -259,10 +256,6 @@ class _IntroState extends State<Intro> {
             woAuto.subText.value = tec.text.trim();
             if (woAuto.subText.value.isEmpty) {
               woAuto.subText.value = 'Mein Auto';
-            }
-            if (woAuto.parkings.isNotEmpty) {
-              var myCar = woAuto.parkings.first;
-              woAuto.addMarker(myCar.position);
             }
 
             woAuto.welcome.value = false;
