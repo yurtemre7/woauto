@@ -22,7 +22,7 @@ void pop<T>({T? result}) => Get.back<T>(result: result);
 void push(Widget page) => Get.to(() => page);
 
 double maxHeightSheet = Get.size.height * 0.7;
-const double minHeightSheet = 140;
+const double minHeightSheet = 117;
 
 Color? getBackgroundColor(context) {
   if (woAuto.themeMode.value != 0) {

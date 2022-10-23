@@ -114,7 +114,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  padding: const EdgeInsets.only(top: 20, bottom: 20),
+                  padding: const EdgeInsets.only(top: 15, bottom: 15),
                   child: InkWell(
                     borderRadius: BorderRadius.circular(5),
                     onTap: () {
@@ -149,7 +149,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                     },
                     child: Container(
                       width: 110,
-                      height: 8,
+                      height: 7,
                       decoration: BoxDecoration(
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(5),
