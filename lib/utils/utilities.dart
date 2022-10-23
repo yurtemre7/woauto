@@ -21,6 +21,8 @@ void pop<T>({T? result}) => Get.back<T>(result: result);
 
 void push(Widget page) => Get.to(() => page);
 
+void pushReplacement(Widget page) => Get.offAll(() => page);
+
 double maxHeightSheet = Get.size.height * 0.7;
 const double minHeightSheet = 117;
 
@@ -29,6 +31,15 @@ Color? getBackgroundColor(context) {
     return woAuto.themeMode.value == 1 ? Colors.white : Colors.grey[900];
   }
   return MediaQuery.of(context).platformBrightness == Brightness.light
+      ? Colors.white
+      : Colors.grey[900];
+}
+
+Color? getForegroundColor(context) {
+  if (woAuto.themeMode.value != 0) {
+    return woAuto.themeMode.value != 1 ? Colors.white : Colors.grey[900];
+  }
+  return MediaQuery.of(context).platformBrightness != Brightness.light
       ? Colors.white
       : Colors.grey[900];
 }
