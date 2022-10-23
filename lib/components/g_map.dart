@@ -91,10 +91,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                 await loadMapStyles();
                 await Future.delayed(2.seconds);
                 mapLoading.value = false;
-                bool hasReadPermission = woAuto.sp.getBool('hasReadPermission') ?? false;
-                if (!hasReadPermission) {
-                  return;
-                }
+
                 LocationData? locationData;
                 try {
                   locationData = await Location().getLocation();
