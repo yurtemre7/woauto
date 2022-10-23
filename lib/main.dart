@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:woauto/screens/home.dart';
 import 'package:woauto/providers/woauto.dart';
+import 'package:woauto/screens/intro.dart';
 
 late WoAuto woAuto;
 
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
               colorScheme: darkDynamic,
             ),
             themeMode: getThemeMode(woAuto.themeMode.value),
-            home: const Home(),
+            home: woAuto.welcome.value ? const Intro() : const Home(),
           ),
         );
       },
