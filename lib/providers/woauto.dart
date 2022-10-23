@@ -9,7 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:woauto/main.dart';
-import 'package:woauto/screens/home.dart';
+import 'package:woauto/screens/intro.dart';
 import 'package:woauto/utils/utilities.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -30,16 +30,16 @@ class WoAuto extends GetxController {
   final parkingList = [].obs;
   final pinList = [].obs;
 
-  var mapController = Rxn<GoogleMapController?>();
-
+  final mapController = Rxn<GoogleMapController?>();
   final snappingSheetController = Rx(SnappingSheetController());
 
-  final subText = 'Mein Auto'.obs;
+  final welcome = true.obs;
 
   final appVersion = ''.obs;
   final appBuildNumber = ''.obs;
 
   // settings
+  final subText = 'Mein Auto'.obs;
   final android13Theme = false.obs;
   final themeMode = 0.obs;
   final mapType = MapType.normal.obs;
@@ -60,6 +60,7 @@ class WoAuto extends GetxController {
       'themeMode': themeMode.value,
       'parkings': parkingList,
       'pins': pinList,
+      'welcome': welcome.value,
     });
   }
 
@@ -71,6 +72,7 @@ class WoAuto extends GetxController {
 
     woAuto.parkingList.value = jsonMap['parkings'] ?? [];
     woAuto.pinList.value = jsonMap['pins'] ?? [];
+    woAuto.welcome.value = jsonMap['welcome'] ?? true;
 
     for (int i = 0; i < woAuto.parkingList.length; i++) {
       var park = woAuto.parkingList[i];
@@ -99,42 +101,6 @@ class WoAuto extends GetxController {
     // settings
     woAuto.android13Theme.value = jsonMap['android13Theme'] ?? false;
     woAuto.themeMode.value = jsonMap['themeMode'] ?? 0;
-
-    // if (woAuto.longitude.value != null && woAuto.latitude.value != null) {
-    //   woAuto.currentPosition.value = CameraPosition(
-    //     target: LatLng(
-    //       woAuto.latitude.value!,
-    //       woAuto.longitude.value!,
-    //     ),
-    //     zoom: 16,
-    //   );
-
-    //   Marker m = Marker(
-    //     markerId: const MarkerId('1'),
-    //     position: LatLng(
-    //       woAuto.latitude.value!,
-    //       woAuto.longitude.value!,
-    //     ),
-    //     consumeTapEvents: true,
-    //     onTap: () async {
-    //       woAuto.mapController.value?.animateCamera(
-    //         CameraUpdate.newCameraPosition(
-    //           CameraPosition(
-    //             target: LatLng(
-    //               woAuto.latitude.value!,
-    //               woAuto.longitude.value!,
-    //             ),
-    //             zoom: 18,
-    //           ),
-    //         ),
-    //       );
-    //       woAuto.showParkingDialog();
-    //     },
-    //   );
-    //   woAuto.parkings.add(m);
-    // }
-
-    // woAuto.pins.addAll(woAuto.parkings);
 
     return woAuto;
   }
@@ -186,6 +152,7 @@ class WoAuto extends GetxController {
     subText.value = 'Mein Auto';
     android13Theme.value = false;
     themeMode.value = 0;
+    welcome.value = true;
 
     parkingList.value = [];
     pinList.value = [];
@@ -195,7 +162,7 @@ class WoAuto extends GetxController {
 
     sp.clear();
     await woAuto.save();
-    Get.offAll(() => const Home());
+    Get.offAll(() => const Intro());
   }
 
   makeMarker(var park, String id) {
