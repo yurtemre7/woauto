@@ -204,7 +204,7 @@ class WoAuto extends GetxController {
             ? Text(
                 'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${park.address ?? 'Adresse konnte nicht gefunden werden.'}.')
             : Text(
-                'Du hast ${formatDateTimeAndTime(datum)}.\n\nDein Auto steht an folgender Adresse:\n${park.address ?? 'Adresse konnte nicht gefunden werden.'}.',
+                'Du hast ${formatDateTimeAndTime(datum)}.\n\nDein Auto steht an folgender Adresse:\n${park.address ?? 'Adresse konnte nicht gefunden werden.'}.\n${park.extra}',
               ),
         actions: [
           TextButton(
@@ -240,7 +240,7 @@ class WoAuto extends GetxController {
   }
 
   // Adds a marker to the (google) map, and clears the old ones
-  Future<void> addMarker(LatLng newPosition) async {
+  Future<void> addMarker(LatLng newPosition, {String? extra}) async {
     // if has premium, dont clear
     woAuto.parkings.clear();
     woAuto.parkingList.clear();
@@ -255,6 +255,7 @@ class WoAuto extends GetxController {
       address: adresse,
       datum: DateTime.now().millisecondsSinceEpoch,
       distance: woAuto.getDistance(newPosition),
+      extra: extra!,
     );
 
     woAuto.parkings.add(woAuto.makeMarker(park, 'park,${woAuto.parkingList.length}'));

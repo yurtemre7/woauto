@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:expandable/expandable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -139,13 +140,39 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                     return;
                   }
                 }
+                var textController = TextEditingController();
                 Get.dialog(
                   AlertDialog(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     title: const Text('Neuer Parkplatz'),
-                    content: const Text('Neuen Parkplatz speichern?'),
+                    contentPadding: const EdgeInsets.only(left: 10, right: 10),
+                    content: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const ListTile(
+                          title: Text('Neuen Parkplatz speichern?'),
+                        ),
+                        ExpandablePanel(
+                          header: const ListTile(
+                            title: Text('Zusätzliche Info zum Parkplatz'),
+                          ),
+                          collapsed: const SizedBox(),
+                          expanded: ListTile(
+                            title: TextField(
+                              controller: textController,
+                              decoration: const InputDecoration(
+                                labelText: 'Info',
+                                hintText: 'z.B. Parkdeck 2',
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
+                    ),
                     actions: <Widget>[
                       TextButton(
                         child: const Text('ABBRECHEN'),
@@ -156,7 +183,10 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                       ElevatedButton(
                         child: const Text('SPEICHERN'),
                         onPressed: () async {
-                          woAuto.addMarker(newPosition);
+                          woAuto.addMarker(
+                            newPosition,
+                            extra: textController.text,
+                          );
 
                           pop();
                           GoogleMapController controller = woAuto.mapController.value!;
