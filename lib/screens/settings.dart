@@ -23,13 +23,15 @@ class _SettingsState extends State<Settings> {
         topRight: Radius.circular(20),
       ),
       child: Scaffold(
+        backgroundColor: getBackgroundColor(context),
+        resizeToAvoidBottomInset: false,
         body: CustomScrollView(
           slivers: [
-            const SliverAppBar(
+            SliverAppBar(
               automaticallyImplyLeading: false,
               pinned: true,
               expandedHeight: 100.0,
-              flexibleSpace: FlexibleSpaceBar(
+              flexibleSpace: const FlexibleSpaceBar(
                 titlePadding: EdgeInsets.only(
                   bottom: 14.0,
                   left: 20.0,
@@ -41,6 +43,9 @@ class _SettingsState extends State<Settings> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+              ),
+              backgroundColor: MaterialStateColor.resolveWith(
+                (states) => states.contains(MaterialState.scrolledUnder) ? darkBg : darkBg,
               ),
             ),
             SliverList(
@@ -62,12 +67,15 @@ class _SettingsState extends State<Settings> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              title: const Text('Auto Text'),
+                              title: const Text('Parkplatz-Titel'),
                               content: TextFormField(
                                 controller: tec,
                                 maxLength: 30,
                                 autocorrect: false,
                                 autofocus: true,
+                                decoration: const InputDecoration(
+                                  hintText: 'Mein Auto',
+                                ),
                               ),
                               actions: [
                                 TextButton(

@@ -11,6 +11,8 @@ bool isIOS() => GetPlatform.isIOS;
 String? darkMapStyle;
 String? lightMapStyle;
 
+const darkBg = Color(0xff1B1A1D);
+
 Future loadMapStyles() async {
   darkMapStyle = await rootBundle.loadString('assets/map_styles/dark.json');
   lightMapStyle = await rootBundle.loadString('assets/map_styles/light.json');
@@ -28,20 +30,16 @@ const double minHeightSheet = 117;
 
 Color? getBackgroundColor(context) {
   if (woAuto.themeMode.value != 0) {
-    return woAuto.themeMode.value == 1 ? Colors.white : Colors.grey[900];
+    return woAuto.themeMode.value == 1 ? Colors.white : darkBg;
   }
-  return MediaQuery.of(context).platformBrightness == Brightness.light
-      ? Colors.white
-      : Colors.grey[900];
+  return MediaQuery.of(context).platformBrightness == Brightness.light ? Colors.white : darkBg;
 }
 
 Color? getForegroundColor(context) {
   if (woAuto.themeMode.value != 0) {
-    return woAuto.themeMode.value != 1 ? Colors.white : Colors.grey[900];
+    return woAuto.themeMode.value != 1 ? Colors.white : darkBg;
   }
-  return MediaQuery.of(context).platformBrightness != Brightness.light
-      ? Colors.white
-      : Colors.grey[900];
+  return MediaQuery.of(context).platformBrightness != Brightness.light ? Colors.white : darkBg;
 }
 
 Future<String?> getAddress(LatLng position) async {
