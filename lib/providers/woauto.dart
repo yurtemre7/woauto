@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
+import 'package:woauto/classes/park.dart';
+import 'package:woauto/classes/pin.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/utilities.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -74,13 +76,13 @@ class WoAuto extends GetxController {
     woAuto.welcome.value = jsonMap['welcome'] ?? true;
 
     for (int i = 0; i < woAuto.parkingList.length; i++) {
-      var park = woAuto.parkingList[i];
+      var park = Park.fromJson(woAuto.parkingList[i]);
 
       woAuto.parkings.add(woAuto.makeMarker(park, 'park,$i'));
     }
 
     for (int i = 0; i < woAuto.pinList.length; i++) {
-      var pin = woAuto.pinList[i];
+      var pin = Pin.fromJson(woAuto.pinList[i]);
 
       woAuto.pins.add(woAuto.makeMarker(pin, 'pin,$i'));
     }
@@ -164,12 +166,12 @@ class WoAuto extends GetxController {
     await woAuto.save();
   }
 
-  makeMarker(var park, String id) {
+  makeMarker(Park park, String id) {
     return Marker(
       markerId: MarkerId(id),
       position: LatLng(
-        park['lat'],
-        park['long'],
+        park.latitude,
+        park.longitude,
       ),
       consumeTapEvents: true,
       onTap: () async {
@@ -177,8 +179,8 @@ class WoAuto extends GetxController {
           CameraUpdate.newCameraPosition(
             CameraPosition(
               target: LatLng(
-                park['lat'],
-                park['long'],
+                park.latitude,
+                park.longitude,
               ),
               zoom: 18,
             ),
@@ -189,20 +191,20 @@ class WoAuto extends GetxController {
     );
   }
 
-  showParkingDialog(var park, String id) {
+  showParkingDialog(Park park, String id) {
     var datum =
-        park['datum'] == null ? DateTime.now() : DateTime.fromMillisecondsSinceEpoch(park['datum']);
+        park.datum == null ? DateTime.now() : DateTime.fromMillisecondsSinceEpoch(park.datum!);
     Get.dialog(
       AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        title: Text(park['name'] ?? woAuto.subText.value),
-        content: park['shared'] ?? false
+        title: Text(park.name ?? woAuto.subText.value),
+        content: park.shared ?? false
             ? Text(
-                'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${park['adresse'] ?? 'Adresse konnte nicht gefunden werden.'}.')
+                'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${park.address ?? 'Adresse konnte nicht gefunden werden.'}.')
             : Text(
-                'Du hast ${formatDateTimeAndTime(datum)}.\n\nDein Auto steht an folgender Adresse:\n${park['adresse'] ?? 'Adresse konnte nicht gefunden werden.'}.',
+                'Du hast ${formatDateTimeAndTime(datum)}.\n\nDein Auto steht an folgender Adresse:\n${park.address ?? 'Adresse konnte nicht gefunden werden.'}.',
               ),
         actions: [
           TextButton(
@@ -244,19 +246,19 @@ class WoAuto extends GetxController {
     woAuto.parkingList.clear();
 
     var adresse = await getAddress(newPosition);
-    var park = <dynamic, dynamic>{
-      'id': 'park,${woAuto.parkingList.length}',
-      'lat': newPosition.latitude,
-      'long': newPosition.longitude,
-      'name': woAuto.subText.value,
-      'adresse': adresse,
-      'datum': DateTime.now().millisecondsSinceEpoch,
-      'shared': false,
-      'distance': woAuto.getDistance(newPosition),
-    };
+
+    var park = Park(
+      id: 'park,${woAuto.parkingList.length}',
+      latitude: newPosition.latitude,
+      longitude: newPosition.longitude,
+      name: woAuto.subText.value,
+      address: adresse,
+      datum: DateTime.now().millisecondsSinceEpoch,
+      distance: woAuto.getDistance(newPosition),
+    );
 
     woAuto.parkings.add(woAuto.makeMarker(park, 'park,${woAuto.parkingList.length}'));
-    woAuto.parkingList.add(park);
+    woAuto.parkingList.add(park.toJson());
 
     markers.clear();
     markers.addAll(woAuto.pins);
@@ -272,19 +274,18 @@ class WoAuto extends GetxController {
 
     var adresse = await getAddress(newPosition);
 
-    var pin = <dynamic, dynamic>{
-      'id': 'pin,${woAuto.pinList.length}',
-      'lat': newPosition.latitude,
-      'long': newPosition.longitude,
-      'datum': DateTime.now().millisecondsSinceEpoch,
-      'name': title,
-      'adresse': adresse,
-      'shared': true,
-      'distance': woAuto.getDistance(newPosition),
-    };
+    var pin = Pin(
+      id: 'pin,${woAuto.pinList.length}',
+      latitude: newPosition.latitude,
+      longitude: newPosition.longitude,
+      name: title,
+      address: adresse,
+      datum: DateTime.now().millisecondsSinceEpoch,
+      distance: woAuto.getDistance(newPosition),
+    );
 
     woAuto.pins.add(woAuto.makeMarker(pin, 'pin,${woAuto.pinList.length}'));
-    woAuto.pinList.add(pin);
+    woAuto.pinList.add(pin.toJson());
 
     markers.clear();
     markers.addAll(woAuto.pins);

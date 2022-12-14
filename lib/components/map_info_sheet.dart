@@ -454,7 +454,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                             ),
                                           ),
                                           subtitle: Text(
-                                            element['adresse'],
+                                            element['address'],
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -507,7 +507,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                             ),
                                           ),
                                           subtitle: Text(
-                                            element['adresse'],
+                                            element['address'],
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                             ),

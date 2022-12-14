@@ -45,9 +45,7 @@ class _TopHeaderState extends State<TopHeader> {
                 IconButton(
                   onPressed: () async {
                     // Go to settings
-                    Get.bottomSheet(
-                      const Settings(),
-                    );
+                    Get.bottomSheet(const Settings());
                   },
                   icon: const Icon(Icons.settings),
                 ),
