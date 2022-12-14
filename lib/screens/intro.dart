@@ -51,49 +51,32 @@ class _IntroState extends State<Intro> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              bodyWidget: Center(
-                child: Container(
-                  margin: const EdgeInsets.only(
-                    left: 5,
-                    right: 5,
-                  ),
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(10),
-                        child: Image.asset(
-                          'assets/icon.png',
-                          fit: BoxFit.contain,
-                          width: 128,
-                          height: 128,
-                        ),
-                      ),
-                      const SizedBox(height: 50),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Text(
-                            'Willkommen bei WoAuto',
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          SizedBox(height: 5),
-                          Div(),
-                          SizedBox(height: 5),
-                          Text(
-                            'Mit der App wirst du nie wieder deinen Parkplatz vergessen.',
-                          ),
-                          SizedBox(height: 5),
-                          Div(),
-                          SizedBox(height: 5),
-                          Text(
-                            'Speichere in nur 2 Klicks deinen Parkplatz und du kannst ihn jederzeit wieder finden.',
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
+              bodyWidget: Container(
+                margin: const EdgeInsets.only(
+                  top: 10,
+                  left: 5,
+                  right: 5,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: const [
+                    Text(
+                      'Willkommen bei WoAuto',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                    SizedBox(height: 5),
+                    Div(),
+                    SizedBox(height: 5),
+                    Text(
+                      'Mit der App wirst du nie wieder deinen Parkplatz vergessen.',
+                    ),
+                    SizedBox(height: 5),
+                    Div(),
+                    SizedBox(height: 5),
+                    Text(
+                      'Speichere in nur 2 Klicks deinen Parkplatz und du kannst ihn jederzeit wieder finden.',
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -107,6 +90,7 @@ class _IntroState extends State<Intro> {
               ),
               bodyWidget: Container(
                 margin: const EdgeInsets.only(
+                  top: 10,
                   left: 5,
                   right: 5,
                 ),
@@ -145,6 +129,7 @@ class _IntroState extends State<Intro> {
                             'Entscheide selbst, ob du das Theme des Systems, das Light-Theme oder das Dark-Theme nutzen möchtest.',
                           ),
                         ),
+                        const SizedBox(width: 15),
                         Obx(
                           () {
                             var themeMode = woAuto.themeMode.value;
