@@ -52,7 +52,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
           return false;
         }
 
-        return await Get.dialog(
+        return await Get.bottomSheet(
           AlertDialog(
             title: const Text('App verlassen'),
             content: const Text('Möchtest du die App verlassen?'),
@@ -90,171 +90,155 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
             grabbingContentOffset: GrabbingContentOffset.bottom,
           ),
         ],
-        lockOverflowDrag: true,
         grabbingHeight: minHeightSheet,
+        lockOverflowDrag: true,
         grabbing: Container(
-          margin: const EdgeInsets.only(
-            left: 5,
-            right: 5,
-            bottom: 10,
-          ),
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.transparent,
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: Colors.grey.withOpacity(0.3),
-            ),
           ),
-          child: Card(
-            elevation: 4,
-            margin: EdgeInsets.zero,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 15, bottom: 15),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(5),
-                    onTap: () {
-                      var snapPos = snappingSheetController.currentSnappingPosition;
-                      var offset = snapPos.grabbingContentOffset;
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                padding: const EdgeInsets.only(top: 15, bottom: 15),
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(5),
+                  onTap: () {
+                    var snapPos = snappingSheetController.currentSnappingPosition;
+                    var offset = snapPos.grabbingContentOffset;
 
-                      scrollController.animateTo(
-                        0,
-                        duration: 250.milliseconds,
-                        curve: Curves.linear,
-                      );
+                    scrollController.animateTo(
+                      0,
+                      duration: 250.milliseconds,
+                      curve: Curves.linear,
+                    );
 
-                      if (offset > 0) {
-                        snappingSheetController.snapToPosition(
-                          SnappingPosition.factor(
-                            positionFactor: 0.6,
-                            snappingCurve: Curves.bounceOut,
-                            snappingDuration: 1300.milliseconds,
-                            grabbingContentOffset: GrabbingContentOffset.bottom,
-                          ),
-                        );
-                        return;
-                      }
+                    if (offset > 0) {
                       snappingSheetController.snapToPosition(
                         SnappingPosition.factor(
-                          positionFactor: 0.0,
-                          snappingCurve: Curves.easeOutExpo,
+                          positionFactor: 0.6,
+                          snappingCurve: Curves.bounceOut,
                           snappingDuration: 1300.milliseconds,
-                          grabbingContentOffset: GrabbingContentOffset.top,
+                          grabbingContentOffset: GrabbingContentOffset.bottom,
+                        ),
+                      );
+                      return;
+                    }
+                    snappingSheetController.snapToPosition(
+                      SnappingPosition.factor(
+                        positionFactor: 0.0,
+                        snappingCurve: Curves.easeOutExpo,
+                        snappingDuration: 1300.milliseconds,
+                        grabbingContentOffset: GrabbingContentOffset.top,
+                      ),
+                    );
+                  },
+                  child: Container(
+                    width: 110,
+                    height: 7,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primaryContainer.withOpacity(0.9),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                ),
+              ),
+              FittedBox(
+                child: SizedBox(
+                  height: 50,
+                  child: FloatingActionButton.extended(
+                    onPressed: () async {
+                      var textController = TextEditingController();
+                      Get.dialog(
+                        AlertDialog(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          title: const Text('Neuer Parkplatz'),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const ListTile(
+                                title: Text('Neuen Parkplatz speichern?'),
+                              ),
+                              ExpandablePanel(
+                                header: const ListTile(
+                                  title: Text('Zusätzliche Info zum Parkplatz'),
+                                ),
+                                collapsed: const SizedBox(),
+                                expanded: ListTile(
+                                  title: TextField(
+                                    controller: textController,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Info',
+                                      hintText: 'z.B. Parkdeck 2',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('ABBRECHEN'),
+                              onPressed: () {
+                                pop();
+                              },
+                            ),
+                            ElevatedButton(
+                              child: const Text('SPEICHERN'),
+                              onPressed: () async {
+                                woAuto.addMarker(
+                                  woAuto.currentPosition.value.target,
+                                  extra: textController.text,
+                                );
+
+                                if (woAuto.mapController.value == null) {
+                                  return;
+                                }
+
+                                var snapPos = snappingSheetController.currentSnappingPosition;
+                                var offset = snapPos.grabbingContentOffset;
+                                if (offset < 0) {
+                                  snappingSheetController.snapToPosition(
+                                    SnappingPosition.factor(
+                                      positionFactor: 0.0,
+                                      snappingCurve: Curves.easeOutExpo,
+                                      snappingDuration: 1300.milliseconds,
+                                      grabbingContentOffset: GrabbingContentOffset.top,
+                                    ),
+                                  );
+                                }
+
+                                woAuto.mapController.value!.animateCamera(
+                                  CameraUpdate.newCameraPosition(
+                                    CameraPosition(
+                                      target: woAuto.currentPosition.value.target,
+                                      zoom: 18,
+                                    ),
+                                  ),
+                                );
+
+                                pop();
+                              },
+                            ),
+                          ],
                         ),
                       );
                     },
-                    child: Container(
-                      width: 110,
-                      height: 7,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(5),
+                    label: const Text(
+                      'Parkplatz speichern',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
+                    icon: const Icon(Icons.local_parking_rounded),
                   ),
                 ),
-                FittedBox(
-                  child: SizedBox(
-                    height: 50,
-                    child: FloatingActionButton.extended(
-                      onPressed: () async {
-                        var textController = TextEditingController();
-                        Get.dialog(
-                          AlertDialog(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            title: const Text('Neuer Parkplatz'),
-                            content: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const ListTile(
-                                  title: Text('Neuen Parkplatz speichern?'),
-                                ),
-                                ExpandablePanel(
-                                  header: const ListTile(
-                                    title: Text('Zusätzliche Info zum Parkplatz'),
-                                  ),
-                                  collapsed: const SizedBox(),
-                                  expanded: ListTile(
-                                    title: TextField(
-                                      controller: textController,
-                                      decoration: const InputDecoration(
-                                        labelText: 'Info',
-                                        hintText: 'z.B. Parkdeck 2',
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(height: 10),
-                              ],
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                child: const Text('ABBRECHEN'),
-                                onPressed: () {
-                                  pop();
-                                },
-                              ),
-                              ElevatedButton(
-                                child: const Text('SPEICHERN'),
-                                onPressed: () async {
-                                  woAuto.addMarker(
-                                    woAuto.currentPosition.value.target,
-                                    extra: textController.text,
-                                  );
-
-                                  if (woAuto.mapController.value == null) {
-                                    return;
-                                  }
-
-                                  var snapPos = snappingSheetController.currentSnappingPosition;
-                                  var offset = snapPos.grabbingContentOffset;
-                                  if (offset < 0) {
-                                    snappingSheetController.snapToPosition(
-                                      SnappingPosition.factor(
-                                        positionFactor: 0.0,
-                                        snappingCurve: Curves.easeOutExpo,
-                                        snappingDuration: 1300.milliseconds,
-                                        grabbingContentOffset: GrabbingContentOffset.top,
-                                      ),
-                                    );
-                                  }
-
-                                  woAuto.mapController.value!.animateCamera(
-                                    CameraUpdate.newCameraPosition(
-                                      CameraPosition(
-                                        target: woAuto.currentPosition.value.target,
-                                        zoom: 18,
-                                      ),
-                                    ),
-                                  );
-
-                                  pop();
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      },
-                      label: const Text(
-                        'Parkplatz speichern',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      icon: const Icon(Icons.local_parking_rounded),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
         sheetBelow: SnappingSheetContent(
