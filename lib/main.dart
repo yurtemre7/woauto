@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,6 +37,13 @@ class MyApp extends StatelessWidget {
             ),
             themeMode: getThemeMode(woAuto.themeMode.value),
             home: woAuto.welcome.value ? const Intro() : const Home(),
+            logWriterCallback: (text, {isError = false}) {
+              if (isError == true) {
+                log(text, name: 'ERROR');
+              } else {
+                log(text, name: 'INFO');
+              }
+            },
           ),
         );
       },
