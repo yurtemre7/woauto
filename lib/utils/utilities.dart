@@ -26,7 +26,7 @@ void push(Widget page) => Get.to(() => page);
 void pushReplacement(Widget page) => Get.offAll(() => page);
 
 double maxHeightSheet = Get.size.height * 0.7;
-const double minHeightSheet = 117;
+const double minHeightSheet = 107;
 
 Color? getBackgroundColor(context) {
   if (woAuto.themeMode.value != 0) {
