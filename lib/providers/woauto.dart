@@ -45,6 +45,9 @@ class WoAuto extends GetxController {
   final themeMode = 0.obs;
   final mapType = MapType.normal.obs;
 
+  // data
+  final currentVelocity = 0.0.obs;
+
   late SharedPreferences sp;
 
   Future<SharedPreferences> get prefs async {

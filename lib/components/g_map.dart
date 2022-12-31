@@ -65,6 +65,9 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         ),
         zoom: 18,
       );
+
+      woAuto.currentVelocity.value = currentLocation.speed ?? 0;
+
       var tempParkList = woAuto.parkingList.toList();
       for (int i = 0; i < tempParkList.length; i++) {
         var park = tempParkList[i];
