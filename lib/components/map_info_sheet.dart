@@ -149,6 +149,86 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                   child: FloatingActionButton.extended(
                     onPressed: () async {
                       var textController = TextEditingController();
+
+                      /* TODO iOS full implementation some day...
+                      Get.dialog(CupertinoAlertDialog(
+                        title: const Text('Neuer Parkplatz'),
+                        content: Material(
+                          color: Colors.transparent,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const ListTile(
+                                title: Text('Neuen Parkplatz speichern?'),
+                              ),
+                              ExpandablePanel(
+                                header: const ListTile(
+                                  title: Text('Zusätzliche Info zum Parkplatz'),
+                                ),
+                                collapsed: const SizedBox(),
+                                expanded: ListTile(
+                                  title: TextField(
+                                    controller: textController,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Info',
+                                      hintText: 'z.B. Parkdeck 2',
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                            ],
+                          ),
+                        ),
+                        actions: [
+                          CupertinoDialogAction(
+                            child: const Text('ABBRECHEN'),
+                            onPressed: () {
+                              pop();
+                            },
+                          ),
+                          CupertinoDialogAction(
+                            child: const Text('SPEICHERN'),
+                            onPressed: () async {
+                              woAuto.addMarker(
+                                woAuto.currentPosition.value.target,
+                                extra: textController.text,
+                              );
+
+                              if (woAuto.mapController.value == null) {
+                                return;
+                              }
+
+                              var snapPos = snappingSheetController.currentSnappingPosition;
+                              var offset = snapPos.grabbingContentOffset;
+                              if (offset < 0) {
+                                snappingSheetController.snapToPosition(
+                                  SnappingPosition.factor(
+                                    positionFactor: 0.0,
+                                    snappingCurve: Curves.easeOutExpo,
+                                    snappingDuration: 1300.milliseconds,
+                                    grabbingContentOffset: GrabbingContentOffset.top,
+                                  ),
+                                );
+                              }
+
+                              woAuto.mapController.value!.animateCamera(
+                                CameraUpdate.newCameraPosition(
+                                  CameraPosition(
+                                    target: woAuto.currentPosition.value.target,
+                                    zoom: 18,
+                                  ),
+                                ),
+                              );
+
+                              pop();
+                            },
+                          ),
+                        ],
+                      ));
+                      */
+
                       Get.dialog(
                         AlertDialog(
                           shape: RoundedRectangleBorder(
