@@ -42,7 +42,7 @@ class _HomeState extends State<Home> {
           children: const [
             GMap(),
             TopHeader(),
-            MapInfoSheet(),
+            SafeArea(child: MapInfoSheet()),
           ],
         ),
       ),
