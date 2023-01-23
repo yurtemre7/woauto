@@ -60,7 +60,7 @@ class _TopHeaderState extends State<TopHeader> {
             Obx(() {
               if (woAuto.currentVelocity.value >= 3.0) {
                 return Text(
-                  'Speed ${((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ?? 0) * 3.6).toStringAsFixed(1)} km/h',
+                  '${((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ?? 0) * 3.6).toStringAsFixed(1)} km/h',
                   style: const TextStyle(fontSize: 16.0),
                 );
               }
