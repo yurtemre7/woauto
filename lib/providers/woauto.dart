@@ -197,50 +197,47 @@ class WoAuto extends GetxController {
   showParkingDialog(Park park, String id) {
     var datum =
         park.datum == null ? DateTime.now() : DateTime.fromMillisecondsSinceEpoch(park.datum!);
-    Get.bottomSheet(
-      GestureDetector(
-        onTap: () => Get.back(),
-        child: AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          title: Text(park.name ?? woAuto.subText.value),
-          content: park.shared ?? false
-              ? Text(
-                  'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${park.address ?? 'Adresse konnte nicht gefunden werden.'}.')
-              : Text(
-                  'Du hast ${formatDateTimeAndTime(datum)}.\n\nDein Auto steht an folgender Adresse:\n${park.address ?? 'Adresse konnte nicht gefunden werden.'}.\n${park.extra}',
-                ),
-          actions: [
-            TextButton(
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.red,
-              ),
-              onPressed: () {
-                // split id by ,
-                var ids = id.split(',');
-                int num = int.parse(ids[1]);
-                String type = ids[0];
-                if (type == 'park') {
-                  woAuto.parkingList.removeAt(num);
-                  woAuto.parkings.removeWhere((Marker element) => element.markerId.value == id);
-                } else {
-                  woAuto.pinList.removeAt(num);
-                  woAuto.pins.removeWhere((Marker element) => element.markerId.value == id);
-                }
-
-                markers.clear();
-                markers.addAll(woAuto.pins);
-                markers.addAll(woAuto.parkings);
-
-                woAuto.save();
-
-                Get.back();
-              },
-              child: const Text('Parkplatz löschen'),
-            ),
-          ],
+    Get.dialog(
+      AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
         ),
+        title: Text(park.name ?? woAuto.subText.value),
+        content: park.shared ?? false
+            ? Text(
+                'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${park.address ?? 'Adresse konnte nicht gefunden werden.'}.')
+            : Text(
+                'Du hast ${formatDateTimeAndTime(datum)}.\n\nDein Auto steht an folgender Adresse:\n${park.address ?? 'Adresse konnte nicht gefunden werden.'}.\n${park.extra}',
+              ),
+        actions: [
+          TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.red,
+            ),
+            onPressed: () {
+              // split id by ,
+              var ids = id.split(',');
+              int num = int.parse(ids[1]);
+              String type = ids[0];
+              if (type == 'park') {
+                woAuto.parkingList.removeAt(num);
+                woAuto.parkings.removeWhere((Marker element) => element.markerId.value == id);
+              } else {
+                woAuto.pinList.removeAt(num);
+                woAuto.pins.removeWhere((Marker element) => element.markerId.value == id);
+              }
+
+              markers.clear();
+              markers.addAll(woAuto.pins);
+              markers.addAll(woAuto.parkings);
+
+              woAuto.save();
+
+              Get.back();
+            },
+            child: const Text('Parkplatz löschen'),
+          ),
+        ],
       ),
     );
   }
