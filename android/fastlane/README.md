@@ -31,6 +31,14 @@ Runs all the tests
 
 Lade als Testversion hoch
 
+### android release
+
+```sh
+[bundle exec] fastlane android release
+```
+
+Lade als Releaseversion hoch
+
 ### android deploy
 
 ```sh

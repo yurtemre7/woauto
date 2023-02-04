@@ -30,6 +30,15 @@ platform :android do
     )
   end
 
+  desc "Lade als Releaseversion hoch"
+  lane :release do
+    supply(
+      aab:"../build/app/outputs/bundle/release/app-release.aab", 
+      skip_upload_metadata: true,
+    )
+    upload_to_play_store
+  end
+
   desc "Deploy a new version to the Google Play"
   lane :deploy do
     gradle(task: "clean assembleRelease")
