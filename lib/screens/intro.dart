@@ -161,22 +161,22 @@ class _IntroState extends State<Intro> {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    if (isAndroid()) ...[
-                      Obx(
-                        () => SwitchListTile(
-                          contentPadding: EdgeInsets.zero,
-                          value: woAuto.android13Theme.value,
-                          title: const Text('Android 13 Design'),
-                          subtitle: const Text(
-                            'Entscheide selbst, ob du das neue Android 13 Design benutzen möchtest.',
-                          ),
-                          onChanged: (v) async {
-                            woAuto.android13Theme.value = v;
-                            await woAuto.save();
-                          },
+                    Obx(
+                      () => SwitchListTile(
+                        contentPadding: EdgeInsets.zero,
+                        value: woAuto.android13Theme.value,
+                        title: Text(
+                          'Android 13 Design ${isAndroid() ? '' : '\n(ja auch für dich iOS Nutzer)'}',
                         ),
+                        subtitle: const Text(
+                          'Entscheide selbst, ob du das neue Android 13 Design benutzen möchtest.',
+                        ),
+                        onChanged: (v) async {
+                          woAuto.android13Theme.value = v;
+                          await woAuto.save();
+                        },
                       ),
-                    ],
+                    ),
                     const SizedBox(height: 20),
                     const Text(
                       'Echtzeit-Standortabfragen erlauben',
