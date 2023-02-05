@@ -1,5 +1,6 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
@@ -149,6 +150,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                   child: FloatingActionButton.extended(
                     onPressed: () async {
                       var textController = TextEditingController();
+                      var tillTime = Rxn<TimeOfDay>();
 
                       /* TODO iOS full implementation some day...
                       Get.dialog(CupertinoAlertDialog(
@@ -247,14 +249,70 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                   title: Text('Zusätzliche Info zum Parkplatz'),
                                 ),
                                 collapsed: const SizedBox(),
-                                expanded: ListTile(
-                                  title: TextField(
-                                    controller: textController,
-                                    decoration: const InputDecoration(
-                                      labelText: 'Info',
-                                      hintText: 'z.B. Parkdeck 2',
+                                expanded: Column(
+                                  children: [
+                                    ListTile(
+                                      title: TextField(
+                                        controller: textController,
+                                        decoration: const InputDecoration(
+                                          labelText: 'Info',
+                                          hintText: 'z.B. Parkdeck 2',
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    const SizedBox(height: 5),
+                                    Wrap(
+                                      alignment: WrapAlignment.center,
+                                      children: [
+                                        Obx(
+                                          () => ElevatedButton(
+                                            onPressed: () async {
+                                              // show time picker of today
+                                              tillTime.value = await showTimePicker(
+                                                context: context,
+                                                initialTime: TimeOfDay.now(),
+                                                builder: (context, child) {
+                                                  return MediaQuery(
+                                                    data: MediaQuery.of(context)
+                                                        .copyWith(alwaysUse24HourFormat: true),
+                                                    child: child!,
+                                                  );
+                                                },
+                                                helpText: 'Parkticket läuft ab um',
+                                                confirmText: 'Speichern',
+                                                cancelText: 'Abbrechen',
+                                              );
+                                            },
+                                            child: Text(
+                                              'Parkticket hinzufügen${tillTime.value == null ? '' : ' (${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')})'}',
+                                            ),
+                                          ),
+                                        ),
+                                        IconButton(
+                                          onPressed: () {
+                                            Get.dialog(
+                                              AlertDialog(
+                                                title: const Text('Parkticket'),
+                                                content: const Text(
+                                                  'Wenn du ein Parkticket hast, kannst du hier die Uhrzeit angeben, bis zu der das Ticket gültig ist. '
+                                                  'Dann erstellt die App dir einen Timer, der dich 10 Minuten vor Ende des Tickets benachrichtigt.',
+                                                ),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () {
+                                                      pop();
+                                                    },
+                                                    child: const Text('OK'),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          },
+                                          icon: const Icon(Icons.question_mark),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                               const SizedBox(height: 10),
@@ -274,6 +332,31 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                   woAuto.currentPosition.value.target,
                                   extra: textController.text,
                                 );
+
+                                if (tillTime.value != null) {
+                                  var differenceInSecondsFromNow = tillTime.value!.hour * 3600 +
+                                      tillTime.value!.minute * 60 -
+                                      DateTime.now().hour * 3600 -
+                                      DateTime.now().minute * 60 -
+                                      DateTime.now().second;
+                                  var title = '';
+
+                                  // if difference bigger then 600 seconds (10 minutes)
+                                  if (differenceInSecondsFromNow > 600) {
+                                    differenceInSecondsFromNow -= 600;
+                                    title = 'Dein Parkticket hält noch 10 Minuten an.';
+                                  } else if (differenceInSecondsFromNow < 0) {
+                                    differenceInSecondsFromNow += 86400 - 600;
+                                    title = 'Dein Parkticket hält noch 10 Minuten an.';
+                                  } else {
+                                    title = 'Dein Parkticket ist abgelaufen.';
+                                  }
+
+                                  FlutterAlarmClock.createTimer(
+                                    differenceInSecondsFromNow,
+                                    title: title,
+                                  );
+                                }
 
                                 if (woAuto.mapController.value == null) {
                                   return;
