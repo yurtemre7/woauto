@@ -1,3 +1,12 @@
+/*
+  In dieser Datei wird meine Custom Deeplink-Implementierung für die App WoAuto
+  beschrieben. Damit kann das Betriebssystem (Android oder iOS) die App öffnen
+  wenn ein bestimmter Link angeklickt wird. In diesem Fall wird die App geöffnet und
+  ein neuer Pin auf der Karte hinzugefügt.
+
+  Emre Yurtseven
+*/
+
 import 'dart:async';
 import 'dart:developer';
 import 'package:get/get.dart';
@@ -82,7 +91,7 @@ class YrtmrDeeplinks {
           break;
       }
     } catch (e) {
-      log('AppmldrLinks Error: ${e.toString()}');
+      log('YrtmrDeeplinks Error: ${e.toString()}');
     }
   }
 
