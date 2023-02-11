@@ -4,4 +4,3 @@
   <foreground android:drawable="@mipmap/ic_launcher_adaptive_fore" />
   <monochrome android:drawable="@mipmap/monochrome" />
 </adaptive-icon>
-  
