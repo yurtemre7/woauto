@@ -595,6 +595,18 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                     ...parkingList.toSet().map(
                                       (element) {
                                         return ListTile(
+                                          leading: IconButton(
+                                            icon: const Icon(Icons.navigation_outlined),
+                                            color: Theme.of(context).colorScheme.primary,
+                                            onPressed: () {
+                                              launchUrl(
+                                                Uri.parse(
+                                                  'https://www.google.com/maps?q=${element['lat']},${element['long']}',
+                                                ),
+                                                mode: LaunchMode.externalApplication,
+                                              );
+                                            },
+                                          ),
                                           title: Text(
                                             element['name'],
                                             style: const TextStyle(
@@ -648,6 +660,18 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                     ...pinList.toSet().map(
                                       (element) {
                                         return ListTile(
+                                          leading: IconButton(
+                                            icon: const Icon(Icons.navigation_outlined),
+                                            color: Theme.of(context).colorScheme.primary,
+                                            onPressed: () {
+                                              launchUrl(
+                                                Uri.parse(
+                                                  'https://www.google.com/maps?q=${element['lat']},${element['long']}',
+                                                ),
+                                                mode: LaunchMode.externalApplication,
+                                              );
+                                            },
+                                          ),
                                           title: Text(
                                             element['name'],
                                             style: const TextStyle(
