@@ -30,15 +30,6 @@ class _TopHeaderState extends State<TopHeader> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.asset(
-                        'assets/icon.png',
-                        fit: BoxFit.contain,
-                        width: 32,
-                        height: 32,
-                      ),
-                    ),
                     const Text(
                       'WoAuto',
                       style: TextStyle(
