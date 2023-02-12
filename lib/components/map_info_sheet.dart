@@ -46,7 +46,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
             SnappingPosition.factor(
               positionFactor: 0.0,
               snappingCurve: Curves.easeOutExpo,
-              snappingDuration: 1300.milliseconds,
+              snappingDuration: animationSpeed,
               grabbingContentOffset: GrabbingContentOffset.top,
             ),
           );
@@ -81,13 +81,13 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
           SnappingPosition.factor(
             positionFactor: 0.0,
             snappingCurve: Curves.easeOutExpo,
-            snappingDuration: 1300.milliseconds,
+            snappingDuration: animationSpeed,
             grabbingContentOffset: GrabbingContentOffset.top,
           ),
           SnappingPosition.factor(
             positionFactor: 0.6,
             snappingCurve: Curves.bounceOut,
-            snappingDuration: 1300.milliseconds,
+            snappingDuration: animationSpeed,
             grabbingContentOffset: GrabbingContentOffset.bottom,
           ),
         ],
@@ -119,7 +119,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                         SnappingPosition.factor(
                           positionFactor: 0.6,
                           snappingCurve: Curves.bounceOut,
-                          snappingDuration: 1300.milliseconds,
+                          snappingDuration: animationSpeed,
                           grabbingContentOffset: GrabbingContentOffset.bottom,
                         ),
                       );
@@ -129,7 +129,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                       SnappingPosition.factor(
                         positionFactor: 0.0,
                         snappingCurve: Curves.easeOutExpo,
-                        snappingDuration: 1300.milliseconds,
+                        snappingDuration: animationSpeed,
                         grabbingContentOffset: GrabbingContentOffset.top,
                       ),
                     );
@@ -209,7 +209,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                   SnappingPosition.factor(
                                     positionFactor: 0.0,
                                     snappingCurve: Curves.easeOutExpo,
-                                    snappingDuration: 1300.milliseconds,
+                                    snappingDuration: animationSpeed,
                                     grabbingContentOffset: GrabbingContentOffset.top,
                                   ),
                                 );
@@ -369,7 +369,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                     SnappingPosition.factor(
                                       positionFactor: 0.0,
                                       snappingCurve: Curves.easeOutExpo,
-                                      snappingDuration: 1300.milliseconds,
+                                      snappingDuration: animationSpeed,
                                       grabbingContentOffset: GrabbingContentOffset.top,
                                     ),
                                   );
@@ -561,7 +561,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                               SnappingPosition.factor(
                                 positionFactor: 0.0,
                                 snappingCurve: Curves.easeOutExpo,
-                                snappingDuration: 1300.milliseconds,
+                                snappingDuration: animationSpeed,
                                 grabbingContentOffset: GrabbingContentOffset.top,
                               ),
                             );
@@ -638,7 +638,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                               SnappingPosition.factor(
                                                 positionFactor: 0.0,
                                                 snappingCurve: Curves.easeOutExpo,
-                                                snappingDuration: 1300.milliseconds,
+                                                snappingDuration: animationSpeed,
                                                 grabbingContentOffset: GrabbingContentOffset.top,
                                               ),
                                             );
@@ -703,7 +703,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                               SnappingPosition.factor(
                                                 positionFactor: 0.0,
                                                 snappingCurve: Curves.easeOutExpo,
-                                                snappingDuration: 1300.milliseconds,
+                                                snappingDuration: animationSpeed,
                                                 grabbingContentOffset: GrabbingContentOffset.top,
                                               ),
                                             );

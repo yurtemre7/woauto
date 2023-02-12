@@ -143,7 +143,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                       SnappingPosition.factor(
                         positionFactor: 0.0,
                         snappingCurve: Curves.easeOutExpo,
-                        snappingDuration: 1300.milliseconds,
+                        snappingDuration: animationSpeed,
                         grabbingContentOffset: GrabbingContentOffset.top,
                       ),
                     );
