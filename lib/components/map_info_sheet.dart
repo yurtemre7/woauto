@@ -595,18 +595,22 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                     ...parkingList.toSet().map(
                                       (element) {
                                         return ListTile(
-                                          leading: IconButton(
-                                            icon: const Icon(Icons.navigation_outlined),
-                                            color: Theme.of(context).colorScheme.primary,
-                                            onPressed: () {
-                                              launchUrl(
-                                                Uri.parse(
-                                                  'https://www.google.com/maps?q=${element['lat']},${element['long']}',
-                                                ),
-                                                mode: LaunchMode.externalApplication,
-                                              );
-                                            },
+                                          leading: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Text("${element['distance']} m"),
                                           ),
+                                          // leading: IconButton(
+                                          //   icon: const Icon(Icons.navigation_outlined),
+                                          //   color: Theme.of(context).colorScheme.primary,
+                                          //   onPressed: () {
+                                          //     launchUrl(
+                                          //       Uri.parse(
+                                          //         'https://www.google.com/maps?q=${element['lat']},${element['long']}',
+                                          //       ),
+                                          //       mode: LaunchMode.externalApplication,
+                                          //     );
+                                          //   },
+                                          // ),
                                           title: Text(
                                             element['name'],
                                             style: const TextStyle(
@@ -619,7 +623,101 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                               fontWeight: FontWeight.bold,
                                             ),
                                           ),
-                                          trailing: Text("${element['distance']} m"),
+                                          // trailing: Text("${element['distance']} m"),
+                                          trailing: PopupMenuButton(
+                                            itemBuilder: (context) {
+                                              return [
+                                                PopupMenuItem(
+                                                  child: TextButton.icon(
+                                                    onPressed: () {
+                                                      pop();
+                                                      launchUrl(
+                                                        Uri.parse(
+                                                          'https://www.google.com/maps?q=${element['lat']},${element['long']}',
+                                                        ),
+                                                        mode: LaunchMode.externalApplication,
+                                                      );
+                                                    },
+                                                    icon: const Icon(Icons.map_outlined),
+                                                    label: const Text('in Google Maps öffnen'),
+                                                  ),
+                                                ),
+                                                PopupMenuItem(
+                                                  child: TextButton.icon(
+                                                    onPressed: () {
+                                                      pop();
+                                                      GoogleMapController controller =
+                                                          woAuto.mapController.value!;
+                                                      controller.animateCamera(
+                                                        CameraUpdate.newCameraPosition(
+                                                          CameraPosition(
+                                                            target: LatLng(
+                                                              element['lat'],
+                                                              element['long'],
+                                                            ),
+                                                            zoom: 18,
+                                                          ),
+                                                        ),
+                                                      );
+                                                      snappingSheetController.snapToPosition(
+                                                        SnappingPosition.factor(
+                                                          positionFactor: 0.0,
+                                                          snappingCurve: Curves.easeOutExpo,
+                                                          snappingDuration: animationSpeed,
+                                                          grabbingContentOffset:
+                                                              GrabbingContentOffset.top,
+                                                        ),
+                                                      );
+                                                    },
+                                                    icon: const Icon(Icons.navigation_outlined),
+                                                    label: const Text('Zum Parkplatz'),
+                                                  ),
+                                                ),
+                                                PopupMenuItem(
+                                                  child: TextButton.icon(
+                                                    style: TextButton.styleFrom(
+                                                      foregroundColor: Colors.red,
+                                                    ),
+                                                    onPressed: () {
+                                                      var id = element['id'].toString();
+                                                      var ids = id.split(',');
+                                                      int num = int.parse(ids[1]);
+                                                      String type = ids[0];
+                                                      if (type == 'park') {
+                                                        woAuto.parkingList.removeAt(num);
+                                                        woAuto.parkings.removeWhere(
+                                                            (Marker element) =>
+                                                                element.markerId.value == id);
+                                                      } else {
+                                                        woAuto.pinList.removeAt(num);
+                                                        woAuto.pins.removeWhere((Marker element) =>
+                                                            element.markerId.value == id);
+                                                      }
+
+                                                      woAuto.markers.clear();
+                                                      woAuto.markers.addAll(woAuto.pins);
+                                                      woAuto.markers.addAll(woAuto.parkings);
+
+                                                      woAuto.save();
+
+                                                      pop();
+                                                      snappingSheetController.snapToPosition(
+                                                        SnappingPosition.factor(
+                                                          positionFactor: 0.0,
+                                                          snappingCurve: Curves.easeOutExpo,
+                                                          snappingDuration: animationSpeed,
+                                                          grabbingContentOffset:
+                                                              GrabbingContentOffset.top,
+                                                        ),
+                                                      );
+                                                    },
+                                                    icon: const Icon(Icons.delete_outline),
+                                                    label: const Text('Parkplatz löschen'),
+                                                  ),
+                                                ),
+                                              ];
+                                            },
+                                          ),
                                           onTap: () {
                                             GoogleMapController controller =
                                                 woAuto.mapController.value!;
