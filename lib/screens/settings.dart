@@ -216,7 +216,10 @@ class _SettingsState extends State<Settings> {
                           const Div(),
                           Obx(
                             () => ListTile(
-                              leading: const Icon(Icons.info_outline),
+                              leading: Icon(
+                                Icons.info_outline,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                               title: const Text('App Info'),
                               subtitle:
                                   Text('Version ${woAuto.appVersion}+${woAuto.appBuildNumber}'),
@@ -246,15 +249,21 @@ class _SettingsState extends State<Settings> {
                               },
                             ),
                           ),
-                          const ListTile(
-                            leading: Icon(Icons.volunteer_activism_outlined),
-                            title: Text('Credits'),
-                            subtitle: Text(
+                          ListTile(
+                            leading: Icon(
+                              Icons.volunteer_activism_outlined,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            title: const Text('Credits'),
+                            subtitle: const Text(
                               'Google Maps API und natürlich der Flutter-Community.',
                             ),
                           ),
                           ListTile(
-                            leading: const Icon(Icons.share),
+                            leading: Icon(
+                              Icons.share,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                             title: const Text('Teilen'),
                             subtitle: const Text(
                                 'Teile die App doch mit deinen Freunden und deiner Familie.'),
@@ -269,7 +278,10 @@ class _SettingsState extends State<Settings> {
                             },
                           ),
                           ListTile(
-                            leading: const Icon(Icons.feedback_outlined),
+                            leading: Icon(
+                              Icons.feedback_outlined,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                             title: const Text('Feedback'),
                             subtitle: const Text(
                                 'Hast du Verbesserungsvorschläge, Fehler oder etwas anderes zu sagen?'),
@@ -308,7 +320,10 @@ class _SettingsState extends State<Settings> {
                             },
                           ),
                           ListTile(
-                            leading: const Icon(Icons.gpp_good_sharp),
+                            leading: Icon(
+                              Icons.gpp_good_outlined,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                             title: const Text('Datenschutz und Impressum'),
                             subtitle: const Text('Erfahre wie deine Daten geschützt werden.'),
                             onTap: () {
@@ -390,7 +405,10 @@ class _SettingsState extends State<Settings> {
                           ),
                           const Div(),
                           ListTile(
-                            leading: const Icon(Icons.delete_forever_outlined),
+                            leading: const Icon(
+                              Icons.delete_forever_outlined,
+                              color: Colors.red,
+                            ),
                             title: const Text('Lösche alle App-Daten'),
                             subtitle: const Text(
                                 'Halte hier gedrückt, um all deine App-Daten zu löschen.'),

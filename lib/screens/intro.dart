@@ -44,11 +44,12 @@ class _IntroState extends State<Intro> {
           globalBackgroundColor: getBackgroundColor(context),
           pages: [
             PageViewModel(
-              titleWidget: const Text(
+              titleWidget: Text(
                 'WoAuto',
                 style: TextStyle(
                   fontSize: 32.0,
                   fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               bodyWidget: Container(
@@ -62,7 +63,9 @@ class _IntroState extends State<Intro> {
                   children: const [
                     Text(
                       'Willkommen bei WoAuto',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
                     SizedBox(height: 5),
                     Div(),
@@ -81,11 +84,12 @@ class _IntroState extends State<Intro> {
               ),
             ),
             PageViewModel(
-              titleWidget: const Text(
+              titleWidget: Text(
                 'App-Voreinstellungen',
                 style: TextStyle(
                   fontSize: 32.0,
                   fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
               bodyWidget: Container(
@@ -100,11 +104,14 @@ class _IntroState extends State<Intro> {
                   children: [
                     const Text(
                       'Parkplatz-Titel setzen',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
                     const Div(),
                     const Text(
                       'Setze dir einen coolen Parkplatz-Titel für dein Auto.',
+                      style: TextStyle(),
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
@@ -119,7 +126,9 @@ class _IntroState extends State<Intro> {
                     const SizedBox(height: 10),
                     const Text(
                       'App-Theme einstellen',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
                     ),
                     const Div(),
                     Row(

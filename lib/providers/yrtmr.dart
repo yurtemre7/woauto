@@ -9,6 +9,7 @@
 
 import 'dart:async';
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uni_links/uni_links.dart';
@@ -108,6 +109,10 @@ class YrtmrDeeplinks {
     Get.snackbar(
       'Ein geteilter Parkplatz wurde hinzugefügt',
       'Schaue auf der Karte oder in der Liste nach.',
+      snackPosition: SnackPosition.TOP,
+      borderRadius: 12,
+      margin: const EdgeInsets.all(20),
+      backgroundColor: Get.theme.colorScheme.surface,
     );
     if (woAuto.mapController.value != null) {
       woAuto.mapController.value!.animateCamera(

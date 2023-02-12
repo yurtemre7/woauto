@@ -30,11 +30,12 @@ class _TopHeaderState extends State<TopHeader> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
+                    Text(
                       'WoAuto',
                       style: TextStyle(
                         fontSize: 20.0,
                         fontWeight: FontWeight.bold,
+                        color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
                     IconButton(
@@ -43,6 +44,7 @@ class _TopHeaderState extends State<TopHeader> {
                         Get.bottomSheet(const Settings());
                       },
                       icon: const Icon(Icons.settings),
+                      color: Theme.of(context).colorScheme.primary,
                     ),
                   ],
                 ),

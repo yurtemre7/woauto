@@ -7,6 +7,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/div.dart';
+import 'package:woauto/components/text_icon.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -151,85 +152,6 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                     onPressed: () async {
                       var textController = TextEditingController();
                       var tillTime = Rxn<TimeOfDay>();
-
-                      /* TODO iOS full implementation some day...
-                      Get.dialog(CupertinoAlertDialog(
-                        title: const Text('Neuer Parkplatz'),
-                        content: Material(
-                          color: Colors.transparent,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const ListTile(
-                                title: Text('Neuen Parkplatz speichern?'),
-                              ),
-                              ExpandablePanel(
-                                header: const ListTile(
-                                  title: Text('Zusätzliche Info zum Parkplatz'),
-                                ),
-                                collapsed: const SizedBox(),
-                                expanded: ListTile(
-                                  title: TextField(
-                                    controller: textController,
-                                    decoration: const InputDecoration(
-                                      labelText: 'Info',
-                                      hintText: 'z.B. Parkdeck 2',
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(height: 10),
-                            ],
-                          ),
-                        ),
-                        actions: [
-                          CupertinoDialogAction(
-                            child: const Text('ABBRECHEN'),
-                            onPressed: () {
-                              pop();
-                            },
-                          ),
-                          CupertinoDialogAction(
-                            child: const Text('SPEICHERN'),
-                            onPressed: () async {
-                              woAuto.addMarker(
-                                woAuto.currentPosition.value.target,
-                                extra: textController.text,
-                              );
-
-                              if (woAuto.mapController.value == null) {
-                                return;
-                              }
-
-                              var snapPos = snappingSheetController.currentSnappingPosition;
-                              var offset = snapPos.grabbingContentOffset;
-                              if (offset < 0) {
-                                snappingSheetController.snapToPosition(
-                                  SnappingPosition.factor(
-                                    positionFactor: 0.0,
-                                    snappingCurve: Curves.easeOutExpo,
-                                    snappingDuration: animationSpeed,
-                                    grabbingContentOffset: GrabbingContentOffset.top,
-                                  ),
-                                );
-                              }
-
-                              woAuto.mapController.value!.animateCamera(
-                                CameraUpdate.newCameraPosition(
-                                  CameraPosition(
-                                    target: woAuto.currentPosition.value.target,
-                                    zoom: 18,
-                                  ),
-                                ),
-                              );
-
-                              pop();
-                            },
-                          ),
-                        ],
-                      ));
-                      */
 
                       Get.dialog(
                         AlertDialog(
@@ -585,7 +507,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                   if (parkingList.isNotEmpty) ...[
                                     const SizedBox(height: 5),
                                     const Text(
-                                      'Information - Parkplätze',
+                                      'Parkplätze',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
@@ -595,125 +517,135 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                     ...parkingList.toSet().map(
                                       (element) {
                                         return ListTile(
-                                          leading: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text("${element['distance']} m"),
-                                          ),
-                                          // leading: IconButton(
-                                          //   icon: const Icon(Icons.navigation_outlined),
-                                          //   color: Theme.of(context).colorScheme.primary,
-                                          //   onPressed: () {
-                                          //     launchUrl(
-                                          //       Uri.parse(
-                                          //         'https://www.google.com/maps?q=${element['lat']},${element['long']}',
-                                          //       ),
-                                          //       mode: LaunchMode.externalApplication,
-                                          //     );
-                                          //   },
-                                          // ),
                                           title: Text(
-                                            element['name'],
-                                            style: const TextStyle(
+                                            element['name'] +
+                                                " - ${element['distance']} m entfernt",
+                                            style: TextStyle(
                                               fontWeight: FontWeight.bold,
+                                              color: Theme.of(context).colorScheme.primary,
                                             ),
                                           ),
                                           subtitle: Text(
                                             element['address'],
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontWeight: FontWeight.bold,
+                                              color: Theme.of(context).colorScheme.primary,
                                             ),
                                           ),
-                                          // trailing: Text("${element['distance']} m"),
                                           trailing: PopupMenuButton(
+                                            icon: Icon(
+                                              Icons.more_vert,
+                                              color: Theme.of(context).colorScheme.primary,
+                                            ),
                                             itemBuilder: (context) {
                                               return [
                                                 PopupMenuItem(
-                                                  child: TextButton.icon(
-                                                    onPressed: () {
-                                                      pop();
-                                                      launchUrl(
-                                                        Uri.parse(
-                                                          'https://www.google.com/maps?q=${element['lat']},${element['long']}',
-                                                        ),
-                                                        mode: LaunchMode.externalApplication,
-                                                      );
-                                                    },
-                                                    icon: const Icon(Icons.map_outlined),
-                                                    label: const Text('in Google Maps öffnen'),
-                                                  ),
-                                                ),
-                                                PopupMenuItem(
-                                                  child: TextButton.icon(
-                                                    onPressed: () {
-                                                      pop();
-                                                      GoogleMapController controller =
-                                                          woAuto.mapController.value!;
-                                                      controller.animateCamera(
-                                                        CameraUpdate.newCameraPosition(
-                                                          CameraPosition(
-                                                            target: LatLng(
-                                                              element['lat'],
-                                                              element['long'],
-                                                            ),
-                                                            zoom: 18,
-                                                          ),
-                                                        ),
-                                                      );
-                                                      snappingSheetController.snapToPosition(
-                                                        SnappingPosition.factor(
-                                                          positionFactor: 0.0,
-                                                          snappingCurve: Curves.easeOutExpo,
-                                                          snappingDuration: animationSpeed,
-                                                          grabbingContentOffset:
-                                                              GrabbingContentOffset.top,
-                                                        ),
-                                                      );
-                                                    },
-                                                    icon: const Icon(Icons.navigation_outlined),
-                                                    label: const Text('Zum Parkplatz'),
-                                                  ),
-                                                ),
-                                                PopupMenuItem(
-                                                  child: TextButton.icon(
-                                                    style: TextButton.styleFrom(
-                                                      foregroundColor: Colors.red,
+                                                  child: TextIcon(
+                                                    icon: Icon(
+                                                      Icons.map_outlined,
+                                                      color: Theme.of(context).colorScheme.primary,
                                                     ),
-                                                    onPressed: () {
-                                                      var id = element['id'].toString();
-                                                      var ids = id.split(',');
-                                                      int num = int.parse(ids[1]);
-                                                      String type = ids[0];
-                                                      if (type == 'park') {
-                                                        woAuto.parkingList.removeAt(num);
-                                                        woAuto.parkings.removeWhere(
-                                                            (Marker element) =>
-                                                                element.markerId.value == id);
-                                                      } else {
-                                                        woAuto.pinList.removeAt(num);
-                                                        woAuto.pins.removeWhere((Marker element) =>
-                                                            element.markerId.value == id);
-                                                      }
-
-                                                      woAuto.markers.clear();
-                                                      woAuto.markers.addAll(woAuto.pins);
-                                                      woAuto.markers.addAll(woAuto.parkings);
-
-                                                      woAuto.save();
-
-                                                      pop();
-                                                      snappingSheetController.snapToPosition(
-                                                        SnappingPosition.factor(
-                                                          positionFactor: 0.0,
-                                                          snappingCurve: Curves.easeOutExpo,
-                                                          snappingDuration: animationSpeed,
-                                                          grabbingContentOffset:
-                                                              GrabbingContentOffset.top,
-                                                        ),
-                                                      );
-                                                    },
-                                                    icon: const Icon(Icons.delete_outline),
-                                                    label: const Text('Parkplatz löschen'),
+                                                    label: Text(
+                                                      'In Google Maps öffnen',
+                                                      style: TextStyle(
+                                                        color:
+                                                            Theme.of(context).colorScheme.primary,
+                                                      ),
+                                                    ),
                                                   ),
+                                                  onTap: () {
+                                                    launchUrl(
+                                                      Uri.parse(
+                                                        'https://www.google.com/maps?q=${element['lat']},${element['long']}',
+                                                      ),
+                                                      mode: LaunchMode.externalApplication,
+                                                    );
+                                                  },
+                                                ),
+                                                PopupMenuItem(
+                                                  child: TextIcon(
+                                                    icon: Icon(
+                                                      Icons.navigation_outlined,
+                                                      color: Theme.of(context).colorScheme.primary,
+                                                    ),
+                                                    label: Text(
+                                                      'Zum Parkplatz',
+                                                      style: TextStyle(
+                                                        color:
+                                                            Theme.of(context).colorScheme.primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onTap: () {
+                                                    GoogleMapController controller =
+                                                        woAuto.mapController.value!;
+                                                    controller.animateCamera(
+                                                      CameraUpdate.newCameraPosition(
+                                                        CameraPosition(
+                                                          target: LatLng(
+                                                            element['lat'],
+                                                            element['long'],
+                                                          ),
+                                                          zoom: 18,
+                                                        ),
+                                                      ),
+                                                    );
+                                                    snappingSheetController.snapToPosition(
+                                                      SnappingPosition.factor(
+                                                        positionFactor: 0.0,
+                                                        snappingCurve: Curves.easeOutExpo,
+                                                        snappingDuration: animationSpeed,
+                                                        grabbingContentOffset:
+                                                            GrabbingContentOffset.top,
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                                PopupMenuItem(
+                                                  child: const TextIcon(
+                                                    icon: Icon(
+                                                      Icons.delete_outline,
+                                                      color: Colors.red,
+                                                    ),
+                                                    label: Text(
+                                                      'Parkplatz löschen',
+                                                      style: TextStyle(
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onTap: () {
+                                                    var id = element['id'].toString();
+                                                    var ids = id.split(',');
+                                                    int num = int.parse(ids[1]);
+                                                    String type = ids[0];
+                                                    if (type == 'park') {
+                                                      woAuto.parkingList.removeAt(num);
+                                                      woAuto.parkings.removeWhere(
+                                                          (Marker element) =>
+                                                              element.markerId.value == id);
+                                                    } else {
+                                                      woAuto.pinList.removeAt(num);
+                                                      woAuto.pins.removeWhere((Marker element) =>
+                                                          element.markerId.value == id);
+                                                    }
+
+                                                    woAuto.markers.clear();
+                                                    woAuto.markers.addAll(woAuto.pins);
+                                                    woAuto.markers.addAll(woAuto.parkings);
+
+                                                    woAuto.save();
+
+                                                    snappingSheetController.snapToPosition(
+                                                      SnappingPosition.factor(
+                                                        positionFactor: 0.0,
+                                                        snappingCurve: Curves.easeOutExpo,
+                                                        snappingDuration: animationSpeed,
+                                                        grabbingContentOffset:
+                                                            GrabbingContentOffset.top,
+                                                      ),
+                                                    );
+                                                  },
                                                 ),
                                               ];
                                             },
@@ -748,7 +680,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                   if (pinList.isNotEmpty) ...[
                                     const SizedBox(height: 5),
                                     const Text(
-                                      'Information - Pins',
+                                      'Pins',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 16,
@@ -758,31 +690,139 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                     ...pinList.toSet().map(
                                       (element) {
                                         return ListTile(
-                                          leading: IconButton(
-                                            icon: const Icon(Icons.navigation_outlined),
-                                            color: Theme.of(context).colorScheme.primary,
-                                            onPressed: () {
-                                              launchUrl(
-                                                Uri.parse(
-                                                  'https://www.google.com/maps?q=${element['lat']},${element['long']}',
-                                                ),
-                                                mode: LaunchMode.externalApplication,
-                                              );
-                                            },
-                                          ),
                                           title: Text(
-                                            element['name'],
-                                            style: const TextStyle(
+                                            element['name'] +
+                                                " - ${element['distance']} m entfernt",
+                                            style: TextStyle(
                                               fontWeight: FontWeight.bold,
+                                              color: Theme.of(context).colorScheme.primary,
                                             ),
                                           ),
                                           subtitle: Text(
                                             element['address'],
-                                            style: const TextStyle(
+                                            style: TextStyle(
                                               fontWeight: FontWeight.bold,
+                                              color: Theme.of(context).colorScheme.primary,
                                             ),
                                           ),
-                                          trailing: Text("${element['distance']} m"),
+                                          trailing: PopupMenuButton(
+                                            icon: Icon(
+                                              Icons.more_vert,
+                                              color: Theme.of(context).colorScheme.primary,
+                                            ),
+                                            itemBuilder: (context) {
+                                              return [
+                                                PopupMenuItem(
+                                                  child: TextIcon(
+                                                    icon: Icon(
+                                                      Icons.map_outlined,
+                                                      color: Theme.of(context).colorScheme.primary,
+                                                    ),
+                                                    label: Text(
+                                                      'in Google Maps öffnen',
+                                                      style: TextStyle(
+                                                        color:
+                                                            Theme.of(context).colorScheme.primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onTap: () {
+                                                    launchUrl(
+                                                      Uri.parse(
+                                                        'https://www.google.com/maps?q=${element['lat']},${element['long']}',
+                                                      ),
+                                                      mode: LaunchMode.externalApplication,
+                                                    );
+                                                  },
+                                                ),
+                                                PopupMenuItem(
+                                                  child: TextIcon(
+                                                    icon: Icon(
+                                                      Icons.navigation_outlined,
+                                                      color: Theme.of(context).colorScheme.primary,
+                                                    ),
+                                                    label: Text(
+                                                      'Zum Parkplatz',
+                                                      style: TextStyle(
+                                                        color:
+                                                            Theme.of(context).colorScheme.primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onTap: () {
+                                                    GoogleMapController controller =
+                                                        woAuto.mapController.value!;
+                                                    controller.animateCamera(
+                                                      CameraUpdate.newCameraPosition(
+                                                        CameraPosition(
+                                                          target: LatLng(
+                                                            element['lat'],
+                                                            element['long'],
+                                                          ),
+                                                          zoom: 18,
+                                                        ),
+                                                      ),
+                                                    );
+                                                    snappingSheetController.snapToPosition(
+                                                      SnappingPosition.factor(
+                                                        positionFactor: 0.0,
+                                                        snappingCurve: Curves.easeOutExpo,
+                                                        snappingDuration: animationSpeed,
+                                                        grabbingContentOffset:
+                                                            GrabbingContentOffset.top,
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                                PopupMenuItem(
+                                                  child: const TextIcon(
+                                                    icon: Icon(
+                                                      Icons.delete_outline,
+                                                      color: Colors.red,
+                                                    ),
+                                                    label: Text(
+                                                      'Parkplatz löschen',
+                                                      style: TextStyle(
+                                                        color: Colors.red,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  onTap: () {
+                                                    var id = element['id'].toString();
+                                                    var ids = id.split(',');
+                                                    int num = int.parse(ids[1]);
+                                                    String type = ids[0];
+                                                    if (type == 'park') {
+                                                      woAuto.parkingList.removeAt(num);
+                                                      woAuto.parkings.removeWhere(
+                                                          (Marker element) =>
+                                                              element.markerId.value == id);
+                                                    } else {
+                                                      woAuto.pinList.removeAt(num);
+                                                      woAuto.pins.removeWhere((Marker element) =>
+                                                          element.markerId.value == id);
+                                                    }
+
+                                                    woAuto.markers.clear();
+                                                    woAuto.markers.addAll(woAuto.pins);
+                                                    woAuto.markers.addAll(woAuto.parkings);
+
+                                                    woAuto.save();
+
+                                                    snappingSheetController.snapToPosition(
+                                                      SnappingPosition.factor(
+                                                        positionFactor: 0.0,
+                                                        snappingCurve: Curves.easeOutExpo,
+                                                        snappingDuration: animationSpeed,
+                                                        grabbingContentOffset:
+                                                            GrabbingContentOffset.top,
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                              ];
+                                            },
+                                          ),
                                           onTap: () {
                                             GoogleMapController controller =
                                                 woAuto.mapController.value!;
@@ -810,7 +850,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                       },
                                     ),
                                   ],
-                                  const SizedBox(height: 10),
+                                  const SizedBox(height: 15),
                                   TextButton.icon(
                                     icon: const Icon(Icons.question_mark),
                                     label: const Text(
@@ -822,27 +862,29 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                         'Wie wird die Entfernung berechnet?',
                                         'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
                                         snackPosition: SnackPosition.BOTTOM,
-                                        titleText: const Text(
+                                        titleText: Text(
                                           'Wie wird die Entfernung berechnet?',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16,
+                                            color: Theme.of(context).colorScheme.primary,
                                           ),
                                         ),
                                         messageText: Column(
-                                          children: const [
+                                          children: [
                                             Text(
                                               'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
                                               style: TextStyle(
                                                 fontSize: 14,
+                                                color: Theme.of(context).colorScheme.secondary,
                                               ),
                                             ),
-                                            SizedBox(height: 10),
+                                            const SizedBox(height: 10),
                                             Text(
                                               'Tippe um mehr zu erfahren.',
                                               style: TextStyle(
                                                 fontSize: 14,
-                                                decoration: TextDecoration.underline,
+                                                color: Theme.of(context).colorScheme.primary,
                                               ),
                                             ),
                                           ],
@@ -858,112 +900,11 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                             mode: LaunchMode.externalApplication,
                                           );
                                         },
-                                        backgroundColor:
-                                            getBackgroundColor(context)?.withOpacity(0.5),
+                                        backgroundColor: Theme.of(context).colorScheme.surface,
                                       );
                                     },
                                   ),
                                   const SizedBox(height: 10),
-
-                                  //   Text(
-                                  //   '${formatDateTimeAndTime(woAuto.datum.value)}:',
-                                  // ),
-                                  // const SizedBox(height: 5),
-                                  // if (address == null)
-                                  //   const Text(
-                                  //     'Ein Fehler beim Herausfinden der Parkadresse ist aufgetreten.',
-                                  //   ),
-                                  // if (address != null && address.isEmpty)
-                                  //   const Text(
-                                  //     'Keine Adresse gefunden.',
-                                  //   ),
-                                  // if (address != null && address.isNotEmpty)
-                                  //   TextButton.icon(
-                                  //     label: Text(
-                                  //       address.toString(),
-                                  //       style: const TextStyle(
-                                  //         fontSize: 16,
-                                  //         decoration: TextDecoration.underline,
-                                  //       ),
-                                  //     ),
-                                  //     icon: const Icon(Icons.map),
-                                  //     onPressed: () async {
-                                  //       if (woAuto.parkings.isEmpty) {
-                                  //         // show snackbar error
-                                  //         Get.snackbar(
-                                  //           'Fehler',
-                                  //           'Kein Parkplatz gespeichert',
-                                  //           snackPosition: SnackPosition.BOTTOM,
-                                  //           backgroundColor: Colors.red,
-                                  //           borderRadius: 10,
-                                  //           margin: const EdgeInsets.all(10),
-                                  //           duration: 1.seconds,
-                                  //         );
-                                  //         return;
-                                  //       }
-                                  //       LatLng myCar = woAuto.parkings.elementAt(0).position;
-                                  //       String link =
-                                  //           'https://www.google.com/maps?q=${myCar.latitude},${myCar.longitude}';
-                                  //       await launchUrl(
-                                  //         Uri.parse(link),
-                                  //         mode: LaunchMode.externalApplication,
-                                  //       );
-                                  //     },
-                                  //   ),
-                                  // const SizedBox(height: 5),
-                                  // TextButton.icon(
-                                  //   icon: const Icon(Icons.question_mark),
-                                  //   label: Text(
-                                  //     'Parkplatz ist π-mal-Daumen\n${woAuto.distance.value} Meter entfernt',
-                                  //     textAlign: TextAlign.center,
-                                  //   ),
-                                  //   onPressed: () {
-                                  //     Get.snackbar(
-                                  //       'Wie wird die Entfernung berechnet?',
-                                  //       'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
-                                  //       snackPosition: SnackPosition.BOTTOM,
-                                  //       titleText: const Text(
-                                  //         'Wie wird die Entfernung berechnet?',
-                                  //         style: TextStyle(
-                                  //           fontWeight: FontWeight.bold,
-                                  //           fontSize: 16,
-                                  //         ),
-                                  //       ),
-                                  //       messageText: Column(
-                                  //         children: const [
-                                  //           Text(
-                                  //             'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
-                                  //             style: TextStyle(
-                                  //               fontSize: 14,
-                                  //             ),
-                                  //           ),
-                                  //           SizedBox(height: 10),
-                                  //           Text(
-                                  //             'Tippe um mehr zu erfahren.',
-                                  //             style: TextStyle(
-                                  //               fontSize: 14,
-                                  //               decoration: TextDecoration.underline,
-                                  //             ),
-                                  //           ),
-                                  //         ],
-                                  //       ),
-                                  //       borderRadius: 12,
-                                  //       margin: const EdgeInsets.all(20),
-                                  //       duration: 10.seconds,
-                                  //       onTap: (snack) {
-                                  //         launchUrl(
-                                  //           Uri.parse(
-                                  //             'https://en.wikipedia.org/wiki/Haversine_formula',
-                                  //           ),
-                                  //           mode: LaunchMode.externalApplication,
-                                  //         );
-                                  //       },
-                                  //       backgroundColor:
-                                  //           getBackgroundColor(context)?.withOpacity(0.5),
-                                  //     );
-                                  //   },
-                                  // ),
-                                  // const SizedBox(height: 10),
                                 ],
                               ),
                             );
