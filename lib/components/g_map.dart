@@ -101,7 +101,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                       zoom: 16,
                     ),
               // padding: const EdgeInsets.all(20),
-              // trafficEnabled: true, // TODO show traffic
+              trafficEnabled: woAuto.showTraffic.value,
               onMapCreated: (GoogleMapController controller) async {
                 woAuto.mapController.value = controller;
                 await loadMapStyles();

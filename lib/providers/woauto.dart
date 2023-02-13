@@ -44,6 +44,7 @@ class WoAuto extends GetxController {
   final android13Theme = false.obs;
   final themeMode = 0.obs;
   final mapType = MapType.normal.obs;
+  final showTraffic = false.obs;
 
   // data
   final currentVelocity = 0.0.obs;

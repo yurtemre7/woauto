@@ -213,6 +213,21 @@ class _SettingsState extends State<Settings> {
                               );
                             },
                           ),
+                          Obx(
+                            () => SwitchListTile(
+                              value: woAuto.showTraffic.value,
+                              title: const Text(
+                                'Verkehr',
+                              ),
+                              subtitle: const Text(
+                                'Zeigt den Verkehr auf der Karte, sofern verfügbar.',
+                              ),
+                              onChanged: (v) async {
+                                woAuto.showTraffic.value = v;
+                                await woAuto.save();
+                              },
+                            ),
+                          ),
                           const Div(),
                           Obx(
                             () => ListTile(
