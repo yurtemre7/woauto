@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
@@ -45,12 +47,17 @@ Color? getForegroundColor(context) {
 }
 
 Future<String?> getAddress(LatLng position) async {
-  List<Placemark> placemarks =
-      await placemarkFromCoordinates(position.latitude, position.longitude);
-  String street = placemarks.first.thoroughfare ?? '';
-  String city = placemarks.first.locality ?? '';
-  String number = placemarks.first.subThoroughfare ?? '';
-  return '$street $number, $city';
+  try {
+    List<Placemark> placemarks =
+        await placemarkFromCoordinates(position.latitude, position.longitude);
+    String street = placemarks.first.thoroughfare ?? '';
+    String city = placemarks.first.locality ?? '';
+    String number = placemarks.first.subThoroughfare ?? '';
+    return '$street $number, $city';
+  } catch (e) {
+    log('Error: $e');
+    return 'Adresse nicht gefunden.';
+  }
 }
 
 String formatDateTimeAndTime(DateTime dateTime) {
