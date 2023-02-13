@@ -1,12 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:woauto/components/g_map.dart';
 import 'package:woauto/components/map_info_sheet.dart';
 
 import 'package:woauto/components/top_header.dart';
+import 'package:woauto/main.dart';
 import 'package:woauto/providers/yrtmr.dart';
+import 'package:woauto/screens/history.dart';
+import 'package:woauto/screens/settings.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class Home extends StatefulWidget {
@@ -22,8 +26,19 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+
     YrtmrDeeplinks.initYrtmrLinks();
     _sub = YrtmrDeeplinks.yrtmrLinksListener();
+  }
+
+  @override
+  void didChangeDependencies() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarColor: Theme.of(context).colorScheme.background,
+      ),
+    );
+    super.didChangeDependencies();
   }
 
   @override
@@ -39,10 +54,43 @@ class _HomeState extends State<Home> {
         backgroundColor: getBackgroundColor(context),
         resizeToAvoidBottomInset: false,
         body: Stack(
-          children: const [
-            GMap(),
-            TopHeader(),
-            SafeArea(child: MapInfoSheet()),
+          children: [
+            const GMap(),
+            if (woAuto.currentIndex.value == 0) ...[
+              const TopHeader(),
+              const SafeArea(child: MapInfoSheet()),
+            ],
+            if (woAuto.currentIndex.value == 1) ...[
+              const History(),
+            ],
+            if (woAuto.currentIndex.value == 2) ...[
+              const Settings(),
+            ]
+          ],
+        ),
+        bottomNavigationBar: NavigationBar(
+          selectedIndex: woAuto.currentIndex.value,
+          onDestinationSelected: (index) {
+            woAuto.currentIndex.value = index;
+          },
+          backgroundColor: Theme.of(context).colorScheme.background,
+          surfaceTintColor: Theme.of(context).colorScheme.background,
+          destinations: const [
+            NavigationDestination(
+              icon: Icon(Icons.map_outlined),
+              label: 'Karte',
+              tooltip: 'Karte',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.history),
+              label: 'Historie',
+              tooltip: 'Historie',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.settings),
+              label: 'Einstellungen',
+              tooltip: 'Einstellungen',
+            ),
           ],
         ),
       ),
