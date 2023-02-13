@@ -40,6 +40,7 @@ class WoAuto extends GetxController {
 
   final appVersion = ''.obs;
   final appBuildNumber = ''.obs;
+  final currentIndex = 0.obs;
 
   // settings
   final subText = 'Mein Auto'.obs;
@@ -176,6 +177,7 @@ class WoAuto extends GetxController {
 
     sp.clear();
     welcome.value = true;
+    currentIndex.value = 0;
 
     await woAuto.save();
   }
