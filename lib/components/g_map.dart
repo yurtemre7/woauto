@@ -59,6 +59,9 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
     }
 
     location.onLocationChanged.listen((LocationData currentLocation) async {
+      if (!mounted) {
+        return;
+      }
       woAuto.currentPosition.value = CameraPosition(
         target: LatLng(
           currentLocation.latitude ?? 0,
@@ -97,6 +100,8 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                       target: woAuto.markers.elementAt(0).position,
                       zoom: 16,
                     ),
+              // padding: const EdgeInsets.all(20),
+              // trafficEnabled: true, // TODO show traffic
               onMapCreated: (GoogleMapController controller) async {
                 woAuto.mapController.value = controller;
                 await loadMapStyles();
