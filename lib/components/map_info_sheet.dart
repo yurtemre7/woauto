@@ -1,4 +1,5 @@
 import 'package:expandable/expandable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'package:get/get.dart';
@@ -54,7 +55,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
           return false;
         }
 
-        return await Get.bottomSheet(
+        return await Get.dialog(
           AlertDialog(
             title: const Text('App verlassen'),
             content: const Text('Möchtest du die App verlassen?'),
@@ -150,6 +151,9 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                   height: 50,
                   child: FloatingActionButton.extended(
                     onPressed: () async {
+                      if (kDebugMode) {
+                        woAuto.printWoAuto();
+                      }
                       var textController = TextEditingController();
                       var tillTime = Rxn<TimeOfDay>();
 
