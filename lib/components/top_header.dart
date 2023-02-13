@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/screens/history.dart';
 import 'package:woauto/screens/settings.dart';
 
 class TopHeader extends StatefulWidget {
@@ -38,13 +39,25 @@ class _TopHeaderState extends State<TopHeader> {
                         color: Theme.of(context).colorScheme.primary,
                       ),
                     ),
-                    IconButton(
-                      onPressed: () async {
-                        // Go to settings
-                        Get.bottomSheet(const Settings());
-                      },
-                      icon: const Icon(Icons.settings),
-                      color: Theme.of(context).colorScheme.primary,
+                    Row(
+                      children: [
+                        IconButton(
+                          onPressed: () async {
+                            // Go to settings
+                            Get.bottomSheet(const History());
+                          },
+                          icon: const Icon(Icons.history),
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        IconButton(
+                          onPressed: () async {
+                            // Go to settings
+                            Get.bottomSheet(const Settings());
+                          },
+                          icon: const Icon(Icons.settings),
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ],
                     ),
                   ],
                 ),
