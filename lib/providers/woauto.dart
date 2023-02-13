@@ -28,6 +28,8 @@ class WoAuto extends GetxController {
   final pins = <Marker>{}.obs;
   final markers = <Marker>{}.obs;
 
+  final parkHistory = <Park>[].obs;
+
   final parkingList = [].obs;
   final pinList = [].obs;
 
@@ -65,6 +67,7 @@ class WoAuto extends GetxController {
       'themeMode': themeMode.value,
       'parkings': parkingList,
       'pins': pinList,
+      'parkHistory': parkHistory,
       'welcome': welcome.value,
     });
   }
@@ -78,6 +81,10 @@ class WoAuto extends GetxController {
     woAuto.parkingList.value = jsonMap['parkings'] ?? [];
     woAuto.pinList.value = jsonMap['pins'] ?? [];
     woAuto.welcome.value = jsonMap['welcome'] ?? true;
+    List history = jsonMap['parkHistory'] ?? [];
+    for (int i = 0; i < history.length; i++) {
+      woAuto.parkHistory.add(Park.fromJson(history[i]));
+    }
 
     for (int i = 0; i < woAuto.parkingList.length; i++) {
       var park = Park.fromJson(woAuto.parkingList[i]);
@@ -148,6 +155,8 @@ class WoAuto extends GetxController {
     }
     log(android13Theme.value.toString(), name: 'GetX Controller');
     log(themeMode.value.toString(), name: 'GetX Controller');
+    log(welcome.value.toString(), name: 'GetX Controller');
+    log(parkHistory.length.toString(), name: 'GetX Controller');
 
     log('---' * 30, name: 'GetX Controller');
   }
@@ -163,6 +172,7 @@ class WoAuto extends GetxController {
     parkings.clear();
     pins.clear();
     markers.clear();
+    parkHistory.clear();
 
     sp.clear();
     welcome.value = true;
@@ -262,6 +272,7 @@ class WoAuto extends GetxController {
       extra: extra!,
     );
 
+    woAuto.parkHistory.add(park);
     woAuto.parkings.add(woAuto.makeMarker(park, 'park,${woAuto.parkingList.length}'));
     woAuto.parkingList.add(park.toJson());
 
