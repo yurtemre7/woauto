@@ -7,7 +7,7 @@ import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:snapping_sheet/snapping_sheet.dart';
+import 'package:woauto/components/top_header.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -136,6 +136,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               myLocationEnabled: true,
               myLocationButtonEnabled: false,
               zoomControlsEnabled: false,
+              padding: const EdgeInsets.only(left: 10, right: 10),
               markers: woAuto.markers.toSet(),
               onTap: (LatLng newPosition) {
                 if (kDebugMode) {
@@ -144,14 +145,9 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                 if (woAuto.snappingSheetController.value.isAttached) {
                   var snapPos = woAuto.snappingSheetController.value.currentSnappingPosition;
                   var offset = snapPos.grabbingContentOffset;
-                  if (offset < 0) {
+                  if (offset > 0) {
                     woAuto.snappingSheetController.value.snapToPosition(
-                      SnappingPosition.factor(
-                        positionFactor: 0.0,
-                        snappingCurve: Curves.easeOutExpo,
-                        snappingDuration: animationSpeed,
-                        grabbingContentOffset: GrabbingContentOffset.top,
-                      ),
+                      resetPosition,
                     );
                     return;
                   }
