@@ -231,9 +231,12 @@ class _SettingsState extends State<Settings> {
                           const Div(),
                           Obx(
                             () => ListTile(
-                              leading: Icon(
-                                Icons.info_outline,
-                                color: Theme.of(context).colorScheme.primary,
+                              leading: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  Icons.info_outline,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                               ),
                               title: const Text('App Info'),
                               subtitle:
@@ -265,9 +268,12 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           ListTile(
-                            leading: Icon(
-                              Icons.volunteer_activism_outlined,
-                              color: Theme.of(context).colorScheme.primary,
+                            leading: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.volunteer_activism_outlined,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
                             title: const Text('Credits'),
                             subtitle: const Text(
@@ -275,9 +281,12 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           ListTile(
-                            leading: Icon(
-                              Icons.share,
-                              color: Theme.of(context).colorScheme.primary,
+                            leading: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.share,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
                             title: const Text('Teilen'),
                             subtitle: const Text(
@@ -293,9 +302,12 @@ class _SettingsState extends State<Settings> {
                             },
                           ),
                           ListTile(
-                            leading: Icon(
-                              Icons.feedback_outlined,
-                              color: Theme.of(context).colorScheme.primary,
+                            leading: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.feedback_outlined,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
                             title: const Text('Feedback'),
                             subtitle: const Text(
@@ -335,9 +347,12 @@ class _SettingsState extends State<Settings> {
                             },
                           ),
                           ListTile(
-                            leading: Icon(
-                              Icons.gpp_good_outlined,
-                              color: Theme.of(context).colorScheme.primary,
+                            leading: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.gpp_good_outlined,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
                             title: const Text('Datenschutz und Impressum'),
                             subtitle: const Text('Erfahre wie deine Daten geschützt werden.'),
@@ -420,9 +435,12 @@ class _SettingsState extends State<Settings> {
                           ),
                           const Div(),
                           ListTile(
-                            leading: const Icon(
-                              Icons.delete_forever_outlined,
-                              color: Colors.red,
+                            leading: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(
+                                Icons.delete_forever_outlined,
+                                color: Colors.red,
+                              ),
                             ),
                             title: const Text('Lösche alle App-Daten'),
                             subtitle: const Text(
