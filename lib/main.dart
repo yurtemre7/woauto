@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:woauto/screens/home.dart';
 import 'package:woauto/providers/woauto.dart';
@@ -12,11 +11,7 @@ late WoAuto woAuto;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      systemNavigationBarColor: Colors.transparent,
-    ),
-  );
+
   woAuto = Get.put(await WoAuto.load());
   runApp(const MyApp());
 }
