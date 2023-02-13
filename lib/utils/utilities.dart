@@ -13,7 +13,7 @@ String? lightMapStyle;
 
 const darkBg = Color(0xff1B1A1D);
 
-final animationSpeed = 1500.milliseconds;
+final animationSpeed = 800.milliseconds;
 
 Future loadMapStyles() async {
   darkMapStyle = await rootBundle.loadString('assets/map_styles/dark.json');
