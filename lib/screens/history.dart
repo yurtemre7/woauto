@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
+import 'package:to_csv/to_csv.dart';
+import 'package:woauto/classes/park.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/utilities.dart';
@@ -14,6 +16,16 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
+  List<Park> getLastParks(List<Park> history) {
+    List<Park> parks = [];
+    for (Park park in history) {
+      if (parks.length < 15) {
+        parks.add(park);
+      }
+    }
+    return parks;
+  }
+
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
@@ -56,6 +68,20 @@ class _HistoryState extends State<History> {
                       ),
                     ),
                   ),
+                  actions: [
+                    IconButton(
+                      onPressed: () async {
+                        Get.dialog(
+                          const AlertDialog(
+                            title: Text('Historie'),
+                            content: Text('Hier werden dir die letzten 15 Parkplätze angezeigt.'),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.question_mark),
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ],
                   backgroundColor: Theme.of(context).colorScheme.background,
                 ),
                 SliverList(
@@ -70,7 +96,7 @@ class _HistoryState extends State<History> {
                                 title: Text('Keine Einträge'),
                                 subtitle: Text('Du hast noch keine Einträge in deiner Historie.'),
                               ),
-                            ...woAuto.parkHistory.reversed.map(
+                            ...getLastParks(woAuto.parkHistory.reversed.toList()).map(
                               (e) => ListTile(
                                 leading: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -129,6 +155,47 @@ class _HistoryState extends State<History> {
                             ),
                             if (woAuto.parkHistory.isNotEmpty) ...[
                               const Div(),
+                              ListTile(
+                                title: Text(
+                                  'Exportiere als CSV',
+                                  style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                                ),
+                                subtitle: const Text(
+                                    'Exportiere deine Historie als CSV-Datei. Hier werden alle alte Parkplätze exportiert.'),
+                                leading: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.table_rows_outlined,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                                onTap: () async {
+                                  List<String> header = [
+                                    'Name',
+                                    'Adresse',
+                                    'Datum',
+                                    'Latitude',
+                                    'Longitude',
+                                    'Extra'
+                                  ];
+                                  List<List<String>> rows = [];
+                                  for (Park park in woAuto.parkHistory) {
+                                    rows.add(
+                                      [
+                                        park.name ?? 'Unbekannt',
+                                        park.address ?? 'Unbekannt',
+                                        DateTime.fromMillisecondsSinceEpoch(
+                                                park.datum ?? DateTime.now().millisecondsSinceEpoch)
+                                            .toString(),
+                                        park.latitude.toString(),
+                                        park.longitude.toString(),
+                                        park.extra,
+                                      ],
+                                    );
+                                  }
+                                  await myCSV(header, rows);
+                                },
+                              ),
                               ListTile(
                                 leading: const Padding(
                                   padding: EdgeInsets.all(8.0),
