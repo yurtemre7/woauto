@@ -368,16 +368,16 @@ class _SettingsState extends State<Settings> {
                                       ),
                                       SizedBox(height: 5),
                                       Text(
-                                        '- Die App speichert keine Meta-Daten, wie z.B. die IP-Adresse, Gerätename oder Betriebssystemversion.',
+                                        '- Die App speichert keine Metadaten, wie z.B. die IP-Adresse, Gerätename oder Betriebssystemversion.',
                                       ),
                                       SizedBox(height: 5),
                                       Text.rich(
                                         TextSpan(
                                           text:
-                                              '- Die App speichert natürlich, unter anderem, deinen Standort, Name des Parkplatzes und die Koordinaten, aber teilt diese ',
+                                              '- Die App speichert natürlich, unter anderem, deinen Standort, den Namen des Parkplatzes und die Koordinaten, gibt diese aber ',
                                           children: [
                                             TextSpan(
-                                              text: 'weder mit Dritten, als auch nicht uns selbst.',
+                                              text: 'weder an Dritte noch an uns weiter.',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 decoration: TextDecoration.underline,
@@ -385,11 +385,11 @@ class _SettingsState extends State<Settings> {
                                             ),
                                             TextSpan(
                                               text:
-                                                  ' Es gibt tatsächlich keinen Datenaustausch mit einem Server, außer den Google Servern beim Bereitstellen der Google Maps Karten. ',
+                                                  '\nEs findet kein Datenaustausch mit einem Server statt, außer mit den Servern von Google bei der Bereitstellung der Google Maps Karten. ',
                                             ),
                                             TextSpan(
                                               text:
-                                                  'Die App speichert die Daten nur auf deinem Gerät, welche du jederzeit (in den Einstellungen ganz unten) löschen kannst.',
+                                                  'Die App speichert die Daten nur auf deinem Gerät und du kannst sie jederzeit löschen (in den Einstellungen ganz unten).',
                                             )
                                           ],
                                         ),
