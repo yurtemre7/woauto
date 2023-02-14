@@ -3,8 +3,8 @@ import 'dart:developer';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:woauto/screens/home.dart';
 import 'package:woauto/providers/woauto.dart';
+import 'package:woauto/screens/home.dart';
 import 'package:woauto/screens/intro.dart';
 
 late WoAuto woAuto;
@@ -21,6 +21,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // if (!isIOS()) {
+    //   return GetCupertinoApp(
+    //     home: woAuto.welcome.value ? const Intro() : const IOSHome(),
+    //   );
+    // }
     return DynamicColorBuilder(
       builder: (lightDynamic, darkDynamic) {
         return Obx(
