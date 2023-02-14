@@ -98,3 +98,14 @@ String formatDateTimeAndTime(DateTime dateTime) {
 
   return 'Am ${twoDigits(dateTime.day)}.${twoDigits(dateTime.month)}.${dateTime.year} um ${twoDigits(dateTime.hour)}:${twoDigits(dateTime.minute)} geparkt';
 }
+
+List<int> quickSort(List<int> list) {
+  if (list.length <= 1) return list;
+
+  var pivot = list[list.length ~/ 2];
+  var equal = list.where((element) => element == pivot).toList();
+  var less = list.where((element) => element < pivot).toList();
+  var greater = list.where((element) => element > pivot).toList();
+
+  return [...quickSort(less), ...equal, ...quickSort(greater)];
+}
