@@ -153,6 +153,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                   }
                 }
                 var textController = TextEditingController();
+                var newNameController = TextEditingController(text: woAuto.subText.value);
                 var tillTime = Rxn<TimeOfDay>();
 
                 Get.dialog(
@@ -162,88 +163,99 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                     ),
                     title: const Text('Neuer Parkplatz'),
                     contentPadding: const EdgeInsets.only(left: 10, right: 10),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const ListTile(
-                          title: Text('Neuen Parkplatz speichern?'),
-                        ),
-                        ExpandablePanel(
-                          header: const ListTile(
-                            title: Text('Zusätzliche Info zum Parkplatz'),
+                    content: SingleChildScrollView(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const ListTile(
+                            title: Text('Neuen Parkplatz speichern?'),
                           ),
-                          collapsed: const SizedBox(),
-                          expanded: Column(
-                            children: [
-                              ListTile(
-                                title: TextField(
-                                  controller: textController,
-                                  decoration: const InputDecoration(
-                                    labelText: 'Info',
-                                    hintText: 'z.B. Parkdeck 2',
+                          ExpandablePanel(
+                            header: const ListTile(
+                              title: Text('Zusätzliche Info zum Parkplatz'),
+                            ),
+                            collapsed: const SizedBox(),
+                            expanded: Column(
+                              children: [
+                                ListTile(
+                                  title: TextField(
+                                    controller: newNameController,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Name',
+                                      hintText: 'z.B. Mein Auto',
+                                    ),
                                   ),
                                 ),
-                              ),
-                              if (isAndroid()) ...[
-                                const SizedBox(height: 5),
-                                Wrap(
-                                  alignment: WrapAlignment.center,
-                                  children: [
-                                    Obx(
-                                      () => ElevatedButton(
-                                        onPressed: () async {
-                                          // show time picker of today
-                                          tillTime.value = await showTimePicker(
-                                            context: context,
-                                            initialTime: TimeOfDay.now(),
-                                            builder: (context, child) {
-                                              return MediaQuery(
-                                                data: MediaQuery.of(context)
-                                                    .copyWith(alwaysUse24HourFormat: true),
-                                                child: child!,
-                                              );
-                                            },
-                                            helpText: 'Parkticket läuft ab um',
-                                            confirmText: 'Speichern',
-                                            cancelText: 'Abbrechen',
-                                          );
-                                        },
-                                        child: Text(
-                                          'Parkticket hinzufügen${tillTime.value == null ? '' : ' (${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')})'}',
+                                ListTile(
+                                  title: TextField(
+                                    controller: textController,
+                                    decoration: const InputDecoration(
+                                      labelText: 'Info',
+                                      hintText: 'z.B. Parkdeck 2',
+                                    ),
+                                  ),
+                                ),
+                                if (isAndroid()) ...[
+                                  const SizedBox(height: 5),
+                                  Wrap(
+                                    alignment: WrapAlignment.center,
+                                    children: [
+                                      Obx(
+                                        () => ElevatedButton(
+                                          onPressed: () async {
+                                            // show time picker of today
+                                            tillTime.value = await showTimePicker(
+                                              context: context,
+                                              initialTime: TimeOfDay.now(),
+                                              builder: (context, child) {
+                                                return MediaQuery(
+                                                  data: MediaQuery.of(context)
+                                                      .copyWith(alwaysUse24HourFormat: true),
+                                                  child: child!,
+                                                );
+                                              },
+                                              helpText: 'Parkticket läuft ab um',
+                                              confirmText: 'Speichern',
+                                              cancelText: 'Abbrechen',
+                                            );
+                                          },
+                                          child: Text(
+                                            'Parkticket hinzufügen${tillTime.value == null ? '' : ' (${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')})'}',
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        Get.dialog(
-                                          AlertDialog(
-                                            title: const Text('Parkticket'),
-                                            content: const Text(
-                                              'Wenn du ein Parkticket hast, kannst du hier die Uhrzeit angeben, bis zu der das Ticket gültig ist. '
-                                              'Dann erstellt die App dir einen Timer, der dich 10 Minuten vor Ende des Tickets benachrichtigt.',
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: () {
-                                                  pop();
-                                                },
-                                                child: const Text('OK'),
+                                      IconButton(
+                                        onPressed: () {
+                                          Get.dialog(
+                                            AlertDialog(
+                                              title: const Text('Parkticket'),
+                                              content: const Text(
+                                                'Wenn du ein Parkticket hast, kannst du hier die Uhrzeit angeben, bis zu der das Ticket gültig ist. '
+                                                'Dann erstellt die App dir einen Timer, der dich 10 Minuten vor Ende des Tickets benachrichtigt.',
                                               ),
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                      icon: const Icon(Icons.question_mark),
-                                    ),
-                                  ],
-                                ),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    pop();
+                                                  },
+                                                  child: const Text('OK'),
+                                                ),
+                                              ],
+                                            ),
+                                          );
+                                        },
+                                        icon: const Icon(Icons.question_mark),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ],
-                            ],
+                            ),
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                      ],
+                          const SizedBox(height: 10),
+                        ],
+                      ),
                     ),
                     actions: <Widget>[
                       TextButton(
@@ -258,6 +270,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                           woAuto.addMarker(
                             newPosition,
                             extra: textController.text,
+                            newName: newNameController.text,
                           );
 
                           if (tillTime.value != null) {

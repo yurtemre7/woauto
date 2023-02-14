@@ -256,7 +256,7 @@ class WoAuto extends GetxController {
   }
 
   // Adds a marker to the (google) map, and clears the old ones
-  Future<void> addMarker(LatLng newPosition, {String? extra}) async {
+  Future<void> addMarker(LatLng newPosition, {String extra = '', String? newName}) async {
     // if has premium, dont clear
     woAuto.parkings.clear();
     woAuto.parkingList.clear();
@@ -267,11 +267,11 @@ class WoAuto extends GetxController {
       id: 'park,${woAuto.parkingList.length}',
       latitude: newPosition.latitude,
       longitude: newPosition.longitude,
-      name: woAuto.subText.value,
+      name: newName ?? woAuto.subText.value,
       address: adresse,
       datum: DateTime.now().millisecondsSinceEpoch,
       distance: woAuto.getDistance(newPosition),
-      extra: extra!,
+      extra: extra,
     );
 
     woAuto.parkHistory.add(park);
