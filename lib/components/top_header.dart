@@ -100,12 +100,7 @@ class _TopHeaderState extends State<TopHeader> {
                       controller: snappingSheetController,
                       lockOverflowDrag: true,
                       snappingPositions: [
-                        SnappingPosition.factor(
-                          positionFactor: 1,
-                          snappingCurve: Curves.easeOutExpo,
-                          snappingDuration: animationSpeed,
-                          grabbingContentOffset: GrabbingContentOffset.bottom,
-                        ),
+                        resetPosition,
                         SnappingPosition.factor(
                           positionFactor: 0.5,
                           snappingCurve: Curves.bounceOut,
@@ -113,12 +108,7 @@ class _TopHeaderState extends State<TopHeader> {
                           grabbingContentOffset: GrabbingContentOffset.top,
                         ),
                       ],
-                      initialSnappingPosition: SnappingPosition.factor(
-                        positionFactor: 1,
-                        snappingCurve: Curves.easeOutExpo,
-                        snappingDuration: animationSpeed,
-                        grabbingContentOffset: GrabbingContentOffset.bottom,
-                      ),
+                      initialSnappingPosition: resetPosition,
                       grabbing: Container(
                         decoration: const BoxDecoration(
                           color: Colors.transparent,
