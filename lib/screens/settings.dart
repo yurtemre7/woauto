@@ -60,7 +60,7 @@ class _SettingsState extends State<Settings> {
                             () => Text('Parkplatz-Titel: ${woAuto.subText.value}'),
                           ),
                           subtitle: const Text(
-                              'Verändere hiermit den Text, welcher bei deinem Parkplatz steht, z B.: Mercedes, Audi oder BMW'),
+                              'Ändere den Text, der auf deinem Parkplatz steht, z.B: Mercedes, Audi oder BMW'),
                           onTap: () {
                             var tec = TextEditingController(text: woAuto.subText.value);
                             Get.dialog(
@@ -113,7 +113,7 @@ class _SettingsState extends State<Settings> {
                               'Android 13 Design ${isAndroid() ? '' : '\n(ja auch für dich iOS Nutzer)'}',
                             ),
                             subtitle: const Text(
-                              'Entscheide selbst, ob du das neue Android 13 Design benutzen möchtest.',
+                              'Entscheide selbst, ob du das neue Android 13 Design verwenden möchtest.',
                             ),
                             onChanged: (v) async {
                               woAuto.android13Theme.value = v;
@@ -159,7 +159,7 @@ class _SettingsState extends State<Settings> {
                             return ListTile(
                               title: const Text('Theme'),
                               subtitle: const Text(
-                                'Entscheide selbst, ob du das Theme des Systems, das Light-Theme oder das Dark-Theme nutzen möchtest.',
+                                'Entscheide selbst, ob du das System-Theme, das Light-Theme oder das Dark-Theme verwenden möchtest.',
                               ),
                               trailing: dropdownButton,
                             );
@@ -210,7 +210,7 @@ class _SettingsState extends State<Settings> {
                               'Verkehr',
                             ),
                             subtitle: const Text(
-                              'Zeigt den Verkehr auf der Karte, sofern verfügbar.',
+                              'Zeigt den Verkehr auf der Karte an, sofern verfügbar.',
                             ),
                             onChanged: (v) async {
                               woAuto.showTraffic.value = v;
@@ -266,7 +266,7 @@ class _SettingsState extends State<Settings> {
                           ),
                           title: const Text('Credits'),
                           subtitle: const Text(
-                            'Google Maps API und natürlich der Flutter-Community.',
+                            'Dank an Google Maps API und natürlich an die Flutter Community.',
                           ),
                         ),
                         ListTile(
@@ -282,11 +282,11 @@ class _SettingsState extends State<Settings> {
                               'Teile die App doch mit deinen Freunden und deiner Familie.'),
                           onTap: () {
                             Share.share(
-                              'Hast du auch vergessen wo du zuletzt geparkt hast? '
-                              'Nun ist schluss. '
-                              'Mit WoAuto kannst du deinen Parkplatz ganz leicht speichern und nachher einsehen, teilen und sogar hinnavigieren.\n'
+                              'Hast du auch vergessen, wo du zuletzt geparkt hast? '
+                              'Jetzt ist Schluss. '
+                              'Mit WoAuto kannst du deinen Parkplatz ganz einfach speichern und später ansehen, mit anderen teilen und sogar dorthin navigieren.\n'
                               'Dein Parkplatz ist sicher und bleibt immer auf deinem Gerät.\n\n'
-                              'Downloade es dir doch und probiere es selbst: https://play.google.com/store/apps/details?id=de.emredev.woauto',
+                              'Warum lädst du es nicht herunter und probierst es selbst aus? https://play.google.com/store/apps/details?id=de.emredev.woauto',
                             );
                           },
                         ),
