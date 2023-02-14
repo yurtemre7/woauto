@@ -343,7 +343,7 @@ class _TopHeaderState extends State<TopHeader> {
                                             'Pins',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              fontSize: 16,
+                                              fontSize: 20,
                                             ),
                                           ),
                                           const SizedBox(height: 5),
