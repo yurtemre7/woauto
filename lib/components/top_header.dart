@@ -94,8 +94,13 @@ class _TopHeaderState extends State<TopHeader> {
                 ),
               ),
               Obx(() {
-                if (woAuto.pinList.toList().isNotEmpty || woAuto.parkingList.toList().isNotEmpty) {
-                  return Expanded(
+                return Expanded(
+                  child: Visibility(
+                    visible: woAuto.pinList.toList().isNotEmpty ||
+                        woAuto.parkingList.toList().isNotEmpty,
+                    maintainSize: true,
+                    maintainAnimation: true,
+                    maintainState: true,
                     child: SnappingSheet(
                       controller: snappingSheetController,
                       lockOverflowDrag: true,
@@ -108,7 +113,6 @@ class _TopHeaderState extends State<TopHeader> {
                           grabbingContentOffset: GrabbingContentOffset.top,
                         ),
                       ],
-                      initialSnappingPosition: resetPosition,
                       grabbing: Container(
                         decoration: const BoxDecoration(
                           color: Colors.transparent,
@@ -138,9 +142,6 @@ class _TopHeaderState extends State<TopHeader> {
                         ),
                       ),
                       sheetAbove: SnappingSheetContent(
-                        sizeBehavior: SheetSizeStatic(
-                          size: 250,
-                        ),
                         child: Container(
                           margin: const EdgeInsets.only(left: 5, right: 5, bottom: 5, top: 10),
                           decoration: BoxDecoration(
@@ -558,9 +559,8 @@ class _TopHeaderState extends State<TopHeader> {
                       ),
                       grabbingHeight: 50,
                     ),
-                  );
-                }
-                return const SizedBox();
+                  ),
+                );
               }),
             ],
           ),

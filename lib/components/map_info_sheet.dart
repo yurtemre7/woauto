@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
+import 'package:woauto/components/top_header.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -199,6 +200,17 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                           if (kDebugMode) {
                             woAuto.printWoAuto();
                           }
+                          if (woAuto.snappingSheetController.value.isAttached) {
+                            var snapPos =
+                                woAuto.snappingSheetController.value.currentSnappingPosition;
+                            var offset = snapPos.grabbingContentOffset;
+
+                            if (offset > 0) {
+                              woAuto.snappingSheetController.value.snapToPosition(
+                                resetPosition,
+                              );
+                            }
+                          }
                           var textController = TextEditingController();
                           var tillTime = Rxn<TimeOfDay>();
 
@@ -334,7 +346,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                     if (woAuto.mapController.value == null) {
                                       return;
                                     }
-
+                                    pop();
                                     woAuto.mapController.value!.animateCamera(
                                       CameraUpdate.newCameraPosition(
                                         CameraPosition(
@@ -343,8 +355,6 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                         ),
                                       ),
                                     );
-
-                                    pop();
                                   },
                                 ),
                               ],
