@@ -231,58 +231,60 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(height: 5),
-                                        Wrap(
-                                          alignment: WrapAlignment.center,
-                                          children: [
-                                            Obx(
-                                              () => ElevatedButton(
-                                                onPressed: () async {
-                                                  // show time picker of today
-                                                  tillTime.value = await showTimePicker(
-                                                    context: context,
-                                                    initialTime: TimeOfDay.now(),
-                                                    builder: (context, child) {
-                                                      return MediaQuery(
-                                                        data: MediaQuery.of(context)
-                                                            .copyWith(alwaysUse24HourFormat: true),
-                                                        child: child!,
-                                                      );
-                                                    },
-                                                    helpText: 'Parkticket läuft ab um',
-                                                    confirmText: 'Speichern',
-                                                    cancelText: 'Abbrechen',
-                                                  );
-                                                },
-                                                child: Text(
-                                                  'Parkticket hinzufügen${tillTime.value == null ? '' : ' (${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')})'}',
+                                        if (isAndroid()) ...[
+                                          const SizedBox(height: 5),
+                                          Wrap(
+                                            alignment: WrapAlignment.center,
+                                            children: [
+                                              Obx(
+                                                () => ElevatedButton(
+                                                  onPressed: () async {
+                                                    // show time picker of today
+                                                    tillTime.value = await showTimePicker(
+                                                      context: context,
+                                                      initialTime: TimeOfDay.now(),
+                                                      builder: (context, child) {
+                                                        return MediaQuery(
+                                                          data: MediaQuery.of(context).copyWith(
+                                                              alwaysUse24HourFormat: true),
+                                                          child: child!,
+                                                        );
+                                                      },
+                                                      helpText: 'Parkticket läuft ab um',
+                                                      confirmText: 'Speichern',
+                                                      cancelText: 'Abbrechen',
+                                                    );
+                                                  },
+                                                  child: Text(
+                                                    'Parkticket hinzufügen${tillTime.value == null ? '' : ' (${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')})'}',
+                                                  ),
                                                 ),
                                               ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () {
-                                                Get.dialog(
-                                                  AlertDialog(
-                                                    title: const Text('Parkticket'),
-                                                    content: const Text(
-                                                      'Wenn du ein Parkticket hast, kannst du hier die Uhrzeit angeben, bis zu der das Ticket gültig ist. '
-                                                      'Dann erstellt die App dir einen Timer, der dich 10 Minuten vor Ende des Tickets benachrichtigt.',
-                                                    ),
-                                                    actions: [
-                                                      TextButton(
-                                                        onPressed: () {
-                                                          pop();
-                                                        },
-                                                        child: const Text('OK'),
+                                              IconButton(
+                                                onPressed: () {
+                                                  Get.dialog(
+                                                    AlertDialog(
+                                                      title: const Text('Parkticket'),
+                                                      content: const Text(
+                                                        'Wenn du ein Parkticket hast, kannst du hier die Uhrzeit angeben, bis zu der das Ticket gültig ist. '
+                                                        'Dann erstellt die App dir einen Timer, der dich 10 Minuten vor Ende des Tickets benachrichtigt.',
                                                       ),
-                                                    ],
-                                                  ),
-                                                );
-                                              },
-                                              icon: const Icon(Icons.question_mark),
-                                            ),
-                                          ],
-                                        ),
+                                                      actions: [
+                                                        TextButton(
+                                                          onPressed: () {
+                                                            pop();
+                                                          },
+                                                          child: const Text('OK'),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                                icon: const Icon(Icons.question_mark),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ],
                                     ),
                                   ),
