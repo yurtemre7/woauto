@@ -103,6 +103,7 @@ class _SettingsState extends State<Settings> {
                                   ),
                                 ],
                               ),
+                              name: 'Parkplatz-Titel',
                             );
                           },
                         ),
@@ -252,6 +253,7 @@ class _SettingsState extends State<Settings> {
                                     ),
                                   ],
                                 ),
+                                name: 'App Info',
                               );
                             },
                           ),
@@ -332,6 +334,7 @@ class _SettingsState extends State<Settings> {
                                   ),
                                 ],
                               ),
+                              name: 'Feedback',
                             );
                           },
                         ),
@@ -418,6 +421,7 @@ class _SettingsState extends State<Settings> {
                                   ),
                                 ],
                               ),
+                              name: 'Datenschutz und Impressum',
                             );
                           },
                         ),
@@ -461,6 +465,7 @@ class _SettingsState extends State<Settings> {
                                   ),
                                 ],
                               ),
+                              name: 'App-Daten löschen',
                             );
                           },
                         ),

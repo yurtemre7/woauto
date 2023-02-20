@@ -79,8 +79,8 @@ class WoAuto extends GetxController {
 
     WoAuto woAuto = WoAuto(await SharedPreferences.getInstance());
 
-    woAuto.parkingList.value = jsonMap['parkings'] ?? [];
-    woAuto.pinList.value = jsonMap['pins'] ?? [];
+    woAuto.parkingList.value.addAll(jsonMap['parkings'] ?? []);
+    woAuto.pinList.value.addAll(jsonMap['pins'] ?? []);
     woAuto.welcome.value = jsonMap['welcome'] ?? true;
     List history = jsonMap['parkHistory'] ?? [];
     for (int i = 0; i < history.length; i++) {
@@ -142,24 +142,24 @@ class WoAuto extends GetxController {
   /// Bebug the current state of the Appmelder
   printWoAuto() {
     log('WoAuto', name: 'GetX Controller');
-    log(subText.value, name: 'GetX Controller');
-    log(currentPosition.value.target.toString(), name: 'GetX Controller');
+    log('Subtext: $subText', name: 'GetX Controller');
+    log('Current Position: ${currentPosition.value}', name: 'GetX Controller');
     if (parkings.isNotEmpty) {
-      for (var m in parkings) {
-        log(m.position.toString(), name: 'GetX Controller');
+      for (var i = 0; i < parkings.length; i++) {
+        log('Parkings[$i]: ${parkings.elementAt(i).position}', name: 'GetX Controller');
       }
     }
     if (pins.isNotEmpty) {
-      for (var pin in pins) {
-        log(pin.position.toString(), name: 'GetX Controller');
+      for (var i = 0; i < pins.length; i++) {
+        log('Pins[$i]: ${pins.elementAt(i).position}', name: 'GetX Controller');
       }
     }
-    log(android13Theme.value.toString(), name: 'GetX Controller');
-    log(themeMode.value.toString(), name: 'GetX Controller');
-    log(welcome.value.toString(), name: 'GetX Controller');
-    log(parkHistory.length.toString(), name: 'GetX Controller');
+    log('Android 13 Theme: $android13Theme', name: 'GetX Controller');
+    log('Theme Mode: $themeMode', name: 'GetX Controller');
+    log('Welcome: $welcome', name: 'GetX Controller');
+    log('Park History length: ${parkHistory.length}', name: 'GetX Controller');
 
-    log('---' * 30, name: 'GetX Controller');
+    log('---' * 15, name: 'GetX Controller');
   }
 
   /// Resets the WoAuto provider
@@ -168,8 +168,8 @@ class WoAuto extends GetxController {
     android13Theme.value = false;
     themeMode.value = 0;
 
-    parkingList.value = [];
-    pinList.value = [];
+    parkingList.clear();
+    pinList.clear();
     parkings.clear();
     pins.clear();
     markers.clear();
@@ -252,6 +252,7 @@ class WoAuto extends GetxController {
           ),
         ],
       ),
+      name: 'Parkplatz Info',
     );
   }
 

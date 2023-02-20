@@ -63,6 +63,7 @@ class _TopHeaderState extends State<TopHeader> {
               borderRadius: BorderRadius.circular(12),
             ),
           ),
+          name: 'App verlassen',
         );
       },
       child: SafeArea(
@@ -502,7 +503,7 @@ class _TopHeaderState extends State<TopHeader> {
                                             Get.snackbar(
                                               'Wie wird die Entfernung berechnet?',
                                               'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
-                                              snackPosition: SnackPosition.BOTTOM,
+                                              snackPosition: SnackPosition.bottom,
                                               titleText: Text(
                                                 'Wie wird die Entfernung berechnet?',
                                                 style: TextStyle(

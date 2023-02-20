@@ -77,13 +77,15 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         var park = tempParkList[i];
         tempParkList[i]['distance'] = woAuto.getDistance(LatLng(park['lat'], park['long']));
       }
-      woAuto.parkingList.value = tempParkList;
+      woAuto.parkingList.value.clear();
+      woAuto.parkingList.value.assignAll(tempParkList);
       tempParkList = woAuto.pinList.toList();
       for (int i = 0; i < tempParkList.length; i++) {
         var park = tempParkList[i];
         tempParkList[i]['distance'] = woAuto.getDistance(LatLng(park['lat'], park['long']));
       }
-      woAuto.pinList.value = tempParkList;
+      woAuto.pinList.value.clear();
+      woAuto.pinList.value.assignAll(tempParkList);
     });
   }
 
@@ -243,6 +245,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                                                 ),
                                               ],
                                             ),
+                                            name: 'Info Parkticket',
                                           );
                                         },
                                         icon: const Icon(Icons.question_mark),
@@ -309,6 +312,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                       ),
                     ],
                   ),
+                  name: 'Parkplatz speichern',
                 );
               },
             ),

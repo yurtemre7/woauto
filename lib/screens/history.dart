@@ -65,6 +65,7 @@ class _HistoryState extends State<History> {
                           title: Text('Historie'),
                           content: Text('Hier werden dir die letzten 15 Parkplätze angezeigt.'),
                         ),
+                        name: 'Historie Info',
                       );
                     },
                     icon: const Icon(Icons.question_mark),
@@ -219,6 +220,7 @@ class _HistoryState extends State<History> {
                                         ),
                                       ],
                                     ),
+                                    name: 'Historie löschen',
                                   );
                                 },
                               ),

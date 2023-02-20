@@ -109,7 +109,7 @@ class YrtmrDeeplinks {
     Get.snackbar(
       'Ein geteilter Parkplatz wurde hinzugefügt',
       'Schaue auf der Karte oder in der Liste nach.',
-      snackPosition: SnackPosition.TOP,
+      snackPosition: SnackPosition.top,
       borderRadius: 12,
       margin: const EdgeInsets.all(20),
       backgroundColor: Get.theme.colorScheme.surface,
