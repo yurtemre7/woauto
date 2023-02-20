@@ -58,7 +58,6 @@ class _HomeState extends State<Home> {
             const GMap(),
             if (woAuto.currentIndex.value == 0) ...[
               const TopHeader(),
-              const SafeArea(child: MapInfoSheet()),
             ],
             if (woAuto.currentIndex.value == 1) ...[
               const History(),
@@ -67,6 +66,11 @@ class _HomeState extends State<Home> {
               const Settings(),
             ]
           ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Visibility(
+          visible: woAuto.currentIndex.value == 0,
+          child: const MapInfoSheet(),
         ),
         bottomNavigationBar: NavigationBar(
           selectedIndex: woAuto.currentIndex.value,
