@@ -53,6 +53,29 @@ Future<String?> getAddress(LatLng position) async {
     String street = placemarks.first.thoroughfare ?? '';
     String city = placemarks.first.locality ?? '';
     String number = placemarks.first.subThoroughfare ?? '';
+
+    if (number.isEmpty && city.isNotEmpty && street.isNotEmpty) {
+      return '$street, $city';
+    }
+    if (number.isEmpty && city.isEmpty && street.isNotEmpty) {
+      return street;
+    }
+    if (number.isEmpty && city.isNotEmpty && street.isEmpty) {
+      return city;
+    }
+    if (number.isNotEmpty && city.isEmpty && street.isEmpty) {
+      return 'Adresse nicht gefunden.';
+    }
+    if (street.isEmpty && city.isEmpty && number.isEmpty) {
+      return 'Adresse nicht gefunden.';
+    }
+    if (number.isNotEmpty && city.isNotEmpty && street.isEmpty) {
+      return '$number, $city';
+    }
+    if (number.isNotEmpty && city.isEmpty && street.isNotEmpty) {
+      return '$street $number';
+    }
+
     return '$street $number, $city';
   } catch (e) {
     log('Error: $e');
