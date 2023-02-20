@@ -5,7 +5,6 @@ import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:woauto/components/top_header.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/utilities.dart';
@@ -32,24 +31,8 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return SnappingSheet(
-      grabbingHeight: 50,
-      initialSnappingPosition: SnappingPosition.factor(
-        positionFactor: 0.1,
-        snappingCurve: Curves.easeOutExpo,
-        snappingDuration: animationSpeed,
-        grabbingContentOffset: GrabbingContentOffset.bottom,
-      ),
-      snappingPositions: [
-        SnappingPosition.factor(
-          positionFactor: 0.1,
-          snappingCurve: Curves.easeOutExpo,
-          snappingDuration: animationSpeed,
-          grabbingContentOffset: GrabbingContentOffset.bottom,
-        ),
-      ],
-      lockOverflowDrag: true,
-      grabbing: Column(
+    return Container(
+      child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Obx(() {
@@ -89,7 +72,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                               Get.snackbar(
                                 'Fehler',
                                 'Keinen Parkplatz gespeichert',
-                                snackPosition: SnackPosition.BOTTOM,
+                                snackPosition: SnackPosition.bottom,
                                 backgroundColor: Colors.redAccent,
                                 borderRadius: 10,
                                 margin: const EdgeInsets.all(10),
@@ -143,7 +126,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                         Get.snackbar(
                                           'Fehler',
                                           'Keinen Name eingegeben',
-                                          snackPosition: SnackPosition.BOTTOM,
+                                          snackPosition: SnackPosition.bottom,
                                           backgroundColor: Colors.redAccent,
                                           borderRadius: 10,
                                           margin: const EdgeInsets.all(10),
@@ -156,7 +139,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                         Get.snackbar(
                                           'Fehler',
                                           'Keinen Parkplatz gespeichert',
-                                          snackPosition: SnackPosition.BOTTOM,
+                                          snackPosition: SnackPosition.bottom,
                                           backgroundColor: Colors.redAccent,
                                           borderRadius: 10,
                                           margin: const EdgeInsets.all(10),
@@ -182,6 +165,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                   ),
                                 ],
                               ),
+                              name: 'Parkplatz teilen',
                             );
                             return;
                           },
@@ -302,6 +286,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                                           ),
                                                         ],
                                                       ),
+                                                      name: 'Info Parkticket',
                                                     );
                                                   },
                                                   icon: const Icon(Icons.question_mark),
@@ -373,6 +358,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                 ),
                               ],
                             ),
+                            name: 'Parkplatz speichern',
                           );
                         },
                         label: const Text(
