@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/text_icon.dart';
-import 'package:woauto/main.dart';
+import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class TopHeader extends StatefulWidget {
@@ -22,22 +22,16 @@ final resetPosition = SnappingPosition.factor(
 );
 
 class _TopHeaderState extends State<TopHeader> {
-  late SnappingSheetController snappingSheetController;
-  @override
-  void initState() {
-    snappingSheetController = SnappingSheetController();
-    woAuto.snappingSheetController.value = snappingSheetController;
-    super.initState();
-  }
+  WoAuto get woAutoController => Get.find<WoAuto>();
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        var snapPos = snappingSheetController.currentSnappingPosition;
+        var snapPos = woAutoController.snappingSheetController.value.currentSnappingPosition;
         var offset = snapPos.grabbingContentOffset;
         if (offset > 0) {
-          snappingSheetController.snapToPosition(
+          woAutoController.snappingSheetController.value.snapToPosition(
             resetPosition,
           );
           return false;
@@ -97,13 +91,13 @@ class _TopHeaderState extends State<TopHeader> {
               Obx(() {
                 return Expanded(
                   child: Visibility(
-                    visible: woAuto.pinList.toList().isNotEmpty ||
-                        woAuto.parkingList.toList().isNotEmpty,
+                    visible: woAutoController.pinList.toList().isNotEmpty ||
+                        woAutoController.parkingList.toList().isNotEmpty,
                     maintainSize: true,
                     maintainAnimation: true,
                     maintainState: true,
                     child: SnappingSheet(
-                      controller: snappingSheetController,
+                      controller: woAutoController.snappingSheetController.value,
                       lockOverflowDrag: true,
                       snappingPositions: [
                         resetPosition,
@@ -114,6 +108,8 @@ class _TopHeaderState extends State<TopHeader> {
                           grabbingContentOffset: GrabbingContentOffset.top,
                         ),
                       ],
+                      grabbingHeight: 50,
+                      initialSnappingPosition: resetPosition,
                       grabbing: Container(
                         decoration: const BoxDecoration(
                           color: Colors.transparent,
@@ -162,8 +158,8 @@ class _TopHeaderState extends State<TopHeader> {
                               child: Column(children: [
                                 Obx(
                                   () {
-                                    var pinList = woAuto.pinList.toList();
-                                    var parkingList = woAuto.parkingList.toList();
+                                    var pinList = woAutoController.pinList.toList();
+                                    var parkingList = woAutoController.parkingList.toList();
                                     return Column(
                                       children: [
                                         if (parkingList.isNotEmpty) ...[
@@ -245,8 +241,13 @@ class _TopHeaderState extends State<TopHeader> {
                                                           ),
                                                         ),
                                                         onTap: () {
+                                                          woAutoController
+                                                              .snappingSheetController.value
+                                                              .snapToPosition(
+                                                            resetPosition,
+                                                          );
                                                           GoogleMapController controller =
-                                                              woAuto.mapController.value!;
+                                                              woAutoController.mapController.value!;
                                                           controller.animateCamera(
                                                             CameraUpdate.newCameraPosition(
                                                               CameraPosition(
@@ -257,9 +258,6 @@ class _TopHeaderState extends State<TopHeader> {
                                                                 zoom: 18,
                                                               ),
                                                             ),
-                                                          );
-                                                          snappingSheetController.snapToPosition(
-                                                            resetPosition,
                                                           );
                                                         },
                                                       ),
@@ -282,24 +280,29 @@ class _TopHeaderState extends State<TopHeader> {
                                                           int num = int.parse(ids[1]);
                                                           String type = ids[0];
                                                           if (type == 'park') {
-                                                            woAuto.parkingList.removeAt(num);
-                                                            woAuto.parkings.removeWhere(
+                                                            woAutoController.parkingList
+                                                                .removeAt(num);
+                                                            woAutoController.parkings.removeWhere(
                                                                 (Marker element) =>
                                                                     element.markerId.value == id);
                                                           } else {
-                                                            woAuto.pinList.removeAt(num);
-                                                            woAuto.pins.removeWhere(
+                                                            woAutoController.pinList.removeAt(num);
+                                                            woAutoController.pins.removeWhere(
                                                                 (Marker element) =>
                                                                     element.markerId.value == id);
                                                           }
 
-                                                          woAuto.markers.clear();
-                                                          woAuto.markers.addAll(woAuto.pins);
-                                                          woAuto.markers.addAll(woAuto.parkings);
+                                                          woAutoController.markers.clear();
+                                                          woAutoController.markers
+                                                              .addAll(woAutoController.pins);
+                                                          woAutoController.markers
+                                                              .addAll(woAutoController.parkings);
 
-                                                          woAuto.save();
+                                                          woAutoController.save();
 
-                                                          snappingSheetController.snapToPosition(
+                                                          woAutoController
+                                                              .snappingSheetController.value
+                                                              .snapToPosition(
                                                             resetPosition,
                                                           );
                                                         },
@@ -309,7 +312,7 @@ class _TopHeaderState extends State<TopHeader> {
                                                 ),
                                                 onTap: () {
                                                   GoogleMapController controller =
-                                                      woAuto.mapController.value!;
+                                                      woAutoController.mapController.value!;
                                                   controller.animateCamera(
                                                     CameraUpdate.newCameraPosition(
                                                       CameraPosition(
@@ -321,7 +324,8 @@ class _TopHeaderState extends State<TopHeader> {
                                                       ),
                                                     ),
                                                   );
-                                                  snappingSheetController.snapToPosition(
+                                                  woAutoController.snappingSheetController.value
+                                                      .snapToPosition(
                                                     resetPosition,
                                                   );
                                                 },
@@ -409,7 +413,7 @@ class _TopHeaderState extends State<TopHeader> {
                                                         ),
                                                         onTap: () {
                                                           GoogleMapController controller =
-                                                              woAuto.mapController.value!;
+                                                              woAutoController.mapController.value!;
                                                           controller.animateCamera(
                                                             CameraUpdate.newCameraPosition(
                                                               CameraPosition(
@@ -421,7 +425,9 @@ class _TopHeaderState extends State<TopHeader> {
                                                               ),
                                                             ),
                                                           );
-                                                          snappingSheetController.snapToPosition(
+                                                          woAutoController
+                                                              .snappingSheetController.value
+                                                              .snapToPosition(
                                                             resetPosition,
                                                           );
                                                         },
@@ -445,24 +451,29 @@ class _TopHeaderState extends State<TopHeader> {
                                                           int num = int.parse(ids[1]);
                                                           String type = ids[0];
                                                           if (type == 'park') {
-                                                            woAuto.parkingList.removeAt(num);
-                                                            woAuto.parkings.removeWhere(
+                                                            woAutoController.parkingList
+                                                                .removeAt(num);
+                                                            woAutoController.parkings.removeWhere(
                                                                 (Marker element) =>
                                                                     element.markerId.value == id);
                                                           } else {
-                                                            woAuto.pinList.removeAt(num);
-                                                            woAuto.pins.removeWhere(
+                                                            woAutoController.pinList.removeAt(num);
+                                                            woAutoController.pins.removeWhere(
                                                                 (Marker element) =>
                                                                     element.markerId.value == id);
                                                           }
 
-                                                          woAuto.markers.clear();
-                                                          woAuto.markers.addAll(woAuto.pins);
-                                                          woAuto.markers.addAll(woAuto.parkings);
+                                                          woAutoController.markers.clear();
+                                                          woAutoController.markers
+                                                              .addAll(woAutoController.pins);
+                                                          woAutoController.markers
+                                                              .addAll(woAutoController.parkings);
 
-                                                          woAuto.save();
+                                                          woAutoController.save();
 
-                                                          snappingSheetController.snapToPosition(
+                                                          woAutoController
+                                                              .snappingSheetController.value
+                                                              .snapToPosition(
                                                             resetPosition,
                                                           );
                                                         },
@@ -472,7 +483,7 @@ class _TopHeaderState extends State<TopHeader> {
                                                 ),
                                                 onTap: () {
                                                   GoogleMapController controller =
-                                                      woAuto.mapController.value!;
+                                                      woAutoController.mapController.value!;
                                                   controller.animateCamera(
                                                     CameraUpdate.newCameraPosition(
                                                       CameraPosition(
@@ -484,7 +495,8 @@ class _TopHeaderState extends State<TopHeader> {
                                                       ),
                                                     ),
                                                   );
-                                                  snappingSheetController.snapToPosition(
+                                                  woAutoController.snappingSheetController.value
+                                                      .snapToPosition(
                                                     resetPosition,
                                                   );
                                                 },
@@ -558,7 +570,6 @@ class _TopHeaderState extends State<TopHeader> {
                           ),
                         ),
                       ),
-                      grabbingHeight: 50,
                     ),
                   ),
                 );

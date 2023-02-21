@@ -60,6 +60,14 @@ class WoAuto extends GetxController {
 
   WoAuto(this.sp);
 
+  @override
+  void onClose() {
+    super.onClose();
+    // Dispose controllers
+    mapController.dispose();
+    snappingSheetController.dispose();
+  }
+
   // to json string
   String toJson() {
     return json.encode({
