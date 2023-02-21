@@ -7,7 +7,7 @@ import 'package:woauto/components/g_map.dart';
 import 'package:woauto/components/map_info_sheet.dart';
 
 import 'package:woauto/components/top_header.dart';
-import 'package:woauto/main.dart';
+import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/providers/yrtmr.dart';
 import 'package:woauto/screens/history.dart';
 import 'package:woauto/screens/settings.dart';
@@ -22,6 +22,8 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   StreamSubscription? _sub;
+
+  WoAuto get woAutoController => Get.find<WoAuto>();
 
   @override
   void initState() {
@@ -56,26 +58,37 @@ class _HomeState extends State<Home> {
         body: Stack(
           children: [
             const GMap(),
-            if (woAuto.currentIndex.value == 0) ...[
-              const TopHeader(),
-            ],
-            if (woAuto.currentIndex.value == 1) ...[
+            Visibility(
+              visible: woAutoController.currentIndex.value == 0,
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              child: const TopHeader(),
+            ),
+            if (woAutoController.currentIndex.value == 1) ...[
               const History(),
             ],
-            if (woAuto.currentIndex.value == 2) ...[
+            if (woAutoController.currentIndex.value == 2) ...[
               const Settings(),
             ]
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Visibility(
-          visible: woAuto.currentIndex.value == 0,
+          visible: woAutoController.currentIndex.value == 0,
           child: const MapInfoSheet(),
         ),
         bottomNavigationBar: NavigationBar(
-          selectedIndex: woAuto.currentIndex.value,
+          selectedIndex: woAutoController.currentIndex.value,
           onDestinationSelected: (index) {
-            woAuto.currentIndex.value = index;
+            woAutoController.currentIndex.value = index;
+            var snapPos = woAutoController.snappingSheetController.value.currentSnappingPosition;
+            var offset = snapPos.grabbingContentOffset;
+            if (offset > 0) {
+              woAutoController.snappingSheetController.value.snapToPosition(
+                resetPosition,
+              );
+            }
           },
           backgroundColor: Theme.of(context).colorScheme.background,
           surfaceTintColor: Theme.of(context).colorScheme.background,
