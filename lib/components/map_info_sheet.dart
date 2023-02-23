@@ -70,7 +70,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                             Get.snackbar(
                               'Fehler',
                               'Keinen Parkplatz gespeichert',
-                              snackPosition: SnackPosition.bottom,
+                              snackPosition: SnackPosition.BOTTOM,
                               backgroundColor: Colors.redAccent,
                               borderRadius: 10,
                               margin: const EdgeInsets.all(10),
@@ -124,7 +124,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                       Get.snackbar(
                                         'Fehler',
                                         'Keinen Name eingegeben',
-                                        snackPosition: SnackPosition.bottom,
+                                        snackPosition: SnackPosition.BOTTOM,
                                         backgroundColor: Colors.redAccent,
                                         borderRadius: 10,
                                         margin: const EdgeInsets.all(10),
@@ -137,7 +137,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                       Get.snackbar(
                                         'Fehler',
                                         'Keinen Parkplatz gespeichert',
-                                        snackPosition: SnackPosition.bottom,
+                                        snackPosition: SnackPosition.BOTTOM,
                                         backgroundColor: Colors.redAccent,
                                         borderRadius: 10,
                                         margin: const EdgeInsets.all(10),

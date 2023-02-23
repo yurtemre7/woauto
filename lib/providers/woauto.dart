@@ -64,8 +64,7 @@ class WoAuto extends GetxController {
   void onClose() {
     super.onClose();
     // Dispose controllers
-    mapController.dispose();
-    snappingSheetController.dispose();
+    mapController.value?.dispose();
   }
 
   // to json string
@@ -87,8 +86,8 @@ class WoAuto extends GetxController {
 
     WoAuto woAuto = WoAuto(await SharedPreferences.getInstance());
 
-    woAuto.parkingList.value.addAll(jsonMap['parkings'] ?? []);
-    woAuto.pinList.value.addAll(jsonMap['pins'] ?? []);
+    woAuto.parkingList.addAll(jsonMap['parkings'] ?? []);
+    woAuto.pinList.addAll(jsonMap['pins'] ?? []);
     woAuto.welcome.value = jsonMap['welcome'] ?? true;
     List history = jsonMap['parkHistory'] ?? [];
     for (int i = 0; i < history.length; i++) {

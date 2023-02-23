@@ -34,9 +34,9 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
-  get: ^5.0.0-release-candidate
+  get: ^4.6.5
 
-  google_maps_flutter: ^2.2.3
+  google_maps_flutter: ^2.2.4
   location: ^4.2.0
   geocoding: ^2.0.5
 
@@ -47,10 +47,10 @@ dependencies:
 
   package_info_plus: ^3.0.3
   share_plus: ^6.3.1
-  url_launcher: ^6.1.9
+  url_launcher: ^6.1.10
   share_plus_web: ^3.1.0
-  shared_preferences: ^2.0.17
-  path_provider: ^2.0.12
+  shared_preferences: ^2.0.18
+  path_provider: ^2.0.13
   to_csv: ^1.1.1
   flutter_alarm_clock: ^0.0.2
 

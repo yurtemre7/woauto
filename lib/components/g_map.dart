@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:woauto/components/top_header.dart';
-import 'package:woauto/providers/woauto.dart';
+import 'package:woauto/main.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class GMap extends StatefulWidget {
@@ -20,7 +20,6 @@ class GMap extends StatefulWidget {
 
 class _GMapState extends State<GMap> with WidgetsBindingObserver {
   final mapLoading = true.obs;
-  WoAuto get woAutoController => Get.find<WoAuto>();
 
   @override
   void initState() {
@@ -33,7 +32,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
   void didChangePlatformBrightness() {
     if (mounted) {
       setState(() {
-        woAutoController.setMapStyle();
+        woAuto.setMapStyle();
       });
     }
     super.didChangePlatformBrightness();
@@ -63,7 +62,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
       if (!mounted) {
         return;
       }
-      woAutoController.currentPosition.value = CameraPosition(
+      woAuto.currentPosition.value = CameraPosition(
         target: LatLng(
           currentLocation.latitude ?? 0,
           currentLocation.longitude ?? 0,
@@ -71,24 +70,22 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         zoom: 18,
       );
 
-      woAutoController.currentVelocity.value = currentLocation.speed ?? 0;
+      woAuto.currentVelocity.value = currentLocation.speed ?? 0;
 
-      var tempParkList = woAutoController.parkingList.toList();
+      var tempParkList = woAuto.parkingList.toList();
       for (int i = 0; i < tempParkList.length; i++) {
         var park = tempParkList[i];
-        tempParkList[i]['distance'] =
-            woAutoController.getDistance(LatLng(park['lat'], park['long']));
+        tempParkList[i]['distance'] = woAuto.getDistance(LatLng(park['lat'], park['long']));
       }
-      woAutoController.parkingList.value.clear();
-      woAutoController.parkingList.value.assignAll(tempParkList);
-      tempParkList = woAutoController.pinList.toList();
+      woAuto.parkingList.clear();
+      woAuto.parkingList.assignAll(tempParkList);
+      tempParkList = woAuto.pinList.toList();
       for (int i = 0; i < tempParkList.length; i++) {
         var park = tempParkList[i];
-        tempParkList[i]['distance'] =
-            woAutoController.getDistance(LatLng(park['lat'], park['long']));
+        tempParkList[i]['distance'] = woAuto.getDistance(LatLng(park['lat'], park['long']));
       }
-      woAutoController.pinList.value.clear();
-      woAutoController.pinList.value.assignAll(tempParkList);
+      woAuto.pinList.clear();
+      woAuto.pinList.assignAll(tempParkList);
     });
   }
 
@@ -99,17 +96,17 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         return Stack(
           children: [
             GoogleMap(
-              initialCameraPosition: woAutoController.markers.isEmpty
-                  ? woAutoController.currentPosition.value
+              initialCameraPosition: woAuto.markers.isEmpty
+                  ? woAuto.currentPosition.value
                   : CameraPosition(
-                      target: woAutoController.markers.elementAt(0).position,
+                      target: woAuto.markers.elementAt(0).position,
                       zoom: 16,
                     ),
               // padding: const EdgeInsets.all(20),
-              trafficEnabled: woAutoController.showTraffic.value,
+              trafficEnabled: woAuto.showTraffic.value,
               mapToolbarEnabled: false,
               onMapCreated: (GoogleMapController controller) async {
-                woAutoController.mapController.value = controller;
+                woAuto.mapController.value = controller;
                 await loadMapStyles();
                 await Future.delayed(2.seconds);
                 mapLoading.value = false;
@@ -121,45 +118,44 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                   return;
                 }
 
-                woAutoController.currentPosition.value = CameraPosition(
+                woAuto.currentPosition.value = CameraPosition(
                   target: LatLng(
                     locationData.latitude ?? 0,
                     locationData.longitude ?? 0,
                   ),
                   zoom: 18,
                 );
-                if (woAutoController.mapController.value != null) {
-                  woAutoController.mapController.value!.animateCamera(
+                if (woAuto.mapController.value != null) {
+                  woAuto.mapController.value!.animateCamera(
                     CameraUpdate.newCameraPosition(
-                      woAutoController.currentPosition.value,
+                      woAuto.currentPosition.value,
                     ),
                   );
                 }
               },
               compassEnabled: false,
-              mapType: woAutoController.mapType.value,
+              mapType: woAuto.mapType.value,
               myLocationEnabled: true,
               myLocationButtonEnabled: false,
               zoomControlsEnabled: false,
               padding: const EdgeInsets.only(left: 10, right: 10),
-              markers: woAutoController.markers.toSet(),
+              markers: woAuto.markers.toSet(),
               onTap: (LatLng newPosition) {
                 if (kDebugMode) {
-                  woAutoController.printWoAuto();
+                  woAuto.printWoAuto();
                 }
-                if (woAutoController.snappingSheetController.value.isAttached) {
-                  var snapPos =
-                      woAutoController.snappingSheetController.value.currentSnappingPosition;
+                if (woAuto.snappingSheetController.value.isAttached) {
+                  var snapPos = woAuto.snappingSheetController.value.currentSnappingPosition;
                   var offset = snapPos.grabbingContentOffset;
                   if (offset > 0) {
-                    woAutoController.snappingSheetController.value.snapToPosition(
+                    woAuto.snappingSheetController.value.snapToPosition(
                       resetPosition,
                     );
                     return;
                   }
                 }
                 var textController = TextEditingController();
-                var newNameController = TextEditingController(text: woAutoController.subText.value);
+                var newNameController = TextEditingController(text: woAuto.subText.value);
                 var tillTime = Rxn<TimeOfDay>();
 
                 Get.dialog(
@@ -274,7 +270,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                       ElevatedButton(
                         child: const Text('SPEICHERN'),
                         onPressed: () async {
-                          woAutoController.addMarker(
+                          woAuto.addMarker(
                             newPosition,
                             extra: textController.text,
                             newName: newNameController.text,
@@ -306,7 +302,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                           }
 
                           pop();
-                          GoogleMapController controller = woAutoController.mapController.value!;
+                          GoogleMapController controller = woAuto.mapController.value!;
                           await controller.animateCamera(
                             CameraUpdate.newCameraPosition(
                               CameraPosition(target: newPosition, zoom: 18),

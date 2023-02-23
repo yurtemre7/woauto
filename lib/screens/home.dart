@@ -7,7 +7,7 @@ import 'package:woauto/components/g_map.dart';
 import 'package:woauto/components/map_info_sheet.dart';
 
 import 'package:woauto/components/top_header.dart';
-import 'package:woauto/providers/woauto.dart';
+import 'package:woauto/main.dart';
 import 'package:woauto/providers/yrtmr.dart';
 import 'package:woauto/screens/history.dart';
 import 'package:woauto/screens/settings.dart';
@@ -22,8 +22,6 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   StreamSubscription? _sub;
-
-  WoAuto get woAutoController => Get.find<WoAuto>();
 
   @override
   void initState() {
@@ -59,33 +57,33 @@ class _HomeState extends State<Home> {
           children: [
             const GMap(),
             Visibility(
-              visible: woAutoController.currentIndex.value == 0,
+              visible: woAuto.currentIndex.value == 0,
               maintainSize: true,
               maintainAnimation: true,
               maintainState: true,
               child: const TopHeader(),
             ),
-            if (woAutoController.currentIndex.value == 1) ...[
+            if (woAuto.currentIndex.value == 1) ...[
               const History(),
             ],
-            if (woAutoController.currentIndex.value == 2) ...[
+            if (woAuto.currentIndex.value == 2) ...[
               const Settings(),
             ]
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Visibility(
-          visible: woAutoController.currentIndex.value == 0,
+          visible: woAuto.currentIndex.value == 0,
           child: const MapInfoSheet(),
         ),
         bottomNavigationBar: NavigationBar(
-          selectedIndex: woAutoController.currentIndex.value,
+          selectedIndex: woAuto.currentIndex.value,
           onDestinationSelected: (index) {
-            woAutoController.currentIndex.value = index;
-            var snapPos = woAutoController.snappingSheetController.value.currentSnappingPosition;
+            woAuto.currentIndex.value = index;
+            var snapPos = woAuto.snappingSheetController.value.currentSnappingPosition;
             var offset = snapPos.grabbingContentOffset;
             if (offset > 0) {
-              woAutoController.snappingSheetController.value.snapToPosition(
+              woAuto.snappingSheetController.value.snapToPosition(
                 resetPosition,
               );
             }

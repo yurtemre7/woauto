@@ -4,7 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/text_icon.dart';
-import 'package:woauto/providers/woauto.dart';
+import 'package:woauto/main.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class TopHeader extends StatefulWidget {
@@ -22,16 +22,14 @@ final resetPosition = SnappingPosition.factor(
 );
 
 class _TopHeaderState extends State<TopHeader> {
-  WoAuto get woAutoController => Get.find<WoAuto>();
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        var snapPos = woAutoController.snappingSheetController.value.currentSnappingPosition;
+        var snapPos = woAuto.snappingSheetController.value.currentSnappingPosition;
         var offset = snapPos.grabbingContentOffset;
         if (offset > 0) {
-          woAutoController.snappingSheetController.value.snapToPosition(
+          woAuto.snappingSheetController.value.snapToPosition(
             resetPosition,
           );
           return false;
@@ -91,13 +89,13 @@ class _TopHeaderState extends State<TopHeader> {
               Obx(() {
                 return Expanded(
                   child: Visibility(
-                    visible: woAutoController.pinList.toList().isNotEmpty ||
-                        woAutoController.parkingList.toList().isNotEmpty,
+                    visible: woAuto.pinList.toList().isNotEmpty ||
+                        woAuto.parkingList.toList().isNotEmpty,
                     maintainSize: true,
                     maintainAnimation: true,
                     maintainState: true,
                     child: SnappingSheet(
-                      controller: woAutoController.snappingSheetController.value,
+                      controller: woAuto.snappingSheetController.value,
                       lockOverflowDrag: true,
                       snappingPositions: [
                         resetPosition,
@@ -158,8 +156,8 @@ class _TopHeaderState extends State<TopHeader> {
                               child: Column(children: [
                                 Obx(
                                   () {
-                                    var pinList = woAutoController.pinList.toList();
-                                    var parkingList = woAutoController.parkingList.toList();
+                                    var pinList = woAuto.pinList.toList();
+                                    var parkingList = woAuto.parkingList.toList();
                                     return Column(
                                       children: [
                                         if (parkingList.isNotEmpty) ...[
@@ -241,13 +239,12 @@ class _TopHeaderState extends State<TopHeader> {
                                                           ),
                                                         ),
                                                         onTap: () {
-                                                          woAutoController
-                                                              .snappingSheetController.value
+                                                          woAuto.snappingSheetController.value
                                                               .snapToPosition(
                                                             resetPosition,
                                                           );
                                                           GoogleMapController controller =
-                                                              woAutoController.mapController.value!;
+                                                              woAuto.mapController.value!;
                                                           controller.animateCamera(
                                                             CameraUpdate.newCameraPosition(
                                                               CameraPosition(
@@ -280,28 +277,24 @@ class _TopHeaderState extends State<TopHeader> {
                                                           int num = int.parse(ids[1]);
                                                           String type = ids[0];
                                                           if (type == 'park') {
-                                                            woAutoController.parkingList
-                                                                .removeAt(num);
-                                                            woAutoController.parkings.removeWhere(
+                                                            woAuto.parkingList.removeAt(num);
+                                                            woAuto.parkings.removeWhere(
                                                                 (Marker element) =>
                                                                     element.markerId.value == id);
                                                           } else {
-                                                            woAutoController.pinList.removeAt(num);
-                                                            woAutoController.pins.removeWhere(
+                                                            woAuto.pinList.removeAt(num);
+                                                            woAuto.pins.removeWhere(
                                                                 (Marker element) =>
                                                                     element.markerId.value == id);
                                                           }
 
-                                                          woAutoController.markers.clear();
-                                                          woAutoController.markers
-                                                              .addAll(woAutoController.pins);
-                                                          woAutoController.markers
-                                                              .addAll(woAutoController.parkings);
+                                                          woAuto.markers.clear();
+                                                          woAuto.markers.addAll(woAuto.pins);
+                                                          woAuto.markers.addAll(woAuto.parkings);
 
-                                                          woAutoController.save();
+                                                          woAuto.save();
 
-                                                          woAutoController
-                                                              .snappingSheetController.value
+                                                          woAuto.snappingSheetController.value
                                                               .snapToPosition(
                                                             resetPosition,
                                                           );
@@ -312,7 +305,7 @@ class _TopHeaderState extends State<TopHeader> {
                                                 ),
                                                 onTap: () {
                                                   GoogleMapController controller =
-                                                      woAutoController.mapController.value!;
+                                                      woAuto.mapController.value!;
                                                   controller.animateCamera(
                                                     CameraUpdate.newCameraPosition(
                                                       CameraPosition(
@@ -324,7 +317,7 @@ class _TopHeaderState extends State<TopHeader> {
                                                       ),
                                                     ),
                                                   );
-                                                  woAutoController.snappingSheetController.value
+                                                  woAuto.snappingSheetController.value
                                                       .snapToPosition(
                                                     resetPosition,
                                                   );
@@ -413,7 +406,7 @@ class _TopHeaderState extends State<TopHeader> {
                                                         ),
                                                         onTap: () {
                                                           GoogleMapController controller =
-                                                              woAutoController.mapController.value!;
+                                                              woAuto.mapController.value!;
                                                           controller.animateCamera(
                                                             CameraUpdate.newCameraPosition(
                                                               CameraPosition(
@@ -425,8 +418,7 @@ class _TopHeaderState extends State<TopHeader> {
                                                               ),
                                                             ),
                                                           );
-                                                          woAutoController
-                                                              .snappingSheetController.value
+                                                          woAuto.snappingSheetController.value
                                                               .snapToPosition(
                                                             resetPosition,
                                                           );
@@ -451,28 +443,24 @@ class _TopHeaderState extends State<TopHeader> {
                                                           int num = int.parse(ids[1]);
                                                           String type = ids[0];
                                                           if (type == 'park') {
-                                                            woAutoController.parkingList
-                                                                .removeAt(num);
-                                                            woAutoController.parkings.removeWhere(
+                                                            woAuto.parkingList.removeAt(num);
+                                                            woAuto.parkings.removeWhere(
                                                                 (Marker element) =>
                                                                     element.markerId.value == id);
                                                           } else {
-                                                            woAutoController.pinList.removeAt(num);
-                                                            woAutoController.pins.removeWhere(
+                                                            woAuto.pinList.removeAt(num);
+                                                            woAuto.pins.removeWhere(
                                                                 (Marker element) =>
                                                                     element.markerId.value == id);
                                                           }
 
-                                                          woAutoController.markers.clear();
-                                                          woAutoController.markers
-                                                              .addAll(woAutoController.pins);
-                                                          woAutoController.markers
-                                                              .addAll(woAutoController.parkings);
+                                                          woAuto.markers.clear();
+                                                          woAuto.markers.addAll(woAuto.pins);
+                                                          woAuto.markers.addAll(woAuto.parkings);
 
-                                                          woAutoController.save();
+                                                          woAuto.save();
 
-                                                          woAutoController
-                                                              .snappingSheetController.value
+                                                          woAuto.snappingSheetController.value
                                                               .snapToPosition(
                                                             resetPosition,
                                                           );
@@ -483,7 +471,7 @@ class _TopHeaderState extends State<TopHeader> {
                                                 ),
                                                 onTap: () {
                                                   GoogleMapController controller =
-                                                      woAutoController.mapController.value!;
+                                                      woAuto.mapController.value!;
                                                   controller.animateCamera(
                                                     CameraUpdate.newCameraPosition(
                                                       CameraPosition(
@@ -495,7 +483,7 @@ class _TopHeaderState extends State<TopHeader> {
                                                       ),
                                                     ),
                                                   );
-                                                  woAutoController.snappingSheetController.value
+                                                  woAuto.snappingSheetController.value
                                                       .snapToPosition(
                                                     resetPosition,
                                                   );
@@ -515,7 +503,7 @@ class _TopHeaderState extends State<TopHeader> {
                                             Get.snackbar(
                                               'Wie wird die Entfernung berechnet?',
                                               'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
-                                              snackPosition: SnackPosition.bottom,
+                                              snackPosition: SnackPosition.BOTTOM,
                                               titleText: Text(
                                                 'Wie wird die Entfernung berechnet?',
                                                 style: TextStyle(
