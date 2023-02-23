@@ -154,15 +154,18 @@ class _SettingsState extends State<Settings> {
                               );
                               await woAuto.save();
                               if (!mounted) return;
-                              SystemChrome.setSystemUIOverlayStyle(
-                                SystemUiOverlayStyle(
-                                  systemNavigationBarColor: v == 1
-                                      ? woAuto.dayColorScheme.value.background
-                                      : v == 2
-                                          ? woAuto.nightColorScheme.value.background
-                                          : Theme.of(context).colorScheme.background,
-                                ),
-                              );
+                              Future.delayed(500.milliseconds, () {
+                                SystemChrome.setSystemUIOverlayStyle(
+                                  SystemUiOverlayStyle(
+                                    systemNavigationBarColor: v == 1
+                                        ? woAuto.dayColorScheme.value.background
+                                        : v == 2
+                                            ? woAuto.nightColorScheme.value.background
+                                            : Theme.of(context).colorScheme.background,
+                                  ),
+                                );
+                              });
+
                               // pop();
                             },
                           );
