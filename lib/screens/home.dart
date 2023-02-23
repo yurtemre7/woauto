@@ -50,63 +50,102 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Scaffold(
-        backgroundColor: getBackgroundColor(context),
-        resizeToAvoidBottomInset: false,
-        body: Stack(
-          children: [
-            const GMap(),
-            Visibility(
-              visible: woAuto.currentIndex.value == 0,
-              maintainSize: true,
-              maintainAnimation: true,
-              maintainState: true,
-              child: const TopHeader(),
+      () => WillPopScope(
+        onWillPop: () async {
+          var snapPos = woAuto.snappingSheetController.value.currentSnappingPosition;
+          var offset = snapPos.grabbingContentOffset;
+          if (offset > 0) {
+            woAuto.snappingSheetController.value.snapToPosition(
+              resetPosition,
+            );
+            return false;
+          }
+          if (woAuto.currentIndex.value != 0) {
+            woAuto.currentIndex.value = 0;
+            return false;
+          }
+
+          return await Get.dialog(
+            AlertDialog(
+              title: const Text('App verlassen'),
+              content: const Text('Möchtest du die App verlassen?'),
+              actions: [
+                TextButton(
+                  child: const Text('ABBRECHEN'),
+                  onPressed: () => Get.back(result: false),
+                ),
+                ElevatedButton(
+                  child: const Text('VERLASSEN'),
+                  onPressed: () {
+                    Get.back(result: true);
+                  },
+                ),
+              ],
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
             ),
-            if (woAuto.currentIndex.value == 1) ...[
-              const History(),
+            name: 'App verlassen',
+          );
+        },
+        child: Scaffold(
+          backgroundColor: getBackgroundColor(context),
+          resizeToAvoidBottomInset: false,
+          body: Stack(
+            children: [
+              const GMap(),
+              Visibility(
+                visible: woAuto.currentIndex.value == 0,
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                child: const TopHeader(),
+              ),
+              if (woAuto.currentIndex.value == 1) ...[
+                const History(),
+              ],
+              if (woAuto.currentIndex.value == 2) ...[
+                const Settings(),
+              ]
             ],
-            if (woAuto.currentIndex.value == 2) ...[
-              const Settings(),
-            ]
-          ],
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Visibility(
-          visible: woAuto.currentIndex.value == 0,
-          child: const MapInfoSheet(),
-        ),
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: woAuto.currentIndex.value,
-          onDestinationSelected: (index) {
-            woAuto.currentIndex.value = index;
-            var snapPos = woAuto.snappingSheetController.value.currentSnappingPosition;
-            var offset = snapPos.grabbingContentOffset;
-            if (offset > 0) {
-              woAuto.snappingSheetController.value.snapToPosition(
-                resetPosition,
-              );
-            }
-          },
-          backgroundColor: Theme.of(context).colorScheme.background,
-          surfaceTintColor: Theme.of(context).colorScheme.background,
-          destinations: const [
-            NavigationDestination(
-              icon: Icon(Icons.map_outlined),
-              label: 'Karte',
-              tooltip: 'Karte',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.history),
-              label: 'Historie',
-              tooltip: 'Historie',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.settings),
-              label: 'Einstellungen',
-              tooltip: 'Einstellungen',
-            ),
-          ],
+          ),
+          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          floatingActionButton: Visibility(
+            visible: woAuto.currentIndex.value == 0,
+            child: const MapInfoSheet(),
+          ),
+          bottomNavigationBar: NavigationBar(
+            selectedIndex: woAuto.currentIndex.value,
+            onDestinationSelected: (index) {
+              woAuto.currentIndex.value = index;
+              var snapPos = woAuto.snappingSheetController.value.currentSnappingPosition;
+              var offset = snapPos.grabbingContentOffset;
+              if (offset > 0) {
+                woAuto.snappingSheetController.value.snapToPosition(
+                  resetPosition,
+                );
+              }
+            },
+            backgroundColor: Theme.of(context).colorScheme.background,
+            surfaceTintColor: Theme.of(context).colorScheme.background,
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(Icons.map_outlined),
+                label: 'Karte',
+                tooltip: 'Karte',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.history),
+                label: 'Historie',
+                tooltip: 'Historie',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.settings),
+                label: 'Einstellungen',
+                tooltip: 'Einstellungen',
+              ),
+            ],
+          ),
         ),
       ),
     );
