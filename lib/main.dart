@@ -29,28 +29,32 @@ class MyApp extends StatelessWidget {
     return DynamicColorBuilder(
       builder: (lightDynamic, darkDynamic) {
         return Obx(
-          () => GetMaterialApp(
-            title: 'WoAuto',
-            theme: ThemeData(
-              brightness: Brightness.light,
-              useMaterial3: woAuto.android13Theme.value,
-              colorScheme: lightDynamic,
-            ),
-            darkTheme: ThemeData(
-              brightness: Brightness.dark,
-              useMaterial3: woAuto.android13Theme.value,
-              colorScheme: darkDynamic,
-            ),
-            themeMode: getThemeMode(woAuto.themeMode.value),
-            home: woAuto.welcome.value ? const Intro() : const Home(),
-            logWriterCallback: (text, {isError = false}) {
-              if (isError == true) {
-                log(text, name: 'ERROR');
-              } else {
-                log(text, name: 'INFO');
-              }
-            },
-          ),
+          () {
+            woAuto.dayColorScheme.value = lightDynamic ?? const ColorScheme.light();
+            woAuto.nightColorScheme.value = darkDynamic ?? const ColorScheme.dark();
+            return GetMaterialApp(
+              title: 'WoAuto',
+              theme: ThemeData(
+                brightness: Brightness.light,
+                useMaterial3: woAuto.android13Theme.value,
+                colorScheme: lightDynamic,
+              ),
+              darkTheme: ThemeData(
+                brightness: Brightness.dark,
+                useMaterial3: woAuto.android13Theme.value,
+                colorScheme: darkDynamic,
+              ),
+              themeMode: getThemeMode(woAuto.themeMode.value),
+              home: woAuto.welcome.value ? const Intro() : const Home(),
+              logWriterCallback: (text, {isError = false}) {
+                if (isError == true) {
+                  log(text, name: 'ERROR');
+                } else {
+                  log(text, name: 'INFO');
+                }
+              },
+            );
+          },
         );
       },
     );
