@@ -51,6 +51,8 @@ class WoAuto extends GetxController {
 
   // data
   final currentVelocity = 0.0.obs;
+  final dayColorScheme = const ColorScheme.light().obs;
+  final nightColorScheme = const ColorScheme.dark().obs;
 
   late SharedPreferences sp;
 

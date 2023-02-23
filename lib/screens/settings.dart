@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
@@ -143,7 +144,7 @@ class _SettingsState extends State<Settings> {
                             ],
                             onChanged: (v) async {
                               woAuto.themeMode.value = v!;
-                              if (woAuto.mapController.value == null) return;
+
                               await woAuto.setMapStyle(
                                 brightness: v == 1
                                     ? Brightness.light
@@ -152,6 +153,16 @@ class _SettingsState extends State<Settings> {
                                         : null,
                               );
                               await woAuto.save();
+                              if (!mounted) return;
+                              SystemChrome.setSystemUIOverlayStyle(
+                                SystemUiOverlayStyle(
+                                  systemNavigationBarColor: v == 1
+                                      ? woAuto.dayColorScheme.value.background
+                                      : v == 2
+                                          ? woAuto.nightColorScheme.value.background
+                                          : Theme.of(context).colorScheme.background,
+                                ),
+                              );
                               // pop();
                             },
                           );
