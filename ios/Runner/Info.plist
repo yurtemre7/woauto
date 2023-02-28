@@ -53,6 +53,8 @@
 		<string>Damit die App deinen eigenen Standord herausfinden kann und auf der Karte anzeigen kann. Dies wird dann nur während die App geöffnet ist genutzt.</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true />
+		<key>ITSAppUsesNonExemptEncryption</key>
+		<false />
 		<key>CFBundleURLTypes</key>
 		<array>
 			<dict>
