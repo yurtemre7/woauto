@@ -51,5 +51,20 @@
 		<true />
 		<key>NSLocationWhenInUseUsageDescription</key>
 		<string>Damit die App deinen eigenen Standord herausfinden kann und auf der Karte anzeigen kann. Dies wird dann nur während die App geöffnet ist genutzt.</string>
+		<key>UIApplicationSupportsIndirectInputEvents</key>
+		<true />
+		<key>CFBundleURLTypes</key>
+		<array>
+			<dict>
+				<key>CFBundleTypeRole</key>
+				<string>Editor</string>
+				<key>CFBundleURLName</key>
+				<string>deeplink.yurtemre.de</string>
+				<key>CFBundleURLSchemes</key>
+				<array>
+					<string>yrtmr</string>
+				</array>
+			</dict>
+		</array>
 	</dict>
 </plist>

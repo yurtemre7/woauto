@@ -70,9 +70,10 @@ dev_dependencies:
 
 flutter_icons:
   android: true
-  ios: false
+  ios: true
   image_path: "assets/icon.png"
   min_sdk_android: 21
+  remove_alpha_ios: true
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

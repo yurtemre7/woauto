@@ -1,14 +1,16 @@
 PODS:
+  - file_saver (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - geocoding (1.0.5):
     - Flutter
   - google_maps_flutter_ios (0.0.1):
     - Flutter
     - GoogleMaps
-  - GoogleMaps (4.2.0):
-    - GoogleMaps/Maps (= 4.2.0)
-  - GoogleMaps/Base (4.2.0)
-  - GoogleMaps/Maps (4.2.0):
+  - GoogleMaps (5.2.0):
+    - GoogleMaps/Maps (= 5.2.0)
+  - GoogleMaps/Base (5.2.0)
+  - GoogleMaps/Maps (5.2.0):
     - GoogleMaps/Base
   - location (0.0.1):
     - Flutter
@@ -28,6 +30,7 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
+  - file_saver (from `.symlinks/plugins/file_saver/ios`)
   - Flutter (from `Flutter`)
   - geocoding (from `.symlinks/plugins/geocoding/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
@@ -44,6 +47,8 @@ SPEC REPOS:
     - GoogleMaps
 
 EXTERNAL SOURCES:
+  file_saver:
+    :path: ".symlinks/plugins/file_saver/ios"
   Flutter:
     :path: Flutter
   geocoding:
@@ -66,18 +71,19 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
+  file_saver: 503e386464dbe118f630e17b4c2e1190fa0cf808
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   geocoding: 32cfcdb16d38d907caaba65e2e42ad10d38bee58
-  google_maps_flutter_ios: 66201f392bf62d500f07670a30488a247b9bb5b9
-  GoogleMaps: eb03e327edfd70b06de1e6e321653f73712df7ad
+  google_maps_flutter_ios: 53f75334bad87ccd0473f4b0142756169846b42b
+  GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
-  path_provider_foundation: 37748e03f12783f9de2cb2c4eadfaa25fe6d4852
+  path_provider_foundation: c68054786f1b4f3343858c1e1d0caaded73f0be9
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
-  shared_preferences_foundation: 297b3ebca31b34ec92be11acd7fb0ba932c822ca
+  shared_preferences_foundation: 986fc17f3d3251412d18b0265f9c64113a8c2472
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
-  url_launcher_ios: ae1517e5e344f5544fb090b079e11f399dfbe4d2
+  url_launcher_ios: 08a3dfac5fb39e8759aeb0abbd5d9480f30fc8b4
 
 PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.12.0
