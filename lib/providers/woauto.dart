@@ -44,7 +44,6 @@ class WoAuto extends GetxController {
 
   // settings
   final subText = 'Mein Auto'.obs;
-  final android13Theme = false.obs;
   final themeMode = 0.obs;
   final mapType = MapType.normal.obs;
   final showTraffic = false.obs;
@@ -73,7 +72,6 @@ class WoAuto extends GetxController {
   String toJson() {
     return json.encode({
       'subText': subText.value,
-      'android13Theme': android13Theme.value,
       'themeMode': themeMode.value,
       'parkings': parkingList,
       'pins': pinList,
@@ -121,7 +119,6 @@ class WoAuto extends GetxController {
 
     woAuto.subText.value = jsonMap['subText'] ?? 'Mein Auto';
     // settings
-    woAuto.android13Theme.value = jsonMap['android13Theme'] ?? false;
     woAuto.themeMode.value = jsonMap['themeMode'] ?? 0;
 
     return woAuto;
@@ -163,7 +160,6 @@ class WoAuto extends GetxController {
         log('Pins[$i]: ${pins.elementAt(i).position}', name: 'GetX Controller');
       }
     }
-    log('Android 13 Theme: $android13Theme', name: 'GetX Controller');
     log('Theme Mode: $themeMode', name: 'GetX Controller');
     log('Welcome: $welcome', name: 'GetX Controller');
     log('Park History length: ${parkHistory.length}', name: 'GetX Controller');
@@ -174,7 +170,6 @@ class WoAuto extends GetxController {
   /// Resets the WoAuto provider
   reset() async {
     subText.value = 'Mein Auto';
-    android13Theme.value = false;
     themeMode.value = 0;
 
     parkingList.clear();

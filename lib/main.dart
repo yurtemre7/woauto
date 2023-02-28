@@ -36,12 +36,12 @@ class MyApp extends StatelessWidget {
               title: 'WoAuto',
               theme: ThemeData(
                 brightness: Brightness.light,
-                useMaterial3: woAuto.android13Theme.value,
+                useMaterial3: true,
                 colorScheme: lightDynamic,
               ),
               darkTheme: ThemeData(
                 brightness: Brightness.dark,
-                useMaterial3: woAuto.android13Theme.value,
+                useMaterial3: true,
                 colorScheme: darkDynamic,
               ),
               themeMode: getThemeMode(woAuto.themeMode.value),

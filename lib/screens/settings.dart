@@ -108,22 +108,6 @@ class _SettingsState extends State<Settings> {
                         },
                       ),
                       Obx(
-                        () => SwitchListTile(
-                          value: woAuto.android13Theme.value,
-                          title: Text(
-                            'Android 13 Design ${isAndroid() ? '' : '\n(ja auch für dich iOS Nutzer)'}',
-                          ),
-                          subtitle: const Text(
-                            'Entscheide selbst, ob du das neue Android 13 Design verwenden möchtest.',
-                          ),
-                          onChanged: (v) async {
-                            woAuto.android13Theme.value = v;
-                            await woAuto.save();
-                            // pop();
-                          },
-                        ),
-                      ),
-                      Obx(
                         () {
                           var themeMode = woAuto.themeMode.value;
                           DropdownButton<int> dropdownButton = DropdownButton<int>(
