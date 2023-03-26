@@ -5,6 +5,7 @@ import 'package:to_csv/to_csv.dart';
 import 'package:woauto/classes/park.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class History extends StatefulWidget {
@@ -76,7 +77,7 @@ class _HistoryState extends State<History> {
             SliverList(
               delegate: SliverChildListDelegate.fixed(
                 [
-                  const SizedBox(height: 10),
+                  16.h,
                   Obx(
                     () {
                       var history = woAuto.parkHistory.reversed.toList();
@@ -224,7 +225,7 @@ class _HistoryState extends State<History> {
                               },
                             ),
                           ],
-                          const SizedBox(height: 10),
+                          16.h,
                         ],
                       );
                     },

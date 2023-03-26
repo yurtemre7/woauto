@@ -9,6 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:woauto/components/top_header.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class GMap extends StatefulWidget {
@@ -199,7 +200,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                                   ),
                                 ),
                                 if (isAndroid()) ...[
-                                  const SizedBox(height: 5),
+                                  16.h,
                                   Wrap(
                                     alignment: WrapAlignment.center,
                                     children: [
@@ -256,7 +257,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 10),
+                          16.h,
                         ],
                       ),
                     ),

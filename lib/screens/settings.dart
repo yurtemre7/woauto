@@ -6,6 +6,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class Settings extends StatefulWidget {
@@ -52,7 +53,7 @@ class _SettingsState extends State<Settings> {
             SliverList(
               delegate: SliverChildListDelegate.fixed(
                 [
-                  const SizedBox(height: 10),
+                  16.h,
                   Column(
                     children: [
                       ListTile(
@@ -466,7 +467,7 @@ class _SettingsState extends State<Settings> {
                           );
                         },
                       ),
-                      const SizedBox(height: 10),
+                      16.h,
                     ],
                   ),
                 ],

@@ -4,6 +4,7 @@ import 'package:introduction_screen/introduction_screen.dart';
 import 'package:location/location.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class Intro extends StatefulWidget {
@@ -113,7 +114,7 @@ class _IntroState extends State<Intro> {
                       'Setze dir einen coolen Parkplatz-Titel für dein Auto.',
                       style: TextStyle(),
                     ),
-                    const SizedBox(height: 10),
+                    16.h,
                     TextFormField(
                       controller: tec,
                       maxLength: 30,
@@ -123,7 +124,7 @@ class _IntroState extends State<Intro> {
                         border: OutlineInputBorder(),
                       ),
                     ),
-                    const SizedBox(height: 10),
+                    16.h,
                     const Text(
                       'App-Theme einstellen',
                       style: TextStyle(
@@ -169,7 +170,7 @@ class _IntroState extends State<Intro> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 20),
+                    16.h,
                     const Text(
                       'Echtzeit-Standortabfragen erlauben',
                       style: TextStyle(fontSize: 20),
@@ -178,7 +179,7 @@ class _IntroState extends State<Intro> {
                     const Text(
                       'Erlaube der App, deinen Standort in Echtzeit während der App-Nutzung abzufragen. Dies ist notwendig, um deinen Parkplatz zu finden und die Karte zu laden.',
                     ),
-                    const SizedBox(height: 10),
+                    16.h,
                     Obx(
                       () => CheckboxListTile(
                         contentPadding: EdgeInsets.zero,
