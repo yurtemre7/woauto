@@ -84,23 +84,18 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(20),
+        color: context.theme.colorScheme.background,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
         // border: Border.all(
         //   color: Colors.grey.withOpacity(0.3),
         // ),
       ),
-      child: Card(
-        elevation: 4,
-        margin: EdgeInsets.zero,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(20),
-            topRight: Radius.circular(20),
-          ),
-        ),
-        child: Container(
-          padding: const EdgeInsets.all(16),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        child: Material(
           child: SingleChildScrollView(
             child: Column(children: [
               Obx(
