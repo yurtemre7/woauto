@@ -36,13 +36,14 @@ class _TopHeaderState extends State<TopHeader> {
                     Text(
                       'WoAuto',
                       style: TextStyle(
-                        fontSize: 20.0,
+                        fontSize: 24.0,
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
+                        color: context.theme.colorScheme.primary,
                       ),
                     ),
                     Obx(
                       () => IconButton(
+                        tooltip: 'Parkplätze & Pins',
                         style: IconButton.styleFrom(
                           foregroundColor: context.theme.colorScheme.primary,
                           disabledForegroundColor: Colors.grey.withOpacity(0.3),
@@ -59,6 +60,7 @@ class _TopHeaderState extends State<TopHeader> {
                         icon: const Icon(
                           Icons.directions_car_outlined,
                         ),
+                        iconSize: 30,
                       ),
                     ),
                   ],
