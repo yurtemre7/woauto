@@ -344,12 +344,13 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                 );
 
                                 int minutesLeft = 0;
-                                if (differenceInSecondsFromNow > 600) {
-                                  differenceInSecondsFromNow -= 600;
-                                  minutesLeft = 10;
+                                int minutes = woAuto.timePuffer.value * 60;
+                                if (differenceInSecondsFromNow > minutes) {
+                                  differenceInSecondsFromNow -= minutes;
+                                  minutesLeft = woAuto.timePuffer.value;
                                 } else if (differenceInSecondsFromNow < 0) {
-                                  differenceInSecondsFromNow += 86400 - 600;
-                                  minutesLeft = 10;
+                                  differenceInSecondsFromNow += 86400 - minutes;
+                                  minutesLeft = woAuto.timePuffer.value;
                                 } else {
                                   minutesLeft = differenceInSecondsFromNow ~/ 60;
                                 }

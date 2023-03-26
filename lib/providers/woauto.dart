@@ -45,6 +45,7 @@ class WoAuto extends GetxController {
   final themeMode = 0.obs;
   final mapType = MapType.normal.obs;
   final showTraffic = false.obs;
+  final timePuffer = 10.obs;
 
   // data
   final currentVelocity = 0.0.obs;
@@ -75,6 +76,7 @@ class WoAuto extends GetxController {
       'pins': pinList,
       'parkHistory': parkHistory,
       'welcome': welcome.value,
+      'timePuffer': timePuffer.value,
     });
   }
 
@@ -87,6 +89,7 @@ class WoAuto extends GetxController {
     woAuto.parkingList.addAll(jsonMap['parkings'] ?? []);
     woAuto.pinList.addAll(jsonMap['pins'] ?? []);
     woAuto.welcome.value = jsonMap['welcome'] ?? true;
+    woAuto.timePuffer.value = jsonMap['timePuffer'] ?? 10;
     List history = jsonMap['parkHistory'] ?? [];
     for (int i = 0; i < history.length; i++) {
       woAuto.parkHistory.add(Park.fromJson(history[i]));
@@ -161,6 +164,7 @@ class WoAuto extends GetxController {
     log('Theme Mode: $themeMode', name: 'GetX Controller');
     log('Welcome: $welcome', name: 'GetX Controller');
     log('Park History length: ${parkHistory.length}', name: 'GetX Controller');
+    log('Time Puffer: $timePuffer', name: 'GetX Controller');
 
     log('---' * 15, name: 'GetX Controller');
   }
@@ -169,6 +173,7 @@ class WoAuto extends GetxController {
   reset() async {
     subText.value = 'Mein Auto';
     themeMode.value = 0;
+    timePuffer.value = 10;
 
     parkingList.clear();
     pinList.clear();

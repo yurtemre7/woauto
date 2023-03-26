@@ -217,6 +217,53 @@ class _SettingsState extends State<Settings> {
                           },
                         ),
                       ),
+                      Obx(
+                        () {
+                          var time = woAuto.timePuffer.value;
+                          DropdownButton<int> dropdownButton = DropdownButton<int>(
+                            value: time,
+                            items: const [
+                              DropdownMenuItem(
+                                value: 5,
+                                child: Text('5 Minuten'),
+                              ),
+                              DropdownMenuItem(
+                                value: 10,
+                                child: Text('10 Minuten'),
+                              ),
+                              DropdownMenuItem(
+                                value: 15,
+                                child: Text('15 Minuten'),
+                              ),
+                              DropdownMenuItem(
+                                value: 20,
+                                child: Text('20 Minuten'),
+                              ),
+                              DropdownMenuItem(
+                                value: 25,
+                                child: Text('25 Minuten'),
+                              ),
+                              DropdownMenuItem(
+                                value: 30,
+                                child: Text('30 Minuten'),
+                              ),
+                            ],
+                            onChanged: (v) {
+                              woAuto.timePuffer.value = v!;
+                              woAuto.save();
+                              // pop();
+                            },
+                          );
+
+                          return ListTile(
+                            title: const Text('Parkticket Zeitpuffer'),
+                            subtitle: const Text(
+                              'Lege einen Zeitpuffer fest, damit du vor dem Parkticketablauf noch Zeit hast, das Ticket zu erneuern oder zum Auto zurückzukehren.',
+                            ),
+                            trailing: dropdownButton,
+                          );
+                        },
+                      ),
                       const Div(),
                       Obx(
                         () => ListTile(
