@@ -481,7 +481,7 @@ class _TopHeaderState extends State<TopHeader> {
                                                     color: Theme.of(context).colorScheme.secondary,
                                                   ),
                                                 ),
-                                                const SizedBox(height: 10),
+                                                const SizedBox(height: 16),
                                                 Text(
                                                   'Tippe um mehr zu erfahren.',
                                                   style: TextStyle(
@@ -506,7 +506,7 @@ class _TopHeaderState extends State<TopHeader> {
                                           );
                                         },
                                       ),
-                                      const SizedBox(height: 10),
+                                      const SizedBox(height: 16),
                                     ],
                                   );
                                 },
