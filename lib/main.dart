@@ -2,17 +2,36 @@ import 'dart:developer';
 
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/screens/home.dart';
 import 'package:woauto/screens/intro.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:woauto/utils/utilities.dart';
 
 late WoAuto woAuto;
+late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   woAuto = Get.put(await WoAuto.load());
+  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+  tz.initializeTimeZones();
+  try {
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+    const InitializationSettings initializationSettings = InitializationSettings(
+      android: AndroidInitializationSettings('monochrome'),
+    );
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+    );
+  } catch (e) {
+    log('Couldn\'t create Notification Channel or Initialize Android Notification Settings: $e');
+  }
   runApp(const MyApp());
 }
 

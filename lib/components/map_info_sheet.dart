@@ -1,13 +1,14 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_alarm_clock/flutter_alarm_clock.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 class MapInfoSheet extends StatefulWidget {
   const MapInfoSheet({super.key});
@@ -303,9 +304,58 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                 //   title = 'Dein Parkticket ist abgelaufen.';
                                 // }
 
-                                FlutterAlarmClock.createTimer(
-                                  differenceInSecondsFromNow,
-                                  title: title,
+                                var res = await flutterLocalNotificationsPlugin
+                                    .resolvePlatformSpecificImplementation<
+                                        AndroidFlutterLocalNotificationsPlugin>()
+                                    ?.requestPermission();
+
+                                if (res == null || res == false) {
+                                  Get.dialog(
+                                    AlertDialog(
+                                      title: const Text('Benachrichtigungen'),
+                                      content: const Text(
+                                        'Um dir eine Benachrichtigung zu schicken, wenn dein Parkticket abläuft, '
+                                        'muss die App die Benachrichtigungen erlauben. '
+                                        'Bitte erlaube die Benachrichtigungen und versuche es erneut.',
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            pop();
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                    name: 'Info Parkticket',
+                                  );
+                                  return;
+                                }
+
+                                await flutterLocalNotificationsPlugin.cancelAll();
+
+                                // FlutterAlarmClock.createTimer(
+                                //   differenceInSecondsFromNow,
+                                //   title: title,
+                                // );
+
+                                await flutterLocalNotificationsPlugin.zonedSchedule(
+                                  0,
+                                  'Parkticket abgelaufen',
+                                  'Dein Parkticket ist abgelaufen.',
+                                  tz.TZDateTime.now(tz.local)
+                                      .add(Duration(seconds: differenceInSecondsFromNow)),
+                                  NotificationDetails(
+                                    android: AndroidNotificationDetails(
+                                      channel.id,
+                                      channel.name,
+                                      channelDescription: channel.description,
+                                      importance: channel.importance,
+                                    ),
+                                  ),
+                                  androidAllowWhileIdle: true,
+                                  uiLocalNotificationDateInterpretation:
+                                      UILocalNotificationDateInterpretation.absoluteTime,
                                 );
                               }
 

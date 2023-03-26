@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -31,6 +32,13 @@ void pushReplacement(Widget page) => Get.offAll(() => page);
 
 double maxHeightSheet = Get.size.height * 0.7;
 const double minHeightSheet = 107;
+
+const AndroidNotificationChannel channel = AndroidNotificationChannel(
+  'woauto_notifs', // id
+  'WoAuto Notification Channel', // title
+  description: 'This channel is used for WoAuto Notifications.', // description
+  importance: Importance.max,
+);
 
 Color? getBackgroundColor(context) {
   if (woAuto.themeMode.value != 0) {

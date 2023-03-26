@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:woauto/components/g_map.dart';
 import 'package:woauto/components/map_info_sheet.dart';
@@ -29,6 +31,14 @@ class _HomeState extends State<Home> {
 
     YrtmrDeeplinks.initYrtmrLinks();
     _sub = YrtmrDeeplinks.yrtmrLinksListener();
+
+    Future.delayed(0.seconds, () async {
+      NotificationAppLaunchDetails? notificationAppLaunchDetails =
+          await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+      if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+        log('Notification launched app');
+      }
+    });
   }
 
   @override
