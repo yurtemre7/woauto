@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:location/location.dart';
@@ -17,6 +18,7 @@ class Intro extends StatefulWidget {
 class _IntroState extends State<Intro> {
   var tec = TextEditingController(text: '');
   final allowed = false.obs;
+  final notifAllowed = false.obs;
   final showError = false.obs;
 
   @override
@@ -205,7 +207,27 @@ class _IntroState extends State<Intro> {
                           showError.value = !allowed.value;
                         },
                       ),
-                    )
+                    ),
+                    Obx(
+                      () => CheckboxListTile(
+                        contentPadding: EdgeInsets.zero,
+                        title: const Text('Benachrichtigungen erlauben (optional)'),
+                        value: notifAllowed.value,
+                        onChanged: (val) async {
+                          if (val == null) return;
+
+                          if (!val) {
+                            notifAllowed.value = val;
+                            return;
+                          }
+                          var v = await flutterLocalNotificationsPlugin
+                              .resolvePlatformSpecificImplementation<
+                                  AndroidFlutterLocalNotificationsPlugin>()
+                              ?.requestPermission();
+                          notifAllowed.value = v ?? false;
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
