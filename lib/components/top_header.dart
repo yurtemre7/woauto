@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/text_icon.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/utils/utilities.dart';
 
 class TopHeader extends StatefulWidget {
   const TopHeader({super.key});
@@ -132,14 +133,63 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
-                              trailing: PopupMenuButton(
+                              trailing: PopupMenuButton<int>(
                                 icon: Icon(
                                   Icons.more_vert_outlined,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
+                                onSelected: (value) {
+                                  switch (value) {
+                                    case 0:
+                                      launchUrl(
+                                        Uri.parse(
+                                          'https://www.google.com/maps?q=${element['lat']},${element['long']}',
+                                        ),
+                                        mode: LaunchMode.externalApplication,
+                                      );
+                                      break;
+                                    case 1:
+                                      GoogleMapController controller = woAuto.mapController.value!;
+                                      controller.animateCamera(
+                                        CameraUpdate.newCameraPosition(
+                                          CameraPosition(
+                                            target: LatLng(
+                                              element['lat'],
+                                              element['long'],
+                                            ),
+                                            zoom: 18,
+                                          ),
+                                        ),
+                                      );
+                                      break;
+                                    case 2:
+                                      var id = element['id'].toString();
+                                      var ids = id.split(',');
+                                      int num = int.parse(ids[1]);
+                                      String type = ids[0];
+                                      if (type == 'park') {
+                                        woAuto.parkingList.removeAt(num);
+                                        woAuto.parkings.removeWhere(
+                                            (Marker element) => element.markerId.value == id);
+                                      } else {
+                                        woAuto.pinList.removeAt(num);
+                                        woAuto.pins.removeWhere(
+                                            (Marker element) => element.markerId.value == id);
+                                      }
+
+                                      woAuto.markers.clear();
+                                      woAuto.markers.addAll(woAuto.pins);
+                                      woAuto.markers.addAll(woAuto.parkings);
+
+                                      woAuto.save();
+                                      break;
+                                  }
+                                  pop();
+                                },
                                 itemBuilder: (context) {
                                   return [
                                     PopupMenuItem(
+                                      value: 0,
                                       child: TextIcon(
                                         icon: Icon(
                                           Icons.map_outlined,
@@ -152,16 +202,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                           ),
                                         ),
                                       ),
-                                      onTap: () {
-                                        launchUrl(
-                                          Uri.parse(
-                                            'https://www.google.com/maps?q=${element['lat']},${element['long']}',
-                                          ),
-                                          mode: LaunchMode.externalApplication,
-                                        );
-                                      },
                                     ),
                                     PopupMenuItem(
+                                      value: 1,
                                       child: TextIcon(
                                         icon: Icon(
                                           Icons.navigation_outlined,
@@ -174,24 +217,10 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                           ),
                                         ),
                                       ),
-                                      onTap: () {
-                                        GoogleMapController controller =
-                                            woAuto.mapController.value!;
-                                        controller.animateCamera(
-                                          CameraUpdate.newCameraPosition(
-                                            CameraPosition(
-                                              target: LatLng(
-                                                element['lat'],
-                                                element['long'],
-                                              ),
-                                              zoom: 18,
-                                            ),
-                                          ),
-                                        );
-                                      },
                                     ),
-                                    PopupMenuItem(
-                                      child: const TextIcon(
+                                    const PopupMenuItem(
+                                      value: 2,
+                                      child: TextIcon(
                                         icon: Icon(
                                           Icons.delete_outline,
                                           color: Colors.red,
@@ -203,27 +232,6 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                           ),
                                         ),
                                       ),
-                                      onTap: () {
-                                        var id = element['id'].toString();
-                                        var ids = id.split(',');
-                                        int num = int.parse(ids[1]);
-                                        String type = ids[0];
-                                        if (type == 'park') {
-                                          woAuto.parkingList.removeAt(num);
-                                          woAuto.parkings.removeWhere(
-                                              (Marker element) => element.markerId.value == id);
-                                        } else {
-                                          woAuto.pinList.removeAt(num);
-                                          woAuto.pins.removeWhere(
-                                              (Marker element) => element.markerId.value == id);
-                                        }
-
-                                        woAuto.markers.clear();
-                                        woAuto.markers.addAll(woAuto.pins);
-                                        woAuto.markers.addAll(woAuto.parkings);
-
-                                        woAuto.save();
-                                      },
                                     ),
                                   ];
                                 },
@@ -241,6 +249,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                     ),
                                   ),
                                 );
+                                pop();
                               },
                             );
                           },
@@ -273,14 +282,63 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
-                              trailing: PopupMenuButton(
+                              trailing: PopupMenuButton<int>(
                                 icon: Icon(
                                   Icons.more_vert_outlined,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
+                                onSelected: (value) {
+                                  switch (value) {
+                                    case 0:
+                                      launchUrl(
+                                        Uri.parse(
+                                          'https://www.google.com/maps?q=${element['lat']},${element['long']}',
+                                        ),
+                                        mode: LaunchMode.externalApplication,
+                                      );
+                                      break;
+                                    case 1:
+                                      GoogleMapController controller = woAuto.mapController.value!;
+                                      controller.animateCamera(
+                                        CameraUpdate.newCameraPosition(
+                                          CameraPosition(
+                                            target: LatLng(
+                                              element['lat'],
+                                              element['long'],
+                                            ),
+                                            zoom: 18,
+                                          ),
+                                        ),
+                                      );
+                                      break;
+                                    case 2:
+                                      var id = element['id'].toString();
+                                      var ids = id.split(',');
+                                      int num = int.parse(ids[1]);
+                                      String type = ids[0];
+                                      if (type == 'park') {
+                                        woAuto.parkingList.removeAt(num);
+                                        woAuto.parkings.removeWhere(
+                                            (Marker element) => element.markerId.value == id);
+                                      } else {
+                                        woAuto.pinList.removeAt(num);
+                                        woAuto.pins.removeWhere(
+                                            (Marker element) => element.markerId.value == id);
+                                      }
+
+                                      woAuto.markers.clear();
+                                      woAuto.markers.addAll(woAuto.pins);
+                                      woAuto.markers.addAll(woAuto.parkings);
+
+                                      woAuto.save();
+                                      break;
+                                  }
+                                  pop();
+                                },
                                 itemBuilder: (context) {
                                   return [
                                     PopupMenuItem(
+                                      value: 0,
                                       child: TextIcon(
                                         icon: Icon(
                                           Icons.map_outlined,
@@ -293,16 +351,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                           ),
                                         ),
                                       ),
-                                      onTap: () {
-                                        launchUrl(
-                                          Uri.parse(
-                                            'https://www.google.com/maps?q=${element['lat']},${element['long']}',
-                                          ),
-                                          mode: LaunchMode.externalApplication,
-                                        );
-                                      },
                                     ),
                                     PopupMenuItem(
+                                      value: 1,
                                       child: TextIcon(
                                         icon: Icon(
                                           Icons.navigation_outlined,
@@ -315,24 +366,10 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                           ),
                                         ),
                                       ),
-                                      onTap: () {
-                                        GoogleMapController controller =
-                                            woAuto.mapController.value!;
-                                        controller.animateCamera(
-                                          CameraUpdate.newCameraPosition(
-                                            CameraPosition(
-                                              target: LatLng(
-                                                element['lat'],
-                                                element['long'],
-                                              ),
-                                              zoom: 18,
-                                            ),
-                                          ),
-                                        );
-                                      },
                                     ),
-                                    PopupMenuItem(
-                                      child: const TextIcon(
+                                    const PopupMenuItem(
+                                      value: 2,
+                                      child: TextIcon(
                                         icon: Icon(
                                           Icons.delete_outline,
                                           color: Colors.red,
@@ -344,27 +381,6 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                           ),
                                         ),
                                       ),
-                                      onTap: () {
-                                        var id = element['id'].toString();
-                                        var ids = id.split(',');
-                                        int num = int.parse(ids[1]);
-                                        String type = ids[0];
-                                        if (type == 'park') {
-                                          woAuto.parkingList.removeAt(num);
-                                          woAuto.parkings.removeWhere(
-                                              (Marker element) => element.markerId.value == id);
-                                        } else {
-                                          woAuto.pinList.removeAt(num);
-                                          woAuto.pins.removeWhere(
-                                              (Marker element) => element.markerId.value == id);
-                                        }
-
-                                        woAuto.markers.clear();
-                                        woAuto.markers.addAll(woAuto.pins);
-                                        woAuto.markers.addAll(woAuto.parkings);
-
-                                        woAuto.save();
-                                      },
                                     ),
                                   ];
                                 },
