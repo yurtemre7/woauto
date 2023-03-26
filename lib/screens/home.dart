@@ -52,14 +52,6 @@ class _HomeState extends State<Home> {
     return Obx(
       () => WillPopScope(
         onWillPop: () async {
-          var snapPos = woAuto.snappingSheetController.value.currentSnappingPosition;
-          var offset = snapPos.grabbingContentOffset;
-          if (offset > 0) {
-            woAuto.snappingSheetController.value.snapToPosition(
-              resetPosition,
-            );
-            return false;
-          }
           if (woAuto.currentIndex.value != 0) {
             woAuto.currentIndex.value = 0;
             return false;
@@ -122,13 +114,6 @@ class _HomeState extends State<Home> {
             selectedIndex: woAuto.currentIndex.value,
             onDestinationSelected: (index) {
               woAuto.currentIndex.value = index;
-              var snapPos = woAuto.snappingSheetController.value.currentSnappingPosition;
-              var offset = snapPos.grabbingContentOffset;
-              if (offset > 0) {
-                woAuto.snappingSheetController.value.snapToPosition(
-                  resetPosition,
-                );
-              }
             },
             backgroundColor: Theme.of(context).colorScheme.background,
             surfaceTintColor: Theme.of(context).colorScheme.background,

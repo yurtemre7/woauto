@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:woauto/classes/park.dart';
 import 'package:woauto/classes/pin.dart';
 import 'package:woauto/main.dart';
@@ -34,7 +33,6 @@ class WoAuto extends GetxController {
   final pinList = [].obs;
 
   final mapController = Rxn<GoogleMapController?>();
-  final snappingSheetController = Rx(SnappingSheetController());
 
   final welcome = true.obs;
 
