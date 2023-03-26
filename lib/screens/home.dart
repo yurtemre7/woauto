@@ -101,6 +101,15 @@ class _HomeState extends State<Home> {
                 maintainState: true,
                 child: const TopHeader(),
               ),
+              Visibility(
+                visible: woAuto.currentIndex.value == 0,
+                child: const Positioned(
+                  bottom: 16,
+                  left: 16,
+                  right: 16,
+                  child: MapInfoSheet(),
+                ),
+              ),
               if (woAuto.currentIndex.value == 1) ...[
                 const History(),
               ],
@@ -108,11 +117,6 @@ class _HomeState extends State<Home> {
                 const Settings(),
               ]
             ],
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: Visibility(
-            visible: woAuto.currentIndex.value == 0,
-            child: const MapInfoSheet(),
           ),
           bottomNavigationBar: NavigationBar(
             selectedIndex: woAuto.currentIndex.value,
