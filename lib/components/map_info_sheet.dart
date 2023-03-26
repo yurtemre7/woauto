@@ -337,7 +337,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                 NotificationDetails notificationDetails =
                                     NotificationDetails(android: androidNotificationDetailsMAX);
                                 await flutterLocalNotificationsPlugin.show(
-                                  0,
+                                  1,
                                   'Auto geparkt',
                                   'Dein Parkticket gilt bis ${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')} Uhr.',
                                   notificationDetails,
