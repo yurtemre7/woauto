@@ -238,7 +238,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                                             name: 'Info Parkticket',
                                           );
                                         },
-                                        icon: const Icon(Icons.question_mark),
+                                        icon: const Icon(Icons.question_mark_outlined),
                                       ),
                                     ],
                                   ),

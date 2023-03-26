@@ -273,7 +273,7 @@ class _SettingsState extends State<Settings> {
                         leading: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Icon(
-                            Icons.share,
+                            Icons.share_outlined,
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),

@@ -124,12 +124,12 @@ class _HomeState extends State<Home> {
                 tooltip: 'Karte',
               ),
               NavigationDestination(
-                icon: Icon(Icons.history),
+                icon: Icon(Icons.history_outlined),
                 label: 'Historie',
                 tooltip: 'Historie',
               ),
               NavigationDestination(
-                icon: Icon(Icons.settings),
+                icon: Icon(Icons.settings_outlined),
                 label: 'Einstellungen',
                 tooltip: 'Einstellungen',
               ),

@@ -68,7 +68,7 @@ class _HistoryState extends State<History> {
                       name: 'Historie Info',
                     );
                   },
-                  icon: const Icon(Icons.question_mark),
+                  icon: const Icon(Icons.question_mark_outlined),
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ],

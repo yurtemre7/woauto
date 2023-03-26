@@ -256,7 +256,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                                 name: 'Info Parkticket',
                                               );
                                             },
-                                            icon: const Icon(Icons.question_mark),
+                                            icon: const Icon(Icons.question_mark_outlined),
                                           ),
                                         ],
                                       ),

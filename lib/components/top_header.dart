@@ -56,7 +56,7 @@ class _TopHeaderState extends State<TopHeader> {
                               }
                             : null,
                         icon: const Icon(
-                          Icons.car_crash_outlined,
+                          Icons.directions_car_outlined,
                         ),
                       ),
                     ),
@@ -134,7 +134,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                               ),
                               trailing: PopupMenuButton(
                                 icon: Icon(
-                                  Icons.more_vert,
+                                  Icons.more_vert_outlined,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                                 itemBuilder: (context) {
@@ -275,7 +275,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                               ),
                               trailing: PopupMenuButton(
                                 icon: Icon(
-                                  Icons.more_vert,
+                                  Icons.more_vert_outlined,
                                   color: Theme.of(context).colorScheme.primary,
                                 ),
                                 itemBuilder: (context) {
@@ -389,7 +389,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                       ],
                       const SizedBox(height: 15),
                       TextButton.icon(
-                        icon: const Icon(Icons.question_mark),
+                        icon: const Icon(Icons.question_mark_outlined),
                         label: const Text(
                           'Wie wird die Entfernung berechnet, fragst du dich?',
                           textAlign: TextAlign.center,
