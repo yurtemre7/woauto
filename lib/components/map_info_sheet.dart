@@ -334,24 +334,33 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
 
                                 await flutterLocalNotificationsPlugin.cancelAll();
 
-                                // FlutterAlarmClock.createTimer(
-                                //   differenceInSecondsFromNow,
-                                //   title: title,
-                                // );
+                                NotificationDetails notificationDetails =
+                                    NotificationDetails(android: androidNotificationDetailsMAX);
+                                await flutterLocalNotificationsPlugin.show(
+                                  0,
+                                  'Auto geparkt',
+                                  'Dein Parkticket gilt bis ${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')} Uhr.',
+                                  notificationDetails,
+                                );
 
+                                int minutesLeft = 0;
+                                if (differenceInSecondsFromNow > 600) {
+                                  differenceInSecondsFromNow -= 600;
+                                  minutesLeft = 10;
+                                } else if (differenceInSecondsFromNow < 0) {
+                                  differenceInSecondsFromNow += 86400 - 600;
+                                  minutesLeft = 10;
+                                } else {
+                                  minutesLeft = differenceInSecondsFromNow ~/ 60;
+                                }
                                 await flutterLocalNotificationsPlugin.zonedSchedule(
                                   0,
-                                  'Parkticket abgelaufen',
-                                  'Dein Parkticket ist abgelaufen.',
+                                  'Dein Parkticket läuft bald ab',
+                                  'In ca. $minutesLeft Minuten läuft dein Parkticket ab, bereite dich langsam auf die Abfahrt vor.',
                                   tz.TZDateTime.now(tz.local)
                                       .add(Duration(seconds: differenceInSecondsFromNow)),
                                   NotificationDetails(
-                                    android: AndroidNotificationDetails(
-                                      channel.id,
-                                      channel.name,
-                                      channelDescription: channel.description,
-                                      importance: channel.importance,
-                                    ),
+                                    android: androidNotificationDetails,
                                   ),
                                   androidAllowWhileIdle: true,
                                   uiLocalNotificationDateInterpretation:

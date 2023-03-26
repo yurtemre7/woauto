@@ -40,6 +40,23 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
   importance: Importance.max,
 );
 
+final androidNotificationDetails = AndroidNotificationDetails(
+  channel.id,
+  channel.name,
+  channelDescription: channel.description,
+  importance: channel.importance,
+  category: AndroidNotificationCategory.alarm,
+);
+
+final androidNotificationDetailsMAX = AndroidNotificationDetails(
+  channel.id,
+  channel.name,
+  channelDescription: channel.description,
+  importance: Importance.max,
+  category: AndroidNotificationCategory.progress,
+  priority: Priority.max,
+);
+
 Color? getBackgroundColor(context) {
   if (woAuto.themeMode.value != 0) {
     return woAuto.themeMode.value == 1 ? Colors.white : darkBg;
