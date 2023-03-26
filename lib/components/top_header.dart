@@ -93,8 +93,11 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
       child: Card(
         elevation: 4,
         margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
         ),
         child: Container(
           padding: const EdgeInsets.all(16),
