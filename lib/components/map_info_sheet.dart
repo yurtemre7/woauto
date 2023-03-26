@@ -291,18 +291,6 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                     DateTime.now().hour * 3600 -
                                     DateTime.now().minute * 60 -
                                     DateTime.now().second;
-                                var title = 'Deine Restparkzeit';
-
-                                // if difference bigger then 600 seconds (10 minutes)
-                                // if (differenceInSecondsFromNow > 600) {
-                                //   differenceInSecondsFromNow -= 600;
-                                //   title = 'Dein Parkticket hält noch 10 Minuten an.';
-                                // } else if (differenceInSecondsFromNow < 0) {
-                                //   differenceInSecondsFromNow += 86400 - 600;
-                                //   title = 'Dein Parkticket hält noch 10 Minuten an.';
-                                // } else {
-                                //   title = 'Dein Parkticket ist abgelaufen.';
-                                // }
 
                                 var res = await flutterLocalNotificationsPlugin
                                     .resolvePlatformSpecificImplementation<
