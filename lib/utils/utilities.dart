@@ -55,6 +55,7 @@ final androidNotificationDetailsMAX = AndroidNotificationDetails(
   importance: Importance.max,
   category: AndroidNotificationCategory.progress,
   priority: Priority.max,
+  ongoing: true,
 );
 
 Color? getBackgroundColor(context) {
