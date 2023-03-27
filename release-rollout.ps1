@@ -3,6 +3,8 @@ $git_count=$(git rev-list --count master)
 
 echo "Rolling out +$git_count ..."
 
+pause
+
 echo "Cleaning.."
 flutter clean && flutter pub get
 
