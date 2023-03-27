@@ -292,10 +292,42 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                     DateTime.now().minute * 60 -
                                     DateTime.now().second;
 
-                                var res = await flutterLocalNotificationsPlugin
-                                    .resolvePlatformSpecificImplementation<
-                                        AndroidFlutterLocalNotificationsPlugin>()
-                                    ?.requestPermission();
+                                bool? res;
+
+                                if (isIOS()) {
+                                  res = await flutterLocalNotificationsPlugin
+                                      .resolvePlatformSpecificImplementation<
+                                          IOSFlutterLocalNotificationsPlugin>()
+                                      ?.requestPermissions(
+                                        alert: true,
+                                        badge: true,
+                                        sound: true,
+                                      );
+                                } else if (isAndroid()) {
+                                  res = await flutterLocalNotificationsPlugin
+                                      .resolvePlatformSpecificImplementation<
+                                          AndroidFlutterLocalNotificationsPlugin>()
+                                      ?.requestPermission();
+                                } else {
+                                  Get.dialog(
+                                    AlertDialog(
+                                      title: const Text('Benachrichtigungen'),
+                                      content: const Text(
+                                        'Dein Betriebssystem unterstützt keine Benachrichtigungen.',
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            pop();
+                                          },
+                                          child: const Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                    name: 'Info Parkticket',
+                                  );
+                                  return;
+                                }
 
                                 if (res == null || res == false) {
                                   Get.dialog(

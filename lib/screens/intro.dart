@@ -220,6 +220,18 @@ class _IntroState extends State<Intro> {
                             notifAllowed.value = val;
                             return;
                           }
+                          if (isIOS()) {
+                            var result = await flutterLocalNotificationsPlugin
+                                .resolvePlatformSpecificImplementation<
+                                    IOSFlutterLocalNotificationsPlugin>()
+                                ?.requestPermissions(
+                                  alert: true,
+                                  badge: true,
+                                  sound: true,
+                                );
+                            notifAllowed.value = result ?? false;
+                            return;
+                          }
                           var v = await flutterLocalNotificationsPlugin
                               .resolvePlatformSpecificImplementation<
                                   AndroidFlutterLocalNotificationsPlugin>()
