@@ -180,6 +180,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                       woAuto.markers.clear();
                                       woAuto.markers.addAll(woAuto.pins);
                                       woAuto.markers.addAll(woAuto.parkings);
+                                      flutterLocalNotificationsPlugin.cancelAll();
 
                                       woAuto.save();
                                       break;

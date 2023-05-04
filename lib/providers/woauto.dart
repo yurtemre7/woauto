@@ -251,6 +251,8 @@ class WoAuto extends GetxController {
               markers.addAll(woAuto.pins);
               markers.addAll(woAuto.parkings);
 
+              flutterLocalNotificationsPlugin.cancelAll();
+
               woAuto.save();
 
               Get.back();
