@@ -338,7 +338,7 @@ class WoAuto extends GetxController {
       );
       return;
     }
-    var theme = WidgetsBinding.instance.window.platformBrightness;
+    var theme = WidgetsBinding.instance.platformDispatcher.platformBrightness;
     if (theme == Brightness.dark) {
       controller.setMapStyle(darkMapStyle);
     } else {

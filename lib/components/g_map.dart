@@ -389,10 +389,10 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
             if (mapLoading.value)
               Container(
                 color: getBackgroundColor(context),
-                child: Center(
+                child: const Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    children: const [
+                    children: [
                       CircularProgressIndicator(),
                       SizedBox(height: 10),
                       Text(

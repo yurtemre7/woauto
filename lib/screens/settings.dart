@@ -400,10 +400,10 @@ class _SettingsState extends State<Settings> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               title: const Text('Datenschutz und Impressum'),
-                              content: SingleChildScrollView(
+                              content: const SingleChildScrollView(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
-                                  children: const [
+                                  children: [
                                     Text(
                                       'Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 14.10.2022):',
                                       style: TextStyle(
