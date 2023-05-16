@@ -365,7 +365,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                               NotificationDetails(
                                 android: androidNotificationDetails,
                               ),
-                              androidAllowWhileIdle: true,
+                              androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
                               uiLocalNotificationDateInterpretation:
                                   UILocalNotificationDateInterpretation.absoluteTime,
                             );

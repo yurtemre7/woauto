@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -104,7 +102,6 @@ Future<String?> getAddress(LatLng position) async {
 
     return '$street $number, $city';
   } catch (e) {
-    log('Error: $e');
     return 'Adresse nicht gefunden.';
   }
 }

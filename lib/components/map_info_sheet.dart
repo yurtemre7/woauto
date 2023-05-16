@@ -383,7 +383,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                   NotificationDetails(
                                     android: androidNotificationDetails,
                                   ),
-                                  androidAllowWhileIdle: true,
+                                  androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
                                   uiLocalNotificationDateInterpretation:
                                       UILocalNotificationDateInterpretation.absoluteTime,
                                 );
