@@ -34,7 +34,8 @@ class _HomeState extends State<Home> {
 
     Future.delayed(0.seconds, () async {
       NotificationAppLaunchDetails? notificationAppLaunchDetails =
-          await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+          await flutterLocalNotificationsPlugin
+              .getNotificationAppLaunchDetails();
       if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
         log('Notification launched app');
       }
@@ -104,6 +105,13 @@ class _HomeState extends State<Home> {
                 child: const TopHeader(),
               ),
               Visibility(
+                visible: woAuto.currentIndex.value == 1,
+                maintainSize: true,
+                maintainAnimation: true,
+                maintainState: true,
+                child: const DrivingHeader(),
+              ),
+              Visibility(
                 visible: woAuto.currentIndex.value == 0,
                 child: const Positioned(
                   bottom: 16,
@@ -112,10 +120,10 @@ class _HomeState extends State<Home> {
                   child: MapInfoSheet(),
                 ),
               ),
-              if (woAuto.currentIndex.value == 1) ...[
+              if (woAuto.currentIndex.value == 2) ...[
                 const History(),
               ],
-              if (woAuto.currentIndex.value == 2) ...[
+              if (woAuto.currentIndex.value == 3) ...[
                 const Settings(),
               ]
             ],
@@ -131,6 +139,11 @@ class _HomeState extends State<Home> {
               NavigationDestination(
                 icon: Icon(Icons.map_outlined),
                 label: 'Karte',
+                tooltip: 'Karte',
+              ),
+              NavigationDestination(
+                icon: Icon(Icons.map_outlined),
+                label: 'Driving',
                 tooltip: 'Karte',
               ),
               NavigationDestination(

@@ -153,7 +153,8 @@ class WoAuto extends GetxController {
     log('Current Position: ${currentPosition.value}', name: 'GetX Controller');
     if (parkings.isNotEmpty) {
       for (var i = 0; i < parkings.length; i++) {
-        log('Parkings[$i]: ${parkings.elementAt(i).position}', name: 'GetX Controller');
+        log('Parkings[$i]: ${parkings.elementAt(i).position}',
+            name: 'GetX Controller');
       }
     }
     if (pins.isNotEmpty) {
@@ -215,8 +216,9 @@ class WoAuto extends GetxController {
   }
 
   showParkingDialog(Park park, String id) {
-    var datum =
-        park.datum == null ? DateTime.now() : DateTime.fromMillisecondsSinceEpoch(park.datum!);
+    var datum = park.datum == null
+        ? DateTime.now()
+        : DateTime.fromMillisecondsSinceEpoch(park.datum!);
     Get.dialog(
       AlertDialog(
         shape: RoundedRectangleBorder(
@@ -241,10 +243,12 @@ class WoAuto extends GetxController {
               String type = ids[0];
               if (type == 'park') {
                 woAuto.parkingList.removeAt(num);
-                woAuto.parkings.removeWhere((Marker element) => element.markerId.value == id);
+                woAuto.parkings.removeWhere(
+                    (Marker element) => element.markerId.value == id);
               } else {
                 woAuto.pinList.removeAt(num);
-                woAuto.pins.removeWhere((Marker element) => element.markerId.value == id);
+                woAuto.pins.removeWhere(
+                    (Marker element) => element.markerId.value == id);
               }
 
               markers.clear();
@@ -266,7 +270,8 @@ class WoAuto extends GetxController {
   }
 
   // Adds a marker to the (google) map, and clears the old ones
-  Future<void> addMarker(LatLng newPosition, {String extra = '', String? newName}) async {
+  Future<void> addMarker(LatLng newPosition,
+      {String extra = '', String? newName}) async {
     // if has premium, dont clear
     woAuto.parkings.clear();
     woAuto.parkingList.clear();
@@ -285,7 +290,8 @@ class WoAuto extends GetxController {
     );
 
     woAuto.parkHistory.add(park);
-    woAuto.parkings.add(woAuto.makeMarker(park, 'park,${woAuto.parkingList.length}'));
+    woAuto.parkings
+        .add(woAuto.makeMarker(park, 'park,${woAuto.parkingList.length}'));
     woAuto.parkingList.add(park.toJson());
 
     markers.clear();
@@ -371,7 +377,10 @@ class WoAuto extends GetxController {
     var p = 0.017453292519943295;
     var a = 0.5 -
         math.cos((lat2 - lat1) * p) / 2 +
-        math.cos(lat1 * p) * math.cos(lat2 * p) * (1 - math.cos((lon2 - lon1) * p)) / 2;
+        math.cos(lat1 * p) *
+            math.cos(lat2 * p) *
+            (1 - math.cos((lon2 - lon1) * p)) /
+            2;
     return 12742 * math.asin(math.sqrt(a)) * 1000;
   }
 }

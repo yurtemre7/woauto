@@ -59,6 +59,10 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
       }
     }
 
+    location.changeSettings(
+      interval: 500,
+    );
+
     location.onLocationChanged.listen((LocationData currentLocation) async {
       if (!mounted) {
         return;
@@ -71,22 +75,17 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         zoom: 18,
       );
 
-      woAuto.currentVelocity.value = currentLocation.speed ?? 0;
+      if (woAuto.currentIndex.value == 1) {
+        if (woAuto.mapController.value != null) {
+          woAuto.mapController.value!.animateCamera(
+            CameraUpdate.newCameraPosition(
+              woAuto.currentPosition.value,
+            ),
+          );
+        }
+      }
 
-      var tempParkList = woAuto.parkingList.toList();
-      for (int i = 0; i < tempParkList.length; i++) {
-        var park = tempParkList[i];
-        tempParkList[i]['distance'] = woAuto.getDistance(LatLng(park['lat'], park['long']));
-      }
-      woAuto.parkingList.clear();
-      woAuto.parkingList.assignAll(tempParkList);
-      tempParkList = woAuto.pinList.toList();
-      for (int i = 0; i < tempParkList.length; i++) {
-        var park = tempParkList[i];
-        tempParkList[i]['distance'] = woAuto.getDistance(LatLng(park['lat'], park['long']));
-      }
-      woAuto.pinList.clear();
-      woAuto.pinList.assignAll(tempParkList);
+      woAuto.currentVelocity.value = currentLocation.speed ?? 0;
     });
   }
 
@@ -104,7 +103,8 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                       zoom: 16,
                     ),
               // padding: const EdgeInsets.all(20),
-              trafficEnabled: woAuto.showTraffic.value,
+              trafficEnabled:
+                  woAuto.showTraffic.value || woAuto.currentIndex.value == 1,
               mapToolbarEnabled: false,
               onMapCreated: (GoogleMapController controller) async {
                 woAuto.mapController.value = controller;
@@ -139,6 +139,8 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               myLocationEnabled: true,
               myLocationButtonEnabled: false,
               zoomControlsEnabled: false,
+              buildingsEnabled: woAuto.currentIndex.value != 1,
+
               padding: const EdgeInsets.only(left: 10, right: 10),
               markers: woAuto.markers.toSet(),
               onTap: (LatLng newPosition) {
@@ -146,7 +148,8 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                   woAuto.printWoAuto();
                 }
                 var textController = TextEditingController();
-                var newNameController = TextEditingController(text: woAuto.subText.value);
+                var newNameController =
+                    TextEditingController(text: woAuto.subText.value);
                 var tillTime = Rxn<TimeOfDay>();
 
                 Get.dialog(
@@ -198,17 +201,21 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                                         () => ElevatedButton(
                                           onPressed: () async {
                                             // show time picker of today
-                                            tillTime.value = await showTimePicker(
+                                            tillTime.value =
+                                                await showTimePicker(
                                               context: context,
                                               initialTime: TimeOfDay.now(),
                                               builder: (context, child) {
                                                 return MediaQuery(
                                                   data: MediaQuery.of(context)
-                                                      .copyWith(alwaysUse24HourFormat: true),
+                                                      .copyWith(
+                                                          alwaysUse24HourFormat:
+                                                              true),
                                                   child: child!,
                                                 );
                                               },
-                                              helpText: 'Parkticket läuft ab um',
+                                              helpText:
+                                                  'Parkticket läuft ab um',
                                               confirmText: 'Speichern',
                                               cancelText: 'Abbrechen',
                                             );
@@ -239,7 +246,8 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                                             name: 'Info Parkticket',
                                           );
                                         },
-                                        icon: const Icon(Icons.question_mark_outlined),
+                                        icon: const Icon(
+                                            Icons.question_mark_outlined),
                                       ),
                                     ],
                                   ),
@@ -268,11 +276,12 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                           );
 
                           if (tillTime.value != null) {
-                            var differenceInSecondsFromNow = tillTime.value!.hour * 3600 +
-                                tillTime.value!.minute * 60 -
-                                DateTime.now().hour * 3600 -
-                                DateTime.now().minute * 60 -
-                                DateTime.now().second;
+                            var differenceInSecondsFromNow =
+                                tillTime.value!.hour * 3600 +
+                                    tillTime.value!.minute * 60 -
+                                    DateTime.now().hour * 3600 -
+                                    DateTime.now().minute * 60 -
+                                    DateTime.now().second;
 
                             bool? res;
 
@@ -337,7 +346,8 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                             await flutterLocalNotificationsPlugin.cancelAll();
 
                             NotificationDetails notificationDetails =
-                                NotificationDetails(android: androidNotificationDetailsMAX);
+                                NotificationDetails(
+                                    android: androidNotificationDetailsMAX);
                             await flutterLocalNotificationsPlugin.show(
                               1,
                               'Auto geparkt',
@@ -360,19 +370,22 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                               0,
                               'Dein Parkticket läuft bald ab',
                               'In ca. $minutesLeft Minuten läuft dein Parkticket ab, bereite dich langsam auf die Abfahrt vor.',
-                              tz.TZDateTime.now(tz.local)
-                                  .add(Duration(seconds: differenceInSecondsFromNow)),
+                              tz.TZDateTime.now(tz.local).add(Duration(
+                                  seconds: differenceInSecondsFromNow)),
                               NotificationDetails(
                                 android: androidNotificationDetails,
                               ),
-                              androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+                              androidScheduleMode:
+                                  AndroidScheduleMode.exactAllowWhileIdle,
                               uiLocalNotificationDateInterpretation:
-                                  UILocalNotificationDateInterpretation.absoluteTime,
+                                  UILocalNotificationDateInterpretation
+                                      .absoluteTime,
                             );
                           }
 
                           pop();
-                          GoogleMapController controller = woAuto.mapController.value!;
+                          GoogleMapController controller =
+                              woAuto.mapController.value!;
                           await controller.animateCamera(
                             CameraUpdate.newCameraPosition(
                               CameraPosition(target: newPosition, zoom: 18),
