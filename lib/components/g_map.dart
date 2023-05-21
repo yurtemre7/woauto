@@ -73,6 +73,8 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
           currentLocation.longitude ?? 0,
         ),
         zoom: 18,
+        bearing: currentLocation.heading ?? 0,
+        // tilt: currentLocation.altitude ?? 0,
       );
 
       if (woAuto.currentIndex.value == 1) {
@@ -103,8 +105,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                       zoom: 16,
                     ),
               // padding: const EdgeInsets.all(20),
-              trafficEnabled:
-                  woAuto.showTraffic.value || woAuto.currentIndex.value == 1,
+              trafficEnabled: woAuto.showTraffic.value,
               mapToolbarEnabled: false,
               onMapCreated: (GoogleMapController controller) async {
                 woAuto.mapController.value = controller;
@@ -139,8 +140,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               myLocationEnabled: true,
               myLocationButtonEnabled: false,
               zoomControlsEnabled: false,
-              buildingsEnabled: woAuto.currentIndex.value != 1,
-
               padding: const EdgeInsets.only(left: 10, right: 10),
               markers: woAuto.markers.toSet(),
               onTap: (LatLng newPosition) {
@@ -399,6 +398,24 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                 );
               },
             ),
+            if (woAuto.currentIndex.value == 1)
+              Obx(
+                () => Positioned(
+                  bottom: 16,
+                  right: 16,
+                  child: FloatingActionButton.extended(
+                    onPressed: () {
+                      woAuto.showTraffic.value = !woAuto.showTraffic.value;
+                      setState(() {});
+                    },
+                    label: Text(
+                      woAuto.showTraffic.value
+                          ? 'Verkehr ausblenden'
+                          : 'Verkehr anzeigen',
+                    ),
+                  ),
+                ),
+              ),
             if (mapLoading.value)
               Container(
                 color: getBackgroundColor(context),

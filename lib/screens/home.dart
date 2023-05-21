@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:woauto/components/g_map.dart';
 import 'package:woauto/components/map_info_sheet.dart';
 
@@ -55,6 +56,8 @@ class _HomeState extends State<Home> {
   @override
   void dispose() {
     _sub?.cancel();
+    KeepScreenOn.turnOff();
+    woAuto.mapController.value?.dispose();
     super.dispose();
   }
 
@@ -132,6 +135,11 @@ class _HomeState extends State<Home> {
             selectedIndex: woAuto.currentIndex.value,
             onDestinationSelected: (index) {
               woAuto.currentIndex.value = index;
+              if (index == 1) {
+                KeepScreenOn.turnOn();
+              } else {
+                KeepScreenOn.turnOff();
+              }
             },
             backgroundColor: Theme.of(context).colorScheme.background,
             surfaceTintColor: Theme.of(context).colorScheme.background,
