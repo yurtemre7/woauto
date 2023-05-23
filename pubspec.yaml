@@ -57,6 +57,7 @@ dependencies:
   keep_screen_on: ^2.1.0
 
   dynamic_color: ^1.6.5
+  csslib: 0.17.0
 
 dev_dependencies:
   flutter_test:
