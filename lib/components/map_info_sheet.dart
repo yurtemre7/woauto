@@ -44,8 +44,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                         );
                         return;
                       }
-                      var textEditing =
-                          TextEditingController(text: woAuto.subText.value);
+                      var textEditing = TextEditingController(text: woAuto.subText.value);
 
                       Get.dialog(
                         AlertDialog(
@@ -85,10 +84,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                             ElevatedButton(
                               child: const Text('TEILEN'),
                               onPressed: () async {
-                                if (textEditing.text
-                                    .replaceAll(' ', '')
-                                    .trim()
-                                    .isEmpty) {
+                                if (textEditing.text.replaceAll(' ', '').trim().isEmpty) {
                                   // show snackbar error
                                   Get.snackbar(
                                     'Fehler',
@@ -114,15 +110,13 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                   );
                                   return;
                                 }
-                                LatLng myCar =
-                                    woAuto.parkings.elementAt(0).position;
+                                LatLng myCar = woAuto.parkings.elementAt(0).position;
                                 String website = 'https://yurtemre.de';
                                 String link =
-                                    'https://www.google.com/maps?q=${myCar.latitude},${myCar.longitude}';
+                                    'https://www.google.com/maps/search/?api=1&query=${myCar.latitude},${myCar.longitude}';
                                 String woLink =
                                     '$website/deeplink?title=${Uri.encodeFull(textEditing.text.trim())}&lat=${Uri.encodeFull(myCar.latitude.toString())}&long=${Uri.encodeFull(myCar.longitude.toString())}';
-                                String text =
-                                    'Ich habe meinen Wagen hier geparkt: $woLink\n\n';
+                                String text = 'Ich habe meinen Wagen hier geparkt: $woLink\n\n';
 
                                 text +=
                                     'Alternativ kannst du ihn auch über Google Maps einsehen: $link';
@@ -150,8 +144,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                 }
 
                 var textController = TextEditingController();
-                var newNameController =
-                    TextEditingController(text: woAuto.subText.value);
+                var newNameController = TextEditingController(text: woAuto.subText.value);
                 var tillTime = Rxn<TimeOfDay>();
 
                 Get.dialog(
@@ -203,21 +196,17 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                         () => ElevatedButton(
                                           onPressed: () async {
                                             // show time picker of today
-                                            tillTime.value =
-                                                await showTimePicker(
+                                            tillTime.value = await showTimePicker(
                                               context: context,
                                               initialTime: TimeOfDay.now(),
                                               builder: (context, child) {
                                                 return MediaQuery(
                                                   data: MediaQuery.of(context)
-                                                      .copyWith(
-                                                          alwaysUse24HourFormat:
-                                                              true),
+                                                      .copyWith(alwaysUse24HourFormat: true),
                                                   child: child!,
                                                 );
                                               },
-                                              helpText:
-                                                  'Parkticket läuft ab um',
+                                              helpText: 'Parkticket läuft ab um',
                                               confirmText: 'Speichern',
                                               cancelText: 'Abbrechen',
                                             );
@@ -248,8 +237,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                             name: 'Info Parkticket',
                                           );
                                         },
-                                        icon: const Icon(
-                                            Icons.question_mark_outlined),
+                                        icon: const Icon(Icons.question_mark_outlined),
                                       ),
                                     ],
                                   ),
@@ -278,12 +266,11 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                           );
 
                           if (tillTime.value != null) {
-                            var differenceInSecondsFromNow =
-                                tillTime.value!.hour * 3600 +
-                                    tillTime.value!.minute * 60 -
-                                    DateTime.now().hour * 3600 -
-                                    DateTime.now().minute * 60 -
-                                    DateTime.now().second;
+                            var differenceInSecondsFromNow = tillTime.value!.hour * 3600 +
+                                tillTime.value!.minute * 60 -
+                                DateTime.now().hour * 3600 -
+                                DateTime.now().minute * 60 -
+                                DateTime.now().second;
 
                             bool? res;
 
@@ -348,8 +335,7 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                             await flutterLocalNotificationsPlugin.cancelAll();
 
                             NotificationDetails notificationDetails =
-                                NotificationDetails(
-                                    android: androidNotificationDetailsMAX);
+                                NotificationDetails(android: androidNotificationDetailsMAX);
                             await flutterLocalNotificationsPlugin.show(
                               1,
                               'Auto geparkt',
@@ -372,16 +358,14 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                               0,
                               'Dein Parkticket läuft bald ab',
                               'In ca. $minutesLeft Minuten läuft dein Parkticket ab, bereite dich langsam auf die Abfahrt vor.',
-                              tz.TZDateTime.now(tz.local).add(Duration(
-                                  seconds: differenceInSecondsFromNow)),
+                              tz.TZDateTime.now(tz.local)
+                                  .add(Duration(seconds: differenceInSecondsFromNow)),
                               NotificationDetails(
                                 android: androidNotificationDetails,
                               ),
-                              androidScheduleMode:
-                                  AndroidScheduleMode.exactAllowWhileIdle,
+                              androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
                               uiLocalNotificationDateInterpretation:
-                                  UILocalNotificationDateInterpretation
-                                      .absoluteTime,
+                                  UILocalNotificationDateInterpretation.absoluteTime,
                             );
                           }
 

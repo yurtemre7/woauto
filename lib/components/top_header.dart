@@ -30,7 +30,11 @@ class _TopHeaderState extends State<TopHeader> {
               ),
               child: Container(
                 padding: const EdgeInsets.only(
-                    left: 20, right: 10, top: 10, bottom: 10),
+                  left: 20,
+                  right: 10,
+                  top: 10,
+                  bottom: 10,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -52,6 +56,22 @@ class _TopHeaderState extends State<TopHeader> {
                         onPressed: woAuto.pinList.toList().isNotEmpty ||
                                 woAuto.parkingList.toList().isNotEmpty
                             ? () {
+                                var tempParkList = woAuto.parkingList.toList();
+                                for (int i = 0; i < tempParkList.length; i++) {
+                                  var park = tempParkList[i];
+                                  tempParkList[i]['distance'] =
+                                      woAuto.getDistance(LatLng(park['lat'], park['long']));
+                                }
+                                woAuto.parkingList.clear();
+                                woAuto.parkingList.assignAll(tempParkList);
+                                tempParkList = woAuto.pinList.toList();
+                                for (int i = 0; i < tempParkList.length; i++) {
+                                  var park = tempParkList[i];
+                                  tempParkList[i]['distance'] =
+                                      woAuto.getDistance(LatLng(park['lat'], park['long']));
+                                }
+                                woAuto.pinList.clear();
+                                woAuto.pinList.assignAll(tempParkList);
                                 Get.bottomSheet(
                                   const CarBottomSheet(),
                                   settings: const RouteSettings(
@@ -88,22 +108,6 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
   @override
   void initState() {
     super.initState();
-    var tempParkList = woAuto.parkingList.toList();
-    for (int i = 0; i < tempParkList.length; i++) {
-      var park = tempParkList[i];
-      tempParkList[i]['distance'] =
-          woAuto.getDistance(LatLng(park['lat'], park['long']));
-    }
-    woAuto.parkingList.clear();
-    woAuto.parkingList.assignAll(tempParkList);
-    tempParkList = woAuto.pinList.toList();
-    for (int i = 0; i < tempParkList.length; i++) {
-      var park = tempParkList[i];
-      tempParkList[i]['distance'] =
-          woAuto.getDistance(LatLng(park['lat'], park['long']));
-    }
-    woAuto.pinList.clear();
-    woAuto.pinList.assignAll(tempParkList);
   }
 
   @override
@@ -128,6 +132,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                 () {
                   var pinList = woAuto.pinList.toList();
                   var parkingList = woAuto.parkingList.toList();
+
                   return Column(
                     children: [
                       if (parkingList.isNotEmpty) ...[
@@ -144,8 +149,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                           (element) {
                             return ListTile(
                               title: Text(
-                                element['name'] +
-                                    " - ${element['distance']} m entfernt",
+                                element['name'] + " - ${element['distance']} m entfernt",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Theme.of(context).colorScheme.primary,
@@ -168,14 +172,13 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                     case 0:
                                       launchUrl(
                                         Uri.parse(
-                                          'https://www.google.com/maps?q=${element['lat']},${element['long']}',
+                                          'https://www.google.com/maps/search/?api=1&query=${element['lat']},${element['long']}',
                                         ),
                                         mode: LaunchMode.externalApplication,
                                       );
                                       break;
                                     case 1:
-                                      GoogleMapController controller =
-                                          woAuto.mapController.value!;
+                                      GoogleMapController controller = woAuto.mapController.value!;
                                       controller.animateCamera(
                                         CameraUpdate.newCameraPosition(
                                           CameraPosition(
@@ -196,20 +199,17 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                       if (type == 'park') {
                                         woAuto.parkingList.removeAt(num);
                                         woAuto.parkings.removeWhere(
-                                            (Marker element) =>
-                                                element.markerId.value == id);
+                                            (Marker element) => element.markerId.value == id);
                                       } else {
                                         woAuto.pinList.removeAt(num);
                                         woAuto.pins.removeWhere(
-                                            (Marker element) =>
-                                                element.markerId.value == id);
+                                            (Marker element) => element.markerId.value == id);
                                       }
 
                                       woAuto.markers.clear();
                                       woAuto.markers.addAll(woAuto.pins);
                                       woAuto.markers.addAll(woAuto.parkings);
-                                      flutterLocalNotificationsPlugin
-                                          .cancelAll();
+                                      flutterLocalNotificationsPlugin.cancelAll();
 
                                       woAuto.save();
                                       break;
@@ -223,16 +223,12 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                       child: TextIcon(
                                         icon: Icon(
                                           Icons.map_outlined,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
+                                          color: Theme.of(context).colorScheme.primary,
                                         ),
                                         label: Text(
                                           'In Google Maps öffnen',
                                           style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
+                                            color: Theme.of(context).colorScheme.primary,
                                           ),
                                         ),
                                       ),
@@ -242,16 +238,12 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                       child: TextIcon(
                                         icon: Icon(
                                           Icons.navigation_outlined,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
+                                          color: Theme.of(context).colorScheme.primary,
                                         ),
                                         label: Text(
                                           'Zum Parkplatz',
                                           style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
+                                            color: Theme.of(context).colorScheme.primary,
                                           ),
                                         ),
                                       ),
@@ -275,8 +267,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                 },
                               ),
                               onTap: () {
-                                GoogleMapController controller =
-                                    woAuto.mapController.value!;
+                                GoogleMapController controller = woAuto.mapController.value!;
                                 controller.animateCamera(
                                   CameraUpdate.newCameraPosition(
                                     CameraPosition(
@@ -308,8 +299,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                           (element) {
                             return ListTile(
                               title: Text(
-                                element['name'] +
-                                    " - ${element['distance']} m entfernt",
+                                element['name'] + " - ${element['distance']} m entfernt",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Theme.of(context).colorScheme.primary,
@@ -332,14 +322,13 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                     case 0:
                                       launchUrl(
                                         Uri.parse(
-                                          'https://www.google.com/maps?q=${element['lat']},${element['long']}',
+                                          'https://www.google.com/maps/search/?api=1&query=${element['lat']},${element['long']}',
                                         ),
                                         mode: LaunchMode.externalApplication,
                                       );
                                       break;
                                     case 1:
-                                      GoogleMapController controller =
-                                          woAuto.mapController.value!;
+                                      GoogleMapController controller = woAuto.mapController.value!;
                                       controller.animateCamera(
                                         CameraUpdate.newCameraPosition(
                                           CameraPosition(
@@ -360,13 +349,11 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                       if (type == 'park') {
                                         woAuto.parkingList.removeAt(num);
                                         woAuto.parkings.removeWhere(
-                                            (Marker element) =>
-                                                element.markerId.value == id);
+                                            (Marker element) => element.markerId.value == id);
                                       } else {
                                         woAuto.pinList.removeAt(num);
                                         woAuto.pins.removeWhere(
-                                            (Marker element) =>
-                                                element.markerId.value == id);
+                                            (Marker element) => element.markerId.value == id);
                                       }
 
                                       woAuto.markers.clear();
@@ -385,16 +372,12 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                       child: TextIcon(
                                         icon: Icon(
                                           Icons.map_outlined,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
+                                          color: Theme.of(context).colorScheme.primary,
                                         ),
                                         label: Text(
                                           'in Google Maps öffnen',
                                           style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
+                                            color: Theme.of(context).colorScheme.primary,
                                           ),
                                         ),
                                       ),
@@ -404,16 +387,12 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                       child: TextIcon(
                                         icon: Icon(
                                           Icons.navigation_outlined,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
+                                          color: Theme.of(context).colorScheme.primary,
                                         ),
                                         label: Text(
                                           'Zum Parkplatz',
                                           style: TextStyle(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
+                                            color: Theme.of(context).colorScheme.primary,
                                           ),
                                         ),
                                       ),
@@ -437,8 +416,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                 },
                               ),
                               onTap: () {
-                                GoogleMapController controller =
-                                    woAuto.mapController.value!;
+                                GoogleMapController controller = woAuto.mapController.value!;
                                 controller.animateCamera(
                                   CameraUpdate.newCameraPosition(
                                     CameraPosition(
@@ -481,8 +459,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                   'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color:
-                                        Theme.of(context).colorScheme.secondary,
+                                    color: Theme.of(context).colorScheme.secondary,
                                   ),
                                 ),
                                 const SizedBox(height: 16),
@@ -490,8 +467,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                   'Tippe um mehr zu erfahren.',
                                   style: TextStyle(
                                     fontSize: 14,
-                                    color:
-                                        Theme.of(context).colorScheme.primary,
+                                    color: Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ],
@@ -507,8 +483,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                 mode: LaunchMode.externalApplication,
                               );
                             },
-                            backgroundColor:
-                                Theme.of(context).colorScheme.surface,
+                            backgroundColor: Theme.of(context).colorScheme.surface,
                           );
                         },
                       ),
@@ -566,10 +541,9 @@ class _DrivingHeaderState extends State<DrivingHeader> {
                       ),
                     ),
                     Obx(() {
-                      var kmh = ((double.tryParse(woAuto.currentVelocity.value
-                                  .toStringAsFixed(2)) ??
-                              0) *
-                          3.6);
+                      var kmh =
+                          ((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ?? 0) *
+                              3.6);
                       if (woAuto.currentVelocity.value >= 0.0) {
                         return Text(
                           '${kmh.toStringAsFixed(1)} km/h',

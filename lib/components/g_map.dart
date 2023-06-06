@@ -169,7 +169,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                             Get.back();
                             launchUrl(
                               Uri.parse(
-                                'https://www.google.com/maps?q=${newPosition.latitude},${newPosition.longitude}',
+                                'https://www.google.com/maps/search/?api=1&query=${newPosition.latitude},${newPosition.longitude}',
                               ),
                               mode: LaunchMode.externalApplication,
                             );
