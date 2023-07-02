@@ -58,7 +58,10 @@ class _SettingsState extends State<Settings> {
                     children: [
                       ListTile(
                         title: Obx(
-                          () => Text('Parkplatz-Titel: ${woAuto.subText.value}'),
+                          () => Text(
+                            'Parkplatz-Titel: ${woAuto.subText.value}',
+                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                          ),
                         ),
                         subtitle: const Text(
                             'Ändere den Text, der auf deinem Parkplatz steht, z.B: Mercedes, Audi oder BMW'),
@@ -156,7 +159,10 @@ class _SettingsState extends State<Settings> {
                           );
 
                           return ListTile(
-                            title: const Text('Theme'),
+                            title: Text(
+                              'Theme',
+                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            ),
                             subtitle: const Text(
                               'Entscheide selbst, ob du das System-Theme, das Light-Theme oder das Dark-Theme verwenden möchtest.',
                             ),
@@ -194,7 +200,10 @@ class _SettingsState extends State<Settings> {
                           );
 
                           return ListTile(
-                            title: const Text('Map-Typ'),
+                            title: Text(
+                              'Map-Typ',
+                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            ),
                             subtitle: const Text(
                               'Zeigt die Karte in verschiedenen Typen an.',
                             ),
@@ -205,8 +214,9 @@ class _SettingsState extends State<Settings> {
                       Obx(
                         () => SwitchListTile(
                           value: woAuto.showTraffic.value,
-                          title: const Text(
+                          title: Text(
                             'Verkehr',
+                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
                           ),
                           subtitle: const Text(
                             'Zeigt den Verkehr auf der Karte an, sofern verfügbar.',
@@ -256,7 +266,10 @@ class _SettingsState extends State<Settings> {
                           );
 
                           return ListTile(
-                            title: const Text('Parkticket Zeitpuffer'),
+                            title: Text(
+                              'Parkticket Zeitpuffer',
+                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            ),
                             subtitle: const Text(
                               'Lege einen Zeitpuffer fest, damit du vor dem Parkticketablauf noch Zeit hast, das Ticket zu erneuern oder zum Auto zurückzukehren.',
                             ),
@@ -274,7 +287,10 @@ class _SettingsState extends State<Settings> {
                               color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                          title: const Text('App Info'),
+                          title: Text(
+                            'App Info',
+                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                          ),
                           subtitle: Text('Version ${woAuto.appVersion}+${woAuto.appBuildNumber}'),
                           onTap: () {
                             Get.dialog(
@@ -311,7 +327,10 @@ class _SettingsState extends State<Settings> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        title: const Text('Credits'),
+                        title: Text(
+                          'Credits',
+                          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                        ),
                         subtitle: const Text(
                           'Dank an Google Maps API und natürlich an die Flutter Community.',
                         ),
@@ -324,7 +343,10 @@ class _SettingsState extends State<Settings> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        title: const Text('Teilen'),
+                        title: Text(
+                          'App Teilen',
+                          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                        ),
                         subtitle: const Text(
                             'Teile die App doch mit deinen Freunden und deiner Familie.'),
                         onTap: () {
@@ -345,7 +367,10 @@ class _SettingsState extends State<Settings> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        title: const Text('Feedback'),
+                        title: Text(
+                          'Feedback',
+                          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                        ),
                         subtitle: const Text(
                             'Hast du Verbesserungsvorschläge, Fehler oder etwas anderes zu sagen?'),
                         onTap: () {
@@ -391,7 +416,10 @@ class _SettingsState extends State<Settings> {
                             color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
-                        title: const Text('Datenschutz und Impressum'),
+                        title: Text(
+                          'Datenschutz und Impressum',
+                          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                        ),
                         subtitle: const Text('Erfahre wie deine Daten geschützt werden.'),
                         onTap: () {
                           Get.dialog(
@@ -472,14 +500,19 @@ class _SettingsState extends State<Settings> {
                       ),
                       const Div(),
                       ListTile(
-                        leading: const Padding(
-                          padding: EdgeInsets.all(8.0),
+                        leading: Padding(
+                          padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.delete_forever_outlined,
-                            color: Colors.red,
+                            color: Theme.of(context).colorScheme.error,
                           ),
                         ),
-                        title: const Text('Lösche alle App-Daten'),
+                        title: Text(
+                          'Lösche alle App-Daten',
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.error,
+                          ),
+                        ),
                         subtitle:
                             const Text('Halte hier gedrückt, um all deine App-Daten zu löschen.'),
                         onLongPress: () {
@@ -493,7 +526,7 @@ class _SettingsState extends State<Settings> {
                               actions: [
                                 TextButton(
                                   style: TextButton.styleFrom(
-                                    foregroundColor: Colors.red,
+                                    foregroundColor: Theme.of(context).colorScheme.error,
                                   ),
                                   child: const Text('Löschen'),
                                   onPressed: () async {

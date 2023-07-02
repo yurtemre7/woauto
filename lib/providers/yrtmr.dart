@@ -113,6 +113,7 @@ class YrtmrDeeplinks {
       borderRadius: 12,
       margin: const EdgeInsets.all(20),
       backgroundColor: Get.theme.colorScheme.surface,
+      colorText: Get.theme.colorScheme.onSurface,
     );
     if (woAuto.mapController.value != null) {
       woAuto.mapController.value!.animateCamera(

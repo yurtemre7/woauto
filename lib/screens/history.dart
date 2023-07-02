@@ -100,7 +100,7 @@ class _HistoryState extends State<History> {
                               title: Text(e.name ?? 'Unbekannt'),
                               subtitle: Text(e.address ?? 'Unbekannt'),
                               trailing: Text(
-                                formatDateTimeAndTime(
+                                formatDateTimeToTimeAndDate(
                                   DateTime.fromMillisecondsSinceEpoch(
                                     e.datum ?? DateTime.now().millisecondsSinceEpoch,
                                   ),
@@ -181,14 +181,17 @@ class _HistoryState extends State<History> {
                               },
                             ),
                             ListTile(
-                              leading: const Padding(
-                                padding: EdgeInsets.all(8.0),
+                              leading: Padding(
+                                padding: const EdgeInsets.all(8.0),
                                 child: Icon(
                                   Icons.delete_forever_outlined,
-                                  color: Colors.red,
+                                  color: Theme.of(context).colorScheme.error,
                                 ),
                               ),
-                              title: const Text('Historie löschen'),
+                              title: Text(
+                                'Historie löschen',
+                                style: TextStyle(color: Theme.of(context).colorScheme.error),
+                              ),
                               subtitle:
                                   const Text('Halte hier gedrückt, um deine Historie zu löschen.'),
                               onLongPress: () {
@@ -202,7 +205,7 @@ class _HistoryState extends State<History> {
                                     actions: [
                                       TextButton(
                                         style: TextButton.styleFrom(
-                                          foregroundColor: Colors.red,
+                                          foregroundColor: Theme.of(context).colorScheme.error,
                                         ),
                                         child: const Text('Löschen'),
                                         onPressed: () async {

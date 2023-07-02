@@ -106,43 +106,49 @@ Future<String?> getAddress(LatLng position) async {
   }
 }
 
-String formatDateTimeAndTime(DateTime dateTime) {
+String formatDateTimeToTimeAndDate(DateTime dateTime) {
   // leading zero
   String twoDigits(int n) {
     if (n >= 10) return '$n';
     return '0$n';
   }
 
+  return '${twoDigits(dateTime.hour)}:${twoDigits(dateTime.minute)} ${twoDigits(dateTime.day)}.${twoDigits(dateTime.month)}.${dateTime.year}';
+}
+
+String formatDateTimeAndTime(DateTime dateTime) {
   // difference to now
   var now = DateTime.now();
   var difference = now.difference(dateTime);
+
+  var minutes = difference.inMinutes % 60;
+  var hours = difference.inHours % 24;
+  var days = difference.inDays % 365;
 
   // if less than a minute
   if (difference.inMinutes <= 0) {
     return 'gerade eben geparkt';
   }
 
-  // if less than an hour
-  if (difference.inHours <= 0) {
-    return 'vor ${difference.inMinutes} Minute${difference.inMinutes == 1 ? '' : 'n'} geparkt';
+  String durationString = '';
+
+  // show all data
+  if (days > 0) {
+    durationString += '$days Tag';
+    if (days > 1) durationString += 'e';
+    durationString += ' ';
+  }
+  if (hours > 0) {
+    durationString += '$hours Stunde';
+    if (hours > 1) durationString += 'n';
+    durationString += ' ';
+  }
+  if (minutes > 0) {
+    durationString += '$minutes Minute';
+    if (minutes > 1) durationString += 'n';
   }
 
-  // if less than a day
-  if (difference.inDays <= 0) {
-    return 'vor ${difference.inHours} Stunde${difference.inHours == 1 ? '' : 'n'} geparkt';
-  }
-
-  // if less than a week
-  if (difference.inDays <= 7) {
-    return 'vor ${difference.inDays} Tag${difference.inDays == 1 ? '' : 'en'} geparkt';
-  }
-
-  // if less than a month
-  if (difference.inDays <= 30) {
-    return 'vor ${difference.inDays ~/ 7} Woche${difference.inDays ~/ 7 == 1 ? '' : 'n'} geparkt';
-  }
-
-  return 'Am ${twoDigits(dateTime.day)}.${twoDigits(dateTime.month)}.${dateTime.year} um ${twoDigits(dateTime.hour)}:${twoDigits(dateTime.minute)} geparkt';
+  return 'vor $durationString geparkt';
 }
 
 List<int> quickSort(List<int> list) {

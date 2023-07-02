@@ -35,8 +35,7 @@ class _HomeState extends State<Home> {
 
     Future.delayed(0.seconds, () async {
       NotificationAppLaunchDetails? notificationAppLaunchDetails =
-          await flutterLocalNotificationsPlugin
-              .getNotificationAppLaunchDetails();
+          await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
       if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
         log('Notification launched app');
       }
@@ -132,6 +131,7 @@ class _HomeState extends State<Home> {
             ],
           ),
           bottomNavigationBar: NavigationBar(
+            elevation: 0,
             selectedIndex: woAuto.currentIndex.value,
             onDestinationSelected: (index) {
               woAuto.currentIndex.value = index;
@@ -141,8 +141,6 @@ class _HomeState extends State<Home> {
                 KeepScreenOn.turnOff();
               }
             },
-            backgroundColor: Theme.of(context).colorScheme.background,
-            surfaceTintColor: Theme.of(context).colorScheme.background,
             destinations: const [
               NavigationDestination(
                 icon: Icon(Icons.map_outlined),

@@ -248,17 +248,17 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                         ),
                                       ),
                                     ),
-                                    const PopupMenuItem(
+                                    PopupMenuItem(
                                       value: 2,
                                       child: TextIcon(
                                         icon: Icon(
                                           Icons.delete_outline,
-                                          color: Colors.red,
+                                          color: Theme.of(context).colorScheme.error,
                                         ),
                                         label: Text(
                                           'Parkplatz löschen',
                                           style: TextStyle(
-                                            color: Colors.red,
+                                            color: Theme.of(context).colorScheme.error,
                                           ),
                                         ),
                                       ),
@@ -397,17 +397,17 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                         ),
                                       ),
                                     ),
-                                    const PopupMenuItem(
+                                    PopupMenuItem(
                                       value: 2,
                                       child: TextIcon(
                                         icon: Icon(
                                           Icons.delete_outline,
-                                          color: Colors.red,
+                                          color: Theme.of(context).colorScheme.error,
                                         ),
                                         label: Text(
                                           'Parkplatz löschen',
                                           style: TextStyle(
-                                            color: Colors.red,
+                                            color: Theme.of(context).colorScheme.error,
                                           ),
                                         ),
                                       ),
@@ -484,6 +484,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                               );
                             },
                             backgroundColor: Theme.of(context).colorScheme.surface,
+                            colorText: Theme.of(context).colorScheme.onSurface,
                           );
                         },
                       ),

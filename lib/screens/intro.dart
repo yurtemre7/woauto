@@ -187,10 +187,10 @@ class _IntroState extends State<Intro> {
                         contentPadding: EdgeInsets.zero,
                         title: const Text('Echtzeit-Standortabfragen'),
                         subtitle: showError.value
-                            ? const Text(
+                            ? Text(
                                 'Bitte erlaube der App, deinen Standort während der App-Nutzung abzufragen.',
                                 style: TextStyle(
-                                  color: Colors.redAccent,
+                                  color: Theme.of(context).colorScheme.error,
                                 ),
                               )
                             : null,
@@ -246,6 +246,7 @@ class _IntroState extends State<Intro> {
             ),
           ],
           onDone: () async {
+            FocusScope.of(context).requestFocus(FocusNode());
             if (!allowed.value) {
               showError.value = true;
               return;
