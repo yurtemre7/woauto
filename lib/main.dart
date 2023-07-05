@@ -26,9 +26,6 @@ void main() async {
     InitializationSettings initializationSettings = InitializationSettings(
       android: const AndroidInitializationSettings('monochrome'),
       iOS: DarwinInitializationSettings(
-        requestAlertPermission: false,
-        requestBadgePermission: false,
-        requestSoundPermission: false,
         onDidReceiveLocalNotification: (id, title, body, payload) {
           log('onDidReceiveLocalNotification called');
         },
