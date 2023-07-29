@@ -56,61 +56,6 @@ class _SettingsState extends State<Settings> {
                   16.h,
                   Column(
                     children: [
-                      ListTile(
-                        title: Obx(
-                          () => Text(
-                            'Parkplatz-Titel: ${woAuto.subText.value}',
-                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
-                          ),
-                        ),
-                        subtitle: const Text(
-                            'Ändere den Text, der auf deinem Parkplatz steht, z.B: Mercedes, Audi oder BMW'),
-                        onTap: () {
-                          var tec = TextEditingController(text: woAuto.subText.value);
-                          Get.dialog(
-                            AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              title: const Text('Parkplatz-Titel'),
-                              content: TextFormField(
-                                controller: tec,
-                                maxLength: 30,
-                                autocorrect: false,
-                                autofocus: true,
-                                decoration: const InputDecoration(
-                                  hintText: 'Mein Auto',
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  child: const Text('Abbrechen'),
-                                  onPressed: () {
-                                    Get.back();
-                                  },
-                                ),
-                                ElevatedButton(
-                                  child: const Text('OK'),
-                                  onPressed: () async {
-                                    woAuto.subText.value = tec.text.trim();
-                                    if (woAuto.subText.value.isEmpty) {
-                                      woAuto.subText.value = 'Mein Auto';
-                                    }
-                                    if (woAuto.parkings.isNotEmpty) {
-                                      var myCar = woAuto.parkings.first;
-                                      woAuto.addMarker(myCar.position);
-                                    }
-
-                                    await woAuto.save();
-                                    Get.back();
-                                  },
-                                ),
-                              ],
-                            ),
-                            name: 'Parkplatz-Titel',
-                          );
-                        },
-                      ),
                       Obx(
                         () {
                           var themeMode = woAuto.themeMode.value;

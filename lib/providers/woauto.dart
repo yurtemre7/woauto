@@ -41,11 +41,16 @@ class WoAuto extends GetxController {
   final currentIndex = 0.obs;
 
   // settings
-  final subText = 'Mein Auto'.obs;
   final themeMode = 0.obs;
   final mapType = MapType.normal.obs;
   final showTraffic = false.obs;
   final timePuffer = 10.obs;
+
+  // my car data
+  final subText = 'Mein Auto'.obs;
+  final kennzeichen = ''.obs;
+  final kilometerStand = ''.obs;
+  final tuvUntil = DateTime.now().obs;
 
   // data
   final currentVelocity = 0.0.obs;
@@ -71,6 +76,9 @@ class WoAuto extends GetxController {
   String toJson() {
     return json.encode({
       'subText': subText.value,
+      'kennzeichen': kennzeichen.value,
+      'kilometerStand': kilometerStand.value,
+      'tuvUntil': tuvUntil.value.toIso8601String(),
       'themeMode': themeMode.value,
       'parkings': parkingList,
       'pins': pinList,
@@ -119,6 +127,9 @@ class WoAuto extends GetxController {
     }
 
     woAuto.subText.value = jsonMap['subText'] ?? 'Mein Auto';
+    woAuto.kennzeichen.value = jsonMap['kennzeichen'] ?? '';
+    woAuto.kilometerStand.value = jsonMap['kilometerStand'] ?? '';
+    woAuto.tuvUntil.value = DateTime.parse(jsonMap['tuvUntil'] ?? DateTime.now().toIso8601String());
     // settings
     woAuto.themeMode.value = jsonMap['themeMode'] ?? 0;
 
@@ -172,6 +183,10 @@ class WoAuto extends GetxController {
   /// Resets the WoAuto provider
   reset() async {
     subText.value = 'Mein Auto';
+    kennzeichen.value = '';
+    kilometerStand.value = '';
+    tuvUntil.value = DateTime.now();
+
     themeMode.value = 0;
     timePuffer.value = 10;
 

@@ -13,6 +13,7 @@ import 'package:woauto/components/top_header.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/yrtmr.dart';
 import 'package:woauto/screens/history.dart';
+import 'package:woauto/screens/my_car.dart';
 import 'package:woauto/screens/settings.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -123,9 +124,12 @@ class _HomeState extends State<Home> {
                 ),
               ),
               if (woAuto.currentIndex.value == 2) ...[
-                const History(),
+                const MyCar(),
               ],
               if (woAuto.currentIndex.value == 3) ...[
+                const History(),
+              ],
+              if (woAuto.currentIndex.value == 4) ...[
                 const Settings(),
               ]
             ],
@@ -141,23 +145,33 @@ class _HomeState extends State<Home> {
                 KeepScreenOn.turnOff();
               }
             },
-            destinations: const [
-              NavigationDestination(
+            destinations: [
+              const NavigationDestination(
                 icon: Icon(Icons.map_outlined),
                 label: 'Karte',
                 tooltip: 'Karte',
               ),
-              NavigationDestination(
+              const NavigationDestination(
                 icon: Icon(Icons.map_outlined),
                 label: 'Driving',
                 tooltip: 'Karte',
               ),
               NavigationDestination(
+                icon: Badge(
+                  isLabelVisible:
+                      DateTime.now().difference(woAuto.tuvUntil.value).abs() < 30.days ||
+                          woAuto.tuvUntil.value.difference(DateTime.now()).isNegative,
+                  child: const Icon(Icons.car_repair),
+                ),
+                label: 'Mein Auto',
+                tooltip: 'Mein Auto',
+              ),
+              const NavigationDestination(
                 icon: Icon(Icons.history_outlined),
                 label: 'Historie',
                 tooltip: 'Historie',
               ),
-              NavigationDestination(
+              const NavigationDestination(
                 icon: Icon(Icons.settings_outlined),
                 label: 'Einstellungen',
                 tooltip: 'Einstellungen',
