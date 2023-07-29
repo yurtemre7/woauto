@@ -139,9 +139,6 @@ class _MyCarState extends State<MyCar> {
                                   child: const Text('OK'),
                                   onPressed: () async {
                                     woAuto.kennzeichen.value = tec.text.trim();
-                                    if (woAuto.kennzeichen.value.isEmpty) {
-                                      return;
-                                    }
 
                                     await woAuto.save();
                                     Get.back();

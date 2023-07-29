@@ -263,7 +263,7 @@ class _IntroState extends State<Intro> {
 
             await woAuto.save();
           },
-          isTopSafeArea: true,
+          safeAreaList: const [false, false, true, false],
           next: const Text(
             'Weiter',
             style: TextStyle(fontWeight: FontWeight.bold),
