@@ -160,7 +160,10 @@ class _HomeState extends State<Home> {
                 icon: Badge(
                   isLabelVisible:
                       DateTime.now().difference(woAuto.tuvUntil.value).abs() < 30.days ||
-                          woAuto.tuvUntil.value.difference(DateTime.now()).isNegative,
+                          woAuto.tuvUntil.value.difference(DateTime.now()).isNegative ||
+                          woAuto.kilometerStand.value.isEmpty ||
+                          woAuto.kennzeichen.value.isEmpty ||
+                          woAuto.carBaujahr.value.isEmpty,
                   child: const Icon(Icons.car_repair),
                 ),
                 label: 'Mein Auto',

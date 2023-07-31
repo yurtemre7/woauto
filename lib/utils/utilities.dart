@@ -106,6 +106,10 @@ Future<String?> getAddress(LatLng position) async {
   }
 }
 
+String formatDateTimeToYear(DateTime dateTime) {
+  return '${dateTime.year}';
+}
+
 String formatDateTimeToMonthYear(DateTime dateTime) {
   // leading zero
   String twoDigits(int n) {
