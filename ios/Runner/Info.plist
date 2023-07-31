@@ -55,6 +55,12 @@
 		<string>Damit die App deinen eigenen Standord herausfinden kann und auf der Karte anzeigen kann. Dies kann immer und während der Appnutzung benutzt werden.</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true />
+		<key>NSPhotoLibraryUsageDescription</key>
+		<string>Damit du ein Foto deines Autos in die App hinzufügen kannst</string>
+		<key>NSCameraUsageDescription</key>
+		<string>Damit du sofort ein Foto deines Autos in die App hinzufügen kannst</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Damit du ein Video mit Ton aufnehmen kannst. Dies nutzen wir aber zurzeit nicht.</string>
 		<key>NSCalendarsUsageDescription</key>
 		<string>Damit die App zu deinem Kalender das Ablaufdatum deines TÜVs eintragen kann.</string>
 		<key>NSContactsUsageDescription</key>
