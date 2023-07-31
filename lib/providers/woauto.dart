@@ -51,6 +51,8 @@ class WoAuto extends GetxController {
   final kennzeichen = ''.obs;
   final kilometerStand = ''.obs;
   final tuvUntil = DateTime.now().obs;
+  final carPicture = ''.obs;
+  final carBaujahr = ''.obs;
 
   // data
   final currentVelocity = 0.0.obs;
@@ -79,6 +81,8 @@ class WoAuto extends GetxController {
       'kennzeichen': kennzeichen.value,
       'kilometerStand': kilometerStand.value,
       'tuvUntil': tuvUntil.value.toIso8601String(),
+      'carPicture': carPicture.value,
+      'carPictureDate': carBaujahr.value,
       'themeMode': themeMode.value,
       'parkings': parkingList,
       'pins': pinList,
@@ -130,6 +134,8 @@ class WoAuto extends GetxController {
     woAuto.kennzeichen.value = jsonMap['kennzeichen'] ?? '';
     woAuto.kilometerStand.value = jsonMap['kilometerStand'] ?? '';
     woAuto.tuvUntil.value = DateTime.parse(jsonMap['tuvUntil'] ?? DateTime.now().toIso8601String());
+    woAuto.carPicture.value = jsonMap['carPicture'] ?? '';
+    woAuto.carBaujahr.value = jsonMap['carPictureDate'] ?? DateTime.now().year.toString();
     // settings
     woAuto.themeMode.value = jsonMap['themeMode'] ?? 0;
 
@@ -186,6 +192,8 @@ class WoAuto extends GetxController {
     kennzeichen.value = '';
     kilometerStand.value = '';
     tuvUntil.value = DateTime.now();
+    carPicture.value = '';
+    carBaujahr.value = DateTime.now().year.toString();
 
     themeMode.value = 0;
     timePuffer.value = 10;
