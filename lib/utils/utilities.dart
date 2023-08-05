@@ -60,14 +60,14 @@ Color? getBackgroundColor(context) {
   if (woAuto.themeMode.value != 0) {
     return woAuto.themeMode.value == 1 ? Colors.white : darkBg;
   }
-  return MediaQuery.of(context).platformBrightness == Brightness.light ? Colors.white : darkBg;
+  return Theme.of(context).colorScheme.background;
 }
 
 Color? getForegroundColor(context) {
   if (woAuto.themeMode.value != 0) {
     return woAuto.themeMode.value != 1 ? Colors.white : darkBg;
   }
-  return MediaQuery.of(context).platformBrightness != Brightness.light ? Colors.white : darkBg;
+  return Theme.of(context).colorScheme.surfaceTint;
 }
 
 Future<String?> getAddress(LatLng position) async {
