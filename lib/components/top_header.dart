@@ -106,7 +106,7 @@ class _TopHeaderState extends State<TopHeader> {
                                 iconSize: 30,
                               ),
                             IconButton(
-                              tooltip: 'Fahrmodus',
+                              tooltip: 'Driving Modus',
                               style: IconButton.styleFrom(
                                 foregroundColor: context.theme.colorScheme.primary,
                                 disabledForegroundColor: Colors.grey.withOpacity(0.3),
