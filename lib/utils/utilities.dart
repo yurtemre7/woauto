@@ -175,3 +175,9 @@ List<int> quickSort(List<int> list) {
 
   return [...quickSort(less), ...equal, ...quickSort(greater)];
 }
+
+int calculateCarAge(String year) {
+  var now = DateTime.now();
+  var yearInt = int.parse(year);
+  return now.year - yearInt;
+}

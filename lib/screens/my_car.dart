@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/extensions.dart';
@@ -205,45 +206,70 @@ class _MyCarState extends State<MyCar> {
 
                             if (woAuto.carPicture.isNotEmpty)
                               Center(
-                                child: Card(
-                                  color: Theme.of(context).colorScheme.primaryContainer,
-                                  elevation: 0,
-                                  child: Container(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          woAuto.subText.value,
-                                          style: TextStyle(
-                                            fontSize: 24,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context).colorScheme.primary,
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Center(
+                                        child: IconButton(
+                                          onPressed: () {
+                                            Share.shareXFiles(
+                                              [
+                                                XFile(woAuto.carPicture.value),
+                                              ],
+                                              text: 'Das ist mein Auto! 🚗',
+                                            );
+                                          },
+                                          icon: const Icon(Icons.share_outlined),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      flex: 2,
+                                      child: Card(
+                                        color: Theme.of(context).colorScheme.primaryContainer,
+                                        elevation: 0,
+                                        child: Container(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                woAuto.subText.value,
+                                                style: TextStyle(
+                                                  fontSize: 24,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Theme.of(context).colorScheme.primary,
+                                                ),
+                                              ),
+                                              if (woAuto.kennzeichen.value.isNotEmpty)
+                                                Text(
+                                                  woAuto.kennzeichen.value,
+                                                  style: TextStyle(
+                                                    color: Theme.of(context).colorScheme.primary,
+                                                  ),
+                                                ),
+                                              if (woAuto.carBaujahr.value.isNotEmpty)
+                                                Text(
+                                                  'Baujahr: ${woAuto.carBaujahr.value} (${calculateCarAge(woAuto.carBaujahr.value)} Jahre)',
+                                                  style: TextStyle(
+                                                    color: Theme.of(context).colorScheme.primary,
+                                                  ),
+                                                ),
+                                              if (woAuto.kilometerStand.value.isNotEmpty)
+                                                Text(
+                                                  '${woAuto.kilometerStand.value} km gefahren',
+                                                  style: TextStyle(
+                                                    color: Theme.of(context).colorScheme.primary,
+                                                  ),
+                                                ),
+                                            ],
                                           ),
                                         ),
-                                        if (woAuto.kennzeichen.value.isNotEmpty)
-                                          Text(
-                                            woAuto.kennzeichen.value,
-                                            style: TextStyle(
-                                              color: Theme.of(context).colorScheme.primary,
-                                            ),
-                                          ),
-                                        if (woAuto.carBaujahr.value.isNotEmpty)
-                                          Text(
-                                            'Baujahr: ${woAuto.carBaujahr.value}',
-                                            style: TextStyle(
-                                              color: Theme.of(context).colorScheme.primary,
-                                            ),
-                                          ),
-                                        if (woAuto.kilometerStand.value.isNotEmpty)
-                                          Text(
-                                            '${woAuto.kilometerStand.value} km gefahren',
-                                            style: TextStyle(
-                                              color: Theme.of(context).colorScheme.primary,
-                                            ),
-                                          ),
-                                      ],
+                                      ),
                                     ),
-                                  ),
+                                    Expanded(
+                                      child: 0.h,
+                                    ),
+                                  ],
                                 ),
                               ),
                           ],
@@ -314,22 +340,34 @@ class _MyCarState extends State<MyCar> {
                         subtitle: const Text('Ändere das Baujahr deines Autos'),
                         onTap: () {
                           var tec = TextEditingController(text: woAuto.carBaujahr.value);
+                          var formkey = GlobalKey<FormState>();
                           Get.dialog(
                             AlertDialog(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               title: const Text('Baujahr'),
-                              content: TextFormField(
-                                controller: tec,
-                                maxLength: 4,
-                                autocorrect: false,
-                                autofocus: true,
-                                decoration: const InputDecoration(
-                                  hintText: '2002',
+                              content: Form(
+                                key: formkey,
+                                child: TextFormField(
+                                  controller: tec,
+                                  maxLength: 4,
+                                  autocorrect: false,
+                                  autofocus: true,
+                                  decoration: const InputDecoration(
+                                    hintText: '2002',
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  validator: (value) {
+                                    if (value == null) return 'Bitte gib ein gültiges Baujahr ein';
+                                    int year = int.tryParse(value) ?? 0;
+                                    if (year < 1900 || year > DateTime.now().year) {
+                                      return 'Bitte gib ein gültiges Baujahr ein';
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                keyboardType: TextInputType.number,
-                                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                               ),
                               actions: [
                                 TextButton(
@@ -341,6 +379,7 @@ class _MyCarState extends State<MyCar> {
                                 ElevatedButton(
                                   child: const Text('OK'),
                                   onPressed: () async {
+                                    if (!formkey.currentState!.validate()) return;
                                     woAuto.carBaujahr.value = tec.text.trim();
 
                                     await woAuto.save();
