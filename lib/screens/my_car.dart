@@ -220,6 +220,7 @@ class _MyCarState extends State<MyCar> {
                                             );
                                           },
                                           icon: const Icon(Icons.share_outlined),
+                                          color: Theme.of(context).colorScheme.primary,
                                         ),
                                       ),
                                     ),
@@ -578,6 +579,44 @@ class _MyCarState extends State<MyCar> {
                             ),
                           ),
                       ],
+                      8.h,
+                      Container(
+                        padding: const EdgeInsets.all(16.0),
+                        // remember the user that his data is saved on device, safe and secure
+                        child: GestureDetector(
+                          onTap: () {
+                            woAuto.currentIndex(3);
+                          },
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Center(
+                                  child: Icon(
+                                    Icons.info_outline,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                flex: 6,
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                  child: Text(
+                                    'Deine Daten werden lokal auf deinem Gerät gespeichert. '
+                                    'Wir haben keinen Zugriff auf deine Daten. '
+                                    'Du kannst deine Daten jederzeit in den Einstellungen löschen.',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.primary,
+                                      fontSize: 12,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                       16.h,
                     ],
                   ),
