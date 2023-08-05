@@ -39,6 +39,7 @@ class WoAuto extends GetxController {
   final appVersion = ''.obs;
   final appBuildNumber = ''.obs;
   final currentIndex = 0.obs;
+  final drivingMode = false.obs;
 
   // settings
   final themeMode = 0.obs;

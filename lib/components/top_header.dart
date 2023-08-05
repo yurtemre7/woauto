@@ -4,6 +4,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/text_icon.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class TopHeader extends StatefulWidget {
@@ -47,44 +48,82 @@ class _TopHeaderState extends State<TopHeader> {
                       ),
                     ),
                     Obx(
-                      () => IconButton(
-                        tooltip: 'Parkplätze & Pins',
-                        style: IconButton.styleFrom(
-                          foregroundColor: context.theme.colorScheme.primary,
-                          disabledForegroundColor: Colors.grey.withOpacity(0.3),
-                        ),
-                        onPressed: woAuto.pinList.toList().isNotEmpty ||
-                                woAuto.parkingList.toList().isNotEmpty
-                            ? () {
-                                var tempParkList = woAuto.parkingList.toList();
-                                for (int i = 0; i < tempParkList.length; i++) {
-                                  var park = tempParkList[i];
-                                  tempParkList[i]['distance'] =
-                                      woAuto.getDistance(LatLng(park['lat'], park['long']));
-                                }
-                                woAuto.parkingList.clear();
-                                woAuto.parkingList.assignAll(tempParkList);
-                                tempParkList = woAuto.pinList.toList();
-                                for (int i = 0; i < tempParkList.length; i++) {
-                                  var park = tempParkList[i];
-                                  tempParkList[i]['distance'] =
-                                      woAuto.getDistance(LatLng(park['lat'], park['long']));
-                                }
-                                woAuto.pinList.clear();
-                                woAuto.pinList.assignAll(tempParkList);
-                                Get.bottomSheet(
-                                  const CarBottomSheet(),
-                                  settings: const RouteSettings(
-                                    name: 'CarBottomSheet',
+                      () {
+                        var kmh =
+                            ((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ??
+                                    0) *
+                                3.6);
+                        return Row(
+                          children: [
+                            if (woAuto.drivingMode.value) ...[
+                              if (woAuto.currentVelocity.value >= 0.0)
+                                Text(
+                                  '${kmh.toStringAsFixed(1)} km/h',
+                                  style: const TextStyle(
+                                    fontSize: 20.0,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                );
-                              }
-                            : null,
-                        icon: const Icon(
-                          Icons.local_parking_outlined,
-                        ),
-                        iconSize: 30,
-                      ),
+                                ),
+                              8.w,
+                            ],
+                            if (!woAuto.drivingMode.value)
+                              IconButton(
+                                tooltip: 'Parkplätze & Pins',
+                                style: IconButton.styleFrom(
+                                  foregroundColor: context.theme.colorScheme.primary,
+                                  disabledForegroundColor: Colors.grey.withOpacity(0.3),
+                                ),
+                                onPressed: woAuto.pinList.toList().isNotEmpty ||
+                                        woAuto.parkingList.toList().isNotEmpty
+                                    ? () {
+                                        var tempParkList = woAuto.parkingList.toList();
+                                        for (int i = 0; i < tempParkList.length; i++) {
+                                          var park = tempParkList[i];
+                                          tempParkList[i]['distance'] =
+                                              woAuto.getDistance(LatLng(park['lat'], park['long']));
+                                        }
+                                        woAuto.parkingList.clear();
+                                        woAuto.parkingList.assignAll(tempParkList);
+                                        tempParkList = woAuto.pinList.toList();
+                                        for (int i = 0; i < tempParkList.length; i++) {
+                                          var park = tempParkList[i];
+                                          tempParkList[i]['distance'] =
+                                              woAuto.getDistance(LatLng(park['lat'], park['long']));
+                                        }
+                                        woAuto.pinList.clear();
+                                        woAuto.pinList.assignAll(tempParkList);
+                                        Get.bottomSheet(
+                                          const CarBottomSheet(),
+                                          settings: const RouteSettings(
+                                            name: 'CarBottomSheet',
+                                          ),
+                                        );
+                                      }
+                                    : null,
+                                icon: const Icon(
+                                  Icons.local_parking_outlined,
+                                ),
+                                iconSize: 30,
+                              ),
+                            IconButton(
+                              tooltip: 'Fahrmodus',
+                              style: IconButton.styleFrom(
+                                foregroundColor: context.theme.colorScheme.primary,
+                                disabledForegroundColor: Colors.grey.withOpacity(0.3),
+                              ),
+                              onPressed: () {
+                                woAuto.drivingMode.toggle();
+                              },
+                              icon: Icon(
+                                woAuto.drivingMode.value
+                                    ? Icons.directions_car
+                                    : Icons.directions_walk,
+                              ),
+                              iconSize: 30,
+                            ),
+                          ],
+                        );
+                      },
                     ),
                   ],
                 ),
@@ -495,72 +534,6 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
               ),
             ]),
           ),
-        ),
-      ),
-    );
-  }
-}
-
-class DrivingHeader extends StatefulWidget {
-  const DrivingHeader({super.key});
-
-  @override
-  State<DrivingHeader> createState() => _DrivingHeaderState();
-}
-
-class _DrivingHeaderState extends State<DrivingHeader> {
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
-        alignment: Alignment.topCenter,
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Card(
-              elevation: 4.0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Container(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: 10,
-                  bottom: 10,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'WoAuto',
-                      style: TextStyle(
-                        fontSize: 24.0,
-                        fontWeight: FontWeight.bold,
-                        color: context.theme.colorScheme.primary,
-                      ),
-                    ),
-                    Obx(() {
-                      var kmh =
-                          ((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ?? 0) *
-                              3.6);
-                      if (woAuto.currentVelocity.value >= 0.0) {
-                        return Text(
-                          '${kmh.toStringAsFixed(1)} km/h',
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        );
-                      }
-                      return const SizedBox();
-                    }),
-                  ],
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );

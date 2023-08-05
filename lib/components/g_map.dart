@@ -430,7 +430,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                 );
               },
             ),
-            if (woAuto.currentIndex.value == 1)
+            if (woAuto.currentIndex.value == 0 && woAuto.drivingMode.value)
               Obx(
                 () => Positioned(
                   bottom: 16,

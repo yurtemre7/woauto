@@ -108,14 +108,7 @@ class _HomeState extends State<Home> {
                 child: const TopHeader(),
               ),
               Visibility(
-                visible: woAuto.currentIndex.value == 1,
-                maintainSize: true,
-                maintainAnimation: true,
-                maintainState: true,
-                child: const DrivingHeader(),
-              ),
-              Visibility(
-                visible: woAuto.currentIndex.value == 0,
+                visible: woAuto.currentIndex.value == 0 && !woAuto.drivingMode.value,
                 child: const Positioned(
                   bottom: 16,
                   left: 16,
@@ -123,13 +116,13 @@ class _HomeState extends State<Home> {
                   child: MapInfoSheet(),
                 ),
               ),
-              if (woAuto.currentIndex.value == 2) ...[
+              if (woAuto.currentIndex.value == 1) ...[
                 const MyCar(),
               ],
-              if (woAuto.currentIndex.value == 3) ...[
+              if (woAuto.currentIndex.value == 2) ...[
                 const History(),
               ],
-              if (woAuto.currentIndex.value == 4) ...[
+              if (woAuto.currentIndex.value == 3) ...[
                 const Settings(),
               ]
             ],
@@ -149,11 +142,6 @@ class _HomeState extends State<Home> {
               const NavigationDestination(
                 icon: Icon(Icons.map_outlined),
                 label: 'Karte',
-                tooltip: 'Karte',
-              ),
-              const NavigationDestination(
-                icon: Icon(Icons.map_outlined),
-                label: 'Driving',
                 tooltip: 'Karte',
               ),
               NavigationDestination(
