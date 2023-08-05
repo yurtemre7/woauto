@@ -43,7 +43,6 @@ class _IntroState extends State<Intro> {
       body: GestureDetector(
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: IntroductionScreen(
-          controlsPadding: const EdgeInsets.all(20),
           globalBackgroundColor: getBackgroundColor(context),
           pages: [
             PageViewModel(
