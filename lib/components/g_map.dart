@@ -76,12 +76,18 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
           currentLocation.longitude ?? 0,
         ),
         zoom: 18,
-        bearing: currentLocation.heading ?? 0,
-        // tilt: currentLocation.altitude ?? 0,
       );
 
-      if (woAuto.currentIndex.value == 1) {
+      if (woAuto.drivingMode.value) {
         if (woAuto.mapController.value != null) {
+          woAuto.currentPosition.value = CameraPosition(
+            target: LatLng(
+              currentLocation.latitude ?? 0,
+              currentLocation.longitude ?? 0,
+            ),
+            zoom: 18,
+            bearing: currentLocation.heading ?? 0,
+          );
           woAuto.mapController.value!.animateCamera(
             CameraUpdate.newCameraPosition(
               woAuto.currentPosition.value,
