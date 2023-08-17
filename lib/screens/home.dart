@@ -132,7 +132,7 @@ class _HomeState extends State<Home> {
             selectedIndex: woAuto.currentIndex.value,
             onDestinationSelected: (index) {
               woAuto.currentIndex.value = index;
-              if (index == 1) {
+              if (woAuto.drivingMode.value) {
                 KeepScreenOn.turnOn();
               } else {
                 KeepScreenOn.turnOff();
