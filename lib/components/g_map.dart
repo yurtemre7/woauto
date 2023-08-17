@@ -98,6 +98,10 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
 
       woAuto.currentVelocity.value = currentLocation.speed ?? 0;
 
+      if (!mounted) {
+        return;
+      }
+
       if (!woAuto.drivingMode.value && woAuto.askForDrivingMode.value) {
         // show dialog to ask the user if he wants to switch to driving mode, IF his velocity is > 5 km/h
         var kmh = ((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ?? 0) * 3.6);
@@ -130,10 +134,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
             if (result) {
               woAuto.drivingMode.value = true;
             }
-          }
-        } else {
-          if (woAuto.drivingMode.value) {
-            woAuto.drivingMode.value = false;
           }
         }
       }
