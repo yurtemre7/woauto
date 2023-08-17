@@ -97,6 +97,46 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
       }
 
       woAuto.currentVelocity.value = currentLocation.speed ?? 0;
+
+      if (!woAuto.drivingMode.value && woAuto.askForDrivingMode.value) {
+        // show dialog to ask the user if he wants to switch to driving mode, IF his velocity is > 5 km/h
+        var kmh = ((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ?? 0) * 3.6);
+        if (kmh > 5) {
+          if (woAuto.currentIndex.value == 0) {
+            woAuto.askForDrivingMode.value = false;
+            var result = await Get.dialog(
+              AlertDialog(
+                title: const Text('Driving Modus erkannt'),
+                content: const Text(
+                  'Du bist gerade (wahrscheinlich) mit deinem Auto unterwegs. Möchtest du in den Driving Modus wechseln?',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Get.back(result: false);
+                    },
+                    child: const Text('NEIN'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Get.back(result: true);
+                    },
+                    child: const Text('JA'),
+                  ),
+                ],
+              ),
+              name: 'Fahrmodus',
+            );
+            if (result) {
+              woAuto.drivingMode.value = true;
+            }
+          }
+        } else {
+          if (woAuto.drivingMode.value) {
+            woAuto.drivingMode.value = false;
+          }
+        }
+      }
     });
   }
 
