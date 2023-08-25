@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/text_icon.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -144,6 +146,7 @@ class CarBottomSheet extends StatefulWidget {
 }
 
 class _CarBottomSheetState extends State<CarBottomSheet> {
+  final woAutoServer = Get.find<WoAutoServer>();
   @override
   void initState() {
     super.initState();
@@ -187,6 +190,97 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                         ...parkingList.toSet().map(
                           (element) {
                             return ListTile(
+                              contentPadding: EdgeInsets.zero,
+                              leading: IconButton(
+                                icon: Icon(
+                                  element['onlineSync']
+                                      ? Icons.sync_sharp
+                                      : Icons.sync_disabled_sharp,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                                onPressed: !element['onlineSync']
+                                    ? () {
+                                        Get.dialog(
+                                          AlertDialog(
+                                            title: const Text('Parkplatz synchronisieren'),
+                                            content: const Text(
+                                              'Möchtest du den Parkplatz synchronisieren?',
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                child: const Text('ABBRECHEN'),
+                                                onPressed: () => Get.back(result: false),
+                                              ),
+                                              ElevatedButton(
+                                                child: const Text('SYNCHRONISIEREN'),
+                                                onPressed: () async {
+                                                  var onlineID = await woAutoServer.createLocation(
+                                                    element['name'],
+                                                    element['lat'].toString(),
+                                                    element['long'].toString(),
+                                                    DateTime.now()
+                                                        .add(30.days)
+                                                        .millisecondsSinceEpoch
+                                                        .toString(),
+                                                  );
+                                                  element['onlineSync'] = true;
+                                                  element['onlineID'] = onlineID;
+                                                  Get.back(result: true);
+                                                  setState(() {});
+                                                },
+                                              ),
+                                            ],
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(12),
+                                            ),
+                                          ),
+                                          name: 'Parkplatz synchronisieren',
+                                        );
+                                      }
+                                    : () async {
+                                        Get.dialog(
+                                          AlertDialog(
+                                            title: const Text('Parkplatz synchronisiert'),
+                                            content: const Text(
+                                              'Dieser Parkplatz ist nun auf den Servern von WoAuto.\nMöchtest du den Parkplatz teilen?',
+                                            ),
+                                            actions: [
+                                              ElevatedButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  foregroundColor:
+                                                      Theme.of(context).colorScheme.error,
+                                                ),
+                                                child: const Text('LÖSCHEN'),
+                                                onPressed: () async {
+                                                  // Delete ... id and edit
+                                                },
+                                              ),
+                                              ElevatedButton(
+                                                child: const Text('TEILEN'),
+                                                onPressed: () async {
+                                                  // Share... id and view..
+                                                  var account = woAutoServer.accounts.values
+                                                      .firstWhere(
+                                                          (acc) => acc.id == element['onlineID']);
+                                                  String website = 'https://yurtemre.de';
+                                                  String woLink =
+                                                      '$website/deeplink?id=${Uri.encodeFull(account.id)}&view=${Uri.encodeFull(account.viewKey)}';
+                                                  Share.share(
+                                                    'Hier ist mein synchronisierter Parkplatz:\n$woLink',
+                                                  );
+                                                  // TODO make website add this new deep link
+                                                  Get.back();
+                                                },
+                                              ),
+                                            ],
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(12),
+                                            ),
+                                          ),
+                                          name: 'Parkplatz synchronisiert Info',
+                                        );
+                                      },
+                              ),
                               title: Text(
                                 element['name'] + " - ${element['distance']} m entfernt",
                                 style: TextStyle(
@@ -337,6 +431,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                         ...pinList.toSet().map(
                           (element) {
                             return ListTile(
+                              contentPadding: EdgeInsets.zero,
                               title: Text(
                                 element['name'] + " - ${element['distance']} m entfernt",
                                 style: TextStyle(

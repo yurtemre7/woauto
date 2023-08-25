@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:woauto/providers/woauto.dart';
+import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/screens/home.dart';
 import 'package:woauto/screens/intro.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
@@ -17,6 +18,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   woAuto = Get.put(await WoAuto.load());
+  Get.put(WoAutoServer.load());
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   tz.initializeTimeZones();
   try {

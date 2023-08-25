@@ -9,6 +9,8 @@ class Pin extends Park {
     super.datum,
     super.address = '',
     super.shared = true,
+    super.onlineSync = false,
+    super.onlineID = '',
     required super.distance,
   });
 
@@ -22,7 +24,9 @@ class Pin extends Park {
       'name': name,
       'address': address,
       'shared': shared,
+      'onlineSync': onlineSync,
       'distance': distance,
+      'onlineID': onlineID,
     };
   }
 
@@ -35,7 +39,9 @@ class Pin extends Park {
           name: json['name'],
           address: json['address'] ?? '',
           shared: json['shared'] ?? true,
+          onlineSync: json['onlineSync'] ?? false,
           distance: json['distance'],
           extra: json['extra'] ?? '',
+          onlineID: json['onlineID'] ?? '',
         );
 }

@@ -88,6 +88,9 @@ class YrtmrDeeplinks {
         case 'add-pin':
           await addPin(deeplink);
           break;
+        case 'add-location':
+          // TODO fetch with ID and VIEW and then add to locations and save, add pin to map
+          break;
         default:
           break;
       }

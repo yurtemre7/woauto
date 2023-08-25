@@ -8,6 +8,8 @@ class Park {
   bool? shared;
   double distance;
   String extra;
+  bool onlineSync = false;
+  String onlineID = '';
 
   Park({
     required this.id,
@@ -19,6 +21,8 @@ class Park {
     this.shared = false,
     required this.distance,
     this.extra = '',
+    this.onlineSync = false,
+    this.onlineID = '',
   });
 
   toJson() {
@@ -32,6 +36,8 @@ class Park {
       'shared': shared,
       'distance': distance,
       'extra': extra,
+      'onlineSync': onlineSync,
+      'onlineID': onlineID,
     };
   }
 
@@ -44,5 +50,7 @@ class Park {
         address = json['address'] ?? '',
         shared = json['shared'] ?? false,
         distance = json['distance'],
-        extra = json['extra'] ?? '';
+        extra = json['extra'] ?? '',
+        onlineSync = json['onlineSync'] ?? false,
+        onlineID = json['onlineID'] ?? '';
 }
