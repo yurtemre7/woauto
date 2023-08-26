@@ -264,7 +264,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                                                           (acc) => acc.id == element['onlineID']);
                                                   String website = 'https://yurtemre.de';
                                                   String woLink =
-                                                      '$website/deeplink?id=${Uri.encodeFull(account.id)}&view=${Uri.encodeFull(account.viewKey)}';
+                                                      '$website/sync?id=${Uri.encodeFull(account.id)}&view=${Uri.encodeFull(account.viewKey)}&name=${Uri.encodeFull(element['name'])}';
                                                   Share.share(
                                                     'Hier ist mein synchronisierter Parkplatz:\n$woLink',
                                                   );

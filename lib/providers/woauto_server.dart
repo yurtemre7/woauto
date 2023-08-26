@@ -96,7 +96,7 @@ class WoAutoServer extends GetxController {
     return response.statusCode == 200;
   }
 
-  Future<bool> getLocation(String id, String view) async {
+  Future<String> getLocation(String id, String view) async {
     var response = await httpClient.get(
       getPath,
       query: {
@@ -109,6 +109,6 @@ class WoAutoServer extends GetxController {
     CardLocation location = CardLocation.fromJson(jsonMap);
     locations[location.id] = location;
     save();
-    return response.statusCode == 200;
+    return location.id;
   }
 }

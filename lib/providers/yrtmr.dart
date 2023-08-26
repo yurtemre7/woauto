@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/providers/woauto_server.dart';
 
 class YrtmrDeeplinks {
   static YrtmrDeeplinks? _instance;
@@ -89,7 +90,7 @@ class YrtmrDeeplinks {
           await addPin(deeplink);
           break;
         case 'add-location':
-          // TODO fetch with ID and VIEW and then add to locations and save, add pin to map
+          await addLocation(deeplink);
           break;
         default:
           break;
@@ -125,6 +126,47 @@ class YrtmrDeeplinks {
             target: LatLng(
               double.parse(lat),
               double.parse(long),
+            ),
+            zoom: 18,
+          ),
+        ),
+      );
+    }
+  }
+
+  addLocation(YrtmrDeeplink deeplink) async {
+    String? id = deeplink.params['id'];
+    String? view = deeplink.params['view'];
+    String? name = deeplink.params['name'];
+
+    if (id == null || view == null || name == null) {
+      return;
+    }
+    log('Adding Location: $name, $id, $view');
+    WoAutoServer woAutoServer = Get.find();
+    var locationId = await woAutoServer.getLocation(id, view);
+    var location = woAutoServer.locations[locationId]!;
+    // await woAuto.addPin(LatLng(double.parse(id), double.parse(view)), name);
+    await woAuto.addPin(
+      LatLng(double.parse(location.lat), double.parse(location.long)),
+      location.name,
+    );
+    Get.snackbar(
+      'Ein geteilter Online Parkplatz wurde hinzugefügt',
+      'Schaue auf der Karte oder in der Liste nach.',
+      snackPosition: SnackPosition.TOP,
+      borderRadius: 12,
+      margin: const EdgeInsets.all(20),
+      backgroundColor: Get.theme.colorScheme.surface,
+      colorText: Get.theme.colorScheme.onSurface,
+    );
+    if (woAuto.mapController.value != null) {
+      woAuto.mapController.value!.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(
+              double.parse(id),
+              double.parse(view),
             ),
             zoom: 18,
           ),
