@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/text_icon.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
+import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -70,30 +72,13 @@ class _TopHeaderState extends State<TopHeader> {
                             ],
                             if (!woAuto.drivingMode.value)
                               IconButton(
-                                tooltip: 'Parkplätze & Pins',
+                                tooltip: 'Parkplätze',
                                 style: IconButton.styleFrom(
                                   foregroundColor: context.theme.colorScheme.primary,
                                   disabledForegroundColor: Colors.grey.withOpacity(0.3),
                                 ),
-                                onPressed: woAuto.pinList.toList().isNotEmpty ||
-                                        woAuto.parkingList.toList().isNotEmpty
+                                onPressed: woAuto.carMarkers.isNotEmpty
                                     ? () {
-                                        var tempParkList = woAuto.parkingList.toList();
-                                        for (int i = 0; i < tempParkList.length; i++) {
-                                          var park = tempParkList[i];
-                                          tempParkList[i]['distance'] =
-                                              woAuto.getDistance(LatLng(park['lat'], park['long']));
-                                        }
-                                        woAuto.parkingList.clear();
-                                        woAuto.parkingList.assignAll(tempParkList);
-                                        tempParkList = woAuto.pinList.toList();
-                                        for (int i = 0; i < tempParkList.length; i++) {
-                                          var park = tempParkList[i];
-                                          tempParkList[i]['distance'] =
-                                              woAuto.getDistance(LatLng(park['lat'], park['long']));
-                                        }
-                                        woAuto.pinList.clear();
-                                        woAuto.pinList.assignAll(tempParkList);
                                         Get.bottomSheet(
                                           const CarBottomSheet(),
                                           settings: const RouteSettings(
@@ -172,12 +157,11 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
             child: Column(children: [
               Obx(
                 () {
-                  var pinList = woAuto.pinList.toList();
-                  var parkingList = woAuto.parkingList.toList();
+                  var carParkingList = woAuto.carParkings.toList();
 
                   return Column(
                     children: [
-                      if (parkingList.isNotEmpty) ...[
+                      if (carParkingList.isNotEmpty) ...[
                         const SizedBox(height: 15),
                         const Text(
                           'Parkplätze',
@@ -186,386 +170,211 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                             fontSize: 20,
                           ),
                         ),
-                        const SizedBox(height: 5),
-                        ...parkingList.toSet().map(
-                          (element) {
-                            return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              leading: IconButton(
-                                icon: Icon(
-                                  element['onlineSync']
-                                      ? Icons.sync_sharp
-                                      : Icons.sync_disabled_sharp,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                                onPressed: !element['onlineSync']
-                                    ? () {
-                                        Get.dialog(
-                                          AlertDialog(
-                                            title: const Text('Parkplatz synchronisieren'),
-                                            content: const Text(
-                                              'Möchtest du den Parkplatz synchronisieren?',
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                child: const Text('ABBRECHEN'),
-                                                onPressed: () => Get.back(result: false),
+                        ...carParkingList
+                            .map(
+                              (park) => ListTile(
+                                contentPadding: EdgeInsets.zero,
+                                leading: IconButton(
+                                  icon: Icon(
+                                    park.sharing ? Icons.sync_sharp : Icons.sync_disabled_sharp,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                  onPressed: park.sharing
+                                      ? () {
+                                          Get.dialog(
+                                            AlertDialog(
+                                              title: const Text('Parkplatz synchronisieren'),
+                                              content: const Text(
+                                                'Möchtest du den Parkplatz synchronisieren?',
                                               ),
-                                              ElevatedButton(
-                                                child: const Text('SYNCHRONISIEREN'),
-                                                onPressed: () async {
-                                                  var onlineID = await woAutoServer.createLocation(
-                                                    element['name'],
-                                                    element['lat'].toString(),
-                                                    element['long'].toString(),
-                                                    DateTime.now()
-                                                        .add(30.days)
-                                                        .millisecondsSinceEpoch
-                                                        .toString(),
-                                                  );
-                                                  element['onlineSync'] = true;
-                                                  element['onlineID'] = onlineID;
-                                                  Get.back(result: true);
-                                                  setState(() {});
-                                                },
-                                              ),
-                                            ],
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(12),
-                                            ),
-                                          ),
-                                          name: 'Parkplatz synchronisieren',
-                                        );
-                                      }
-                                    : () async {
-                                        Get.dialog(
-                                          AlertDialog(
-                                            title: const Text('Parkplatz synchronisiert'),
-                                            content: const Text(
-                                              'Dieser Parkplatz ist nun auf den Servern von WoAuto.\nMöchtest du den Parkplatz teilen?',
-                                            ),
-                                            actions: [
-                                              ElevatedButton(
-                                                style: ElevatedButton.styleFrom(
-                                                  foregroundColor:
-                                                      Theme.of(context).colorScheme.error,
+                                              actions: [
+                                                TextButton(
+                                                  child: const Text('ABBRECHEN'),
+                                                  onPressed: () => Get.back(result: false),
                                                 ),
-                                                child: const Text('LÖSCHEN'),
-                                                onPressed: () async {
-                                                  // Delete ... id and edit
-                                                },
+                                                ElevatedButton(
+                                                  child: const Text('SYNCHRONISIEREN'),
+                                                  onPressed: () async {
+                                                    await woAutoServer.createLocation(
+                                                      park.name,
+                                                      park.latitude.toString(),
+                                                      park.longitude.toString(),
+                                                      DateTime.now()
+                                                          .add(30.days)
+                                                          .millisecondsSinceEpoch
+                                                          .toString(),
+                                                    );
+
+                                                    Get.back(result: true);
+                                                    setState(() {});
+                                                  },
+                                                ),
+                                              ],
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(12),
                                               ),
-                                              ElevatedButton(
-                                                child: const Text('TEILEN'),
-                                                onPressed: () async {
-                                                  // Share... id and view..
-                                                  var account = woAutoServer.accounts.values
-                                                      .firstWhere(
-                                                          (acc) => acc.id == element['onlineID']);
-                                                  String website = 'https://yurtemre.de';
-                                                  String woLink =
-                                                      '$website/sync?id=${Uri.encodeFull(account.id)}&view=${Uri.encodeFull(account.viewKey)}&name=${Uri.encodeFull(element['name'])}';
-                                                  Share.share(
-                                                    'Hier ist mein synchronisierter Parkplatz:\n$woLink',
-                                                  );
-                                                  // TODO make website add this new deep link
-                                                  Get.back();
-                                                },
-                                              ),
-                                            ],
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(12),
                                             ),
-                                          ),
-                                          name: 'Parkplatz synchronisiert Info',
+                                            name: 'Parkplatz synchronisieren',
+                                          );
+                                        }
+                                      : () async {
+                                          Get.dialog(
+                                            AlertDialog(
+                                              title: const Text('Parkplatz synchronisiert'),
+                                              content: const Text(
+                                                'Dieser Parkplatz ist nun auf den Servern von WoAuto.\nMöchtest du den Parkplatz teilen?',
+                                              ),
+                                              actions: [
+                                                ElevatedButton(
+                                                  style: ElevatedButton.styleFrom(
+                                                    foregroundColor:
+                                                        Theme.of(context).colorScheme.error,
+                                                  ),
+                                                  child: const Text('LÖSCHEN'),
+                                                  onPressed: () async {
+                                                    // Delete ... id and edit
+                                                  },
+                                                ),
+                                                ElevatedButton(
+                                                  child: const Text('TEILEN'),
+                                                  onPressed: () async {
+                                                    // Share... id and view..
+                                                    var account = woAutoServer.accounts.values
+                                                        .firstWhere((acc) => acc.id == park.uuid);
+                                                    String website = 'https://yurtemre.de';
+                                                    String woLink =
+                                                        '$website/sync?id=${Uri.encodeFull(account.id)}&view=${Uri.encodeFull(account.viewKey)}&name=${Uri.encodeFull(park.name)}';
+                                                    Share.share(
+                                                      'Hier ist mein synchronisierter Parkplatz:\n$woLink',
+                                                    );
+                                                    Get.back();
+                                                  },
+                                                ),
+                                              ],
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.circular(12),
+                                              ),
+                                            ),
+                                            name: 'Parkplatz synchronisiert Info',
+                                          );
+                                        },
+                                ),
+                                title: Text(
+                                  '${park.name} - ${woAuto.getCarParkDistance(park)} m',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                                subtitle: Text(
+                                  park.adresse ?? 'Keine Adresse gefunden',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                                trailing: PopupMenuButton<int>(
+                                  icon: Icon(
+                                    Icons.more_vert_outlined,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                  onSelected: (value) {
+                                    switch (value) {
+                                      case 0:
+                                        MapsLauncher.launchCoordinates(
+                                          park.latitude,
+                                          park.longitude,
                                         );
-                                      },
-                              ),
-                              title: Text(
-                                element['name'] + " - ${element['distance']} m entfernt",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                              subtitle: Text(
-                                element['address'],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                              trailing: PopupMenuButton<int>(
-                                icon: Icon(
-                                  Icons.more_vert_outlined,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                                onSelected: (value) {
-                                  switch (value) {
-                                    case 0:
-                                      launchUrl(
-                                        Uri.parse(
-                                          'https://www.google.com/maps/search/?api=1&query=${element['lat']},${element['long']}',
-                                        ),
-                                        mode: LaunchMode.externalApplication,
-                                      );
-                                      break;
-                                    case 1:
-                                      GoogleMapController controller = woAuto.mapController.value!;
-                                      controller.animateCamera(
-                                        CameraUpdate.newCameraPosition(
-                                          CameraPosition(
-                                            target: LatLng(
-                                              element['lat'],
-                                              element['long'],
+                                        break;
+                                      case 1:
+                                        GoogleMapController controller =
+                                            woAuto.mapController.value!;
+                                        controller.animateCamera(
+                                          CameraUpdate.newCameraPosition(
+                                            CameraPosition(
+                                              target: park.latLng,
+                                              zoom: CAM_ZOOM,
                                             ),
-                                            zoom: 18,
                                           ),
-                                        ),
-                                      );
-                                      break;
-                                    case 2:
-                                      var id = element['id'].toString();
-                                      var ids = id.split(',');
-                                      int num = int.parse(ids[1]);
-                                      String type = ids[0];
-                                      if (type == 'park') {
-                                        woAuto.parkingList.removeAt(num);
-                                        woAuto.parkings.removeWhere(
-                                            (Marker element) => element.markerId.value == id);
-                                      } else {
-                                        woAuto.pinList.removeAt(num);
-                                        woAuto.pins.removeWhere(
-                                            (Marker element) => element.markerId.value == id);
-                                      }
+                                        );
+                                        break;
+                                      case 2:
+                                        woAuto.carParkings
+                                            .removeWhere((element) => element.uuid == park.uuid);
+                                        woAuto.carParkings.refresh();
 
-                                      woAuto.markers.clear();
-                                      woAuto.markers.addAll(woAuto.pins);
-                                      woAuto.markers.addAll(woAuto.parkings);
-                                      flutterLocalNotificationsPlugin.cancelAll();
-
-                                      woAuto.save();
-                                      break;
-                                  }
-                                  pop();
-                                },
-                                itemBuilder: (context) {
-                                  return [
-                                    PopupMenuItem(
-                                      value: 0,
-                                      child: TextIcon(
-                                        icon: Icon(
-                                          Icons.map_outlined,
-                                          color: Theme.of(context).colorScheme.primary,
-                                        ),
-                                        label: Text(
-                                          'In Google Maps öffnen',
-                                          style: TextStyle(
+                                        flutterLocalNotificationsPlugin.cancelAll();
+                                        woAuto.save();
+                                        break;
+                                    }
+                                    pop();
+                                  },
+                                  itemBuilder: (context) {
+                                    return [
+                                      PopupMenuItem(
+                                        value: 0,
+                                        child: TextIcon(
+                                          icon: Icon(
+                                            Icons.map_outlined,
                                             color: Theme.of(context).colorScheme.primary,
+                                          ),
+                                          label: Text(
+                                            'In Google Maps öffnen',
+                                            style: TextStyle(
+                                              color: Theme.of(context).colorScheme.primary,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    PopupMenuItem(
-                                      value: 1,
-                                      child: TextIcon(
-                                        icon: Icon(
-                                          Icons.navigation_outlined,
-                                          color: Theme.of(context).colorScheme.primary,
-                                        ),
-                                        label: Text(
-                                          'Zum Parkplatz',
-                                          style: TextStyle(
+                                      PopupMenuItem(
+                                        value: 1,
+                                        child: TextIcon(
+                                          icon: Icon(
+                                            Icons.navigation_outlined,
                                             color: Theme.of(context).colorScheme.primary,
+                                          ),
+                                          label: Text(
+                                            'Zum Parkplatz',
+                                            style: TextStyle(
+                                              color: Theme.of(context).colorScheme.primary,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    PopupMenuItem(
-                                      value: 2,
-                                      child: TextIcon(
-                                        icon: Icon(
-                                          Icons.delete_outline,
-                                          color: Theme.of(context).colorScheme.error,
-                                        ),
-                                        label: Text(
-                                          'Parkplatz löschen',
-                                          style: TextStyle(
+                                      PopupMenuItem(
+                                        value: 2,
+                                        child: TextIcon(
+                                          icon: Icon(
+                                            Icons.delete_outline,
                                             color: Theme.of(context).colorScheme.error,
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                  ];
-                                },
-                              ),
-                              onTap: () {
-                                GoogleMapController controller = woAuto.mapController.value!;
-                                controller.animateCamera(
-                                  CameraUpdate.newCameraPosition(
-                                    CameraPosition(
-                                      target: LatLng(
-                                        element['lat'],
-                                        element['long'],
-                                      ),
-                                      zoom: 18,
-                                    ),
-                                  ),
-                                );
-                                pop();
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                      if (pinList.isNotEmpty) ...[
-                        const SizedBox(height: 5),
-                        const Text(
-                          'Pins',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                          ),
-                        ),
-                        const SizedBox(height: 5),
-                        ...pinList.toSet().map(
-                          (element) {
-                            return ListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(
-                                element['name'] + " - ${element['distance']} m entfernt",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                              subtitle: Text(
-                                element['address'],
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                              trailing: PopupMenuButton<int>(
-                                icon: Icon(
-                                  Icons.more_vert_outlined,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                                onSelected: (value) {
-                                  switch (value) {
-                                    case 0:
-                                      launchUrl(
-                                        Uri.parse(
-                                          'https://www.google.com/maps/search/?api=1&query=${element['lat']},${element['long']}',
-                                        ),
-                                        mode: LaunchMode.externalApplication,
-                                      );
-                                      break;
-                                    case 1:
-                                      GoogleMapController controller = woAuto.mapController.value!;
-                                      controller.animateCamera(
-                                        CameraUpdate.newCameraPosition(
-                                          CameraPosition(
-                                            target: LatLng(
-                                              element['lat'],
-                                              element['long'],
+                                          label: Text(
+                                            'Parkplatz löschen',
+                                            style: TextStyle(
+                                              color: Theme.of(context).colorScheme.error,
                                             ),
-                                            zoom: 18,
                                           ),
                                         ),
-                                      );
-                                      break;
-                                    case 2:
-                                      var id = element['id'].toString();
-                                      var ids = id.split(',');
-                                      int num = int.parse(ids[1]);
-                                      String type = ids[0];
-                                      if (type == 'park') {
-                                        woAuto.parkingList.removeAt(num);
-                                        woAuto.parkings.removeWhere(
-                                            (Marker element) => element.markerId.value == id);
-                                      } else {
-                                        woAuto.pinList.removeAt(num);
-                                        woAuto.pins.removeWhere(
-                                            (Marker element) => element.markerId.value == id);
-                                      }
-
-                                      woAuto.markers.clear();
-                                      woAuto.markers.addAll(woAuto.pins);
-                                      woAuto.markers.addAll(woAuto.parkings);
-
-                                      woAuto.save();
-                                      break;
-                                  }
+                                      ),
+                                    ];
+                                  },
+                                ),
+                                onTap: () {
+                                  GoogleMapController controller = woAuto.mapController.value!;
+                                  controller.animateCamera(
+                                    CameraUpdate.newCameraPosition(
+                                      CameraPosition(
+                                        target: park.latLng,
+                                        zoom: CAM_ZOOM,
+                                      ),
+                                    ),
+                                  );
                                   pop();
                                 },
-                                itemBuilder: (context) {
-                                  return [
-                                    PopupMenuItem(
-                                      value: 0,
-                                      child: TextIcon(
-                                        icon: Icon(
-                                          Icons.map_outlined,
-                                          color: Theme.of(context).colorScheme.primary,
-                                        ),
-                                        label: Text(
-                                          'in Google Maps öffnen',
-                                          style: TextStyle(
-                                            color: Theme.of(context).colorScheme.primary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    PopupMenuItem(
-                                      value: 1,
-                                      child: TextIcon(
-                                        icon: Icon(
-                                          Icons.navigation_outlined,
-                                          color: Theme.of(context).colorScheme.primary,
-                                        ),
-                                        label: Text(
-                                          'Zum Parkplatz',
-                                          style: TextStyle(
-                                            color: Theme.of(context).colorScheme.primary,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    PopupMenuItem(
-                                      value: 2,
-                                      child: TextIcon(
-                                        icon: Icon(
-                                          Icons.delete_outline,
-                                          color: Theme.of(context).colorScheme.error,
-                                        ),
-                                        label: Text(
-                                          'Parkplatz löschen',
-                                          style: TextStyle(
-                                            color: Theme.of(context).colorScheme.error,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ];
-                                },
                               ),
-                              onTap: () {
-                                GoogleMapController controller = woAuto.mapController.value!;
-                                controller.animateCamera(
-                                  CameraUpdate.newCameraPosition(
-                                    CameraPosition(
-                                      target: LatLng(
-                                        element['lat'],
-                                        element['long'],
-                                      ),
-                                      zoom: 18,
-                                    ),
-                                  ),
-                                );
-                              },
-                            );
-                          },
-                        ),
+                            )
+                            .toList(),
+                        const SizedBox(height: 5),
                       ],
                       const SizedBox(height: 15),
                       TextButton.icon(

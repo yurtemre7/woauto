@@ -311,16 +311,20 @@ class _MyCarState extends State<MyCar> {
                                 ElevatedButton(
                                   child: const Text('OK'),
                                   onPressed: () async {
+                                    var oldName = woAuto.subText.value;
                                     woAuto.subText.value = tec.text.trim();
                                     if (woAuto.subText.value.isEmpty) {
                                       woAuto.subText.value = 'Mein Auto';
                                     }
-                                    if (woAuto.parkings.isNotEmpty) {
-                                      var myCar = woAuto.parkings.first;
-                                      woAuto.addMarker(myCar.position);
+                                    if (woAuto.carParkings.isNotEmpty) {
+                                      for (var element in woAuto.carParkings) {
+                                        if (element.name == oldName) {
+                                          element.name = woAuto.subText.value;
+                                        }
+                                      }
                                     }
-
-                                    await woAuto.save();
+                                    woAuto.carParkings.refresh();
+                                    woAuto.save();
                                     Get.back();
                                   },
                                 ),

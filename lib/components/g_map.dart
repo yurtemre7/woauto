@@ -4,16 +4,16 @@ import 'dart:developer';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/providers/woauto_server.dart';
+import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 class GMap extends StatefulWidget {
   const GMap({super.key});
@@ -24,6 +24,7 @@ class GMap extends StatefulWidget {
 
 class _GMapState extends State<GMap> with WidgetsBindingObserver {
   final mapLoading = true.obs;
+  final WoAutoServer woAutoServer = Get.find();
 
   @override
   void initState() {
@@ -75,7 +76,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
           currentLocation.latitude ?? 0,
           currentLocation.longitude ?? 0,
         ),
-        zoom: 18,
+        zoom: CAM_ZOOM,
       );
 
       if (woAuto.drivingMode.value) {
@@ -85,7 +86,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               currentLocation.latitude ?? 0,
               currentLocation.longitude ?? 0,
             ),
-            zoom: 18,
+            zoom: CAM_ZOOM,
             bearing: currentLocation.heading ?? 0,
           );
           woAuto.mapController.value!.animateCamera(
@@ -105,7 +106,8 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
       if (!woAuto.drivingMode.value && woAuto.askForDrivingMode.value) {
         // show dialog to ask the user if he wants to switch to driving mode, IF his velocity is > 5 km/h
         var kmh = ((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ?? 0) * 3.6);
-        if (kmh > 5) {
+
+        if (kmh > woAuto.drivingModeDetectionSpeed.value) {
           if (woAuto.currentIndex.value == 0) {
             woAuto.askForDrivingMode.value = false;
             var result = await Get.dialog(
@@ -117,13 +119,13 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                 actions: [
                   TextButton(
                     onPressed: () {
-                      Get.back(result: false);
+                      pop();
                     },
                     child: const Text('NEIN'),
                   ),
                   ElevatedButton(
                     onPressed: () {
-                      Get.back(result: true);
+                      pop(result: true);
                     },
                     child: const Text('JA'),
                   ),
@@ -140,6 +142,29 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
     });
   }
 
+  Future<void> fetchSyncLocations() async {
+    var futures = <Future>[];
+    for (var location in woAutoServer.locations.values) {
+      futures.add(woAutoServer.getLocation(location.accountId, location.view));
+    }
+    // locationIds
+    var results = await Future.wait(futures);
+    log('Fetched ${results.length} locations');
+
+    for (var location in woAutoServer.locations.values) {
+      // clear markers
+
+      // TODO same as in yrtmr.dart
+      woAuto.addCarPark(
+        LatLng(
+          double.parse(location.lat),
+          double.parse(location.long),
+        ),
+        newName: location.name,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -147,10 +172,10 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         return Stack(
           children: [
             GoogleMap(
-              initialCameraPosition: woAuto.markers.isEmpty
+              initialCameraPosition: woAuto.carMarkers.isEmpty
                   ? woAuto.currentPosition.value
                   : CameraPosition(
-                      target: woAuto.markers.elementAt(0).position,
+                      target: woAuto.carMarkers.elementAt(0).position,
                       zoom: 16,
                     ),
               // padding: const EdgeInsets.all(20),
@@ -174,7 +199,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                     locationData.latitude ?? 0,
                     locationData.longitude ?? 0,
                   ),
-                  zoom: 18,
+                  zoom: CAM_ZOOM,
                 );
                 if (woAuto.mapController.value != null) {
                   woAuto.mapController.value!.animateCamera(
@@ -190,12 +215,12 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               myLocationButtonEnabled: false,
               zoomControlsEnabled: false,
               padding: const EdgeInsets.only(left: 10, right: 10),
-              markers: woAuto.markers.toSet(),
+              markers: woAuto.carMarkers.toSet()..addAll(woAuto.tempMarkers.toSet()),
               onLongPress: (LatLng newPosition) async {
                 // open context menu
                 log('Long Pressed at $newPosition');
                 // add temporary marker
-                woAuto.markers.add(
+                woAuto.tempMarkers.add(
                   Marker(
                     markerId: const MarkerId('temp'),
                     position: newPosition,
@@ -213,11 +238,9 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                           title: const Text('Navigation starten'),
                           onTap: () {
                             Get.back();
-                            launchUrl(
-                              Uri.parse(
-                                'https://www.google.com/maps/search/?api=1&query=${newPosition.latitude},${newPosition.longitude}',
-                              ),
-                              mode: LaunchMode.externalApplication,
+                            MapsLauncher.launchCoordinates(
+                              newPosition.latitude,
+                              newPosition.longitude,
                             );
                           },
                           leading: const Icon(Icons.directions),
@@ -229,7 +252,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                   ),
                 );
                 // remove temporary marker
-                woAuto.markers.removeWhere((element) => element.markerId.value == 'temp');
+                woAuto.tempMarkers.removeWhere((element) => element.markerId.value == 'temp');
               },
               onTap: (LatLng newPosition) {
                 if (kDebugMode) {
@@ -351,121 +374,24 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                       ElevatedButton(
                         child: const Text('SPEICHERN'),
                         onPressed: () async {
-                          woAuto.addMarker(
+                          woAuto.addCarPark(
                             newPosition,
                             extra: textController.text,
                             newName: newNameController.text,
                           );
 
-                          if (tillTime.value != null) {
-                            var differenceInSecondsFromNow = tillTime.value!.hour * 3600 +
-                                tillTime.value!.minute * 60 -
-                                DateTime.now().hour * 3600 -
-                                DateTime.now().minute * 60 -
-                                DateTime.now().second;
-
-                            bool? res;
-
-                            if (isIOS()) {
-                              res = await flutterLocalNotificationsPlugin
-                                  .resolvePlatformSpecificImplementation<
-                                      IOSFlutterLocalNotificationsPlugin>()
-                                  ?.requestPermissions(
-                                    alert: true,
-                                    badge: true,
-                                    sound: true,
-                                  );
-                            } else if (isAndroid()) {
-                              res = await flutterLocalNotificationsPlugin
-                                  .resolvePlatformSpecificImplementation<
-                                      AndroidFlutterLocalNotificationsPlugin>()
-                                  ?.requestPermission();
-                            } else {
-                              Get.dialog(
-                                AlertDialog(
-                                  title: const Text('Benachrichtigungen'),
-                                  content: const Text(
-                                    'Dein Betriebssystem unterstützt keine Benachrichtigungen.',
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        pop();
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                ),
-                                name: 'Info Parkticket',
-                              );
-                              return;
-                            }
-
-                            if (res == null || res == false) {
-                              Get.dialog(
-                                AlertDialog(
-                                  title: const Text('Benachrichtigungen'),
-                                  content: const Text(
-                                    'Um dir eine Benachrichtigung zu schicken, wenn dein Parkticket abläuft, '
-                                    'muss die App die Benachrichtigungen erlauben. '
-                                    'Bitte erlaube die Benachrichtigungen und versuche es erneut.',
-                                  ),
-                                  actions: [
-                                    TextButton(
-                                      onPressed: () {
-                                        pop();
-                                      },
-                                      child: const Text('OK'),
-                                    ),
-                                  ],
-                                ),
-                                name: 'Info Parkticket',
-                              );
-                              return;
-                            }
-
-                            await flutterLocalNotificationsPlugin.cancelAll();
-
-                            NotificationDetails notificationDetails =
-                                NotificationDetails(android: androidNotificationDetailsMAX);
-                            await flutterLocalNotificationsPlugin.show(
-                              1,
-                              'Auto geparkt',
-                              'Dein Parkticket gilt bis ${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')} Uhr.',
-                              notificationDetails,
-                            );
-
-                            int minutesLeft = 0;
-                            int minutes = woAuto.timePuffer.value * 60;
-                            if (differenceInSecondsFromNow > minutes) {
-                              differenceInSecondsFromNow -= minutes;
-                              minutesLeft = woAuto.timePuffer.value;
-                            } else if (differenceInSecondsFromNow < 0) {
-                              differenceInSecondsFromNow += 86400 - minutes;
-                              minutesLeft = woAuto.timePuffer.value;
-                            } else {
-                              minutesLeft = differenceInSecondsFromNow ~/ 60;
-                            }
-                            await flutterLocalNotificationsPlugin.zonedSchedule(
-                              0,
-                              'Dein Parkticket läuft bald ab',
-                              'In ca. $minutesLeft Minuten läuft dein Parkticket ab, bereite dich langsam auf die Abfahrt vor.',
-                              tz.TZDateTime.now(tz.local)
-                                  .add(Duration(seconds: differenceInSecondsFromNow)),
-                              NotificationDetails(
-                                android: androidNotificationDetails,
-                              ),
-                              androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-                              uiLocalNotificationDateInterpretation:
-                                  UILocalNotificationDateInterpretation.absoluteTime,
-                            );
-                          }
+                          woAuto.addParkticketNotification(tillTime.value);
 
                           pop();
-                          GoogleMapController controller = woAuto.mapController.value!;
-                          await controller.animateCamera(
+                          if (woAuto.mapController.value == null) {
+                            return;
+                          }
+                          await woAuto.mapController.value!.animateCamera(
                             CameraUpdate.newCameraPosition(
-                              CameraPosition(target: newPosition, zoom: 18),
+                              CameraPosition(
+                                target: newPosition,
+                                zoom: CAM_ZOOM,
+                              ),
                             ),
                           );
                         },

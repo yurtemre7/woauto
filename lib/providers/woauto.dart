@@ -4,14 +4,17 @@ import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:woauto/classes/park.dart';
-import 'package:woauto/classes/pin.dart';
+import 'package:uuid/uuid.dart';
+import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/utilities.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 /// The WoAuto GetXController class
 class WoAuto extends GetxController {
@@ -23,14 +26,10 @@ class WoAuto extends GetxController {
     zoom: 16,
   ).obs;
 
-  final parkings = <Marker>{}.obs;
-  final pins = <Marker>{}.obs;
-  final markers = <Marker>{}.obs;
-
-  final parkHistory = <Park>[].obs;
-
-  final parkingList = [].obs;
-  final pinList = [].obs;
+  final carParkings = <CarPark>[].obs;
+  RxList<Marker> get carMarkers => carParkings.map((park) => makeCarMarker(park)).toList().obs;
+  final tempMarkers = <Marker>{}.obs;
+  final carParkingHistory = <CarPark>[].obs;
 
   final mapController = Rxn<GoogleMapController?>();
 
@@ -47,6 +46,7 @@ class WoAuto extends GetxController {
   final mapType = MapType.normal.obs;
   final showTraffic = false.obs;
   final timePuffer = 10.obs;
+  final drivingModeDetectionSpeed = 20.obs;
 
   // my car data
   final subText = 'Mein Auto'.obs;
@@ -58,8 +58,13 @@ class WoAuto extends GetxController {
 
   // data
   final currentVelocity = 0.0.obs;
-  final dayColorScheme = const ColorScheme.light().obs;
-  final nightColorScheme = const ColorScheme.dark().obs;
+  final dayColorScheme = ColorScheme.fromSeed(
+    seedColor: Colors.blue,
+  ).obs;
+  final nightColorScheme = ColorScheme.fromSeed(
+    seedColor: Colors.blue,
+    brightness: Brightness.dark,
+  ).obs;
 
   late SharedPreferences sp;
 
@@ -86,11 +91,11 @@ class WoAuto extends GetxController {
       'carPicture': carPicture.value,
       'carPictureDate': carBaujahr.value,
       'themeMode': themeMode.value,
-      'parkings': parkingList,
-      'pins': pinList,
-      'parkHistory': parkHistory,
+      'carParkings': carParkings.map((e) => e.toJson()).toList(),
+      'carParkHistory': carParkingHistory.map((e) => e.toJson()).toList(),
       'welcome': welcome.value,
       'timePuffer': timePuffer.value,
+      'drivingModeDetectionSpeed': drivingModeDetectionSpeed.value,
     });
   }
 
@@ -100,34 +105,25 @@ class WoAuto extends GetxController {
 
     WoAuto woAuto = WoAuto(await SharedPreferences.getInstance());
 
-    woAuto.parkingList.addAll(jsonMap['parkings'] ?? []);
-    woAuto.pinList.addAll(jsonMap['pins'] ?? []);
     woAuto.welcome.value = jsonMap['welcome'] ?? true;
     woAuto.timePuffer.value = jsonMap['timePuffer'] ?? 10;
-    List history = jsonMap['parkHistory'] ?? [];
-    for (int i = 0; i < history.length; i++) {
-      woAuto.parkHistory.add(Park.fromJson(history[i]));
+    woAuto.drivingModeDetectionSpeed.value = jsonMap['drivingModeDetectionSpeed'] ?? 20;
+
+    var carParkings = jsonMap['carParkings'] ?? [];
+    for (int i = 0; i < carParkings.length; i++) {
+      woAuto.carParkings.add(CarPark.fromJson(carParkings[i]));
+    }
+    woAuto.carParkings.refresh();
+    woAuto.carMarkers.refresh();
+    var carParkingHistory = jsonMap['carParkHistory'] ?? [];
+    for (int i = 0; i < carParkingHistory.length; i++) {
+      woAuto.carParkingHistory.add(CarPark.fromJson(carParkingHistory[i]));
     }
 
-    for (int i = 0; i < woAuto.parkingList.length; i++) {
-      var park = Park.fromJson(woAuto.parkingList[i]);
-
-      woAuto.parkings.add(woAuto.makeMarker(park, 'park,$i'));
-    }
-
-    for (int i = 0; i < woAuto.pinList.length; i++) {
-      var pin = Pin.fromJson(woAuto.pinList[i]);
-
-      woAuto.pins.add(woAuto.makeMarker(pin, 'pin,$i'));
-    }
-
-    woAuto.markers.addAll(woAuto.parkings);
-    woAuto.markers.addAll(woAuto.pins);
-
-    if (woAuto.parkings.isNotEmpty) {
-      var myCar = woAuto.parkings.first;
+    if (woAuto.carParkings.isNotEmpty) {
+      var myCar = woAuto.carParkings.first;
       woAuto.currentPosition.value = CameraPosition(
-        target: myCar.position,
+        target: myCar.latLng,
         zoom: 16,
       );
     }
@@ -170,19 +166,29 @@ class WoAuto extends GetxController {
     log('WoAuto', name: 'GetX Controller');
     log('Subtext: $subText', name: 'GetX Controller');
     log('Current Position: ${currentPosition.value}', name: 'GetX Controller');
-    if (parkings.isNotEmpty) {
-      for (var i = 0; i < parkings.length; i++) {
-        log('Parkings[$i]: ${parkings.elementAt(i).position}', name: 'GetX Controller');
-      }
-    }
-    if (pins.isNotEmpty) {
-      for (var i = 0; i < pins.length; i++) {
-        log('Pins[$i]: ${pins.elementAt(i).position}', name: 'GetX Controller');
-      }
-    }
     log('Theme Mode: $themeMode', name: 'GetX Controller');
     log('Welcome: $welcome', name: 'GetX Controller');
-    log('Park History length: ${parkHistory.length}', name: 'GetX Controller');
+    log('CarPark History length: ${carParkingHistory.length}', name: 'GetX Controller');
+    log('CarParkings length: ${carParkings.length}', name: 'GetX Controller');
+    log('CarParkings: ${carParkings.map((e) => e.toJson())}', name: 'GetX Controller');
+    log('CarMarkers length: ${carMarkers.length}', name: 'GetX Controller');
+    log('CarMarkers: ${carMarkers.map((e) => e.toJson())}', name: 'GetX Controller');
+    log('TempMarkers length: ${tempMarkers.length}', name: 'GetX Controller');
+    log('TempMarkers: ${tempMarkers.map((e) => e.toJson())}', name: 'GetX Controller');
+    log('Kennzeichen: $kennzeichen', name: 'GetX Controller');
+    log('Kilometerstand: $kilometerStand', name: 'GetX Controller');
+    log('TÜV: $tuvUntil', name: 'GetX Controller');
+    log('Car Picture: $carPicture', name: 'GetX Controller');
+    log('Car Baujahr: $carBaujahr', name: 'GetX Controller');
+    log('App Version: $appVersion', name: 'GetX Controller');
+    log('App Build Number: $appBuildNumber', name: 'GetX Controller');
+    log('Current Velocity: $currentVelocity', name: 'GetX Controller');
+
+    log('Driving Mode: $drivingMode', name: 'GetX Controller');
+    log('Ask for Driving Mode: $askForDrivingMode', name: 'GetX Controller');
+    log('Map Type: $mapType', name: 'GetX Controller');
+    log('Show Traffic: $showTraffic', name: 'GetX Controller');
+    log('Driving Mode Detection Speed: $drivingModeDetectionSpeed', name: 'GetX Controller');
     log('Time Puffer: $timePuffer', name: 'GetX Controller');
 
     log('---' * 15, name: 'GetX Controller');
@@ -199,13 +205,11 @@ class WoAuto extends GetxController {
 
     themeMode.value = 0;
     timePuffer.value = 10;
+    drivingModeDetectionSpeed.value = 10;
 
-    parkingList.clear();
-    pinList.clear();
-    parkings.clear();
-    pins.clear();
-    markers.clear();
-    parkHistory.clear();
+    carParkings.clear();
+    carParkingHistory.clear();
+    tempMarkers.clear();
 
     sp.clear();
     welcome.value = true;
@@ -214,45 +218,40 @@ class WoAuto extends GetxController {
     await woAuto.save();
   }
 
-  makeMarker(Park park, String id) {
+  Marker makeCarMarker(CarPark park) {
     return Marker(
-      markerId: MarkerId(id),
-      position: LatLng(
-        park.latitude,
-        park.longitude,
-      ),
+      markerId: MarkerId(park.uuid),
+      position: park.latLng,
       consumeTapEvents: true,
       onTap: () async {
         woAuto.mapController.value?.animateCamera(
           CameraUpdate.newCameraPosition(
             CameraPosition(
-              target: LatLng(
-                park.latitude,
-                park.longitude,
-              ),
-              zoom: 18,
+              target: park.latLng,
+              zoom: CAM_ZOOM,
             ),
           ),
         );
-        woAuto.showParkingDialog(park, id);
+        woAuto.showCarParkDialog(park);
       },
     );
   }
 
-  showParkingDialog(Park park, String id) {
-    var datum =
-        park.datum == null ? DateTime.now() : DateTime.fromMillisecondsSinceEpoch(park.datum!);
+  showCarParkDialog(CarPark park) {
+    var datum = park.createdAt == null
+        ? DateTime.now()
+        : DateTime.fromMillisecondsSinceEpoch(park.createdAt!);
     Get.dialog(
       AlertDialog(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        title: Text(park.name ?? woAuto.subText.value),
-        content: park.shared ?? false
+        title: Text(park.name),
+        content: park.sharing
             ? Text(
-                'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${park.address ?? 'Adresse konnte nicht gefunden werden.'}.')
+                'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${park.adresse ?? 'Adresse konnte nicht gefunden werden.'}.')
             : Text(
-                'Du hast ${formatDateTimeAndTime(datum)}.\n\nDein Auto steht an folgender Adresse:\n${park.address ?? 'Adresse konnte nicht gefunden werden.'}.\n${park.extra}',
+                'Du hast ${formatDateTimeAndTime(datum)}.\n\nDein Auto steht an folgender Adresse:\n${park.adresse ?? 'Adresse konnte nicht gefunden werden.'}.\n${park.description}',
               ),
         actions: [
           TextButton(
@@ -260,26 +259,11 @@ class WoAuto extends GetxController {
               foregroundColor: Get.theme.colorScheme.error,
             ),
             onPressed: () {
-              // split id by ,
-              var ids = id.split(',');
-              int num = int.parse(ids[1]);
-              String type = ids[0];
-              if (type == 'park') {
-                woAuto.parkingList.removeAt(num);
-                woAuto.parkings.removeWhere((Marker element) => element.markerId.value == id);
-              } else {
-                woAuto.pinList.removeAt(num);
-                woAuto.pins.removeWhere((Marker element) => element.markerId.value == id);
-              }
-
-              markers.clear();
-              markers.addAll(woAuto.pins);
-              markers.addAll(woAuto.parkings);
+              carParkings.removeWhere((element) => element.uuid == park.uuid);
+              carParkings.refresh();
 
               flutterLocalNotificationsPlugin.cancelAll();
-
               woAuto.save();
-
               Get.back();
             },
             child: const Text('Parkplatz löschen'),
@@ -290,60 +274,142 @@ class WoAuto extends GetxController {
     );
   }
 
-  // Adds a marker to the (google) map, and clears the old ones
-  Future<void> addMarker(LatLng newPosition, {String extra = '', String? newName}) async {
+  Future<void> addCarPark(
+    LatLng newPosition, {
+    String extra = '',
+    String? newName,
+    String? photoPath,
+  }) async {
     // if has premium, dont clear
-    woAuto.parkings.clear();
-    woAuto.parkingList.clear();
-
     var adresse = await getAddress(newPosition);
 
-    var park = Park(
-      id: 'park,${woAuto.parkingList.length}',
+    Uuid uuid = const Uuid();
+
+    var carPark = CarPark(
+      uuid: uuid.v5(Uuid.NAMESPACE_URL, newName ?? woAuto.subText.value),
+      name: newName ?? woAuto.subText.value,
       latitude: newPosition.latitude,
       longitude: newPosition.longitude,
-      name: newName ?? woAuto.subText.value,
-      address: adresse,
-      datum: DateTime.now().millisecondsSinceEpoch,
-      distance: woAuto.getDistance(newPosition),
-      extra: extra,
+      adresse: adresse,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      updatedAt: DateTime.now().millisecondsSinceEpoch,
+      description: extra,
+      photoPath: photoPath,
     );
 
-    woAuto.parkHistory.add(park);
-    woAuto.parkings.add(woAuto.makeMarker(park, 'park,${woAuto.parkingList.length}'));
-    woAuto.parkingList.add(park.toJson());
+    log('New Car Park: ${carPark.toJson()}');
+    log('Length before ${carParkings.length}');
 
-    markers.clear();
-    markers.addAll(woAuto.pins);
-    markers.addAll(woAuto.parkings);
+    // delete old car park with same uuid
+    carParkings.removeWhere((element) => element.uuid == carPark.uuid);
+
+    woAuto.carParkings.add(carPark);
+    log('Length after ${carParkings.length}');
+    woAuto.carParkingHistory.add(carPark);
+    woAuto.carParkings.refresh();
     woAuto.save();
   }
 
-  // Adds a pin to the (google) map, and clears the old ones
-  Future<void> addPin(LatLng newPosition, String title) async {
-    // if has premium, dont clear
-    woAuto.pins.clear();
-    woAuto.pinList.clear();
+  Future<void> addParkticketNotification(TimeOfDay? tillTime) async {
+    if (tillTime != null) {
+      var differenceInSecondsFromNow = tillTime.hour * 3600 +
+          tillTime.minute * 60 -
+          DateTime.now().hour * 3600 -
+          DateTime.now().minute * 60 -
+          DateTime.now().second;
 
-    var adresse = await getAddress(newPosition);
+      bool? res;
 
-    var pin = Pin(
-      id: 'pin,${woAuto.pinList.length}',
-      latitude: newPosition.latitude,
-      longitude: newPosition.longitude,
-      name: title,
-      address: adresse,
-      datum: DateTime.now().millisecondsSinceEpoch,
-      distance: woAuto.getDistance(newPosition),
-    );
+      if (isIOS()) {
+        res = await flutterLocalNotificationsPlugin
+            .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
+            ?.requestPermissions(
+              alert: true,
+              badge: true,
+              sound: true,
+            );
+      } else if (isAndroid()) {
+        res = await flutterLocalNotificationsPlugin
+            .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+            ?.requestPermission();
+      } else {
+        Get.dialog(
+          AlertDialog(
+            title: const Text('Benachrichtigungen'),
+            content: const Text(
+              'Dein Betriebssystem unterstützt keine Benachrichtigungen.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+          name: 'Info Parkticket',
+        );
+        return;
+      }
 
-    woAuto.pins.add(woAuto.makeMarker(pin, 'pin,${woAuto.pinList.length}'));
-    woAuto.pinList.add(pin.toJson());
+      if (res == null || res == false) {
+        Get.dialog(
+          AlertDialog(
+            title: const Text('Benachrichtigungen'),
+            content: const Text(
+              'Um dir eine Benachrichtigung zu schicken, wenn dein Parkticket abläuft, '
+              'muss die App die Benachrichtigungen erlauben. '
+              'Bitte erlaube die Benachrichtigungen und versuche es erneut.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+          name: 'Info Parkticket',
+        );
+        return;
+      }
 
-    markers.clear();
-    markers.addAll(woAuto.pins);
-    markers.addAll(woAuto.parkings);
-    woAuto.save();
+      await flutterLocalNotificationsPlugin.cancelAll();
+
+      NotificationDetails notificationDetails =
+          NotificationDetails(android: androidNotificationDetailsMAX);
+      await flutterLocalNotificationsPlugin.show(
+        1,
+        'Auto geparkt',
+        'Dein Parkticket gilt bis ${tillTime.hour.toString().padLeft(2, '0')}:${tillTime.minute.toString().padLeft(2, '0')} Uhr.',
+        notificationDetails,
+      );
+
+      int minutesLeft = 0;
+      int minutes = woAuto.timePuffer.value * 60;
+      if (differenceInSecondsFromNow > minutes) {
+        differenceInSecondsFromNow -= minutes;
+        minutesLeft = woAuto.timePuffer.value;
+      } else if (differenceInSecondsFromNow < 0) {
+        differenceInSecondsFromNow += 86400 - minutes;
+        minutesLeft = woAuto.timePuffer.value;
+      } else {
+        minutesLeft = differenceInSecondsFromNow ~/ 60;
+      }
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        'Dein Parkticket läuft bald ab',
+        'In ca. $minutesLeft Minuten läuft dein Parkticket ab, bereite dich langsam auf die Abfahrt vor.',
+        tz.TZDateTime.now(tz.local).add(Duration(seconds: differenceInSecondsFromNow)),
+        NotificationDetails(
+          android: androidNotificationDetails,
+        ),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      );
+    }
   }
 
   Future setMapStyle({Brightness? brightness}) async {
@@ -371,7 +437,7 @@ class WoAuto extends GetxController {
     }
   }
 
-  fetchPackageInfo() async {
+  Future<void> fetchPackageInfo() async {
     try {
       PackageInfo packageInfo = await PackageInfo.fromPlatform();
       appVersion.value = packageInfo.version;
@@ -379,6 +445,17 @@ class WoAuto extends GetxController {
     } catch (e) {
       log(e.toString(), name: 'Error @ WoAuto.fetchPackageInfo');
     }
+  }
+
+  double getCarParkDistance(CarPark park) {
+    var myLat = currentPosition.value.target.latitude;
+    var myLng = currentPosition.value.target.longitude;
+    return calculateDistance(
+      myLat,
+      myLng,
+      park.latitude,
+      park.longitude,
+    ).toPrecision(1);
   }
 
   double getDistance(LatLng pos) {

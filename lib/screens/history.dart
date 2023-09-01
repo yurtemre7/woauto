@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:to_csv/to_csv.dart';
-import 'package:woauto/classes/park.dart';
+import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -16,9 +17,9 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
-  List<Park> getLastParks(List<Park> history) {
-    List<Park> parks = [];
-    for (Park park in history) {
+  List<CarPark> getLastParks(List<CarPark> history) {
+    List<CarPark> parks = [];
+    for (CarPark park in history) {
       if (parks.length < 15) {
         parks.add(park);
       }
@@ -80,64 +81,80 @@ class _HistoryState extends State<History> {
                   16.h,
                   Obx(
                     () {
-                      var history = woAuto.parkHistory.reversed.toList();
+                      var history = woAuto.carParkingHistory.reversed.toList();
                       return Column(
                         children: [
-                          if (woAuto.parkHistory.isEmpty)
+                          if (history.isEmpty)
                             const ListTile(
                               title: Text('Keine Einträge'),
                               subtitle: Text('Du hast noch keine Einträge in deiner Historie.'),
                             ),
                           ...getLastParks(history).map(
-                            (e) => ListTile(
-                              leading: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.navigation_outlined,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                              title: Text(e.name ?? 'Unbekannt'),
-                              subtitle: Text(e.address ?? 'Unbekannt'),
-                              trailing: Text(
-                                formatDateTimeToTimeAndDate(
-                                  DateTime.fromMillisecondsSinceEpoch(
-                                    e.datum ?? DateTime.now().millisecondsSinceEpoch,
+                            (park) => Dismissible(
+                              key: Key(park.uuid + park.createdAt.toString()),
+                              onDismissed: (direction) {
+                                woAuto.carParkingHistory.remove(park);
+                                woAuto.save();
+                              },
+                              background: Container(
+                                color: Theme.of(context).colorScheme.error,
+                                child: Container(
+                                  alignment: Alignment.centerRight,
+                                  padding: const EdgeInsets.only(right: 16.0),
+                                  child: const Icon(
+                                    Icons.delete_forever_outlined,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ),
-                              onTap: () async {
-                                woAuto.currentIndex.value = 0;
-                                GoogleMapController controller = woAuto.mapController.value!;
-                                await controller.animateCamera(
-                                  CameraUpdate.newCameraPosition(
-                                    CameraPosition(
-                                      target: LatLng(
-                                        e.latitude,
-                                        e.longitude,
-                                      ),
-                                      zoom: 18,
+                              child: ListTile(
+                                leading: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.navigation_outlined,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                                title: Text(park.name),
+                                subtitle: Text(park.adresse ?? 'Unbekannt'),
+                                trailing: Text(
+                                  formatDateTimeToTimeAndDate(
+                                    DateTime.fromMillisecondsSinceEpoch(
+                                      park.createdAt ?? DateTime.now().millisecondsSinceEpoch,
                                     ),
                                   ),
-                                );
-                                // add temporary marker
-                                var m = Marker(
-                                  markerId: const MarkerId('temp'),
-                                  position: LatLng(
-                                    e.latitude,
-                                    e.longitude,
-                                  ),
-                                  icon: BitmapDescriptor.defaultMarkerWithHue(
-                                    BitmapDescriptor.hueAzure,
-                                  ),
-                                );
-                                woAuto.markers
-                                    .removeWhere((element) => element.markerId.value == 'temp');
-                                woAuto.markers.add(m);
-                              },
+                                ),
+                                onTap: () async {
+                                  woAuto.currentIndex.value = 0;
+                                  GoogleMapController controller = woAuto.mapController.value!;
+                                  await controller.animateCamera(
+                                    CameraUpdate.newCameraPosition(
+                                      CameraPosition(
+                                        target: park.latLng,
+                                        zoom: CAM_ZOOM,
+                                      ),
+                                    ),
+                                  );
+                                  // add temporary marker
+                                  var m = Marker(
+                                    markerId: const MarkerId('temp'),
+                                    position: LatLng(
+                                      park.latitude,
+                                      park.longitude,
+                                    ),
+                                    icon: BitmapDescriptor.defaultMarkerWithHue(
+                                      BitmapDescriptor.hueAzure,
+                                    ),
+                                  );
+                                  woAuto.tempMarkers
+                                      .removeWhere((element) => element.markerId.value == 'temp');
+                                  woAuto.tempMarkers.add(m);
+                                  woAuto.tempMarkers.refresh();
+                                },
+                              ),
                             ),
                           ),
-                          if (woAuto.parkHistory.isNotEmpty) ...[
+                          if (history.isNotEmpty) ...[
                             const Div(),
                             ListTile(
                               title: Text(
@@ -163,17 +180,17 @@ class _HistoryState extends State<History> {
                                   'Extra'
                                 ];
                                 List<List<String>> rows = [];
-                                for (Park park in woAuto.parkHistory) {
+                                for (CarPark park in woAuto.carParkingHistory) {
                                   rows.add(
                                     [
-                                      park.name ?? 'Unbekannt',
-                                      park.address ?? 'Unbekannt',
-                                      DateTime.fromMillisecondsSinceEpoch(
-                                              park.datum ?? DateTime.now().millisecondsSinceEpoch)
+                                      park.name,
+                                      park.adresse ?? 'Unbekannt',
+                                      DateTime.fromMillisecondsSinceEpoch(park.createdAt ??
+                                              DateTime.now().millisecondsSinceEpoch)
                                           .toString(),
                                       park.latitude.toString(),
                                       park.longitude.toString(),
-                                      park.extra,
+                                      park.description ?? '',
                                     ],
                                   );
                                 }
@@ -211,7 +228,7 @@ class _HistoryState extends State<History> {
                                         onPressed: () async {
                                           pop();
 
-                                          woAuto.parkHistory.clear();
+                                          woAuto.carParkingHistory.clear();
                                           woAuto.save();
                                         },
                                       ),
