@@ -271,6 +271,10 @@ class WoAuto extends GetxController {
               foregroundColor: Get.theme.colorScheme.error,
             ),
             onPressed: () {
+              WoAutoServer woAutoServer = Get.find();
+              if (park.sharing) {
+                woAutoServer.deleteLocationAccount(park: park);
+              }
               carParkings.removeWhere((element) => element.uuid == park.uuid);
               carParkings.refresh();
 

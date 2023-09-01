@@ -162,6 +162,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
           logMessage('Couldn\'t fetch location for ${element.name} (${element.uuid})');
           // remove from sync list
           woAuto.carParkings.removeWhere((e) => e.uuid == element.uuid);
+          woAuto.carParkings.refresh();
           continue;
         }
         logMessage('Adding fetched location for ${element.name} (${element.uuid})');
