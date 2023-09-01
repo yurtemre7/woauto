@@ -271,7 +271,6 @@ class _IntroState extends State<Intro> {
                       }
                       showError.value = false;
 
-                      // set data aquired from intro
                       woAuto.subText.value = tec.text.trim();
                       if (woAuto.subText.value.isEmpty) {
                         woAuto.subText.value = 'Mein Auto';

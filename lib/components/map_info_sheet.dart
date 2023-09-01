@@ -82,7 +82,6 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                                   Obx(
                                     () => ElevatedButton(
                                       onPressed: () async {
-                                        // show time picker of today
                                         tillTime.value = await showTimePicker(
                                           context: context,
                                           initialTime: TimeOfDay.now(),

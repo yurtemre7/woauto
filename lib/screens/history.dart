@@ -135,7 +135,6 @@ class _HistoryState extends State<History> {
                                       ),
                                     ),
                                   );
-                                  // add temporary marker
                                   var m = Marker(
                                     markerId: const MarkerId('temp'),
                                     position: LatLng(

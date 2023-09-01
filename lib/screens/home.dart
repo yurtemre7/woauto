@@ -89,7 +89,6 @@ class _HomeState extends State<Home> {
     ];
     quickActions.setShortcutItems(shortCuts);
 
-    // TODO add a way to show intro as bottom sheet, make it NON dismissible
     Future.delayed(0.seconds, () async {
       if (woAuto.welcome.value) {
         await Get.dialog(

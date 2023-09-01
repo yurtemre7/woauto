@@ -599,7 +599,6 @@ class _MyCarState extends State<MyCar> {
                       8.h,
                       Container(
                         padding: const EdgeInsets.all(16.0),
-                        // remember the user that his data is saved on device, safe and secure
                         child: GestureDetector(
                           onTap: () {
                             woAuto.currentIndex(3);

@@ -60,14 +60,9 @@ class MyApp extends StatelessWidget {
         ColorScheme darkColorScheme;
 
         if (lightDynamic != null && darkDynamic != null) {
-          // On Android S+ devices, use the provided dynamic color scheme.
-
-          // (Recommended) Harmonize the dynamic color scheme' built-in semantic colors.
           lightColorScheme = lightDynamic.harmonized();
-          // Repeat for the dark color scheme.
           darkColorScheme = darkDynamic.harmonized();
         } else {
-          // Otherwise, use fallback schemes.
           lightColorScheme = ColorScheme.fromSeed(
             seedColor: Colors.blue,
           );
