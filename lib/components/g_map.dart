@@ -31,6 +31,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     loadPositionData();
+    fetchSyncLocations();
   }
 
   @override
@@ -104,7 +105,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
       }
 
       if (!woAuto.drivingMode.value && woAuto.askForDrivingMode.value) {
-        // show dialog to ask the user if he wants to switch to driving mode, IF his velocity is > 5 km/h
+        // show dialog to ask the user if he wants to switch to driving mode, IF his velocity is > woAuto.drivingModeDetectionSpeed.value
         var kmh = ((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ?? 0) * 3.6);
 
         if (kmh > woAuto.drivingModeDetectionSpeed.value) {
@@ -143,25 +144,21 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
   }
 
   Future<void> fetchSyncLocations() async {
-    var futures = <Future>[];
-    for (var location in woAutoServer.locations.values) {
-      futures.add(woAutoServer.getLocation(location.accountId, location.view));
+    logMessage('Fetching positions...');
+    var carParkingList = woAuto.carParkings.toList();
+    var myParking = carParkingList.where((element) => element.mine);
+    var otherParking = carParkingList.where((element) => !element.mine);
+
+    for (var element in myParking) {
+      if (element.sharing) {
+        woAutoServer.updateLocation(park: element);
+      }
     }
-    // locationIds
-    var results = await Future.wait(futures);
-    logMessage('Fetched ${results.length} locations');
 
-    for (var location in woAutoServer.locations.values) {
-      // clear markers
-
-      // TODO same as in yrtmr.dart
-      woAuto.addCarPark(
-        LatLng(
-          double.parse(location.lat),
-          double.parse(location.long),
-        ),
-        newName: location.name,
-      );
+    for (var element in otherParking) {
+      if (element.sharing) {
+        woAutoServer.getLocation(id: element.uuid, view: element.viewKey);
+      }
     }
   }
 
@@ -217,9 +214,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               padding: const EdgeInsets.only(left: 10, right: 10),
               markers: woAuto.carMarkers.toSet()..addAll(woAuto.tempMarkers.toSet()),
               onLongPress: (LatLng newPosition) async {
-                // open context menu
                 logMessage('Long Pressed at $newPosition');
-                // add temporary marker
                 woAuto.tempMarkers.add(
                   Marker(
                     markerId: const MarkerId('temp'),
@@ -227,7 +222,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                     icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
                   ),
                 );
-                // show dialog
                 await Get.dialog(
                   AlertDialog(
                     title: const Text('Standort Info'),
@@ -251,7 +245,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                     ),
                   ),
                 );
-                // remove temporary marker
                 woAuto.tempMarkers.removeWhere((element) => element.markerId.value == 'temp');
               },
               onTap: (LatLng newPosition) {
@@ -310,7 +303,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                                       Obx(
                                         () => ElevatedButton(
                                           onPressed: () async {
-                                            // show time picker of today
                                             tillTime.value = await showTimePicker(
                                               context: context,
                                               initialTime: TimeOfDay.now(),
