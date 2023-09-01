@@ -70,5 +70,5 @@ class CarPark {
 
   LatLng get latLng => LatLng(latitude, longitude);
 
-  bool get mine => editKey.isNotEmpty;
+  bool get mine => sharing ? editKey.isNotEmpty : true;
 }
