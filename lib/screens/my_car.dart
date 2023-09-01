@@ -11,6 +11,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/extensions.dart';
+import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class MyCar extends StatefulWidget {
@@ -78,24 +79,35 @@ class _MyCarState extends State<MyCar> {
                   woAuto.save();
                 },
               ),
-              const Div(),
-              ListTile(
-                title: Text(
-                  'Foto löschen',
-                  style: TextStyle(
+              if (woAuto.carPicture.isNotEmpty) ...[
+                const Div(),
+                ListTile(
+                  title: Text(
+                    'Foto löschen',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                  ),
+                  leading: Icon(
+                    Icons.delete,
                     color: Theme.of(context).colorScheme.error,
                   ),
+                  onTap: () async {
+                    try {
+                      File localImage = File(woAuto.carPicture.value);
+                      if (await localImage.exists()) {
+                        await localImage.delete();
+                      }
+                    } catch (e) {
+                      logMessage('Couldn\'t delete image: $e');
+                    }
+
+                    pop();
+                    woAuto.carPicture.value = '';
+                    woAuto.save();
+                  },
                 ),
-                leading: Icon(
-                  Icons.delete,
-                  color: Theme.of(context).colorScheme.error,
-                ),
-                onTap: () {
-                  pop();
-                  woAuto.carPicture.value = '';
-                  woAuto.save();
-                },
-              ),
+              ],
             ],
           ),
         ),
@@ -420,7 +432,7 @@ class _MyCarState extends State<MyCar> {
                                 textCapitalization: TextCapitalization.characters,
                                 autofocus: true,
                                 decoration: const InputDecoration(
-                                  hintText: 'B DE 1234',
+                                  hintText: 'B-DE-1234',
                                 ),
                               ),
                               actions: [
@@ -462,7 +474,7 @@ class _MyCarState extends State<MyCar> {
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              title: const Text('Kennzeichen'),
+                              title: const Text('Kilometerstand'),
                               content: TextFormField(
                                 controller: tec,
                                 keyboardType: TextInputType.number,
@@ -516,6 +528,7 @@ class _MyCarState extends State<MyCar> {
                             firstDate: DateTime.now().subtract(const Duration(days: 365 * 10)),
                             lastDate: DateTime.now().add(const Duration(days: 365 * 10)),
                             helpText: 'Gebe als Tag den "1." an, z.B. "1.1.2022"',
+                            initialDatePickerMode: DatePickerMode.year,
                           );
                           if (date == null) return;
                           woAuto.tuvUntil.value = date;

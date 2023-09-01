@@ -8,13 +8,14 @@
 */
 
 import 'dart:async';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
+import 'package:woauto/utils/constants.dart';
+import 'package:woauto/utils/logger.dart';
 
 class YrtmrDeeplinks {
   static YrtmrDeeplinks? _instance;
@@ -35,7 +36,7 @@ class YrtmrDeeplinks {
   static Future<void> initYrtmrLinks() async {
     // Platform messages may fail, so we use a try/catch PlatformException.
     try {
-      log('initYrtmrLinks');
+      logMessage('initYrtmrLinks');
       YrtmrDeeplinks appmldrLinks = YrtmrDeeplinks.getInstance();
 
       if (appmldrLinks.once) {
@@ -45,12 +46,12 @@ class YrtmrDeeplinks {
       appmldrLinks.once = true;
 
       if (initialUri == null) {
-        // log('AppmldrLinks: No initial link found.');
+        logMessage('YrtmrLinks: No initial link found.');
         return;
       }
 
       var deeplink = appmldrLinks.parseUri(initialUri);
-      // log('AppmldrLinks: Opening App Link: ${deeplink.toString()}');
+      // logMessage('YrtmrLinks: Opening App Link: ${deeplink.toString()}');
       await appmldrLinks.handleDeeplink(deeplink);
 
       // Parse the link and warn the user, if it is not correct,
@@ -64,15 +65,15 @@ class YrtmrDeeplinks {
   static StreamSubscription<Uri?> yrtmrLinksListener() {
     return uriLinkStream.listen((Uri? uri) async {
       if (uri == null) {
-        // log('AppmldrLinks: No initial link found.');
+        // log('YrtmrLinks: No initial link found.');
         return;
       }
-      YrtmrDeeplinks appmldrLinks = YrtmrDeeplinks.getInstance();
+      YrtmrDeeplinks yrtmrLinks = YrtmrDeeplinks.getInstance();
 
-      var deeplink = appmldrLinks.parseUri(uri);
-      // log('AppmldrLinks: ${deeplink.toString()}');
-      await appmldrLinks.handleDeeplink(deeplink);
-      appmldrLinks.once = true;
+      var deeplink = yrtmrLinks.parseUri(uri);
+      // log('YrtmrLinks: ${deeplink.toString()}');
+      await yrtmrLinks.handleDeeplink(deeplink);
+      yrtmrLinks.once = true;
       // Use the uri and warn the user, if it is not correct
     }, onError: (err) {
       // Handle exception by warning the user their action did not succeed
@@ -82,13 +83,10 @@ class YrtmrDeeplinks {
 
   Future<void> handleDeeplink(YrtmrDeeplink deeplink) async {
     try {
-      log('Handling deeplink: ${deeplink.link}..');
-      log(deeplink.params.toString());
+      logMessage('Handling deeplink: ${deeplink.link}..');
+      logMessage(deeplink.params.toString());
 
       switch (deeplink.link) {
-        case 'add-pin':
-          await addPin(deeplink);
-          break;
         case 'add-location':
           await addLocation(deeplink);
           break;
@@ -96,41 +94,7 @@ class YrtmrDeeplinks {
           break;
       }
     } catch (e) {
-      log('YrtmrDeeplinks Error: ${e.toString()}');
-    }
-  }
-
-  addPin(YrtmrDeeplink deeplink) async {
-    String? lat = deeplink.params['lat'];
-    String? long = deeplink.params['long'];
-    String title = deeplink.params['title'] ?? 'Anderer Parkplatz';
-
-    if (lat == null || long == null) {
-      return;
-    }
-    log('Adding pin: $title, $lat, $long');
-    await woAuto.addPin(LatLng(double.parse(lat), double.parse(long)), title);
-    Get.snackbar(
-      'Ein geteilter Parkplatz wurde hinzugefügt',
-      'Schaue auf der Karte oder in der Liste nach.',
-      snackPosition: SnackPosition.TOP,
-      borderRadius: 12,
-      margin: const EdgeInsets.all(20),
-      backgroundColor: Get.theme.colorScheme.surface,
-      colorText: Get.theme.colorScheme.onSurface,
-    );
-    if (woAuto.mapController.value != null) {
-      woAuto.mapController.value!.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(
-              double.parse(lat),
-              double.parse(long),
-            ),
-            zoom: 18,
-          ),
-        ),
-      );
+      logMessage('YrtmrDeeplinks Error: ${e.toString()}');
     }
   }
 
@@ -142,14 +106,19 @@ class YrtmrDeeplinks {
     if (id == null || view == null || name == null) {
       return;
     }
-    log('Adding Location: $name, $id, $view');
+    logMessage('Adding Location: $name, $id, $view');
     WoAutoServer woAutoServer = Get.find();
     var locationId = await woAutoServer.getLocation(id, view);
+    if (locationId == null) {
+      return;
+    }
     var location = woAutoServer.locations[locationId]!;
+    logMessage('${location.lat}, ${location.long}');
     // await woAuto.addPin(LatLng(double.parse(id), double.parse(view)), name);
-    await woAuto.addPin(
+    // TODO use different add method, so that we can differ between the two
+    await woAuto.addCarPark(
       LatLng(double.parse(location.lat), double.parse(location.long)),
-      location.name,
+      newName: location.name,
     );
     Get.snackbar(
       'Ein geteilter Online Parkplatz wurde hinzugefügt',
@@ -168,7 +137,7 @@ class YrtmrDeeplinks {
               double.parse(id),
               double.parse(view),
             ),
-            zoom: 18,
+            zoom: CAM_ZOOM,
           ),
         ),
       );

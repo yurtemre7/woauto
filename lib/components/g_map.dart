@@ -13,6 +13,7 @@ import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/extensions.dart';
+import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class GMap extends StatefulWidget {
@@ -149,7 +150,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
     }
     // locationIds
     var results = await Future.wait(futures);
-    log('Fetched ${results.length} locations');
+    logMessage('Fetched ${results.length} locations');
 
     for (var location in woAutoServer.locations.values) {
       // clear markers
@@ -218,7 +219,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               markers: woAuto.carMarkers.toSet()..addAll(woAuto.tempMarkers.toSet()),
               onLongPress: (LatLng newPosition) async {
                 // open context menu
-                log('Long Pressed at $newPosition');
+                logMessage('Long Pressed at $newPosition');
                 // add temporary marker
                 woAuto.tempMarkers.add(
                   Marker(

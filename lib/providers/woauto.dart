@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:developer';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
@@ -12,6 +11,7 @@ import 'package:uuid/uuid.dart';
 import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/constants.dart';
+import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -163,35 +163,39 @@ class WoAuto extends GetxController {
 
   /// Bebug the current state of the Appmelder
   printWoAuto() {
-    log('WoAuto', name: 'GetX Controller');
-    log('Subtext: $subText', name: 'GetX Controller');
-    log('Current Position: ${currentPosition.value}', name: 'GetX Controller');
-    log('Theme Mode: $themeMode', name: 'GetX Controller');
-    log('Welcome: $welcome', name: 'GetX Controller');
-    log('CarPark History length: ${carParkingHistory.length}', name: 'GetX Controller');
-    log('CarParkings length: ${carParkings.length}', name: 'GetX Controller');
-    log('CarParkings: ${carParkings.map((e) => e.toJson())}', name: 'GetX Controller');
-    log('CarMarkers length: ${carMarkers.length}', name: 'GetX Controller');
-    log('CarMarkers: ${carMarkers.map((e) => e.toJson())}', name: 'GetX Controller');
-    log('TempMarkers length: ${tempMarkers.length}', name: 'GetX Controller');
-    log('TempMarkers: ${tempMarkers.map((e) => e.toJson())}', name: 'GetX Controller');
-    log('Kennzeichen: $kennzeichen', name: 'GetX Controller');
-    log('Kilometerstand: $kilometerStand', name: 'GetX Controller');
-    log('TÜV: $tuvUntil', name: 'GetX Controller');
-    log('Car Picture: $carPicture', name: 'GetX Controller');
-    log('Car Baujahr: $carBaujahr', name: 'GetX Controller');
-    log('App Version: $appVersion', name: 'GetX Controller');
-    log('App Build Number: $appBuildNumber', name: 'GetX Controller');
-    log('Current Velocity: $currentVelocity', name: 'GetX Controller');
+    logMessage('WoAuto');
+    logMessage('App Version: $appVersion');
+    logMessage('App Build Number: $appBuildNumber');
 
-    log('Driving Mode: $drivingMode', name: 'GetX Controller');
-    log('Ask for Driving Mode: $askForDrivingMode', name: 'GetX Controller');
-    log('Map Type: $mapType', name: 'GetX Controller');
-    log('Show Traffic: $showTraffic', name: 'GetX Controller');
-    log('Driving Mode Detection Speed: $drivingModeDetectionSpeed', name: 'GetX Controller');
-    log('Time Puffer: $timePuffer', name: 'GetX Controller');
+    logMessage('Current Position: ${currentPosition.value}');
+    logMessage('Current Velocity: $currentVelocity');
 
-    log('---' * 15, name: 'GetX Controller');
+    logMessage('Welcome: $welcome');
+    logMessage('Driving Mode: $drivingMode');
+    logMessage('Ask for Driving Mode: $askForDrivingMode');
+
+    logMessage('CarPark History length: ${carParkingHistory.length}');
+    logMessage('CarParkings length: ${carParkings.length}');
+    logMessage('CarParkings: ${carParkings.map((e) => e.toJson())}');
+    logMessage('CarMarkers length: ${carMarkers.length}');
+    logMessage('CarMarkers: ${carMarkers.map((e) => e.toJson())}');
+    logMessage('TempMarkers length: ${tempMarkers.length}');
+    logMessage('TempMarkers: ${tempMarkers.map((e) => e.toJson())}');
+
+    logMessage('Subtext: $subText');
+    logMessage('Kennzeichen: $kennzeichen');
+    logMessage('Kilometerstand: $kilometerStand');
+    logMessage('TÜV: $tuvUntil');
+    logMessage('Car Picture: $carPicture');
+    logMessage('Car Baujahr: $carBaujahr');
+
+    logMessage('Theme Mode: $themeMode');
+    logMessage('Map Type: $mapType');
+    logMessage('Show Traffic: $showTraffic');
+    logMessage('Time Puffer: $timePuffer');
+    logMessage('Driving Mode Detection Speed: $drivingModeDetectionSpeed');
+
+    logMessage('---' * 15);
   }
 
   /// Resets the WoAuto provider
@@ -296,15 +300,10 @@ class WoAuto extends GetxController {
       description: extra,
       photoPath: photoPath,
     );
-
-    log('New Car Park: ${carPark.toJson()}');
-    log('Length before ${carParkings.length}');
-
     // delete old car park with same uuid
     carParkings.removeWhere((element) => element.uuid == carPark.uuid);
 
     woAuto.carParkings.add(carPark);
-    log('Length after ${carParkings.length}');
     woAuto.carParkingHistory.add(carPark);
     woAuto.carParkings.refresh();
     woAuto.save();
@@ -443,7 +442,7 @@ class WoAuto extends GetxController {
       appVersion.value = packageInfo.version;
       appBuildNumber.value = packageInfo.buildNumber;
     } catch (e) {
-      log(e.toString(), name: 'Error @ WoAuto.fetchPackageInfo');
+      logMessage(e.toString(), tag: 'Error @ WoAuto.fetchPackageInfo');
     }
   }
 

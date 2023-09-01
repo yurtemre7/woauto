@@ -8,6 +8,7 @@ import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/screens/home.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
 late WoAuto woAuto;
@@ -31,7 +32,7 @@ void main() async {
         requestBadgePermission: false,
         requestSoundPermission: false,
         onDidReceiveLocalNotification: (id, title, body, payload) {
-          log('onDidReceiveLocalNotification called');
+          logMessage('onDidReceiveLocalNotification called');
         },
       ),
     );
@@ -39,7 +40,8 @@ void main() async {
       initializationSettings,
     );
   } catch (e) {
-    log('Couldn\'t create Notification Channel or Initialize Android Notification Settings: $e');
+    logMessage(
+        'Couldn\'t create Notification Channel or Initialize Android Notification Settings: $e');
   }
   runApp(const MyApp());
 }
@@ -94,9 +96,9 @@ class MyApp extends StatelessWidget {
               home: const Home(),
               logWriterCallback: (text, {isError = false}) {
                 if (isError == true) {
-                  log(text, name: 'ERROR');
+                  logMessage(text, tag: 'ERROR');
                 } else {
-                  log(text, name: 'INFO');
+                  logMessage(text, tag: 'INFO');
                 }
               },
             );

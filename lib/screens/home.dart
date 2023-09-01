@@ -17,6 +17,7 @@ import 'package:woauto/screens/intro.dart';
 import 'package:woauto/screens/my_car.dart';
 import 'package:woauto/screens/settings.dart';
 import 'package:woauto/utils/constants.dart';
+import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class Home extends StatefulWidget {
@@ -40,7 +41,7 @@ class _HomeState extends State<Home> {
       NotificationAppLaunchDetails? notificationAppLaunchDetails =
           await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
       if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
-        log('Notification launched app');
+        logMessage('Notification launched app');
       }
     });
 
