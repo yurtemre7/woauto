@@ -222,6 +222,52 @@ class _SettingsState extends State<Settings> {
                           );
                         },
                       ),
+                      Obx(
+                        () {
+                          var speed = woAuto.drivingModeDetectionSpeed.value;
+                          DropdownButton<int> dropdownButton = DropdownButton<int>(
+                            value: speed,
+                            items: const [
+                              DropdownMenuItem(
+                                value: 20,
+                                child: Text('20 km/h'),
+                              ),
+                              DropdownMenuItem(
+                                value: 25,
+                                child: Text('25 km/h'),
+                              ),
+                              DropdownMenuItem(
+                                value: 30,
+                                child: Text('30 km/h'),
+                              ),
+                              DropdownMenuItem(
+                                value: 35,
+                                child: Text('35 km/h'),
+                              ),
+                              DropdownMenuItem(
+                                value: 40,
+                                child: Text('40 km/h'),
+                              ),
+                            ],
+                            onChanged: (v) {
+                              woAuto.drivingModeDetectionSpeed.value = v!;
+                              woAuto.save();
+                              // pop();
+                            },
+                          );
+
+                          return ListTile(
+                            title: Text(
+                              'Driving Modus Erkennung',
+                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            ),
+                            subtitle: const Text(
+                              'Lege fest, wie schnell du fahren musst, damit die App den Driving Modus erkennt.',
+                            ),
+                            trailing: dropdownButton,
+                          );
+                        },
+                      ),
                       const Div(),
                       Obx(
                         () => ListTile(
