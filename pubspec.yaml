@@ -19,7 +19,6 @@ dependencies:
   geocoding: ^2.1.0
 
   expandable: ^5.0.1
-  introduction_screen: ^3.1.11
   uni_links: ^0.5.1
 
   package_info_plus: ^4.1.0
@@ -39,6 +38,9 @@ dependencies:
 
   dynamic_color: ^1.6.6
   http: ^1.1.0
+  uuid: ^3.0.7
+  quick_actions: ^1.0.6
+  maps_launcher: ^2.2.0
 
 dev_dependencies:
   flutter_test:
