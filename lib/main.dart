@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/screens/home.dart';
-import 'package:woauto/screens/intro.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:woauto/utils/utilities.dart';
 
@@ -57,24 +56,42 @@ class MyApp extends StatelessWidget {
     // }
     return DynamicColorBuilder(
       builder: (lightDynamic, darkDynamic) {
+        ColorScheme lightColorScheme;
+        ColorScheme darkColorScheme;
+
+        if (lightDynamic != null && darkDynamic != null) {
+          // On Android S+ devices, use the provided dynamic color scheme.
+
+          // (Recommended) Harmonize the dynamic color scheme' built-in semantic colors.
+          lightColorScheme = lightDynamic.harmonized();
+          // Repeat for the dark color scheme.
+          darkColorScheme = darkDynamic.harmonized();
+        } else {
+          // Otherwise, use fallback schemes.
+          lightColorScheme = ColorScheme.fromSeed(
+            seedColor: Colors.blue,
+          );
+          darkColorScheme = ColorScheme.fromSeed(
+            seedColor: Colors.blue,
+            brightness: Brightness.dark,
+          );
+        }
         return Obx(
           () {
-            woAuto.dayColorScheme.value = lightDynamic ?? const ColorScheme.light();
-            woAuto.nightColorScheme.value = darkDynamic ?? const ColorScheme.dark();
+            woAuto.dayColorScheme.value = lightColorScheme;
+            woAuto.nightColorScheme.value = darkColorScheme;
             return GetMaterialApp(
               title: 'WoAuto',
               theme: ThemeData(
-                brightness: Brightness.light,
                 useMaterial3: true,
-                colorScheme: lightDynamic,
+                colorScheme: lightColorScheme,
               ),
               darkTheme: ThemeData(
-                brightness: Brightness.dark,
                 useMaterial3: true,
-                colorScheme: darkDynamic,
+                colorScheme: darkColorScheme,
               ),
               themeMode: getThemeMode(woAuto.themeMode.value),
-              home: woAuto.welcome.value ? const Intro() : const Home(),
+              home: const Home(),
               logWriterCallback: (text, {isError = false}) {
                 if (isError == true) {
                   log(text, name: 'ERROR');
