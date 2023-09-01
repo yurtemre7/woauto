@@ -111,7 +111,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         if (kmh > woAuto.drivingModeDetectionSpeed.value) {
           if (woAuto.currentIndex.value == 0) {
             woAuto.askForDrivingMode.value = false;
-            var result = await Get.dialog(
+            var result = await Get.dialog<bool?>(
               AlertDialog(
                 title: const Text('Driving Modus erkannt'),
                 content: const Text(
@@ -120,7 +120,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                 actions: [
                   TextButton(
                     onPressed: () {
-                      pop();
+                      pop(result: false);
                     },
                     child: const Text('NEIN'),
                   ),
@@ -134,7 +134,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               ),
               name: 'Fahrmodus',
             );
-            if (result) {
+            if (result != null && result) {
               woAuto.drivingMode.value = true;
             }
           }
@@ -157,7 +157,18 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
 
     for (var element in otherParking) {
       if (element.sharing) {
-        woAutoServer.getLocation(id: element.uuid, view: element.viewKey);
+        var loc = await woAutoServer.getLocation(id: element.uuid, view: element.viewKey);
+        if (loc == null) {
+          logMessage('Couldn\'t fetch location for ${element.name} (${element.uuid})');
+          // remove from sync list
+          continue;
+        }
+        logMessage('Adding fetched location for ${element.name} (${element.uuid})');
+        woAuto.addAnotherCarPark(
+          newPosition: LatLng(double.parse(loc.lat), double.parse(loc.long)),
+          uuid: element.uuid,
+          view: loc.view,
+        );
       }
     }
   }
