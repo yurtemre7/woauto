@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:woauto/classes/account.dart';
 import 'package:woauto/classes/car_location.dart';
+import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/constants.dart';
+import 'package:woauto/utils/logger.dart';
 
 class WoAutoServer extends GetxController {
   var httpClient = GetHttpClient(baseUrl: scheme + host);
@@ -53,62 +55,75 @@ class WoAutoServer extends GetxController {
     save();
   }
 
-  Future<String> createLocation(String name, String lat, String long, String until) async {
-    var response = await httpClient.post(
-      createPath,
-      query: {
-        'name': name,
-        'lat': lat,
-        'long': long,
-        'until': until,
-      },
-    );
-    // account
-    var jsonMap = json.decode(response.body);
-    Account account = Account.fromJson(jsonMap);
-    accounts[account.id] = account;
-    save();
-    return account.id;
+  Future<Account?> createLocation(CarPark park, String until) async {
+    try {
+      var response = await httpClient.post(
+        createPath,
+        query: {
+          'uuid': park.uuid,
+          'name': park.name,
+          'lat': park.latitude.toString(),
+          'long': park.longitude.toString(),
+          'until': until,
+        },
+      );
+      var jsonMap = json.decode(response.body);
+      if (jsonMap['msg'] is! List) {
+        return null;
+      }
+      Account account = Account.fromJson(jsonMap);
+      save();
+      return account;
+    } catch (e) {
+      logMessage(e.toString());
+      return null;
+    }
   }
 
-  Future<bool> updateLocation(
-    String id,
-    String edit, {
-    String? name,
-    String? lat,
-    String? long,
-  }) async {
-    var response = await httpClient.post(
-      updatePath,
-      query: {
-        if (name != null) 'name': name,
-        if (lat != null) 'lat': lat,
-        if (long != null) 'long': long,
-        'id': id,
-        'edit': edit,
-      },
-    );
-    // account
-    var jsonMap = json.decode(response.body);
-    Account account = Account.fromJson(jsonMap);
-    accounts[account.id] = account;
-    save();
-    return response.statusCode == 200;
+  Future<Account?> updateLocation({required CarPark park}) async {
+    try {
+      var response = await httpClient.post(
+        updatePath,
+        query: {
+          'name': park.name,
+          'lat': park.latitude.toString(),
+          'long': park.longitude.toString(),
+          'uuid': park.uuid,
+          'edit': park.editKey,
+        },
+      );
+      var jsonMap = json.decode(response.body);
+      if (jsonMap['msg'] is! List) {
+        return null;
+      }
+      Account account = Account.fromJson(jsonMap);
+      save();
+      return account;
+    } catch (e) {
+      logMessage(e.toString());
+      return null;
+    }
   }
 
-  Future<String> getLocation(String id, String view) async {
-    var response = await httpClient.get(
-      getPath,
-      query: {
-        'id': id,
-        'view': view,
-      },
-    );
-    // location
-    var jsonMap = json.decode(response.body);
-    CardLocation location = CardLocation.fromJson(jsonMap);
-    locations[location.id] = location;
-    save();
-    return location.id;
+  Future<CardLocation?> getLocation({required String id, required String view}) async {
+    try {
+      var response = await httpClient.get(
+        getPath,
+        query: {
+          'uuid': id,
+          'view': view,
+        },
+      );
+      var jsonMap = json.decode(response.body);
+      if (jsonMap['msg'] is! List) {
+        return null;
+      }
+      CardLocation location = CardLocation.fromJson(jsonMap);
+      save();
+      return location;
+    } catch (e) {
+      logMessage(e.toString());
+      return null;
+    }
   }
 }
