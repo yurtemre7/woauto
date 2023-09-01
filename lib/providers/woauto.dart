@@ -238,6 +238,9 @@ class WoAuto extends GetxController {
         );
         woAuto.showCarParkDialog(park);
       },
+      icon: park.mine
+          ? BitmapDescriptor.defaultMarker
+          : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
     );
   }
 
@@ -251,7 +254,7 @@ class WoAuto extends GetxController {
           borderRadius: BorderRadius.circular(12),
         ),
         title: Text(park.name),
-        content: park.sharing
+        content: !park.mine
             ? Text(
                 'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${park.adresse ?? 'Adresse konnte nicht gefunden werden.'}.')
             : Text(
@@ -284,14 +287,29 @@ class WoAuto extends GetxController {
     String? newName,
     String? photoPath,
   }) async {
-    // if has premium, dont clear
     var adresse = await getAddress(newPosition);
+    var name = newName ?? woAuto.subText.value;
 
+    if (carParkings.any((element) => element.name == name && element.mine)) {
+      // Update
+      logMessage('Update Car Park');
+      var carPark = carParkings.firstWhere((element) => element.name == name && element.mine);
+      carPark.latitude = newPosition.latitude;
+      carPark.longitude = newPosition.longitude;
+      carPark.adresse = adresse;
+      carPark.updatedAt = DateTime.now().millisecondsSinceEpoch;
+      carPark.description = extra;
+      carPark.photoPath = photoPath;
+      woAuto.carParkings.refresh();
+      woAuto.save();
+      return;
+    }
+    logMessage('Add first Car Park');
     Uuid uuid = const Uuid();
 
     var carPark = CarPark(
-      uuid: uuid.v5(Uuid.NAMESPACE_URL, newName ?? woAuto.subText.value),
-      name: newName ?? woAuto.subText.value,
+      uuid: uuid.v4(),
+      name: name,
       latitude: newPosition.latitude,
       longitude: newPosition.longitude,
       adresse: adresse,
@@ -300,8 +318,49 @@ class WoAuto extends GetxController {
       description: extra,
       photoPath: photoPath,
     );
-    // delete old car park with same uuid
-    carParkings.removeWhere((element) => element.uuid == carPark.uuid);
+
+    woAuto.carParkings.add(carPark);
+    woAuto.carParkingHistory.add(carPark);
+    woAuto.carParkings.refresh();
+    woAuto.save();
+  }
+
+  Future<void> addAnotherCarPark({
+    required LatLng newPosition,
+    required String uuid,
+    required String view,
+    String? newName,
+  }) async {
+    var adresse = await getAddress(newPosition);
+    var name = newName ?? 'Anderes Auto';
+
+    if (carParkings.any((element) => element.uuid == uuid && !element.mine)) {
+      // Update
+      logMessage('Update Another Car Park');
+      var carPark = carParkings.firstWhere((element) => element.name == name && !element.mine);
+      carPark.latitude = newPosition.latitude;
+      carPark.longitude = newPosition.longitude;
+      carPark.adresse = adresse;
+      carPark.sharing = true;
+      carPark.viewKey = view;
+      carPark.updatedAt = DateTime.now().millisecondsSinceEpoch;
+      woAuto.carParkings.refresh();
+
+      woAuto.save();
+      return;
+    }
+    logMessage('Add Another Car Park');
+    var carPark = CarPark(
+      uuid: uuid,
+      name: name,
+      viewKey: view,
+      latitude: newPosition.latitude,
+      longitude: newPosition.longitude,
+      adresse: adresse,
+      sharing: true,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      updatedAt: DateTime.now().millisecondsSinceEpoch,
+    );
 
     woAuto.carParkings.add(carPark);
     woAuto.carParkingHistory.add(carPark);

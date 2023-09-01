@@ -108,17 +108,16 @@ class YrtmrDeeplinks {
     }
     logMessage('Adding Location: $name, $id, $view');
     WoAutoServer woAutoServer = Get.find();
-    var locationId = await woAutoServer.getLocation(id, view);
+    var locationId = await woAutoServer.getLocation(id: id, view: view);
     if (locationId == null) {
       return;
     }
     var location = woAutoServer.locations[locationId]!;
-    logMessage('${location.lat}, ${location.long}');
-    // await woAuto.addPin(LatLng(double.parse(id), double.parse(view)), name);
-    // TODO use different add method, so that we can differ between the two
-    await woAuto.addCarPark(
-      LatLng(double.parse(location.lat), double.parse(location.long)),
+    await woAuto.addAnotherCarPark(
+      newPosition: LatLng(double.parse(location.lat), double.parse(location.long)),
       newName: location.name,
+      uuid: id,
+      view: view,
     );
     Get.snackbar(
       'Ein geteilter Online Parkplatz wurde hinzugefügt',
@@ -134,8 +133,8 @@ class YrtmrDeeplinks {
         CameraUpdate.newCameraPosition(
           CameraPosition(
             target: LatLng(
-              double.parse(id),
-              double.parse(view),
+              double.parse(location.lat),
+              double.parse(location.long),
             ),
             zoom: CAM_ZOOM,
           ),
