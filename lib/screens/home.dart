@@ -1,20 +1,22 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
+import 'package:quick_actions/quick_actions.dart';
 import 'package:woauto/components/g_map.dart';
 import 'package:woauto/components/map_info_sheet.dart';
-
 import 'package:woauto/components/top_header.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/yrtmr.dart';
 import 'package:woauto/screens/history.dart';
+import 'package:woauto/screens/intro.dart';
 import 'package:woauto/screens/my_car.dart';
 import 'package:woauto/screens/settings.dart';
+import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class Home extends StatefulWidget {
@@ -39,6 +41,86 @@ class _HomeState extends State<Home> {
           await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
       if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
         log('Notification launched app');
+      }
+    });
+
+    const QuickActions quickActions = QuickActions();
+    quickActions.initialize((shortcutType) async {
+      switch (shortcutType) {
+        case 'action_save':
+          woAuto.addCarPark(
+            woAuto.currentPosition.value.target,
+          );
+
+          pop();
+          if (woAuto.mapController.value == null) {
+            return;
+          }
+          await woAuto.mapController.value!.animateCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: woAuto.currentPosition.value.target,
+                zoom: CAM_ZOOM,
+              ),
+            ),
+          );
+          break;
+        case 'action_parkings':
+          Get.bottomSheet(
+            const CarBottomSheet(),
+            settings: const RouteSettings(
+              name: 'CarBottomSheet',
+            ),
+          );
+          break;
+      }
+    });
+    var shortCuts = [
+      const ShortcutItem(
+        type: 'action_save',
+        localizedTitle: 'Parkplatz speichern',
+        icon: 'monochrome',
+      ),
+      const ShortcutItem(
+        type: 'action_parkings',
+        localizedTitle: 'Parkplätze ansehen',
+        icon: 'monochrome',
+      )
+    ];
+    quickActions.setShortcutItems(shortCuts);
+
+    // TODO add a way to show intro as bottom sheet, make it NON dismissible
+    Future.delayed(0.seconds, () async {
+      if (woAuto.welcome.value) {
+        await Get.dialog(
+          Container(
+            margin: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.background,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Intro(),
+          ),
+          barrierDismissible: false,
+        );
+      }
+    });
+
+    ever(woAuto.welcome, (callback) async {
+      if (woAuto.welcome.value) {
+        await Get.dialog(
+          Container(
+            margin: const EdgeInsets.all(16),
+            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.background,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: const Intro(),
+          ),
+          barrierDismissible: false,
+        );
       }
     });
   }
@@ -137,6 +219,7 @@ class _HomeState extends State<Home> {
               } else {
                 KeepScreenOn.turnOff();
               }
+              woAuto.tempMarkers.clear();
             },
             destinations: [
               const NavigationDestination(
@@ -152,7 +235,7 @@ class _HomeState extends State<Home> {
                           woAuto.kilometerStand.value.isEmpty ||
                           woAuto.kennzeichen.value.isEmpty ||
                           woAuto.carBaujahr.value.isEmpty,
-                  child: const Icon(Icons.car_repair),
+                  child: const Icon(Icons.car_rental_outlined),
                 ),
                 label: 'Mein Auto',
                 tooltip: 'Mein Auto',
