@@ -176,6 +176,19 @@ List<int> quickSort(List<int> list) {
   return [...quickSort(less), ...equal, ...quickSort(greater)];
 }
 
+getThemeMode(int themeMode) {
+  switch (themeMode) {
+    case 0:
+      return ThemeMode.system;
+    case 1:
+      return ThemeMode.light;
+    case 2:
+      return ThemeMode.dark;
+    default:
+      return ThemeMode.system;
+  }
+}
+
 int calculateCarAge(String year) {
   var now = DateTime.now();
   var yearInt = int.parse(year);
