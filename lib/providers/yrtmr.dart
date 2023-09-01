@@ -108,11 +108,10 @@ class YrtmrDeeplinks {
     }
     logMessage('Adding Location: $name, $id, $view');
     WoAutoServer woAutoServer = Get.find();
-    var locationId = await woAutoServer.getLocation(id: id, view: view);
-    if (locationId == null) {
+    var location = await woAutoServer.getLocation(id: id, view: view);
+    if (location == null) {
       return;
     }
-    var location = woAutoServer.locations[locationId]!;
     await woAuto.addAnotherCarPark(
       newPosition: LatLng(double.parse(location.lat), double.parse(location.long)),
       newName: location.name,

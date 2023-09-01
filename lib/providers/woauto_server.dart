@@ -119,6 +119,8 @@ class WoAutoServer extends GetxController {
         return null;
       }
       CardLocation location = CardLocation.fromJson(jsonMap);
+      location.view = view;
+      location.accountId = id;
       save();
       return location;
     } catch (e) {

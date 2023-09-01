@@ -6,6 +6,7 @@ import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/screens/home.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:woauto/screens/intro.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -86,7 +87,7 @@ class MyApp extends StatelessWidget {
                 colorScheme: darkColorScheme,
               ),
               themeMode: getThemeMode(woAuto.themeMode.value),
-              home: const Home(),
+              home: woAuto.welcome.value ? const Intro() : const Home(),
               logWriterCallback: (text, {isError = false}) {
                 if (isError == true) {
                   logMessage(text, tag: 'ERROR');
@@ -99,18 +100,5 @@ class MyApp extends StatelessWidget {
         );
       },
     );
-  }
-
-  getThemeMode(int themeMode) {
-    switch (themeMode) {
-      case 0:
-        return ThemeMode.system;
-      case 1:
-        return ThemeMode.light;
-      case 2:
-        return ThemeMode.dark;
-      default:
-        return ThemeMode.system;
-    }
   }
 }

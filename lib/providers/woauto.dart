@@ -10,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
@@ -177,6 +178,10 @@ class WoAuto extends GetxController {
     logMessage('CarPark History length: ${carParkingHistory.length}');
     logMessage('CarParkings length: ${carParkings.length}');
     logMessage('CarParkings: ${carParkings.map((e) => e.toJson())}');
+    logMessage('Keys begin');
+    logMessage('CarParkings: ${carParkings.map((e) => e.editKey)}');
+    logMessage('CarParkings: ${carParkings.map((e) => e.viewKey)}');
+    logMessage('Keys end');
     logMessage('CarMarkers length: ${carMarkers.length}');
     logMessage('CarMarkers: ${carMarkers.map((e) => e.toJson())}');
     logMessage('TempMarkers length: ${tempMarkers.length}');
@@ -209,7 +214,7 @@ class WoAuto extends GetxController {
 
     themeMode.value = 0;
     timePuffer.value = 10;
-    drivingModeDetectionSpeed.value = 10;
+    drivingModeDetectionSpeed.value = 20;
 
     carParkings.clear();
     carParkingHistory.clear();
@@ -300,8 +305,14 @@ class WoAuto extends GetxController {
       carPark.updatedAt = DateTime.now().millisecondsSinceEpoch;
       carPark.description = extra;
       carPark.photoPath = photoPath;
+      woAuto.carParkingHistory.add(carPark);
       woAuto.carParkings.refresh();
       woAuto.save();
+      if (carPark.sharing) {
+        WoAutoServer woAutoServer = Get.find();
+        woAutoServer.updateLocation(park: carPark);
+      }
+
       return;
     }
     logMessage('Add first Car Park');
@@ -337,7 +348,7 @@ class WoAuto extends GetxController {
     if (carParkings.any((element) => element.uuid == uuid && !element.mine)) {
       // Update
       logMessage('Update Another Car Park');
-      var carPark = carParkings.firstWhere((element) => element.name == name && !element.mine);
+      var carPark = carParkings.firstWhere((element) => element.uuid == uuid && !element.mine);
       carPark.latitude = newPosition.latitude;
       carPark.longitude = newPosition.longitude;
       carPark.adresse = adresse;
@@ -363,7 +374,6 @@ class WoAuto extends GetxController {
     );
 
     woAuto.carParkings.add(carPark);
-    woAuto.carParkingHistory.add(carPark);
     woAuto.carParkings.refresh();
     woAuto.save();
   }

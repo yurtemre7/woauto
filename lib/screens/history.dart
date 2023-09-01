@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:to_csv/to_csv.dart';
+import 'package:uuid/uuid.dart';
 import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
@@ -91,7 +92,7 @@ class _HistoryState extends State<History> {
                             ),
                           ...getLastParks(history).map(
                             (park) => Dismissible(
-                              key: Key(park.uuid + park.createdAt.toString()),
+                              key: Key(const Uuid().v4()),
                               onDismissed: (direction) {
                                 woAuto.carParkingHistory.remove(park);
                                 woAuto.save();
