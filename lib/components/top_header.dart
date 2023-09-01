@@ -313,6 +313,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                     'Couldn\'t fetch location for ${element.name} (${element.uuid})',
                   );
                   // remove from sync list
+                  woAuto.carParkings.removeWhere((e) => e.uuid == element.uuid);
                   continue;
                 }
                 logMessage(
@@ -419,13 +420,20 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                       'Dieser Parkplatz ist nun auf den Servern von WoAuto.\nMöchtest du den Parkplatz teilen?',
                     ),
                     actions: [
-                      ElevatedButton(
+                      TextButton(
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Theme.of(context).colorScheme.error,
                         ),
-                        child: const Text('LÖSCHEN'),
+                        child: const Text('AUFHEBEN'),
                         onPressed: () async {
-                          // Delete ... id and edit
+                          woAutoServer.deleteLocationAccount(park: park);
+                          park.sharing = false;
+                          park.editKey = '';
+                          park.viewKey = '';
+                          park.until = null;
+                          woAuto.save();
+
+                          Get.back();
                         },
                       ),
                       ElevatedButton(

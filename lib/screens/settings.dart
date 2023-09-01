@@ -6,6 +6,7 @@ import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -424,7 +425,7 @@ class _SettingsState extends State<Settings> {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      'Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 14.10.2022):',
+                                      'Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 01.09.2023):',
                                       style: TextStyle(
                                         fontSize: 16,
                                       ),
@@ -432,6 +433,10 @@ class _SettingsState extends State<Settings> {
                                     SizedBox(height: 8),
                                     Text(
                                       '- Die App kommuniziert mit Google Maps, um die Karte anzuzeigen.',
+                                    ),
+                                    SizedBox(height: 5),
+                                    Text(
+                                      '- Die App kommuniziert mit meinem VPS Server auf Deutschem Boden, um synchronisierte Parkplätze anzuzeigen, anzulegen und zu verwalten.',
                                     ),
                                     SizedBox(height: 5),
                                     Text(
@@ -444,7 +449,7 @@ class _SettingsState extends State<Settings> {
                                             '- Die App speichert natürlich, unter anderem, deinen Standort, den Namen des Parkplatzes und die Koordinaten, gibt diese aber ',
                                         children: [
                                           TextSpan(
-                                            text: 'weder an Dritte noch an uns weiter.',
+                                            text: 'nicht an Dritte weiter.',
                                             style: TextStyle(
                                               fontWeight: FontWeight.bold,
                                               decoration: TextDecoration.underline,
@@ -452,11 +457,11 @@ class _SettingsState extends State<Settings> {
                                           ),
                                           TextSpan(
                                             text:
-                                                '\nEs findet kein Datenaustausch mit einem Server statt, außer mit den Servern von Google bei der Bereitstellung der Google Maps Karten. ',
+                                                '\nEs findet ein Datenaustausch mit meinem Server und mit den Servern von Google bei der Bereitstellung der Google Maps Karten statt. ',
                                           ),
                                           TextSpan(
                                             text:
-                                                'Die App speichert die Daten nur auf deinem Gerät und du kannst sie jederzeit löschen (in den Einstellungen ganz unten).',
+                                                'Die App speichert sont alle Daten nur auf deinem Gerät und du kannst sie jederzeit löschen, dann sind sie auch aus meinem Server gelöscht (in den Einstellungen ganz unten).',
                                           )
                                         ],
                                       ),
@@ -521,6 +526,15 @@ class _SettingsState extends State<Settings> {
                                   ),
                                   child: const Text('Löschen'),
                                   onPressed: () async {
+                                    WoAutoServer woAutoServer = Get.find();
+                                    var parkings = woAuto.carParkings;
+                                    for (var parking in parkings) {
+                                      if (parking.sharing) {
+                                        woAutoServer.deleteLocationAccount(
+                                          park: parking,
+                                        );
+                                      }
+                                    }
                                     // pop();
                                     pop();
                                     await woAuto.reset();

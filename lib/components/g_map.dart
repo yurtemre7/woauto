@@ -161,6 +161,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         if (loc == null) {
           logMessage('Couldn\'t fetch location for ${element.name} (${element.uuid})');
           // remove from sync list
+          woAuto.carParkings.removeWhere((e) => e.uuid == element.uuid);
           continue;
         }
         logMessage('Adding fetched location for ${element.name} (${element.uuid})');
@@ -256,6 +257,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                     ),
                   ),
                 );
+                flutterLocalNotificationsPlugin.cancelAll();
                 woAuto.tempMarkers.removeWhere((element) => element.markerId.value == 'temp');
               },
               onTap: (LatLng newPosition) {

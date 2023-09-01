@@ -105,6 +105,28 @@ class WoAutoServer extends GetxController {
     }
   }
 
+  Future<bool?> deleteLocationAccount({required CarPark park}) async {
+    try {
+      var response = await httpClient.post(
+        deletePath,
+        query: {
+          'uuid': park.uuid,
+          'edit': park.editKey,
+        },
+      );
+      var jsonMap = json.decode(response.body);
+      if (jsonMap['msg'] == null) {
+        return null;
+      }
+
+      save();
+      return jsonMap['msg'] == 'deleted';
+    } catch (e) {
+      logMessage(e.toString());
+      return null;
+    }
+  }
+
   Future<CardLocation?> getLocation({required String id, required String view}) async {
     try {
       var response = await httpClient.get(

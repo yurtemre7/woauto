@@ -5,6 +5,7 @@ const String host = 'woauto.yurtemre.de';
 
 const String createPath = '/create/';
 const String updatePath = '/update/';
+const String deletePath = '/delete/';
 const String getPath = '/';
 
 const double CAM_ZOOM = 18;
