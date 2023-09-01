@@ -12,7 +12,6 @@ import 'package:woauto/components/top_header.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/yrtmr.dart';
 import 'package:woauto/screens/history.dart';
-import 'package:woauto/screens/intro.dart';
 import 'package:woauto/screens/my_car.dart';
 import 'package:woauto/screens/settings.dart';
 import 'package:woauto/utils/constants.dart';
@@ -88,40 +87,6 @@ class _HomeState extends State<Home> {
       )
     ];
     quickActions.setShortcutItems(shortCuts);
-
-    Future.delayed(0.seconds, () async {
-      if (woAuto.welcome.value) {
-        await Get.dialog(
-          Container(
-            margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Intro(),
-          ),
-          barrierDismissible: false,
-        );
-      }
-    });
-
-    ever(woAuto.welcome, (callback) async {
-      if (woAuto.welcome.value) {
-        await Get.dialog(
-          Container(
-            margin: const EdgeInsets.all(16),
-            padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 12),
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Intro(),
-          ),
-          barrierDismissible: false,
-        );
-      }
-    });
   }
 
   @override
