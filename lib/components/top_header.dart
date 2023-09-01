@@ -11,6 +11,7 @@ import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/extensions.dart';
+import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class TopHeader extends StatefulWidget {
@@ -169,29 +170,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                       children: [
                         if (carParkingList.isNotEmpty) ...[
                           const SizedBox(height: 15),
-                          Row(
-                            children: [
-                              const Text(
-                                'Parkplätze',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              const Spacer(),
-                              TextButton.icon(
-                                onPressed: () {
-                                  for (var element in myParking) {
-                                    if (element.sharing) {
-                                      woAutoServer.updateLocation(park: element);
-                                    }
-                                  }
-                                },
-                                icon: const Icon(Icons.refresh),
-                                label: const Text('Aktualisieren'),
-                              ),
-                            ],
-                          ),
+                          parkHeader(myParking),
                           if (myParking.isEmpty)
                             const Text(
                               'Du hast keine Parkplätze.',
@@ -205,32 +184,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                               )
                               .toList(),
                           const Div(),
-                          Row(
-                            children: [
-                              const Text(
-                                'Geteilte Parkplätze',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                ),
-                              ),
-                              const Spacer(),
-                              TextButton.icon(
-                                onPressed: () {
-                                  for (var element in otherParking) {
-                                    if (element.sharing) {
-                                      woAutoServer.getLocation(
-                                        id: element.uuid,
-                                        view: element.viewKey,
-                                      );
-                                    }
-                                  }
-                                },
-                                icon: const Icon(Icons.refresh),
-                                label: const Text('Aktualisieren'),
-                              ),
-                            ],
-                          ),
+                          sharedParkHeader(otherParking),
                           if (otherParking.isEmpty)
                             const Text(
                               'Du hast keine geteilten Parkplätze.',
@@ -309,6 +263,76 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
           ),
         ),
       ),
+    );
+  }
+
+  Row parkHeader(Iterable<CarPark> myParking) {
+    return Row(
+      children: [
+        const Text(
+          'Parkplätze',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        const Spacer(),
+        TextButton.icon(
+          onPressed: () {
+            for (var element in myParking) {
+              if (element.sharing) {
+                woAutoServer.updateLocation(park: element);
+              }
+            }
+          },
+          icon: const Icon(Icons.refresh),
+          label: const Text('Aktualisieren'),
+        ),
+      ],
+    );
+  }
+
+  Row sharedParkHeader(Iterable<CarPark> otherParking) {
+    return Row(
+      children: [
+        const Text(
+          'Geteilte Parkplätze',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+          ),
+        ),
+        const Spacer(),
+        TextButton.icon(
+          onPressed: () async {
+            for (var element in otherParking) {
+              if (element.sharing) {
+                var loc = await woAutoServer.getLocation(id: element.uuid, view: element.viewKey);
+                if (loc == null) {
+                  logMessage(
+                    'Couldn\'t fetch location for ${element.name} (${element.uuid})',
+                  );
+                  // remove from sync list
+                  continue;
+                }
+                logMessage(
+                  'Adding fetched location for ${element.name} (${element.uuid})',
+                );
+                woAuto.addAnotherCarPark(
+                  newPosition: LatLng(
+                    double.parse(loc.lat),
+                    double.parse(loc.long),
+                  ),
+                  uuid: element.uuid,
+                  view: loc.view,
+                );
+              }
+            }
+          },
+          icon: const Icon(Icons.refresh),
+          label: const Text('Aktualisieren'),
+        ),
+      ],
     );
   }
 
@@ -407,11 +431,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> {
                       ElevatedButton(
                         child: const Text('TEILEN'),
                         onPressed: () async {
-                          var account =
-                              woAutoServer.accounts.values.firstWhere((acc) => acc.id == park.uuid);
                           String website = 'https://yurtemre.de';
                           String woLink =
-                              '$website/sync?id=${Uri.encodeFull(account.id)}&view=${Uri.encodeFull(account.viewKey)}&name=${Uri.encodeFull(park.name)}';
+                              '$website/sync?id=${Uri.encodeFull(park.uuid)}&view=${Uri.encodeFull(park.viewKey)}&name=${Uri.encodeFull(park.name)}';
                           Share.share(
                             'Hier ist mein synchronisierter Parkplatz:\n$woLink',
                           );
