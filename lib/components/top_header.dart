@@ -583,7 +583,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 label: Text(
-                  'In Google Maps öffnen',
+                  'Karten App öffnen',
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   ),
