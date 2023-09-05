@@ -1,17 +1,15 @@
 import 'dart:async';
 
-import 'package:expandable/expandable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
+import 'package:location/location.dart' as loc;
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
-import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -25,6 +23,8 @@ class GMap extends StatefulWidget {
 class _GMapState extends State<GMap> with WidgetsBindingObserver {
   final mapLoading = true.obs;
   final WoAutoServer woAutoServer = Get.find();
+
+  StreamSubscription<Position>? positionStream;
 
   @override
   void initState() {
@@ -47,13 +47,14 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    positionStream?.cancel();
     super.dispose();
   }
 
   loadPositionData() async {
     mapLoading.value = true;
 
-    Location location = Location();
+    var location = loc.Location();
 
     bool serviceEnabled;
     serviceEnabled = await location.serviceEnabled();
@@ -63,19 +64,89 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         return;
       }
     }
+    var permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        await Get.dialog(
+          AlertDialog(
+            title: const Text('Standort Berechtigung'),
+            content: const Text(
+              'Du hast die Berechtigung für den Standortzugriff verweigert. Bitte gehe in die Einstellungen und erlaube den Zugriff auf deinen Standort.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  await Geolocator.openAppSettings();
+                  pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+          name: 'Standort Berechtigung',
+        );
 
-    location.changeSettings(
-      interval: 500,
-    );
+        return loadPositionData();
+      }
+    }
 
-    location.onLocationChanged.listen((LocationData currentLocation) async {
-      if (!mounted) {
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      await Get.dialog(
+        AlertDialog(
+          title: const Text('Standort Berechtigung'),
+          content: const Text(
+            'Du hast die Berechtigung für den Standortzugriff verweigert. Bitte gehe in die Einstellungen und erlaube den Zugriff auf deinen Standort.',
+          ),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                await Geolocator.openAppSettings();
+                pop();
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+        name: 'Standort Berechtigung',
+      );
+      return loadPositionData();
+    }
+
+    late LocationSettings locationSettings;
+
+    if (isAndroid()) {
+      locationSettings = AndroidSettings(
+        accuracy: LocationAccuracy.bestForNavigation,
+        distanceFilter: 100,
+        forceLocationManager: true,
+        intervalDuration: 500.milliseconds,
+      );
+    } else if (isIOS()) {
+      locationSettings = AppleSettings(
+        accuracy: LocationAccuracy.bestForNavigation,
+        activityType: ActivityType.automotiveNavigation,
+        distanceFilter: 100,
+        pauseLocationUpdatesAutomatically: true,
+        allowBackgroundLocationUpdates: false,
+      );
+    } else {
+      locationSettings = const LocationSettings(
+        accuracy: LocationAccuracy.bestForNavigation,
+        distanceFilter: 100,
+      );
+    }
+
+    positionStream = Geolocator.getPositionStream(locationSettings: locationSettings)
+        .listen((Position? position) async {
+      if (!mounted || position == null) {
         return;
       }
       woAuto.currentPosition.value = CameraPosition(
         target: LatLng(
-          currentLocation.latitude ?? 0,
-          currentLocation.longitude ?? 0,
+          position.latitude,
+          position.longitude,
         ),
         zoom: CAM_ZOOM,
       );
@@ -84,11 +155,11 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         if (woAuto.mapController.value != null) {
           woAuto.currentPosition.value = CameraPosition(
             target: LatLng(
-              currentLocation.latitude ?? 0,
-              currentLocation.longitude ?? 0,
+              position.latitude,
+              position.longitude,
             ),
             zoom: CAM_ZOOM,
-            bearing: currentLocation.heading ?? 0,
+            bearing: position.heading,
           );
           woAuto.mapController.value!.animateCamera(
             CameraUpdate.newCameraPosition(
@@ -98,11 +169,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         }
       }
 
-      woAuto.currentVelocity.value = currentLocation.speed ?? 0;
-
-      if (!mounted) {
-        return;
-      }
+      woAuto.currentVelocity.value = position.speed;
 
       if (!woAuto.drivingMode.value && woAuto.askForDrivingMode.value) {
         // show dialog to ask the user if he wants to switch to driving mode, IF his velocity is > woAuto.drivingModeDetectionSpeed.value
@@ -191,34 +258,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               // padding: const EdgeInsets.all(20),
               trafficEnabled: woAuto.showTraffic.value,
               mapToolbarEnabled: false,
-              onMapCreated: (GoogleMapController controller) async {
-                woAuto.mapController.value = controller;
-                await loadMapStyles();
-                await Future.delayed(2.seconds);
-                mapLoading.value = false;
-
-                LocationData? locationData;
-                try {
-                  locationData = await Location().getLocation();
-                } catch (e) {
-                  return;
-                }
-
-                woAuto.currentPosition.value = CameraPosition(
-                  target: LatLng(
-                    locationData.latitude ?? 0,
-                    locationData.longitude ?? 0,
-                  ),
-                  zoom: CAM_ZOOM,
-                );
-                if (woAuto.mapController.value != null) {
-                  woAuto.mapController.value!.animateCamera(
-                    CameraUpdate.newCameraPosition(
-                      woAuto.currentPosition.value,
-                    ),
-                  );
-                }
-              },
+              onMapCreated: _onMapCreated,
               compassEnabled: false,
               mapType: woAuto.mapType.value,
               myLocationEnabled: true,
@@ -226,187 +266,8 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               zoomControlsEnabled: false,
               padding: const EdgeInsets.only(left: 10, right: 10),
               markers: woAuto.carMarkers.toSet()..addAll(woAuto.tempMarkers.toSet()),
-              onLongPress: (LatLng newPosition) async {
-                logMessage('Long Pressed at $newPosition');
-                woAuto.tempMarkers.add(
-                  Marker(
-                    markerId: const MarkerId('temp'),
-                    position: newPosition,
-                    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-                  ),
-                );
-                await Get.dialog(
-                  AlertDialog(
-                    title: const Text('Standort Info'),
-                    content: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        ListTile(
-                          title: const Text('Navigation starten'),
-                          onTap: () {
-                            Get.back();
-                            MapsLauncher.launchCoordinates(
-                              newPosition.latitude,
-                              newPosition.longitude,
-                            );
-                          },
-                          leading: const Icon(Icons.directions),
-                        ),
-                        const Div(),
-                        Text('Abstand zum aktuellen Standort: ${woAuto.getDistance(newPosition)}m'),
-                      ],
-                    ),
-                  ),
-                );
-                flutterLocalNotificationsPlugin.cancelAll();
-                woAuto.tempMarkers.removeWhere((element) => element.markerId.value == 'temp');
-              },
-              onTap: (LatLng newPosition) {
-                if (kDebugMode) {
-                  woAuto.printWoAuto();
-                }
-                var textController = TextEditingController();
-                var newNameController = TextEditingController(text: woAuto.subText.value);
-                var tillTime = Rxn<TimeOfDay>();
-
-                Get.dialog(
-                  AlertDialog(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    title: const Text('Neuer Parkplatz'),
-                    contentPadding: const EdgeInsets.only(left: 10, right: 10),
-                    content: SingleChildScrollView(
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const ListTile(
-                            title: Text('Neuen Parkplatz speichern?'),
-                          ),
-                          ExpandablePanel(
-                            header: const ListTile(
-                              title: Text('Zusätzliche Info zum Parkplatz'),
-                            ),
-                            collapsed: const SizedBox(),
-                            expanded: Column(
-                              children: [
-                                ListTile(
-                                  title: TextField(
-                                    controller: newNameController,
-                                    decoration: const InputDecoration(
-                                      labelText: 'Name',
-                                      hintText: 'z.B. Mein Auto',
-                                    ),
-                                  ),
-                                ),
-                                ListTile(
-                                  title: TextField(
-                                    controller: textController,
-                                    decoration: const InputDecoration(
-                                      labelText: 'Info',
-                                      hintText: 'z.B. Parkdeck 2',
-                                    ),
-                                  ),
-                                ),
-                                if (isAndroid()) ...[
-                                  16.h,
-                                  Wrap(
-                                    alignment: WrapAlignment.center,
-                                    children: [
-                                      Obx(
-                                        () => ElevatedButton(
-                                          onPressed: () async {
-                                            tillTime.value = await showTimePicker(
-                                              context: context,
-                                              initialTime: TimeOfDay.now(),
-                                              builder: (context, child) {
-                                                return MediaQuery(
-                                                  data: MediaQuery.of(context)
-                                                      .copyWith(alwaysUse24HourFormat: true),
-                                                  child: child!,
-                                                );
-                                              },
-                                              helpText: 'Parkticket läuft ab um',
-                                              confirmText: 'Speichern',
-                                              cancelText: 'Abbrechen',
-                                            );
-                                          },
-                                          child: Text(
-                                            'Parkticket hinzufügen${tillTime.value == null ? '' : ' (${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')})'}',
-                                          ),
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          Get.dialog(
-                                            AlertDialog(
-                                              title: const Text('Parkticket'),
-                                              content: const Text(
-                                                'Wenn du ein Parkticket hast, kannst du hier die Uhrzeit angeben, bis zu der das Ticket gültig ist. '
-                                                'Dann erstellt die App dir einen Timer, der dich 10 Minuten vor Ende des Tickets benachrichtigt.',
-                                              ),
-                                              actions: [
-                                                TextButton(
-                                                  onPressed: () {
-                                                    pop();
-                                                  },
-                                                  child: const Text('OK'),
-                                                ),
-                                              ],
-                                            ),
-                                            name: 'Info Parkticket',
-                                          );
-                                        },
-                                        icon: const Icon(Icons.question_mark_outlined),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ],
-                            ),
-                          ),
-                          16.h,
-                        ],
-                      ),
-                    ),
-                    actions: <Widget>[
-                      TextButton(
-                        child: const Text('ABBRECHEN'),
-                        onPressed: () {
-                          pop();
-                        },
-                      ),
-                      ElevatedButton(
-                        child: const Text('SPEICHERN'),
-                        onPressed: () async {
-                          woAuto.addCarPark(
-                            newPosition,
-                            extra: textController.text,
-                            newName: newNameController.text,
-                          );
-
-                          woAuto.addParkticketNotification(tillTime.value);
-
-                          pop();
-                          if (woAuto.mapController.value == null) {
-                            return;
-                          }
-                          await woAuto.mapController.value!.animateCamera(
-                            CameraUpdate.newCameraPosition(
-                              CameraPosition(
-                                target: newPosition,
-                                zoom: CAM_ZOOM,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  name: 'Parkplatz speichern',
-                );
-              },
+              onLongPress: _onMapLongPress,
+              onTap: woAuto.onNewParking,
             ),
             if (woAuto.currentIndex.value == 0 && woAuto.drivingMode.value)
               Obx(
@@ -444,5 +305,70 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         );
       },
     );
+  }
+
+  Future<void> _onMapLongPress(LatLng newPosition) async {
+    logMessage('Long Pressed at $newPosition');
+    woAuto.tempMarkers.add(
+      Marker(
+        markerId: const MarkerId('temp'),
+        position: newPosition,
+        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+      ),
+    );
+    await Get.dialog(
+      AlertDialog(
+        title: const Text('Standort Info'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              title: const Text('Navigation starten'),
+              onTap: () {
+                Get.back();
+                MapsLauncher.launchCoordinates(
+                  newPosition.latitude,
+                  newPosition.longitude,
+                );
+              },
+              leading: const Icon(Icons.directions),
+            ),
+            const Div(),
+            Text('Abstand zum aktuellen Standort: ${woAuto.getDistance(newPosition)}m'),
+          ],
+        ),
+      ),
+    );
+    flutterLocalNotificationsPlugin.cancelAll();
+    woAuto.tempMarkers.removeWhere((element) => element.markerId.value == 'temp');
+  }
+
+  Future<void> _onMapCreated(GoogleMapController controller) async {
+    woAuto.mapController.value = controller;
+    await loadMapStyles();
+    await Future.delayed(2.seconds);
+    mapLoading.value = false;
+
+    Position? locationData;
+    try {
+      locationData = await Geolocator.getCurrentPosition();
+    } catch (e) {
+      return;
+    }
+
+    woAuto.currentPosition.value = CameraPosition(
+      target: LatLng(
+        locationData.latitude,
+        locationData.longitude,
+      ),
+      zoom: CAM_ZOOM,
+    );
+    if (woAuto.mapController.value != null) {
+      woAuto.mapController.value!.animateCamera(
+        CameraUpdate.newCameraPosition(
+          woAuto.currentPosition.value,
+        ),
+      );
+    }
   }
 }
