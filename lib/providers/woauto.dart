@@ -1,17 +1,24 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math' as math;
+import 'dart:io';
 
+import 'package:expandable/expandable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:woauto/classes/car_park.dart';
+import 'package:woauto/components/div.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
+import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -177,15 +184,15 @@ class WoAuto extends GetxController {
 
     logMessage('CarPark History length: ${carParkingHistory.length}');
     logMessage('CarParkings length: ${carParkings.length}');
-    logMessage('CarParkings: ${carParkings.map((e) => e.toJson())}');
-    logMessage('Keys begin');
-    logMessage('CarParkings: ${carParkings.map((e) => e.editKey)}');
-    logMessage('CarParkings: ${carParkings.map((e) => e.viewKey)}');
-    logMessage('Keys end');
+    // logMessage('CarParkings: ${carParkings.map((e) => e.toJson())}');
+    // logMessage('Keys begin');
+    // logMessage('CarParkings: ${carParkings.map((e) => e.editKey)}');
+    // logMessage('CarParkings: ${carParkings.map((e) => e.viewKey)}');
+    // logMessage('Keys end');
     logMessage('CarMarkers length: ${carMarkers.length}');
-    logMessage('CarMarkers: ${carMarkers.map((e) => e.toJson())}');
+    // logMessage('CarMarkers: ${carMarkers.map((e) => e.toJson())}');
     logMessage('TempMarkers length: ${tempMarkers.length}');
-    logMessage('TempMarkers: ${tempMarkers.map((e) => e.toJson())}');
+    // logMessage('TempMarkers: ${tempMarkers.map((e) => e.toJson())}');
 
     logMessage('Subtext: $subText');
     logMessage('Kennzeichen: $kennzeichen');
@@ -227,6 +234,293 @@ class WoAuto extends GetxController {
     await woAuto.save();
   }
 
+  Future<void> onNewParking(LatLng newPosition) async {
+    if (kDebugMode) {
+      woAuto.printWoAuto();
+    }
+    var textController = TextEditingController();
+    var newNameController = TextEditingController(text: woAuto.subText.value);
+    var tillTime = Rxn<TimeOfDay>();
+    var carPicturePath = ''.obs;
+
+    Get.dialog(
+      GestureDetector(
+        onTap: () => FocusScope.of(Get.context!).unfocus(),
+        child: AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          title: const Text('Neuer Parkplatz'),
+          contentPadding: const EdgeInsets.only(left: 10, right: 10),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const ListTile(
+                  title: Text('Neuen Parkplatz speichern?'),
+                ),
+                ExpandablePanel(
+                  header: const ListTile(
+                    title: Text('Zusätzliche Info zum Parkplatz'),
+                  ),
+                  collapsed: const SizedBox(),
+                  expanded: Column(
+                    children: [
+                      ListTile(
+                        title: TextField(
+                          controller: newNameController,
+                          decoration: InputDecoration(
+                            labelText: 'Name',
+                            hintText: 'z.B. Mein Auto',
+                            isDense: true,
+                            suffixIcon: IconButton(
+                              padding: EdgeInsets.zero,
+                              visualDensity: VisualDensity.compact,
+                              onPressed: () => newNameController.clear(),
+                              icon: const Icon(Icons.clear),
+                            ),
+                          ),
+                        ),
+                      ),
+                      ListTile(
+                        title: TextField(
+                          controller: textController,
+                          decoration: const InputDecoration(
+                            isDense: true,
+                            labelText: 'Info',
+                            hintText: 'z.B. Parkdeck 2',
+                          ),
+                        ),
+                      ),
+                      if (isAndroid()) ...[
+                        16.h,
+                        Wrap(
+                          alignment: WrapAlignment.center,
+                          children: [
+                            Obx(
+                              () => ElevatedButton(
+                                onPressed: () async {
+                                  tillTime.value = await showTimePicker(
+                                    context: Get.context!,
+                                    initialTime: TimeOfDay.now(),
+                                    builder: (context, child) {
+                                      return MediaQuery(
+                                        data: MediaQuery.of(context)
+                                            .copyWith(alwaysUse24HourFormat: true),
+                                        child: child!,
+                                      );
+                                    },
+                                    helpText: 'Parkticket läuft ab um',
+                                    confirmText: 'Speichern',
+                                    cancelText: 'Abbrechen',
+                                  );
+                                },
+                                child: Text(
+                                  'Parkticket hinzufügen${tillTime.value == null ? '' : ' (${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')})'}',
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                Get.dialog(
+                                  AlertDialog(
+                                    title: const Text('Parkticket'),
+                                    content: const Text(
+                                      'Wenn du ein Parkticket hast, kannst du hier die Uhrzeit angeben, bis zu der das Ticket gültig ist. '
+                                      'Dann erstellt die App dir einen Timer, der dich 10 Minuten vor Ende des Tickets benachrichtigt.',
+                                    ),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          pop();
+                                        },
+                                        child: const Text('OK'),
+                                      ),
+                                    ],
+                                  ),
+                                  name: 'Info Parkticket',
+                                );
+                              },
+                              icon: const Icon(Icons.question_mark_outlined),
+                            ),
+                          ],
+                        ),
+                      ],
+                      ElevatedButton(
+                        onPressed: () async {
+                          Get.bottomSheet(
+                            Card(
+                              color: Get.theme.colorScheme.background,
+                              shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(12),
+                                ),
+                              ),
+                              margin: EdgeInsets.zero,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    ListTile(
+                                      title: const Text('Foto aufnehmen'),
+                                      leading: const Icon(Icons.camera_alt),
+                                      onTap: () async {
+                                        pop();
+                                        XFile? image = await ImagePicker()
+                                            .pickImage(source: ImageSource.camera);
+
+                                        if (image == null) return;
+
+                                        String duplicateFilePath =
+                                            (await getApplicationDocumentsDirectory()).path;
+
+                                        var fileName = image.path.split('/').last;
+                                        File localImage = await File(image.path)
+                                            .copy('$duplicateFilePath/$fileName');
+                                        carPicturePath.value = localImage.path;
+                                      },
+                                    ),
+                                    const Div(),
+                                    ListTile(
+                                      title: const Text('Foto auswählen'),
+                                      leading: const Icon(Icons.photo),
+                                      onTap: () async {
+                                        pop();
+                                        XFile? image = await ImagePicker()
+                                            .pickImage(source: ImageSource.gallery);
+
+                                        if (image == null) return;
+
+                                        String duplicateFilePath =
+                                            (await getApplicationDocumentsDirectory()).path;
+
+                                        var fileName = image.path.split('/').last;
+                                        File localImage = await File(image.path)
+                                            .copy('$duplicateFilePath/$fileName');
+                                        carPicturePath.value = localImage.path;
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                        child: const Text(
+                          'Foto hinzufügen',
+                        ),
+                      ),
+                      Obx(
+                        () => carPicturePath.value.isEmpty
+                            ? const SizedBox()
+                            : Stack(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Get.dialog(
+                                        AlertDialog(
+                                          content: GestureDetector(
+                                            onTap: () {
+                                              pop();
+                                            },
+                                            child: Image.file(
+                                              File(carPicturePath.value),
+                                            ),
+                                          ),
+                                          contentPadding: EdgeInsets.zero,
+                                          actionsPadding: EdgeInsets.zero,
+                                        ),
+                                        name: 'Foto',
+                                      );
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: CircleAvatar(
+                                        radius: 40,
+                                        backgroundImage: FileImage(
+                                          File(carPicturePath.value),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: IconButton(
+                                      onPressed: () {
+                                        carPicturePath.value = '';
+                                      },
+                                      icon: const Icon(Icons.clear),
+                                      color: Get.theme.colorScheme.error,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                      ),
+                    ],
+                  ),
+                ),
+                16.h,
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('ABBRECHEN'),
+              onPressed: () {
+                pop();
+              },
+            ),
+            ElevatedButton(
+              child: const Text('SPEICHERN'),
+              onPressed: () async {
+                woAuto.addCarPark(
+                  newPosition,
+                  extra: textController.text,
+                  newName: newNameController.text,
+                  photoPath: carPicturePath.value,
+                );
+
+                woAuto.addParkticketNotification(tillTime.value);
+
+                pop();
+                if (woAuto.mapController.value == null) {
+                  return;
+                }
+                await woAuto.mapController.value!.animateCamera(
+                  CameraUpdate.newCameraPosition(
+                    CameraPosition(
+                      target: newPosition,
+                      zoom: CAM_ZOOM,
+                    ),
+                  ),
+                );
+
+                Get.snackbar(
+                  'Hast du dein Auto abgeschlossen?',
+                  'Dies ist eine Erinnerung, ob du dein Auto abgeschlossen hast.',
+                  snackPosition: SnackPosition.BOTTOM,
+                  colorText: Get.theme.colorScheme.primary,
+                  duration: const Duration(seconds: 15),
+                  mainButton: TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: const Text('Ja, habe ich.'),
+                  ),
+                  backgroundColor: Get.theme.colorScheme.primaryContainer,
+                );
+              },
+            ),
+          ],
+        ),
+      ),
+      name: 'Parkplatz speichern',
+    );
+  }
+
   Marker makeCarMarker(CarPark park) {
     return Marker(
       markerId: MarkerId(park.uuid),
@@ -259,12 +553,47 @@ class WoAuto extends GetxController {
           borderRadius: BorderRadius.circular(12),
         ),
         title: Text(park.name),
-        content: !park.mine
-            ? Text(
-                'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${park.adresse ?? 'Adresse konnte nicht gefunden werden.'}.')
-            : Text(
-                'Du hast ${formatDateTimeAndTime(datum)}.\n\nDein Auto steht an folgender Adresse:\n${park.adresse ?? 'Adresse konnte nicht gefunden werden.'}.\n${park.description}',
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (park.photoPath != null && park.photoPath!.isNotEmpty)
+              GestureDetector(
+                onTap: () {
+                  Get.dialog(
+                    AlertDialog(
+                      content: GestureDetector(
+                        onTap: () {
+                          pop();
+                        },
+                        child: Image.file(
+                          File(park.photoPath!),
+                        ),
+                      ),
+                      contentPadding: EdgeInsets.zero,
+                      actionsPadding: EdgeInsets.zero,
+                    ),
+                    name: 'Foto',
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(16.0),
+                  child: CircleAvatar(
+                    radius: 40,
+                    backgroundImage: FileImage(
+                      File(park.photoPath!),
+                    ),
+                  ),
+                ),
               ),
+            5.h,
+            !park.mine
+                ? Text(
+                    'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${park.adresse ?? 'Adresse konnte nicht gefunden werden.'}.')
+                : Text(
+                    'Du hast ${formatDateTimeAndTime(datum)}.\n\nDein Auto steht an folgender Adresse:\n${park.adresse ?? 'Adresse konnte nicht gefunden werden.'}.\n${park.description}',
+                  ),
+          ],
+        ),
         actions: [
           TextButton(
             style: TextButton.styleFrom(
@@ -541,11 +870,6 @@ class WoAuto extends GetxController {
     ).toPrecision(1);
   }
 
-  double calculateDistance(lat1, lon1, lat2, lon2) {
-    var p = 0.017453292519943295;
-    var a = 0.5 -
-        math.cos((lat2 - lat1) * p) / 2 +
-        math.cos(lat1 * p) * math.cos(lat2 * p) * (1 - math.cos((lon2 - lon1) * p)) / 2;
-    return 12742 * math.asin(math.sqrt(a)) * 1000;
-  }
+  double calculateDistance(lat1, lon1, lat2, lon2) =>
+      Geolocator.distanceBetween(lat1, lon1, lat2, lon2);
 }
