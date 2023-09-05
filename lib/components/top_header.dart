@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maps_launcher/maps_launcher.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/classes/car_park.dart';
@@ -432,94 +433,10 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                 }
 
                 if (!mounted) return;
-
-                Get.dialog(
-                  AlertDialog(
-                    title: const Text('Parkplatz synchronisiert'),
-                    content: const Text(
-                      'Dieser Parkplatz ist nun auf den Servern von WoAuto.\nMöchtest du den Parkplatz teilen?',
-                    ),
-                    actions: [
-                      TextButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Theme.of(context).colorScheme.error,
-                        ),
-                        child: const Text('AUFHEBEN'),
-                        onPressed: () async {
-                          woAutoServer.deleteLocationAccount(park: park);
-                          park.sharing = false;
-                          park.editKey = '';
-                          park.viewKey = '';
-                          park.until = null;
-                          woAuto.save();
-
-                          Get.back();
-                          setState(() {});
-                        },
-                      ),
-                      ElevatedButton(
-                        child: const Text('TEILEN'),
-                        onPressed: () async {
-                          String website = 'https://yurtemre.de';
-                          String woLink =
-                              '$website/sync?id=${Uri.encodeFull(park.uuid)}&view=${Uri.encodeFull(park.viewKey)}&name=${Uri.encodeFull(park.name)}';
-                          Share.share(
-                            'Hier ist mein synchronisierter Parkplatz:\n$woLink',
-                          );
-                          Get.back();
-                        },
-                      ),
-                    ],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  name: 'Parkplatz synchronisiert Info',
-                );
+                _showSyncDialog(park);
               }
             : () async {
-                Get.dialog(
-                  AlertDialog(
-                    title: const Text('Parkplatz synchronisiert'),
-                    content: const Text(
-                      'Dieser Parkplatz ist nun auf den Servern von WoAuto.\nMöchtest du den Parkplatz teilen?',
-                    ),
-                    actions: [
-                      TextButton(
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Theme.of(context).colorScheme.error,
-                        ),
-                        child: const Text('AUFHEBEN'),
-                        onPressed: () async {
-                          woAutoServer.deleteLocationAccount(park: park);
-                          park.sharing = false;
-                          park.editKey = '';
-                          park.viewKey = '';
-                          park.until = null;
-                          woAuto.save();
-
-                          Get.back();
-                        },
-                      ),
-                      ElevatedButton(
-                        child: const Text('TEILEN'),
-                        onPressed: () async {
-                          String website = 'https://yurtemre.de';
-                          String woLink =
-                              '$website/sync?id=${Uri.encodeFull(park.uuid)}&view=${Uri.encodeFull(park.viewKey)}&name=${Uri.encodeFull(park.name)}';
-                          Share.share(
-                            'Hier ist mein synchronisierter Parkplatz:\n$woLink',
-                          );
-                          Get.back();
-                        },
-                      ),
-                    ],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  name: 'Parkplatz synchronisiert Info',
-                );
+                _showSyncDialog(park);
               },
       ),
       title: Text(
@@ -635,6 +552,83 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
         );
         pop();
       },
+    );
+  }
+
+  _showSyncDialog(CarPark park) {
+    Get.dialog(
+      AlertDialog(
+        title: const Text('Parkplatz synchronisiert'),
+        content: const Text(
+          'Dieser Parkplatz ist nun auf den Servern von WoAuto.\nMöchtest du den Parkplatz teilen?',
+        ),
+        actions: [
+          TextButton(
+            style: ElevatedButton.styleFrom(
+              foregroundColor: Theme.of(context).colorScheme.error,
+            ),
+            child: const Text('AUFHEBEN'),
+            onPressed: () async {
+              woAutoServer.deleteLocationAccount(park: park);
+              park.sharing = false;
+              park.editKey = '';
+              park.viewKey = '';
+              park.until = null;
+              woAuto.save();
+
+              Get.back();
+              setState(() {});
+            },
+          ),
+          ElevatedButton(
+            child: const Text('TEILEN'),
+            onPressed: () async {
+              pop();
+              String website = 'https://yurtemre.de';
+              String woLink =
+                  '$website/sync?id=${Uri.encodeFull(park.uuid)}&view=${Uri.encodeFull(park.viewKey)}&name=${Uri.encodeFull(park.name)}';
+              Get.dialog(AlertDialog(
+                title: const Text('Parkplatz teilen'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('Lasse diesen QR Code scannen, um deinen Standort zu teilen'),
+                    5.h,
+                    SizedBox(
+                      height: 320,
+                      width: Get.width,
+                      child: QrImageView(
+                        data: woLink,
+                        size: 320,
+                        gapless: false,
+                      ),
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    child: const Text('ABBRECHEN'),
+                    onPressed: () => Get.back(result: false),
+                  ),
+                  ElevatedButton(
+                    child: const Text('LINK TEILEN'),
+                    onPressed: () async {
+                      Share.share(
+                        'Hier ist mein synchronisierter Parkplatz:\n$woLink',
+                      );
+                      Get.back();
+                    },
+                  ),
+                ],
+              ));
+            },
+          ),
+        ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
+      name: 'Parkplatz synchronisiert Info',
     );
   }
 }
