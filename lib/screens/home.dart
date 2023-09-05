@@ -47,11 +47,11 @@ class _HomeState extends State<Home> {
     quickActions.initialize((shortcutType) async {
       switch (shortcutType) {
         case 'action_save':
+          await Future.delayed(3.seconds);
           woAuto.addCarPark(
             woAuto.currentPosition.value.target,
           );
 
-          pop();
           if (woAuto.mapController.value == null) {
             return;
           }
@@ -63,8 +63,25 @@ class _HomeState extends State<Home> {
               ),
             ),
           );
+          Get.snackbar(
+            'Hast du dein Auto abgeschlossen?',
+            'Dies ist eine Erinnerung, ob du dein Auto abgeschlossen hast.',
+            snackPosition: SnackPosition.BOTTOM,
+            colorText: Get.theme.colorScheme.primary,
+            duration: const Duration(seconds: 15),
+            mainButton: TextButton(
+              onPressed: () {
+                Get.back();
+              },
+              child: const Text('Ja, habe ich.'),
+            ),
+            backgroundColor: Get.theme.colorScheme.primaryContainer,
+          );
           break;
         case 'action_parkings':
+          if (Get.isBottomSheetOpen ?? false) {
+            Get.back();
+          }
           Get.bottomSheet(
             const CarBottomSheet(),
             settings: const RouteSettings(
