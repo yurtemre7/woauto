@@ -119,7 +119,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
     if (isAndroid()) {
       locationSettings = AndroidSettings(
         accuracy: LocationAccuracy.bestForNavigation,
-        distanceFilter: 100,
         forceLocationManager: true,
         intervalDuration: 500.milliseconds,
       );
@@ -127,14 +126,12 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
       locationSettings = AppleSettings(
         accuracy: LocationAccuracy.bestForNavigation,
         activityType: ActivityType.automotiveNavigation,
-        distanceFilter: 100,
         pauseLocationUpdatesAutomatically: true,
         allowBackgroundLocationUpdates: false,
       );
     } else {
       locationSettings = const LocationSettings(
         accuracy: LocationAccuracy.bestForNavigation,
-        distanceFilter: 100,
       );
     }
 
