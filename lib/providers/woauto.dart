@@ -476,6 +476,7 @@ class WoAuto extends GetxController {
             ElevatedButton(
               child: const Text('SPEICHERN'),
               onPressed: () async {
+                pop();
                 woAuto.addCarPark(
                   newPosition,
                   extra: textController.text,
@@ -485,7 +486,6 @@ class WoAuto extends GetxController {
 
                 woAuto.addParkticketNotification(tillTime.value);
 
-                pop();
                 if (woAuto.mapController.value == null) {
                   return;
                 }
