@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 429 (214 per locale)
+/// Strings: 416 (208 per locale)
 ///
-/// Built on 2023-09-17 at 16:26 UTC
+/// Built on 2023-09-17 at 16:48 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -150,7 +150,6 @@ class _TranslationsDe implements BaseTranslations<AppLocale, _TranslationsDe> {
 	late final _TranslationsDe _root = this; // ignore: unused_field
 
 	// Translations
-	String hello({required Object name}) => 'Hallo ${name}';
 	late final _TranslationsConstantsDe constants = _TranslationsConstantsDe._(_root);
 	late final _TranslationsParkDurationDe park_duration = _TranslationsParkDurationDe._(_root);
 	late final _TranslationsParkDialogDe park_dialog = _TranslationsParkDialogDe._(_root);
@@ -375,7 +374,6 @@ class _TranslationsDialogDe {
 	String get abort => 'Abbrechen';
 	String get delete => 'Löschen';
 	String get leave => 'Verlassen';
-	String get confirm => 'Bestätigen';
 	String get ok => 'Ok';
 	String get yes => 'Ja';
 	String get no => 'Nein';
@@ -443,7 +441,6 @@ class _TranslationsParkDialogTicketDe {
 
 	// Translations
 	String get title => 'Parkticket';
-	String get hint => 'z.B. Parkdeck 2';
 	String get help => 'Parkticket läuft ab um';
 	String until({required Object time}) => 'Parkticket gilt bis ${time} Uhr';
 }
@@ -627,7 +624,6 @@ class _TranslationsMyCarParkNameDe {
 	// Translations
 	String title({required Object name}) => 'Titel: ${name}';
 	String get subtitle => 'Ändere den Titel, der auf deinem Parkplatz steht, z.B: Mercedes, Audi oder BMW';
-	String get validate => 'Bitte gib einen Namen ein';
 	String get park_title => 'Name des Parkplatzes';
 }
 
@@ -738,7 +734,6 @@ class _TranslationsDialogNavigationDe {
 
 	// Translations
 	String get title => 'Standort Info';
-	String get subtitle => 'Möchtest du den Standort deines Autos ansehen oder dorthin navigieren?';
 	String distance_info({required Object distance}) => 'Abstand zum aktuellen Standort: ${distance} m';
 	String get action_1 => 'Navigation starten';
 }
@@ -799,7 +794,6 @@ class _TranslationsDialogLeaveInfoDe {
 	// Translations
 	String get title => 'App verlassen';
 	String get subtitle => 'Bist du sicher, dass du die App verlassen möchtest?';
-	String get action_1 => 'Verlassen';
 }
 
 // Path: dialog.app_info
@@ -1019,7 +1013,6 @@ class _TranslationsDialogNotificationsSentDe {
 
 	// Translations
 	String get title => 'Auto geparkt';
-	String get subtitle => 'Möchtest du Benachrichtigungen aktivieren? Du kannst diese Einstellung später in den Einstellungen ändern.';
 }
 
 // Path: dialog.notifications.expiring
@@ -1140,7 +1133,6 @@ class _TranslationsEn extends _TranslationsDe {
 	@override late final _TranslationsEn _root = this; // ignore: unused_field
 
 	// Translations
-	@override String hello({required Object name}) => 'Hallo ${name}';
 	@override late final _TranslationsConstantsEn constants = _TranslationsConstantsEn._(_root);
 	@override late final _TranslationsParkDurationEn park_duration = _TranslationsParkDurationEn._(_root);
 	@override late final _TranslationsParkDialogEn park_dialog = _TranslationsParkDialogEn._(_root);
@@ -1172,7 +1164,7 @@ class _TranslationsConstantsEn extends _TranslationsConstantsDe {
 	@override String get default_park_info => 'e.g., parking level 2';
 	@override String get default_address => 'No address found';
 	@override String get address_na => 'Address was not found.';
-	@override String get update => 'update';
+	@override String get update => 'Update';
 	@override String get error => 'Error';
 	@override String get error_description => 'An error occurred.';
 	@override String get parked_rn => 'parked right now';
@@ -1363,9 +1355,8 @@ class _TranslationsDialogEn extends _TranslationsDialogDe {
 
 	// Translations
 	@override String get abort => 'Cancel';
-	@override String get delete => 'delete';
+	@override String get delete => 'Delete';
 	@override String get leave => 'Exit';
-	@override String get confirm => 'Confirm';
 	@override String get ok => 'Ok';
 	@override String get yes => 'Yes';
 	@override String get no => 'No';
@@ -1433,7 +1424,6 @@ class _TranslationsParkDialogTicketEn extends _TranslationsParkDialogTicketDe {
 
 	// Translations
 	@override String get title => 'Parking ticket';
-	@override String get hint => 'e.g., parking level 2';
 	@override String get help => 'Parking ticket expires at';
 	@override String until({required Object time}) => 'Parking ticket valid until ${time} o\'clock';
 }
@@ -1617,7 +1607,6 @@ class _TranslationsMyCarParkNameEn extends _TranslationsMyCarParkNameDe {
 	// Translations
 	@override String title({required Object name}) => 'Title: ${name}';
 	@override String get subtitle => 'Change the title of your car, e.g., Mercedes, Audi or BMW.';
-	@override String get validate => 'Please enter a valid title.';
 	@override String get park_title => 'Name of your car';
 }
 
@@ -1788,7 +1777,6 @@ class _TranslationsDialogLeaveInfoEn extends _TranslationsDialogLeaveInfoDe {
 	// Translations
 	@override String get title => 'Leave App';
 	@override String get subtitle => 'Are you sure you want to leave the app?';
-	@override String get action_1 => 'leave';
 }
 
 // Path: dialog.app_info
@@ -1855,10 +1843,10 @@ class _TranslationsSettingsThemeEn extends _TranslationsSettingsThemeDe {
 
 	// Translations
 	@override String get title => 'Theme';
-	@override String get subtitle => 'Choose the theme you like best';
-	@override String get dropdown_1 => 'system';
-	@override String get dropdown_2 => 'light';
-	@override String get dropdown_3 => 'dark';
+	@override String get subtitle => 'Choose the theme you like best.';
+	@override String get dropdown_1 => 'System';
+	@override String get dropdown_2 => 'Light';
+	@override String get dropdown_3 => 'Dark';
 }
 
 // Path: settings.map_type
@@ -1869,11 +1857,11 @@ class _TranslationsSettingsMapTypeEn extends _TranslationsSettingsMapTypeDe {
 
 	// Translations
 	@override String get title => 'Map type';
-	@override String get subtitle => 'Choose the map type you like best';
-	@override String get dropdown_1 => 'normal';
-	@override String get dropdown_2 => 'satellite';
-	@override String get dropdown_3 => 'hybrid';
-	@override String get dropdown_4 => 'terrain';
+	@override String get subtitle => 'Choose the map type you like best.';
+	@override String get dropdown_1 => 'Normal';
+	@override String get dropdown_2 => 'Satellite';
+	@override String get dropdown_3 => 'Hybrid';
+	@override String get dropdown_4 => 'Terrain';
 }
 
 // Path: settings.traffic
@@ -2008,7 +1996,6 @@ class _TranslationsDialogNotificationsSentEn extends _TranslationsDialogNotifica
 
 	// Translations
 	@override String get title => 'Car parked';
-	@override String get subtitle => 'Do you want to enable notifications? You can change this setting later in settings.';
 }
 
 // Path: dialog.notifications.expiring
@@ -2087,7 +2074,7 @@ class _TranslationsDialogHistoryInfoEn extends _TranslationsDialogHistoryInfoDe 
 	@override final _TranslationsEn _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'history';
+	@override String get title => 'History';
 	@override String get subtitle => 'This will show you the last 15 parking spaces';
 }
 
@@ -2108,7 +2095,6 @@ class _TranslationsDialogHistoryDeleteEn extends _TranslationsDialogHistoryDelet
 extension on _TranslationsDe {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
-			case 'hello': return ({required Object name}) => 'Hallo ${name}';
 			case 'constants.app_name': return 'WoAuto';
 			case 'constants.default_park_title': return 'Mein Auto';
 			case 'constants.default_shared_title': return 'Anderes Auto';
@@ -2138,7 +2124,6 @@ extension on _TranslationsDe {
 			case 'park_dialog.content_2': return 'Zusätzliche Infos';
 			case 'park_dialog.info.label': return 'Info';
 			case 'park_dialog.ticket.title': return 'Parkticket';
-			case 'park_dialog.ticket.hint': return 'z.B. Parkdeck 2';
 			case 'park_dialog.ticket.help': return 'Parkticket läuft ab um';
 			case 'park_dialog.ticket.until': return ({required Object time}) => 'Parkticket gilt bis ${time} Uhr';
 			case 'park_dialog.photo.title': return 'Foto';
@@ -2191,7 +2176,6 @@ extension on _TranslationsDe {
 			case 'my_car.plate.hint': return 'B-DE-1234';
 			case 'my_car.park_name.title': return ({required Object name}) => 'Titel: ${name}';
 			case 'my_car.park_name.subtitle': return 'Ändere den Titel, der auf deinem Parkplatz steht, z.B: Mercedes, Audi oder BMW';
-			case 'my_car.park_name.validate': return 'Bitte gib einen Namen ein';
 			case 'my_car.park_name.park_title': return 'Name des Parkplatzes';
 			case 'my_car.tuv.title': return ({required Object date}) => 'TÜV bis ${date}';
 			case 'my_car.tuv.subtitle': return 'Ändere das Datum, an dem dein TÜV abläuft';
@@ -2237,7 +2221,6 @@ extension on _TranslationsDe {
 			case 'dialog.abort': return 'Abbrechen';
 			case 'dialog.delete': return 'Löschen';
 			case 'dialog.leave': return 'Verlassen';
-			case 'dialog.confirm': return 'Bestätigen';
 			case 'dialog.ok': return 'Ok';
 			case 'dialog.yes': return 'Ja';
 			case 'dialog.no': return 'Nein';
@@ -2245,7 +2228,6 @@ extension on _TranslationsDe {
 			case 'dialog.save': return 'Speichern';
 			case 'dialog.open_settings': return 'Einstellungen öffnen';
 			case 'dialog.navigation.title': return 'Standort Info';
-			case 'dialog.navigation.subtitle': return 'Möchtest du den Standort deines Autos ansehen oder dorthin navigieren?';
 			case 'dialog.navigation.distance_info': return ({required Object distance}) => 'Abstand zum aktuellen Standort: ${distance} m';
 			case 'dialog.navigation.action_1': return 'Navigation starten';
 			case 'dialog.notifications.na.title': return 'Benachrichtigungen nicht verfügbar';
@@ -2253,7 +2235,6 @@ extension on _TranslationsDe {
 			case 'dialog.notifications.denied.title': return 'Benachrichtigungen verweigert';
 			case 'dialog.notifications.denied.subtitle': return 'Du hast die Benachrichtigungen verweigert. Bitte gehe in die Einstellungen und erlaube die Benachrichtigungen.';
 			case 'dialog.notifications.sent.title': return 'Auto geparkt';
-			case 'dialog.notifications.sent.subtitle': return 'Möchtest du Benachrichtigungen aktivieren? Du kannst diese Einstellung später in den Einstellungen ändern.';
 			case 'dialog.notifications.expiring.title': return 'Dein Parkticket läuft bald ab';
 			case 'dialog.notifications.expiring.subtitle': return ({required Object minutesLeft}) => 'In ca. ${minutesLeft} Minuten läuft dein Parkticket ab, bereite dich langsam auf die Abfahrt vor.';
 			case 'dialog.car_bottom_sheet.sync.title': return 'Parkplatz synchronisieren';
@@ -2275,7 +2256,6 @@ extension on _TranslationsDe {
 			case 'dialog.history.delete.subtitle': return 'Bist du sicher, dass du alle Einträge löschen möchtest?';
 			case 'dialog.leave_info.title': return 'App verlassen';
 			case 'dialog.leave_info.subtitle': return 'Bist du sicher, dass du die App verlassen möchtest?';
-			case 'dialog.leave_info.action_1': return 'Verlassen';
 			case 'dialog.app_info.title': return 'App Info';
 			case 'dialog.app_info.subtitle': return 'Diese App wurde von Emre Yurtseven entwickelt, ist Open-Source und natürlich auf Github verfügbar.';
 			case 'dialog.app_info.action_1': return 'GitHub';
@@ -2337,14 +2317,13 @@ extension on _TranslationsDe {
 extension on _TranslationsEn {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
-			case 'hello': return ({required Object name}) => 'Hallo ${name}';
 			case 'constants.app_name': return 'WoAuto';
 			case 'constants.default_park_title': return 'My Car';
 			case 'constants.default_shared_title': return 'Other Car';
 			case 'constants.default_park_info': return 'e.g., parking level 2';
 			case 'constants.default_address': return 'No address found';
 			case 'constants.address_na': return 'Address was not found.';
-			case 'constants.update': return 'update';
+			case 'constants.update': return 'Update';
 			case 'constants.error': return 'Error';
 			case 'constants.error_description': return 'An error occurred.';
 			case 'constants.parked_rn': return 'parked right now';
@@ -2367,7 +2346,6 @@ extension on _TranslationsEn {
 			case 'park_dialog.content_2': return 'Additional information';
 			case 'park_dialog.info.label': return 'Info';
 			case 'park_dialog.ticket.title': return 'Parking ticket';
-			case 'park_dialog.ticket.hint': return 'e.g., parking level 2';
 			case 'park_dialog.ticket.help': return 'Parking ticket expires at';
 			case 'park_dialog.ticket.until': return ({required Object time}) => 'Parking ticket valid until ${time} o\'clock';
 			case 'park_dialog.photo.title': return 'Photo';
@@ -2420,7 +2398,6 @@ extension on _TranslationsEn {
 			case 'my_car.plate.hint': return 'B-DE-1234';
 			case 'my_car.park_name.title': return ({required Object name}) => 'Title: ${name}';
 			case 'my_car.park_name.subtitle': return 'Change the title of your car, e.g., Mercedes, Audi or BMW.';
-			case 'my_car.park_name.validate': return 'Please enter a valid title.';
 			case 'my_car.park_name.park_title': return 'Name of your car';
 			case 'my_car.tuv.title': return ({required Object date}) => 'MOT until ${date}';
 			case 'my_car.tuv.subtitle': return 'Change the MOT date of your car.';
@@ -2464,9 +2441,8 @@ extension on _TranslationsEn {
 			case 'snackbar.distance_calculation.subtitle': return 'Distance is calculated using the Haversine formula. The formula is a special form of the Pythagorean formula used to calculate the distance between two points on a sphere. The formula is also known as "sphere distance".';
 			case 'snackbar.distance_calculation.subsubtitle': return 'Click here to know more.';
 			case 'dialog.abort': return 'Cancel';
-			case 'dialog.delete': return 'delete';
+			case 'dialog.delete': return 'Delete';
 			case 'dialog.leave': return 'Exit';
-			case 'dialog.confirm': return 'Confirm';
 			case 'dialog.ok': return 'Ok';
 			case 'dialog.yes': return 'Yes';
 			case 'dialog.no': return 'No';
@@ -2481,7 +2457,6 @@ extension on _TranslationsEn {
 			case 'dialog.notifications.denied.title': return 'Notifications access denied';
 			case 'dialog.notifications.denied.subtitle': return 'You have denied notifications access. Please go to settings and allow notifications.';
 			case 'dialog.notifications.sent.title': return 'Car parked';
-			case 'dialog.notifications.sent.subtitle': return 'Do you want to enable notifications? You can change this setting later in settings.';
 			case 'dialog.notifications.expiring.title': return 'Your parking ticket is about to expire';
 			case 'dialog.notifications.expiring.subtitle': return ({required Object minutesLeft}) => 'In about ${minutesLeft} minutes your parking ticket will expire, slowly prepare to leave.';
 			case 'dialog.car_bottom_sheet.sync.title': return 'Sync parking spot';
@@ -2497,13 +2472,12 @@ extension on _TranslationsEn {
 			case 'dialog.maps.driving_mode.subtitle': return 'You are (probably) driving your car right now. Do you want to switch to the driving mode?';
 			case 'dialog.maps.location_denied.title': return 'Location permission denied';
 			case 'dialog.maps.location_denied.subtitle': return 'You have denied location permission. Please go to settings and allow access to your location.';
-			case 'dialog.history.info.title': return 'history';
+			case 'dialog.history.info.title': return 'History';
 			case 'dialog.history.info.subtitle': return 'This will show you the last 15 parking spaces';
 			case 'dialog.history.delete.title': return 'Delete all entries';
 			case 'dialog.history.delete.subtitle': return 'Are you sure you want to delete all entries?';
 			case 'dialog.leave_info.title': return 'Leave App';
 			case 'dialog.leave_info.subtitle': return 'Are you sure you want to leave the app?';
-			case 'dialog.leave_info.action_1': return 'leave';
 			case 'dialog.app_info.title': return 'App Info';
 			case 'dialog.app_info.subtitle': return 'This app was developed by Emre Yurtseven, is open-source and of course available on Github.';
 			case 'dialog.app_info.action_1': return 'GitHub';
@@ -2526,16 +2500,16 @@ extension on _TranslationsEn {
 			case 'dialog.app_data.subtitle': return 'Are you sure you want to delete all app data?';
 			case 'settings.title': return 'Settings';
 			case 'settings.theme.title': return 'Theme';
-			case 'settings.theme.subtitle': return 'Choose the theme you like best';
-			case 'settings.theme.dropdown_1': return 'system';
-			case 'settings.theme.dropdown_2': return 'light';
-			case 'settings.theme.dropdown_3': return 'dark';
+			case 'settings.theme.subtitle': return 'Choose the theme you like best.';
+			case 'settings.theme.dropdown_1': return 'System';
+			case 'settings.theme.dropdown_2': return 'Light';
+			case 'settings.theme.dropdown_3': return 'Dark';
 			case 'settings.map_type.title': return 'Map type';
-			case 'settings.map_type.subtitle': return 'Choose the map type you like best';
-			case 'settings.map_type.dropdown_1': return 'normal';
-			case 'settings.map_type.dropdown_2': return 'satellite';
-			case 'settings.map_type.dropdown_3': return 'hybrid';
-			case 'settings.map_type.dropdown_4': return 'terrain';
+			case 'settings.map_type.subtitle': return 'Choose the map type you like best.';
+			case 'settings.map_type.dropdown_1': return 'Normal';
+			case 'settings.map_type.dropdown_2': return 'Satellite';
+			case 'settings.map_type.dropdown_3': return 'Hybrid';
+			case 'settings.map_type.dropdown_4': return 'Terrain';
 			case 'settings.traffic.title': return 'Traffic';
 			case 'settings.traffic.subtitle': return 'Show the current traffic situation on the map.';
 			case 'settings.park_ticket.title': return 'Parking ticket time buffer';

@@ -400,7 +400,7 @@ class _MyCarState extends State<MyCar> {
                                     Get.back();
                                   },
                                 ),
-                                ElevatedButton(
+                                OutlinedButton(
                                   child: Text(t.dialog.ok),
                                   onPressed: () async {
                                     if (!formkey.currentState!.validate()) return;
@@ -510,7 +510,7 @@ class _MyCarState extends State<MyCar> {
                                     Get.back();
                                   },
                                 ),
-                                ElevatedButton(
+                                OutlinedButton(
                                   child: Text(t.dialog.ok),
                                   onPressed: () async {
                                     woAuto.kilometerStand.value = tec.text.trim();

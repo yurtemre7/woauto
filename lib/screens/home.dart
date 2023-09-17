@@ -144,7 +144,7 @@ class _HomeState extends State<Home> {
                   child: Text(t.dialog.abort),
                   onPressed: () => Get.back(result: false),
                 ),
-                ElevatedButton(
+                OutlinedButton(
                   child: Text(t.dialog.leave),
                   onPressed: () {
                     Get.back(result: true);

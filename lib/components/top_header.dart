@@ -565,7 +565,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
         ),
         actions: [
           TextButton(
-            style: ElevatedButton.styleFrom(
+            style: TextButton.styleFrom(
               foregroundColor: Theme.of(context).colorScheme.error,
             ),
             child: Text(t.dialog.delete),
@@ -612,7 +612,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                       child: Text(t.dialog.abort),
                       onPressed: () => Get.back(result: false),
                     ),
-                    OutlinedButton(
+                    ElevatedButton(
                       child: Text(t.dialog.car_bottom_sheet.sharing.action_1),
                       onPressed: () async {
                         Share.share(

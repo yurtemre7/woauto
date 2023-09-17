@@ -1,5 +1,4 @@
 {
-  "hello": "Hallo $name",
   "constants": {
     "app_name": "WoAuto",
     "default_park_title": "Mein Auto",
@@ -39,7 +38,6 @@
     },
     "ticket": {
       "title": "Parkticket",
-      "hint": "z.B. Parkdeck 2",
       "help": "Parkticket läuft ab um",
       "until": "Parkticket gilt bis $time Uhr"
     },
@@ -138,7 +136,6 @@
     "park_name": {
       "title": "Titel: $name",
       "subtitle": "Ändere den Titel, der auf deinem Parkplatz steht, z.B: Mercedes, Audi oder BMW",
-      "validate": "Bitte gib einen Namen ein",
       "park_title": "Name des Parkplatzes"
     },
     "tuv": {
@@ -209,7 +206,6 @@
     "abort": "Abbrechen",
     "delete": "Löschen",
     "leave": "Verlassen",
-    "confirm": "Bestätigen",
     "ok": "Ok",
     "yes": "Ja",
     "no": "Nein",
@@ -218,7 +214,6 @@
     "open_settings": "Einstellungen öffnen",
     "navigation": {
       "title": "Standort Info",
-      "subtitle": "Möchtest du den Standort deines Autos ansehen oder dorthin navigieren?",
       "distance_info": "Abstand zum aktuellen Standort: $distance m",
       "action_1": "Navigation starten"
     },
@@ -232,8 +227,7 @@
         "subtitle": "Du hast die Benachrichtigungen verweigert. Bitte gehe in die Einstellungen und erlaube die Benachrichtigungen."
       },
       "sent": {
-        "title": "Auto geparkt",
-        "subtitle": "Möchtest du Benachrichtigungen aktivieren? Du kannst diese Einstellung später in den Einstellungen ändern."
+        "title": "Auto geparkt"
       },
       "expiring": {
         "title": "Dein Parkticket läuft bald ab",
@@ -279,8 +273,7 @@
     },
     "leave_info": {
       "title": "App verlassen",
-      "subtitle": "Bist du sicher, dass du die App verlassen möchtest?",
-      "action_1": "Verlassen"
+      "subtitle": "Bist du sicher, dass du die App verlassen möchtest?"
     },
     "app_info": {
       "title": "App Info",

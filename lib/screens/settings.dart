@@ -538,7 +538,7 @@ class _SettingsState extends State<Settings> {
                                     await woAuto.reset();
                                   },
                                 ),
-                                ElevatedButton(
+                                OutlinedButton(
                                   child: Text(t.dialog.abort),
                                   onPressed: () {
                                     pop();

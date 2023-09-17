@@ -1,5 +1,4 @@
 {
-  "hello": "Hallo $name",
   "constants": {
     "app_name": "WoAuto",
     "default_park_title": "My Car",
@@ -7,7 +6,7 @@
     "default_park_info": "e.g., parking level 2",
     "default_address": "No address found",
     "address_na": "Address was not found.",
-    "update": "update",
+    "update": "Update",
     "error": "Error",
     "error_description": "An error occurred.",
     "parked_rn": "parked right now",
@@ -39,7 +38,6 @@
     },
     "ticket": {
       "title": "Parking ticket",
-      "hint": "e.g., parking level 2",
       "help": "Parking ticket expires at",
       "until": "Parking ticket valid until $time o'clock"
     },
@@ -138,7 +136,6 @@
     "park_name": {
       "title": "Title: $name",
       "subtitle": "Change the title of your car, e.g., Mercedes, Audi or BMW.",
-      "validate": "Please enter a valid title.",
       "park_title": "Name of your car"
     },
     "tuv": {
@@ -208,9 +205,8 @@
   },
   "dialog": {
     "abort": "Cancel",
-    "delete": "delete",
+    "delete": "Delete",
     "leave": "Exit",
-    "confirm": "Confirm",
     "ok": "Ok",
     "yes": "Yes",
     "no": "No",
@@ -232,8 +228,7 @@
         "subtitle": "You have denied notifications access. Please go to settings and allow notifications."
       },
       "sent": {
-        "title": "Car parked",
-        "subtitle": "Do you want to enable notifications? You can change this setting later in settings."
+        "title": "Car parked"
       },
       "expiring": {
         "title": "Your parking ticket is about to expire",
@@ -269,7 +264,7 @@
     },
     "history": {
       "info": {
-        "title": "history",
+        "title": "History",
         "subtitle": "This will show you the last 15 parking spaces"
       },
       "delete": {
@@ -279,8 +274,7 @@
     },
     "leave_info": {
       "title": "Leave App",
-      "subtitle": "Are you sure you want to leave the app?",
-      "action_1": "leave"
+      "subtitle": "Are you sure you want to leave the app?"
     },
     "app_info": {
       "title": "App Info",
@@ -315,18 +309,18 @@
     "title": "Settings",
     "theme": {
       "title": "Theme",
-      "subtitle": "Choose the theme you like best",
-      "dropdown_1": "system",
-      "dropdown_2": "light",
-      "dropdown_3": "dark"
+      "subtitle": "Choose the theme you like best.",
+      "dropdown_1": "System",
+      "dropdown_2": "Light",
+      "dropdown_3": "Dark"
     },
     "map_type": {
       "title": "Map type",
-      "subtitle": "Choose the map type you like best",
-      "dropdown_1": "normal",
-      "dropdown_2": "satellite",
-      "dropdown_3": "hybrid",
-      "dropdown_4": "terrain"
+      "subtitle": "Choose the map type you like best.",
+      "dropdown_1": "Normal",
+      "dropdown_2": "Satellite",
+      "dropdown_3": "Hybrid",
+      "dropdown_4": "Terrain"
     },
     "traffic": {
       "title": "Traffic",

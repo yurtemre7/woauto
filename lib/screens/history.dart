@@ -235,7 +235,7 @@ class _HistoryState extends State<History> {
                                           woAuto.save();
                                         },
                                       ),
-                                      ElevatedButton(
+                                      OutlinedButton(
                                         child: Text(t.dialog.abort),
                                         onPressed: () {
                                           pop();

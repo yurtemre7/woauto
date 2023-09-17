@@ -1,0 +1,8 @@
+{
+  "@@info": [
+    "Here are translations that exist in secondary locales but not in <de>.",
+    "[--full enabled] Furthermore, translations not used in 'lib/' according to the 't.<path>' pattern are written into <de>."
+  ],
+  "de": {},
+  "en": {}
+}
