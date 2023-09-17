@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -169,6 +170,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
       woAuto.currentVelocity.value = position.speed;
 
       if (!woAuto.drivingMode.value && woAuto.askForDrivingMode.value) {
+        if (kDebugMode) return;
         // show dialog to ask the user if he wants to switch to driving mode, IF his velocity is > woAuto.drivingModeDetectionSpeed.value
         var kmh = ((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ?? 0) * 3.6);
 
