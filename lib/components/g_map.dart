@@ -8,6 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as loc;
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:woauto/components/div.dart';
+import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
@@ -71,17 +72,15 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
       if (permission == LocationPermission.denied) {
         await Get.dialog(
           AlertDialog(
-            title: const Text('Standort Berechtigung'),
-            content: const Text(
-              'Du hast die Berechtigung für den Standortzugriff verweigert. Bitte gehe in die Einstellungen und erlaube den Zugriff auf deinen Standort.',
-            ),
+            title: Text(t.dialog.maps.location_denied.title),
+            content: Text(t.dialog.maps.location_denied.subtitle),
             actions: [
               TextButton(
                 onPressed: () async {
                   await Geolocator.openAppSettings();
                   pop();
                 },
-                child: const Text('OK'),
+                child: Text(t.dialog.open_settings),
               ),
             ],
           ),
@@ -96,17 +95,15 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
       // Permissions are denied forever, handle appropriately.
       await Get.dialog(
         AlertDialog(
-          title: const Text('Standort Berechtigung'),
-          content: const Text(
-            'Du hast die Berechtigung für den Standortzugriff verweigert. Bitte gehe in die Einstellungen und erlaube den Zugriff auf deinen Standort.',
-          ),
+          title: Text(t.dialog.maps.location_denied.title),
+          content: Text(t.dialog.maps.location_denied.subtitle),
           actions: [
             TextButton(
               onPressed: () async {
                 await Geolocator.openAppSettings();
                 pop();
               },
-              child: const Text('OK'),
+              child: Text(t.dialog.open_settings),
             ),
           ],
         ),
@@ -179,22 +176,22 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
             woAuto.askForDrivingMode.value = false;
             var result = await Get.dialog<bool?>(
               AlertDialog(
-                title: const Text('Driving Modus erkannt'),
-                content: const Text(
-                  'Du bist gerade (wahrscheinlich) mit deinem Auto unterwegs. Möchtest du in den Driving Modus wechseln?',
+                title: Text(t.dialog.maps.driving_mode.title),
+                content: Text(
+                  t.dialog.maps.driving_mode.subtitle,
                 ),
                 actions: [
                   TextButton(
                     onPressed: () {
                       pop(result: false);
                     },
-                    child: const Text('NEIN'),
+                    child: Text(t.dialog.no),
                   ),
-                  ElevatedButton(
+                  OutlinedButton(
                     onPressed: () {
                       pop(result: true);
                     },
-                    child: const Text('JA'),
+                    child: Text(t.dialog.yes),
                   ),
                 ],
               ),
@@ -279,7 +276,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                       setState(() {});
                     },
                     label: Text(
-                      woAuto.showTraffic.value ? 'Verkehr ausblenden' : 'Verkehr anzeigen',
+                      woAuto.showTraffic.value ? t.maps.traffic.hide : t.maps.traffic.show,
                     ),
                   ),
                 ),
@@ -287,14 +284,14 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
             if (mapLoading.value)
               Container(
                 color: getBackgroundColor(context),
-                child: const Center(
+                child: Center(
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      CircularProgressIndicator(),
-                      SizedBox(height: 10),
+                      const CircularProgressIndicator(),
+                      const SizedBox(height: 10),
                       Text(
-                        'Lädt Karte...',
+                        t.maps.loading,
                       ),
                     ],
                   ),
@@ -317,12 +314,12 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
     );
     await Get.dialog(
       AlertDialog(
-        title: const Text('Standort Info'),
+        title: Text(t.dialog.navigation.title),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
-              title: const Text('Navigation starten'),
+              title: Text(t.dialog.navigation.action_1),
               onTap: () {
                 Get.back();
                 MapsLauncher.launchCoordinates(
@@ -333,7 +330,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               leading: const Icon(Icons.directions),
             ),
             const Div(),
-            Text('Abstand zum aktuellen Standort: ${woAuto.getDistance(newPosition)}m'),
+            Text(t.dialog.navigation.distance_info(distance: woAuto.getDistance(newPosition))),
           ],
         ),
       ),

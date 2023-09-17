@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:uni_links/uni_links.dart';
+import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
@@ -119,8 +120,8 @@ class YrtmrDeeplinks {
       view: view,
     );
     Get.snackbar(
-      'Ein geteilter Online Parkplatz wurde hinzugefügt',
-      'Schaue auf der Karte oder in der Liste nach.',
+      t.snackbar.shared_parking.title,
+      t.snackbar.shared_parking.subtitle,
       snackPosition: SnackPosition.TOP,
       borderRadius: 12,
       margin: const EdgeInsets.all(20),

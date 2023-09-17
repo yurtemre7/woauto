@@ -5,6 +5,7 @@ import 'package:to_csv/to_csv.dart';
 import 'package:uuid/uuid.dart';
 import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/components/div.dart';
+import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/extensions.dart';
@@ -51,7 +52,7 @@ class _HistoryState extends State<History> {
                   left: 20.0,
                 ),
                 title: Text(
-                  'Historie',
+                  t.history.title,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -63,9 +64,9 @@ class _HistoryState extends State<History> {
                 IconButton(
                   onPressed: () async {
                     Get.dialog(
-                      const AlertDialog(
-                        title: Text('Historie'),
-                        content: Text('Hier werden dir die letzten 15 Parkplätze angezeigt.'),
+                      AlertDialog(
+                        title: Text(t.dialog.history.info.title),
+                        content: Text(t.dialog.history.info.subtitle),
                       ),
                       name: 'Historie Info',
                     );
@@ -86,9 +87,9 @@ class _HistoryState extends State<History> {
                       return Column(
                         children: [
                           if (history.isEmpty)
-                            const ListTile(
-                              title: Text('Keine Einträge'),
-                              subtitle: Text('Du hast noch keine Einträge in deiner Historie.'),
+                            ListTile(
+                              title: Text(t.history.empty.title),
+                              subtitle: Text(t.history.empty.subtitle),
                             ),
                           ...getLastParks(history).map(
                             (park) => Dismissible(
@@ -158,11 +159,12 @@ class _HistoryState extends State<History> {
                             const Div(),
                             ListTile(
                               title: Text(
-                                'Exportiere als CSV',
+                                t.history.export.title,
                                 style: TextStyle(color: Theme.of(context).colorScheme.primary),
                               ),
-                              subtitle: const Text(
-                                  'Exportiere deine Historie als CSV-Datei. Hier werden alle alte Parkplätze exportiert.'),
+                              subtitle: Text(
+                                t.history.export.subtitle,
+                              ),
                               leading: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Icon(
@@ -184,7 +186,7 @@ class _HistoryState extends State<History> {
                                   rows.add(
                                     [
                                       park.name,
-                                      park.adresse ?? 'Unbekannt',
+                                      park.adresse ?? t.constants.default_address,
                                       DateTime.fromMillisecondsSinceEpoch(park.createdAt ??
                                               DateTime.now().millisecondsSinceEpoch)
                                           .toString(),
@@ -206,25 +208,26 @@ class _HistoryState extends State<History> {
                                 ),
                               ),
                               title: Text(
-                                'Historie löschen',
+                                t.history.delete.title,
                                 style: TextStyle(color: Theme.of(context).colorScheme.error),
                               ),
-                              subtitle:
-                                  const Text('Halte hier gedrückt, um deine Historie zu löschen.'),
+                              subtitle: Text(
+                                t.history.delete.subtitle,
+                              ),
                               onLongPress: () {
                                 Get.dialog(
                                   AlertDialog(
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(12),
                                     ),
-                                    title: const Text('Historie löschen'),
-                                    content: const Text('Möchtest du deine Historie löschen?'),
+                                    title: Text(t.dialog.history.delete.title),
+                                    content: Text(t.dialog.history.delete.subtitle),
                                     actions: [
                                       TextButton(
                                         style: TextButton.styleFrom(
                                           foregroundColor: Theme.of(context).colorScheme.error,
                                         ),
-                                        child: const Text('Löschen'),
+                                        child: Text(t.dialog.delete),
                                         onPressed: () async {
                                           pop();
 
@@ -233,7 +236,7 @@ class _HistoryState extends State<History> {
                                         },
                                       ),
                                       ElevatedButton(
-                                        child: const Text('Abbrechen'),
+                                        child: Text(t.dialog.abort),
                                         onPressed: () {
                                           pop();
                                         },

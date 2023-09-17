@@ -1,4 +1,5 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:woauto/i18n/translations.g.dart';
 
 class CarPark {
   final String uuid;
@@ -35,7 +36,7 @@ class CarPark {
   factory CarPark.fromJson(Map<String, dynamic> json) {
     return CarPark(
       uuid: json['uuid'],
-      name: json['name'] ?? 'Mein Auto',
+      name: json['name'] ?? t.constants.default_park_title,
       latitude: json['latitude'] ?? 0.0,
       longitude: json['longitude'] ?? 0.0,
       adresse: json['adresse'],

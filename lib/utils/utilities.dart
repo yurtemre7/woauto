@@ -4,6 +4,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 
 bool isAndroid() => GetPlatform.isAndroid;
@@ -72,8 +73,12 @@ Color? getForegroundColor(context) {
 
 Future<String?> getAddress(LatLng position) async {
   try {
-    List<Placemark> placemarks =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
+    List<Placemark> placemarks = await placemarkFromCoordinates(
+      position.latitude,
+      position.longitude,
+      localeIdentifier: '${Get.locale?.languageCode ?? 'de'}_${Get.locale?.countryCode ?? 'DE'}',
+    );
+
     String street = placemarks.first.thoroughfare ?? '';
     String city = placemarks.first.locality ?? '';
     String number = placemarks.first.subThoroughfare ?? '';
@@ -88,10 +93,10 @@ Future<String?> getAddress(LatLng position) async {
       return city;
     }
     if (number.isNotEmpty && city.isEmpty && street.isEmpty) {
-      return 'Adresse nicht gefunden.';
+      return t.constants.address_na;
     }
     if (street.isEmpty && city.isEmpty && number.isEmpty) {
-      return 'Adresse nicht gefunden.';
+      return t.constants.address_na;
     }
     if (number.isNotEmpty && city.isNotEmpty && street.isEmpty) {
       return '$number, $city';
@@ -102,7 +107,7 @@ Future<String?> getAddress(LatLng position) async {
 
     return '$street $number, $city';
   } catch (e) {
-    return 'Adresse nicht gefunden.';
+    return t.constants.address_na;
   }
 }
 
@@ -141,28 +146,25 @@ String formatDateTimeAndTime(DateTime dateTime) {
 
   // if less than a minute
   if (difference.inMinutes <= 0) {
-    return 'gerade eben geparkt';
+    return t.constants.parked_rn;
   }
 
   String durationString = '';
 
   // show all data
   if (days > 0) {
-    durationString += '$days Tag';
-    if (days > 1) durationString += 'e';
+    durationString += t.park_duration.days(n: days);
     durationString += ' ';
   }
   if (hours > 0) {
-    durationString += '$hours Stunde';
-    if (hours > 1) durationString += 'n';
+    durationString += t.park_duration.hours(n: hours);
     durationString += ' ';
   }
   if (minutes > 0) {
-    durationString += '$minutes Minute';
-    if (minutes > 1) durationString += 'n';
+    durationString += t.park_duration.minutes(n: minutes);
   }
 
-  return 'vor $durationString geparkt';
+  return t.constants.parked_duration_string(duration: durationString);
 }
 
 List<int> quickSort(List<int> list) {

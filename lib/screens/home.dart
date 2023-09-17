@@ -9,6 +9,7 @@ import 'package:quick_actions/quick_actions.dart';
 import 'package:woauto/components/g_map.dart';
 import 'package:woauto/components/map_info_sheet.dart';
 import 'package:woauto/components/top_header.dart';
+import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/yrtmr.dart';
 import 'package:woauto/screens/history.dart';
@@ -64,8 +65,8 @@ class _HomeState extends State<Home> {
             ),
           );
           Get.snackbar(
-            'Hast du dein Auto abgeschlossen?',
-            'Dies ist eine Erinnerung, ob du dein Auto abgeschlossen hast.',
+            t.snackbar.locked.title,
+            t.snackbar.locked.subtitle,
             snackPosition: SnackPosition.BOTTOM,
             colorText: Get.theme.colorScheme.primary,
             duration: const Duration(seconds: 15),
@@ -73,7 +74,7 @@ class _HomeState extends State<Home> {
               onPressed: () {
                 Get.back();
               },
-              child: const Text('Ja, habe ich.'),
+              child: Text(t.snackbar.locked.action),
             ),
             backgroundColor: Get.theme.colorScheme.primaryContainer,
           );
@@ -92,14 +93,14 @@ class _HomeState extends State<Home> {
       }
     });
     var shortCuts = [
-      const ShortcutItem(
+      ShortcutItem(
         type: 'action_save',
-        localizedTitle: 'Parkplatz speichern',
+        localizedTitle: t.home.quick_actions.action_save,
         icon: 'monochrome',
       ),
-      const ShortcutItem(
+      ShortcutItem(
         type: 'action_parkings',
-        localizedTitle: 'Parkplätze ansehen',
+        localizedTitle: t.home.quick_actions.action_parkings,
         icon: 'monochrome',
       )
     ];
@@ -136,15 +137,15 @@ class _HomeState extends State<Home> {
 
           return await Get.dialog(
             AlertDialog(
-              title: const Text('App verlassen'),
-              content: const Text('Möchtest du die App verlassen?'),
+              title: Text(t.dialog.leave_info.title),
+              content: Text(t.dialog.leave_info.subtitle),
               actions: [
                 TextButton(
-                  child: const Text('ABBRECHEN'),
+                  child: Text(t.dialog.abort),
                   onPressed: () => Get.back(result: false),
                 ),
                 ElevatedButton(
-                  child: const Text('VERLASSEN'),
+                  child: Text(t.dialog.leave),
                   onPressed: () {
                     Get.back(result: true);
                   },
@@ -190,48 +191,51 @@ class _HomeState extends State<Home> {
               ]
             ],
           ),
-          bottomNavigationBar: NavigationBar(
-            elevation: 0,
-            selectedIndex: woAuto.currentIndex.value,
-            onDestinationSelected: (index) {
-              woAuto.currentIndex.value = index;
-              if (woAuto.drivingMode.value) {
-                KeepScreenOn.turnOn();
-              } else {
-                KeepScreenOn.turnOff();
-              }
-              woAuto.tempMarkers.clear();
-            },
-            destinations: [
-              const NavigationDestination(
-                icon: Icon(Icons.map_outlined),
-                label: 'Karte',
-                tooltip: 'Karte',
-              ),
-              NavigationDestination(
-                icon: Badge(
-                  isLabelVisible:
-                      DateTime.now().difference(woAuto.tuvUntil.value).abs() < 30.days ||
-                          woAuto.tuvUntil.value.difference(DateTime.now()).isNegative ||
-                          woAuto.kilometerStand.value.isEmpty ||
-                          woAuto.kennzeichen.value.isEmpty ||
-                          woAuto.carBaujahr.value.isEmpty,
-                  child: const Icon(Icons.car_rental_outlined),
+          bottomNavigationBar: Visibility(
+            visible: !woAuto.drivingMode.value,
+            child: NavigationBar(
+              elevation: 0,
+              selectedIndex: woAuto.currentIndex.value,
+              onDestinationSelected: (index) {
+                woAuto.currentIndex.value = index;
+                if (woAuto.drivingMode.value) {
+                  KeepScreenOn.turnOn();
+                } else {
+                  KeepScreenOn.turnOff();
+                }
+                woAuto.tempMarkers.clear();
+              },
+              destinations: [
+                NavigationDestination(
+                  icon: const Icon(Icons.map_outlined),
+                  label: t.home.navigation_1,
+                  tooltip: t.home.navigation_1,
                 ),
-                label: 'Mein Auto',
-                tooltip: 'Mein Auto',
-              ),
-              const NavigationDestination(
-                icon: Icon(Icons.history_outlined),
-                label: 'Historie',
-                tooltip: 'Historie',
-              ),
-              const NavigationDestination(
-                icon: Icon(Icons.settings_outlined),
-                label: 'Einstellungen',
-                tooltip: 'Einstellungen',
-              ),
-            ],
+                NavigationDestination(
+                  icon: Badge(
+                    isLabelVisible:
+                        DateTime.now().difference(woAuto.tuvUntil.value).abs() < 30.days ||
+                            woAuto.tuvUntil.value.difference(DateTime.now()).isNegative ||
+                            woAuto.kilometerStand.value.isEmpty ||
+                            woAuto.kennzeichen.value.isEmpty ||
+                            woAuto.carBaujahr.value.isEmpty,
+                    child: const Icon(Icons.car_rental_outlined),
+                  ),
+                  label: t.home.navigation_2,
+                  tooltip: t.home.navigation_2,
+                ),
+                NavigationDestination(
+                  icon: const Icon(Icons.history_outlined),
+                  label: t.home.navigation_3,
+                  tooltip: t.home.navigation_3,
+                ),
+                NavigationDestination(
+                  icon: const Icon(Icons.settings_outlined),
+                  label: t.home.navigation_4,
+                  tooltip: t.home.navigation_4,
+                ),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:woauto/components/div.dart';
+import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
@@ -60,7 +62,7 @@ class _IntroState extends State<Intro> {
                   child: ListView(
                     children: [
                       Text(
-                        'WoAuto',
+                        t.intro.page_1.page_title,
                         style: TextStyle(
                           fontSize: 32.0,
                           fontWeight: FontWeight.bold,
@@ -71,26 +73,32 @@ class _IntroState extends State<Intro> {
                         margin: const EdgeInsets.only(
                           top: 10,
                         ),
-                        child: const Column(
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Willkommen bei WoAuto',
-                              style: TextStyle(
+                              t.intro.page_1.title,
+                              style: const TextStyle(
                                 fontSize: 20,
                               ),
                             ),
-                            SizedBox(height: 5),
-                            Div(),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
+                            const Div(),
+                            const SizedBox(height: 5),
                             Text(
-                              'Mit der App wirst du nie wieder deinen Parkplatz vergessen.',
+                              t.intro.page_1.content_1,
                             ),
-                            SizedBox(height: 5),
-                            Div(),
-                            SizedBox(height: 5),
+                            const SizedBox(height: 5),
+                            const Div(),
+                            const SizedBox(height: 5),
                             Text(
-                              'Speichere in nur 2 Klicks deinen Parkplatz und du kannst ihn jederzeit wieder finden.',
+                              t.intro.page_1.content_2,
+                            ),
+                            const SizedBox(height: 5),
+                            const Div(),
+                            const SizedBox(height: 5),
+                            Text(
+                              t.intro.page_1.content_3,
                             ),
                           ],
                         ),
@@ -103,7 +111,7 @@ class _IntroState extends State<Intro> {
                     padding: const EdgeInsets.only(right: 8),
                     children: [
                       Text(
-                        'App-Voreinstellungen',
+                        t.intro.page_2.page_title,
                         style: TextStyle(
                           fontSize: 32.0,
                           fontWeight: FontWeight.bold,
@@ -118,40 +126,40 @@ class _IntroState extends State<Intro> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Text(
-                              'Parkplatz-Titel setzen',
-                              style: TextStyle(
+                            Text(
+                              t.intro.page_2.parking_title,
+                              style: const TextStyle(
                                 fontSize: 20,
                               ),
                             ),
                             const Div(),
-                            const Text(
-                              'Setze dir einen coolen Parkplatz-Titel für dein Auto.',
-                              style: TextStyle(),
+                            Text(
+                              t.intro.page_2.parking_content,
+                              style: const TextStyle(),
                             ),
                             16.h,
                             TextFormField(
                               controller: tec,
                               maxLength: 30,
                               autocorrect: false,
-                              decoration: const InputDecoration(
-                                labelText: 'Mein Auto',
-                                border: OutlineInputBorder(),
+                              decoration: InputDecoration(
+                                labelText: t.intro.page_2.parking_hint,
+                                border: const OutlineInputBorder(),
                               ),
                             ),
                             16.h,
-                            const Text(
-                              'App-Theme einstellen',
-                              style: TextStyle(
+                            Text(
+                              t.intro.page_2.theme_title,
+                              style: const TextStyle(
                                 fontSize: 20,
                               ),
                             ),
                             const Div(),
                             Row(
                               children: [
-                                const Flexible(
+                                Expanded(
                                   child: Text(
-                                    'Entscheide selbst, ob du das Theme des Systems, das Light-Theme oder das Dark-Theme nutzen möchtest.',
+                                    t.intro.page_2.theme_content,
                                   ),
                                 ),
                                 const SizedBox(width: 15),
@@ -160,23 +168,42 @@ class _IntroState extends State<Intro> {
                                     var themeMode = woAuto.themeMode.value;
                                     DropdownButton<int> dropdownButton = DropdownButton<int>(
                                       value: themeMode,
-                                      items: const [
+                                      items: [
                                         DropdownMenuItem(
                                           value: 0,
-                                          child: Text('System'),
+                                          child: Text(t.settings.theme.dropdown_1),
                                         ),
                                         DropdownMenuItem(
                                           value: 1,
-                                          child: Text('Hell'),
+                                          child: Text(t.settings.theme.dropdown_2),
                                         ),
                                         DropdownMenuItem(
                                           value: 2,
-                                          child: Text('Dunkel'),
+                                          child: Text(t.settings.theme.dropdown_3),
                                         ),
                                       ],
                                       onChanged: (v) async {
                                         woAuto.themeMode.value = v!;
+                                        await woAuto.setMapStyle(
+                                          brightness: v == 1
+                                              ? Brightness.light
+                                              : v == 2
+                                                  ? Brightness.dark
+                                                  : null,
+                                        );
                                         await woAuto.save();
+                                        if (!mounted) return;
+                                        Future.delayed(500.milliseconds, () {
+                                          SystemChrome.setSystemUIOverlayStyle(
+                                            SystemUiOverlayStyle(
+                                              systemNavigationBarColor: v == 1
+                                                  ? woAuto.dayColorScheme.value.background
+                                                  : v == 2
+                                                      ? woAuto.nightColorScheme.value.background
+                                                      : Theme.of(context).colorScheme.background,
+                                            ),
+                                          );
+                                        });
                                       },
                                     );
 
@@ -186,22 +213,22 @@ class _IntroState extends State<Intro> {
                               ],
                             ),
                             16.h,
-                            const Text(
-                              'Echtzeit-Standortabfragen erlauben',
-                              style: TextStyle(fontSize: 20),
+                            Text(
+                              t.intro.page_2.location_title,
+                              style: const TextStyle(fontSize: 20),
                             ),
                             const Div(),
-                            const Text(
-                              'Erlaube der App, deinen Standort in Echtzeit während der App-Nutzung abzufragen. Dies ist notwendig, um deinen Parkplatz zu finden und die Karte zu laden.',
+                            Text(
+                              t.intro.page_2.location_content,
                             ),
                             16.h,
                             Obx(
                               () => CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: const Text('Echtzeit-Standortabfragen'),
+                                title: Text(t.intro.page_2.location_checkbox),
                                 subtitle: showError.value
                                     ? Text(
-                                        'Bitte erlaube der App, deinen Standort während der App-Nutzung abzufragen.',
+                                        t.intro.page_2.location_checkbox_error,
                                         style: TextStyle(
                                           color: Theme.of(context).colorScheme.error,
                                         ),
@@ -224,7 +251,7 @@ class _IntroState extends State<Intro> {
                             Obx(
                               () => CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: const Text('Benachrichtigungen erlauben (optional)'),
+                                title: Text(t.intro.page_2.notification_checkbox),
                                 value: notifAllowed.value,
                                 onChanged: (val) async {
                                   if (val == null) return;
@@ -282,7 +309,7 @@ class _IntroState extends State<Intro> {
 
                       woAuto.subText.value = tec.text.trim();
                       if (woAuto.subText.value.isEmpty) {
-                        woAuto.subText.value = 'Mein Auto';
+                        woAuto.subText.value = t.constants.default_park_title;
                       }
 
                       woAuto.welcome.value = false;
@@ -290,7 +317,9 @@ class _IntroState extends State<Intro> {
                       await woAuto.save();
                       pop();
                     },
-              label: pageIndex.value == 0 ? const Text('Weiter') : const Text('Fertig'),
+              label: pageIndex.value == 0
+                  ? Text(t.intro.page_1.action_1)
+                  : Text(t.intro.page_2.action_1),
               icon: pageIndex.value == 0
                   ? const Icon(Icons.arrow_right_alt_outlined)
                   : const Icon(Icons.check),

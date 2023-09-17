@@ -1,0 +1,371 @@
+{
+  "hello": "Hallo $name",
+  "constants": {
+    "app_name": "WoAuto",
+    "default_park_title": "My Car",
+    "default_shared_title": "Other Car",
+    "default_park_info": "e.g., parking level 2",
+    "default_address": "No address found",
+    "address_na": "Address was not found.",
+    "update": "update",
+    "error": "Error",
+    "error_description": "An error occurred.",
+    "parked_rn": "parked right now",
+    "parked_duration_string": "parked since $duration"
+  },
+  "park_duration": {
+    "hours": {
+      "one": "$n hour",
+      "other": "$n hours"
+    },
+    "minutes": {
+      "one": "$n minute",
+      "other": "$n minutes"
+    },
+    "days": {
+      "one": "$n day",
+      "other": "$n days"
+    }
+  },
+  "park_dialog": {
+    "title": "New Parking",
+    "content_1": "Save the new parking?",
+    "park_name": {
+      "label": "Name"
+    },
+    "content_2": "Additional information",
+    "info": {
+      "label": "Info"
+    },
+    "ticket": {
+      "title": "Parking ticket",
+      "hint": "e.g., parking level 2",
+      "help": "Parking ticket expires at",
+      "until": "Parking ticket valid until $time o'clock"
+    },
+    "photo": {
+      "title": "Photo"
+    }
+  },
+  "marker_dialog": {
+    "shared": {
+      "content": "This parking spot is being shared with you.\n\nThe car is at the following address:\n$address."
+    },
+    "mine": {
+      "content": "You have $formattedDate.\n\nYour car is at the following address:\n$address.\n$description"
+    },
+    "action_1": "Delete parking"
+  },
+  "home": {
+    "navigation_1": "Map",
+    "navigation_2": "Your Car",
+    "navigation_3": "History",
+    "navigation_4": "Settings",
+    "quick_actions": {
+      "action_parkings": "Open parking spots",
+      "action_save": "Quicksave parking spot"
+    }
+  },
+  "history": {
+    "title": "History",
+    "empty": {
+      "title": "No entries",
+      "subtitle": "You have no entries in your history."
+    },
+    "export": {
+      "title": "Export as CSV",
+      "subtitle": "Export your history as a CSV file. This will include all of your parking spots."
+    },
+    "delete": {
+      "title": "Delete all entries",
+      "subtitle": "Delete all entries in your history."
+    }
+  },
+  "info_sheet": {
+    "park_save": "Save parking spot",
+    "current_position": "Go to your current position",
+    "parkings": "Open parking spots",
+    "badge_label": "Sync"
+  },
+  "top_header": {
+    "driving_mode_tooltip": "Driving mode"
+  },
+  "car_bottom_sheet": {
+    "empty": {
+      "parkings": "You have no parking spots.",
+      "shared_parkings": "You have no shared parking spots."
+    },
+    "distance_calculation": {
+      "title": "How are we calculating the distance?"
+    },
+    "parkings": {
+      "title": "Parkings"
+    },
+    "shared_parkings": {
+      "title": "Shared Parkings"
+    },
+    "menu": {
+      "open_park_in_maps": "Open in a maps app",
+      "to_park": "Go to parking spot",
+      "delete_park": "Delete parking spot"
+    }
+  },
+  "my_car": {
+    "title": "My Car",
+    "shared_content": "This is my car! 🚗",
+    "built": {
+      "title": "Year of manufacture: $baujahr ($jahre Jahre)",
+      "title_short": "Year of manufacture: $baujahr",
+      "title_dialog": "Year of manufacture",
+      "subtitle": "Change the year of manufacture of your car.",
+      "default_year": "2002",
+      "validate_null": "Please enter a valid year of manufacture.",
+      "validate_year": "Please enter a valid year of manufacture between 1900 and $year"
+    },
+    "driven": {
+      "title": "$km km driven",
+      "title_short": "Mileage: $km",
+      "title_dialog": "Mileage",
+      "subtitle": "Change the mileage of your car.",
+      "hint": "123456"
+    },
+    "plate": {
+      "title": "License plate: $plate",
+      "subtitle": "Change the license plate of your car.",
+      "title_short": "License plate",
+      "hint": "B-DE-1234"
+    },
+    "park_name": {
+      "title": "Title: $name",
+      "subtitle": "Change the title of your car, e.g., Mercedes, Audi or BMW.",
+      "validate": "Please enter a valid title.",
+      "park_title": "Name of your car"
+    },
+    "tuv": {
+      "title": "MOT until $date",
+      "subtitle": "Change the MOT date of your car.",
+      "help": "Choose the \"1.\" of the month, e.g., \"1.1.2022\"",
+      "add_to_calender": "Add to calendar",
+      "calender_title": "MOT expired",
+      "calender_content": "Your MOT has expired! Please make an appointment.\n\nBest regards,\nYour WoAuto-Team",
+      "expired_info": "Your MOT has expired!",
+      "expiring_info": "Your MOT will expire soon! Please make an appointment."
+    },
+    "secure_notice": "Your private car data is stored locally on your device. We do not have access to your data. You can also delete your data at any time in the settings."
+  },
+  "maps": {
+    "loading": "Loading maps ...",
+    "traffic": {
+      "show": "Show traffic",
+      "hide": "Hide traffic"
+    }
+  },
+  "intro": {
+    "page_1": {
+      "page_title": "WoAuto",
+      "title": "Welcome to WoAuto",
+      "content_1": "With WoAuto you can save your parking spot and view it later, share it with others and even navigate to it.",
+      "content_2": "Your parking spot is safe and always stays on your device.",
+      "content_3": "Save your parking spot in just 2 clicks.",
+
+      "action_1": "Continue"
+    },
+    "page_2": {
+      "page_title": "App preferences",
+      "parking_title": "Set a name for your car",
+      "parking_content": "Give your car a cool name",
+      "parking_hint": "My Car",
+      "theme_title": "Set the app theme",
+      "theme_content": "Choose the theme you like best",
+      "location_title": "Allow real-time location permission",
+      "location_content": "In order for WoAuto to save your location, you must allow real-time location permission. This is necessary to find your parking spot and load the map.",
+      "location_checkbox": "Real-time location permission",
+      "location_checkbox_error": "Please allow the app to query your location while using the app.",
+      "notification_checkbox": "Notifications (optional)",
+      "action_1": "Done"
+    }
+  },
+  "bottom_sheet": {
+    "photo": "Choose photo",
+    "camera": "Take photo",
+    "photo_delete": "Delete photo"
+  },
+  "snackbar": {
+    "locked": {
+      "title": "Did you lock your car?",
+      "subtitle": "This is a reminder if you locked your car",
+      "action": "Yes, I did"
+    },
+    "shared_parking": {
+      "title": "A shared online parking space has been added",
+      "subtitle": "Check the map or the list."
+    },
+    "distance_calculation": {
+      "title": "How is the distance calculated?",
+      "subtitle": "Distance is calculated using the Haversine formula. The formula is a special form of the Pythagorean formula used to calculate the distance between two points on a sphere. The formula is also known as \"sphere distance\".",
+      "subsubtitle": "Click here to know more."
+    }
+  },
+  "dialog": {
+    "abort": "Cancel",
+    "delete": "delete",
+    "leave": "Exit",
+    "confirm": "Confirm",
+    "ok": "Ok",
+    "yes": "Yes",
+    "no": "No",
+    "share": "Share",
+    "save": "Save",
+    "open_settings": "Open settings",
+    "navigation": {
+      "title": "Location info",
+      "distance_info": "Distance to current location: $distance m",
+      "action_1": "Start navigation"
+    },
+    "notifications": {
+      "na": {
+        "title": "Notifications are not available",
+        "subtitle": "notifications are not available on your device"
+      },
+      "denied": {
+        "title": "Notifications access denied",
+        "subtitle": "You have denied notifications access. Please go to settings and allow notifications."
+      },
+      "sent": {
+        "title": "Car parked",
+        "subtitle": "Do you want to enable notifications? You can change this setting later in settings."
+      },
+      "expiring": {
+        "title": "Your parking ticket is about to expire",
+        "subtitle": "In about $minutesLeft minutes your parking ticket will expire, slowly prepare to leave."
+      }
+    },
+    "car_bottom_sheet": {
+      "sync": {
+        "title": "Sync parking spot",
+        "subtitle": "Do you want to sync the parking spot?",
+        "action_1": "Sync"
+      },
+      "synced": {
+        "title": "Parking spot synced",
+        "subtitle": "This parking spot is now on WoAuto's servers.\nWould you like to share the parking spot?"
+      },
+      "sharing": {
+        "title": "Sharing parking spot",
+        "subtitle": "Have this QR code scanned to share your location",
+        "action_1": "Share link",
+        "share_content": "Here is my synced parking:\n\n$woLink"
+      }
+    },
+    "maps": {
+      "driving_mode": {
+        "title": "Driving mode detected",
+        "subtitle": "You are (probably) driving your car right now. Do you want to switch to the driving mode?"
+      },
+      "location_denied": {
+        "title": "Location permission denied",
+        "subtitle": "You have denied location permission. Please go to settings and allow access to your location."
+      }
+    },
+    "history": {
+      "info": {
+        "title": "history",
+        "subtitle": "This will show you the last 15 parking spaces"
+      },
+      "delete": {
+        "title": "Delete all entries",
+        "subtitle": "Are you sure you want to delete all entries?"
+      }
+    },
+    "leave_info": {
+      "title": "Leave App",
+      "subtitle": "Are you sure you want to leave the app?",
+      "action_1": "leave"
+    },
+    "app_info": {
+      "title": "App Info",
+      "subtitle": "This app was developed by Emre Yurtseven, is open-source and of course available on Github.",
+      "action_1": "GitHub"
+    },
+    "feedback": {
+      "title": "feedback",
+      "subtitle": "Feel free to email me, join our Telegram channel, or send me a private message on Telegram:",
+      "action_1": "Telegram Channel",
+      "action_2": "Telegram (Private)"
+    },
+    "data_security": {
+      "title": "Privacy Policy and Legal Notice",
+      "content_1": "Brief summary of privacy policy in our own words (as of 01/09/2023):",
+      "content_2": "- The app communicates with Google Maps to display the map.",
+      "content_3": "- The app communicates with my VPS server on German soil to display, create and manage synchronized parking spots.",
+      "content_4": "- The app does not store any metadata, such as IP address, device name, or operating system version.",
+      "content_5": "- The app stores, of course, among other things, your location, the name of the parking lot and the coordinates, but gives them ",
+      "content_6": "not to any third parties.",
+      "content_7": "\n\n A data exchange with my server and with the servers of Google, when providing the Google Maps maps, takes place. ",
+      "content_8": "The app otherwise stores all data only on your device and you can delete them at any time, then they are also deleted from my server (in the settings at the bottom).",
+      "action_1": "Imprint",
+      "action_2": "Privacy"
+    },
+    "app_data": {
+      "title": "Delete App Data",
+      "subtitle": "Are you sure you want to delete all app data?"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "theme": {
+      "title": "Theme",
+      "subtitle": "Choose the theme you like best",
+      "dropdown_1": "system",
+      "dropdown_2": "light",
+      "dropdown_3": "dark"
+    },
+    "map_type": {
+      "title": "Map type",
+      "subtitle": "Choose the map type you like best",
+      "dropdown_1": "normal",
+      "dropdown_2": "satellite",
+      "dropdown_3": "hybrid",
+      "dropdown_4": "terrain"
+    },
+    "traffic": {
+      "title": "Traffic",
+      "subtitle": "Show the current traffic situation on the map."
+    },
+    "park_ticket": {
+      "title": "Parking ticket time buffer",
+      "subtitle": "Set a time buffer so you have time to renew the ticket or return to the car before the parking ticket expires.",
+      "dropdown_value": "$value minutes"
+    },
+    "driving_mode": {
+      "title": "Driving Mode Detection",
+      "subtitle": "Set how fast you need to drive for the app to detect driving mode.",
+      "dropdown_value": "$value km/h"
+    },
+    "app_info": {
+      "title": "App Info",
+      "subtitle": "Version $appVersion+$buildNumber"
+    },
+    "credits": {
+      "title": "Credits",
+      "subtitle": "Thanks to Google Maps API and of course to the Flutter community."
+    },
+    "share": {
+      "title": "Share App",
+      "subtitle": "Why not share the app with your friends and family?",
+      "share_content": "Did you also forget where you parked last? No more. With WoAuto you can easily save your parking spot and view it later, share it with others and even navigate to it.\nYour parking spot is safe and always stays on your device.\n\nWhy don't you download it and try it out for yourself? https://play.google.com/store/apps/details?id=de.emredev.woauto"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "subtitle": "Do you have any suggestions for improvement, bugs or anything else to say?"
+    },
+    "data_security": {
+      "title": "Privacy and Legal Notice",
+      "subtitle": "Learn how your data is protected."
+    },
+    "app_data": {
+      "title": "Delete all app data",
+      "subtitle": "Press and hold here to delete all your app data."
+    }
+  }
+}

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:efficient_autocomplete_formfield/efficient_autocomplete_formfield.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/components/div.dart';
+import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
@@ -136,7 +138,7 @@ class WoAuto extends GetxController {
       );
     }
 
-    woAuto.subText.value = jsonMap['subText'] ?? 'Mein Auto';
+    woAuto.subText.value = jsonMap['subText'] ?? t.constants.default_park_title;
     woAuto.kennzeichen.value = jsonMap['kennzeichen'] ?? '';
     woAuto.kilometerStand.value = jsonMap['kilometerStand'] ?? '';
     woAuto.tuvUntil.value = DateTime.parse(jsonMap['tuvUntil'] ?? DateTime.now().toIso8601String());
@@ -212,7 +214,7 @@ class WoAuto extends GetxController {
 
   /// Resets the WoAuto provider
   reset() async {
-    subText.value = 'Mein Auto';
+    subText.value = t.constants.default_park_title;
     kennzeichen.value = '';
     kilometerStand.value = '';
     tuvUntil.value = DateTime.now();
@@ -239,7 +241,7 @@ class WoAuto extends GetxController {
       woAuto.printWoAuto();
     }
     var textController = TextEditingController();
-    var newNameController = TextEditingController(text: woAuto.subText.value);
+    var newNameController = TextEditingController(text: woAuto.subText.value).obs;
     var tillTime = Rxn<TimeOfDay>();
     var carPicturePath = ''.obs;
 
@@ -250,237 +252,268 @@ class WoAuto extends GetxController {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
-          title: const Text('Neuer Parkplatz'),
+          title: Text(t.park_dialog.title),
           contentPadding: const EdgeInsets.only(left: 10, right: 10),
           content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const ListTile(
-                  title: Text('Neuen Parkplatz speichern?'),
-                ),
-                ExpandablePanel(
-                  header: const ListTile(
-                    title: Text('Zusätzliche Info zum Parkplatz'),
+            child: Obx(
+              () => Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ListTile(
+                    title: Text(t.park_dialog.content_1),
                   ),
-                  collapsed: const SizedBox(),
-                  expanded: Column(
-                    children: [
-                      ListTile(
-                        title: TextField(
-                          controller: newNameController,
-                          decoration: InputDecoration(
-                            labelText: 'Name',
-                            hintText: 'z.B. Mein Auto',
-                            isDense: true,
-                            suffixIcon: IconButton(
-                              padding: EdgeInsets.zero,
-                              visualDensity: VisualDensity.compact,
-                              onPressed: () => newNameController.clear(),
-                              icon: const Icon(Icons.clear),
-                            ),
-                          ),
+                  ListTile(
+                    title: EfficientAutocompleteFormField<String>(
+                      decoration: InputDecoration(
+                        labelText: t.park_dialog.park_name.label,
+                        hintText: t.constants.default_park_title,
+                        isDense: true,
+                        suffixIcon: IconButton(
+                          padding: EdgeInsets.zero,
+                          visualDensity: VisualDensity.compact,
+                          onPressed: () => newNameController.value.clear(),
+                          icon: const Icon(Icons.clear),
                         ),
                       ),
-                      ListTile(
-                        title: TextField(
-                          controller: textController,
-                          decoration: const InputDecoration(
-                            isDense: true,
-                            labelText: 'Info',
-                            hintText: 'z.B. Parkdeck 2',
+                      autocorrect: false,
+                      textCapitalization: TextCapitalization.words,
+                      suggestionsBuilder: (context, items) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(vertical: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: items,
                           ),
-                        ),
-                      ),
-                      if (isAndroid()) ...[
-                        16.h,
-                        Wrap(
-                          alignment: WrapAlignment.center,
+                        );
+                      },
+                      itemBuilder: (context, carName) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Obx(
-                              () => ElevatedButton(
-                                onPressed: () async {
-                                  tillTime.value = await showTimePicker(
-                                    context: Get.context!,
-                                    initialTime: TimeOfDay.now(),
-                                    builder: (context, child) {
-                                      return MediaQuery(
-                                        data: MediaQuery.of(context)
-                                            .copyWith(alwaysUse24HourFormat: true),
-                                        child: child!,
-                                      );
-                                    },
-                                    helpText: 'Parkticket läuft ab um',
-                                    confirmText: 'Speichern',
-                                    cancelText: 'Abbrechen',
-                                  );
-                                },
-                                child: Text(
-                                  'Parkticket hinzufügen${tillTime.value == null ? '' : ' (${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')})'}',
-                                ),
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 8,
                               ),
-                            ),
-                            IconButton(
-                              onPressed: () {
-                                Get.dialog(
-                                  AlertDialog(
-                                    title: const Text('Parkticket'),
-                                    content: const Text(
-                                      'Wenn du ein Parkticket hast, kannst du hier die Uhrzeit angeben, bis zu der das Ticket gültig ist. '
-                                      'Dann erstellt die App dir einen Timer, der dich 10 Minuten vor Ende des Tickets benachrichtigt.',
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () {
-                                          pop();
-                                        },
-                                        child: const Text('OK'),
-                                      ),
-                                    ],
-                                  ),
-                                  name: 'Info Parkticket',
-                                );
-                              },
-                              icon: const Icon(Icons.question_mark_outlined),
+                              child: Text(carName ?? ''),
                             ),
                           ],
+                        );
+                      },
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      controller: newNameController.value,
+                      onSearch: (search) async {
+                        // if (search.isNotEmpty) return [];
+                        if (search.isEmpty) return [];
+
+                        List<String> carNames = carParkings
+                            .where((element) =>
+                                element.name.toLowerCase().startsWith(search.toLowerCase()))
+                            .map((e) => e.name)
+                            .toList();
+
+                        return carNames;
+                      },
+                    ),
+                  ),
+                  10.h,
+                  ExpandablePanel(
+                    header: ListTile(
+                      title: Text(t.park_dialog.content_2),
+                    ),
+                    collapsed: const SizedBox(),
+                    expanded: Column(
+                      children: [
+                        ListTile(
+                          title: TextField(
+                            controller: textController,
+                            decoration: InputDecoration(
+                              isDense: true,
+                              labelText: t.park_dialog.info.label,
+                              hintText: t.constants.default_park_info,
+                            ),
+                          ),
                         ),
-                      ],
-                      ElevatedButton(
-                        onPressed: () async {
-                          Get.bottomSheet(
-                            Card(
-                              color: Get.theme.colorScheme.background,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(12),
+                        16.h,
+                        SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: [
+                              if (isAndroid())
+                                ElevatedButton.icon(
+                                  onPressed: () async {
+                                    tillTime.value = await showTimePicker(
+                                      context: Get.context!,
+                                      initialTime: TimeOfDay.now(),
+                                      builder: (context, child) {
+                                        return MediaQuery(
+                                          data: MediaQuery.of(context)
+                                              .copyWith(alwaysUse24HourFormat: true),
+                                          child: child!,
+                                        );
+                                      },
+                                      helpText: t.park_dialog.ticket.help,
+                                      confirmText: t.dialog.save,
+                                      cancelText: t.dialog.abort,
+                                    );
+                                  },
+                                  label: Text(
+                                    t.park_dialog.ticket.title,
+                                  ),
+                                  icon: const Icon(Icons.timer_outlined),
                                 ),
-                              ),
-                              margin: EdgeInsets.zero,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    ListTile(
-                                      title: const Text('Foto aufnehmen'),
-                                      leading: const Icon(Icons.camera_alt),
-                                      onTap: () async {
-                                        pop();
-                                        XFile? image = await ImagePicker()
-                                            .pickImage(source: ImageSource.camera);
+                              8.w,
+                              ElevatedButton.icon(
+                                onPressed: () async {
+                                  Get.bottomSheet(
+                                    Card(
+                                      color: Get.theme.colorScheme.background,
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(12),
+                                        ),
+                                      ),
+                                      margin: EdgeInsets.zero,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            ListTile(
+                                              title: Text(t.bottom_sheet.camera),
+                                              leading: const Icon(Icons.camera_alt),
+                                              onTap: () async {
+                                                pop();
+                                                XFile? image = await ImagePicker()
+                                                    .pickImage(source: ImageSource.camera);
 
-                                        if (image == null) return;
+                                                if (image == null) return;
 
-                                        String duplicateFilePath =
-                                            (await getApplicationDocumentsDirectory()).path;
+                                                String duplicateFilePath =
+                                                    (await getApplicationDocumentsDirectory()).path;
 
-                                        var fileName = image.path.split('/').last;
-                                        File localImage = await File(image.path)
-                                            .copy('$duplicateFilePath/$fileName');
-                                        carPicturePath.value = localImage.path;
-                                      },
+                                                var fileName = image.path.split('/').last;
+                                                File localImage = await File(image.path)
+                                                    .copy('$duplicateFilePath/$fileName');
+                                                carPicturePath.value = localImage.path;
+                                              },
+                                            ),
+                                            const Div(),
+                                            ListTile(
+                                              title: Text(t.bottom_sheet.photo),
+                                              leading: const Icon(Icons.photo),
+                                              onTap: () async {
+                                                pop();
+                                                XFile? image = await ImagePicker()
+                                                    .pickImage(source: ImageSource.gallery);
+
+                                                if (image == null) return;
+
+                                                String duplicateFilePath =
+                                                    (await getApplicationDocumentsDirectory()).path;
+
+                                                var fileName = image.path.split('/').last;
+                                                File localImage = await File(image.path)
+                                                    .copy('$duplicateFilePath/$fileName');
+                                                carPicturePath.value = localImage.path;
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                    const Div(),
-                                    ListTile(
-                                      title: const Text('Foto auswählen'),
-                                      leading: const Icon(Icons.photo),
-                                      onTap: () async {
-                                        pop();
-                                        XFile? image = await ImagePicker()
-                                            .pickImage(source: ImageSource.gallery);
-
-                                        if (image == null) return;
-
-                                        String duplicateFilePath =
-                                            (await getApplicationDocumentsDirectory()).path;
-
-                                        var fileName = image.path.split('/').last;
-                                        File localImage = await File(image.path)
-                                            .copy('$duplicateFilePath/$fileName');
-                                        carPicturePath.value = localImage.path;
+                                  );
+                                },
+                                label: Text(
+                                  t.park_dialog.photo.title,
+                                ),
+                                icon: const Icon(Icons.add_a_photo_outlined),
+                              ),
+                            ],
+                          ),
+                        ),
+                        12.h,
+                        Obx(
+                          () => Text(
+                            tillTime.value == null
+                                ? ''
+                                : t.park_dialog.ticket.until(
+                                    time:
+                                        "${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')}",
+                                  ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Obx(
+                          () => carPicturePath.value.isEmpty
+                              ? const SizedBox()
+                              : Stack(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        Get.dialog(
+                                          AlertDialog(
+                                            content: GestureDetector(
+                                              onTap: () {
+                                                pop();
+                                              },
+                                              child: Image.file(
+                                                File(carPicturePath.value),
+                                              ),
+                                            ),
+                                            contentPadding: EdgeInsets.zero,
+                                            actionsPadding: EdgeInsets.zero,
+                                          ),
+                                          name: 'Foto',
+                                        );
                                       },
+                                      child: Container(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: CircleAvatar(
+                                          radius: 40,
+                                          backgroundImage: FileImage(
+                                            File(carPicturePath.value),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: IconButton(
+                                        onPressed: () {
+                                          carPicturePath.value = '';
+                                        },
+                                        icon: const Icon(Icons.clear),
+                                        color: Get.theme.colorScheme.error,
+                                      ),
                                     ),
                                   ],
                                 ),
-                              ),
-                            ),
-                          );
-                        },
-                        child: const Text(
-                          'Foto hinzufügen',
                         ),
-                      ),
-                      Obx(
-                        () => carPicturePath.value.isEmpty
-                            ? const SizedBox()
-                            : Stack(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      Get.dialog(
-                                        AlertDialog(
-                                          content: GestureDetector(
-                                            onTap: () {
-                                              pop();
-                                            },
-                                            child: Image.file(
-                                              File(carPicturePath.value),
-                                            ),
-                                          ),
-                                          contentPadding: EdgeInsets.zero,
-                                          actionsPadding: EdgeInsets.zero,
-                                        ),
-                                        name: 'Foto',
-                                      );
-                                    },
-                                    child: Container(
-                                      padding: const EdgeInsets.all(16.0),
-                                      child: CircleAvatar(
-                                        radius: 40,
-                                        backgroundImage: FileImage(
-                                          File(carPicturePath.value),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 0,
-                                    right: 0,
-                                    child: IconButton(
-                                      onPressed: () {
-                                        carPicturePath.value = '';
-                                      },
-                                      icon: const Icon(Icons.clear),
-                                      color: Get.theme.colorScheme.error,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                16.h,
-              ],
+                  16.h,
+                ],
+              ),
             ),
           ),
           actions: <Widget>[
             TextButton(
-              child: const Text('ABBRECHEN'),
+              child: Text(t.dialog.abort),
               onPressed: () {
                 pop();
               },
             ),
-            ElevatedButton(
-              child: const Text('SPEICHERN'),
+            OutlinedButton(
+              child: Text(t.dialog.save),
               onPressed: () async {
                 pop();
                 woAuto.addCarPark(
                   newPosition,
                   extra: textController.text,
-                  newName: newNameController.text,
+                  newName: newNameController.value.text,
                   photoPath: carPicturePath.value,
                 );
 
@@ -499,8 +532,8 @@ class WoAuto extends GetxController {
                 );
 
                 Get.snackbar(
-                  'Hast du dein Auto abgeschlossen?',
-                  'Dies ist eine Erinnerung, ob du dein Auto abgeschlossen hast.',
+                  t.snackbar.locked.title,
+                  t.snackbar.locked.subtitle,
                   snackPosition: SnackPosition.BOTTOM,
                   colorText: Get.theme.colorScheme.primary,
                   duration: const Duration(seconds: 15),
@@ -508,7 +541,7 @@ class WoAuto extends GetxController {
                     onPressed: () {
                       Get.back();
                     },
-                    child: const Text('Ja, habe ich.'),
+                    child: Text(t.snackbar.locked.action),
                   ),
                   backgroundColor: Get.theme.colorScheme.primaryContainer,
                 );
@@ -588,9 +621,16 @@ class WoAuto extends GetxController {
             5.h,
             !park.mine
                 ? Text(
-                    'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${park.adresse ?? 'Adresse konnte nicht gefunden werden.'}.')
+                    t.marker_dialog.shared.content(
+                      address: park.adresse ?? 'Adresse konnte nicht gefunden werden.',
+                    ),
+                  )
                 : Text(
-                    'Du hast ${formatDateTimeAndTime(datum)}.\n\nDein Auto steht an folgender Adresse:\n${park.adresse ?? 'Adresse konnte nicht gefunden werden.'}.\n${park.description}',
+                    t.marker_dialog.mine.content(
+                      formattedDate: formatDateTimeAndTime(datum),
+                      address: park.adresse ?? 'Adresse konnte nicht gefunden werden.',
+                      description: park.description ?? '',
+                    ),
                   ),
           ],
         ),
@@ -611,7 +651,7 @@ class WoAuto extends GetxController {
               woAuto.save();
               Get.back();
             },
-            child: const Text('Parkplatz löschen'),
+            child: Text(t.marker_dialog.action_1),
           ),
         ],
       ),
@@ -626,7 +666,15 @@ class WoAuto extends GetxController {
     String? photoPath,
   }) async {
     var adresse = await getAddress(newPosition);
-    var name = newName ?? woAuto.subText.value;
+    String name;
+    switch (newName) {
+      case null:
+        name = woAuto.subText.value;
+      case '':
+        name = woAuto.subText.value;
+      default:
+        name = newName;
+    }
 
     if (carParkings.any((element) => element.name == name && element.mine)) {
       // Update
@@ -676,7 +724,7 @@ class WoAuto extends GetxController {
     String? newName,
   }) async {
     var adresse = await getAddress(newPosition);
-    var name = newName ?? 'Anderes Auto';
+    var name = newName ?? t.constants.default_shared_title;
 
     if (carParkings.any((element) => element.uuid == uuid && !element.mine)) {
       // Update
@@ -736,16 +784,16 @@ class WoAuto extends GetxController {
       } else {
         Get.dialog(
           AlertDialog(
-            title: const Text('Benachrichtigungen'),
-            content: const Text(
-              'Dein Betriebssystem unterstützt keine Benachrichtigungen.',
+            title: Text(t.dialog.notifications.na.title),
+            content: Text(
+              t.dialog.notifications.na.subtitle,
             ),
             actions: [
               TextButton(
                 onPressed: () {
                   pop();
                 },
-                child: const Text('OK'),
+                child: Text(t.dialog.ok),
               ),
             ],
           ),
@@ -757,18 +805,15 @@ class WoAuto extends GetxController {
       if (res == null || res == false) {
         Get.dialog(
           AlertDialog(
-            title: const Text('Benachrichtigungen'),
-            content: const Text(
-              'Um dir eine Benachrichtigung zu schicken, wenn dein Parkticket abläuft, '
-              'muss die App die Benachrichtigungen erlauben. '
-              'Bitte erlaube die Benachrichtigungen und versuche es erneut.',
-            ),
+            title: Text(t.dialog.notifications.denied.title),
+            content: Text(t.dialog.notifications.denied.subtitle),
             actions: [
               TextButton(
                 onPressed: () {
                   pop();
+                  Geolocator.openAppSettings();
                 },
-                child: const Text('OK'),
+                child: Text(t.dialog.ok),
               ),
             ],
           ),
@@ -783,8 +828,11 @@ class WoAuto extends GetxController {
           NotificationDetails(android: androidNotificationDetailsMAX);
       await flutterLocalNotificationsPlugin.show(
         1,
-        'Auto geparkt',
-        'Dein Parkticket gilt bis ${tillTime.hour.toString().padLeft(2, '0')}:${tillTime.minute.toString().padLeft(2, '0')} Uhr.',
+        t.dialog.notifications.sent.title,
+        t.park_dialog.ticket.until(
+          time:
+              "${tillTime.hour.toString().padLeft(2, '0')}:${tillTime.minute.toString().padLeft(2, '0')}",
+        ),
         notificationDetails,
       );
 
@@ -801,8 +849,8 @@ class WoAuto extends GetxController {
       }
       await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
-        'Dein Parkticket läuft bald ab',
-        'In ca. $minutesLeft Minuten läuft dein Parkticket ab, bereite dich langsam auf die Abfahrt vor.',
+        t.dialog.notifications.expiring.title,
+        t.dialog.notifications.expiring.subtitle(minutesLeft: minutesLeft),
         tz.TZDateTime.now(tz.local).add(Duration(seconds: differenceInSecondsFromNow)),
         NotificationDetails(
           android: androidNotificationDetails,

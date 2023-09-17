@@ -8,6 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/components/text_icon.dart';
+import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
@@ -48,7 +49,7 @@ class _TopHeaderState extends State<TopHeader> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'WoAuto',
+                      t.constants.app_name,
                       style: TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
@@ -75,7 +76,7 @@ class _TopHeaderState extends State<TopHeader> {
                               8.w,
                             ],
                             IconButton(
-                              tooltip: 'Driving Modus',
+                              tooltip: t.top_header.driving_mode_tooltip,
                               style: IconButton.styleFrom(
                                 foregroundColor: context.theme.colorScheme.primary,
                                 disabledForegroundColor: Colors.grey.withOpacity(0.3),
@@ -168,9 +169,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                                 top: 15,
                                 bottom: 15,
                               ),
-                              child: const Text(
-                                'Du hast keine Parkplätze.',
-                                style: TextStyle(
+                              child: Text(
+                                t.car_bottom_sheet.empty.parkings,
+                                style: const TextStyle(
                                   fontSize: 16,
                                 ),
                               ),
@@ -189,9 +190,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                                 top: 15,
                                 bottom: 15,
                               ),
-                              child: const Text(
-                                'Du hast keine geteilten Parkplätze.',
-                                style: TextStyle(
+                              child: Text(
+                                t.car_bottom_sheet.empty.shared_parkings,
+                                style: const TextStyle(
                                   fontSize: 16,
                                 ),
                               ),
@@ -205,17 +206,17 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                         const Div(),
                         TextButton.icon(
                           icon: const Icon(Icons.question_mark_outlined),
-                          label: const Text(
-                            'Wie wird die Entfernung berechnet, fragst du dich?',
+                          label: Text(
+                            t.car_bottom_sheet.distance_calculation.title,
                             textAlign: TextAlign.center,
                           ),
                           onPressed: () {
                             Get.snackbar(
-                              'Wie wird die Entfernung berechnet?',
-                              'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
+                              t.snackbar.distance_calculation.title,
+                              t.snackbar.distance_calculation.subtitle,
                               snackPosition: SnackPosition.TOP,
                               titleText: Text(
-                                'Wie wird die Entfernung berechnet?',
+                                t.snackbar.distance_calculation.title,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -225,7 +226,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                               messageText: Column(
                                 children: [
                                   Text(
-                                    'Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als "Kugelentfernung" bekannt.',
+                                    t.snackbar.distance_calculation.subtitle,
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Theme.of(context).colorScheme.secondary,
@@ -233,7 +234,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                                   ),
                                   16.h,
                                   Text(
-                                    'Tippe um mehr zu erfahren.',
+                                    t.snackbar.distance_calculation.subsubtitle,
                                     style: TextStyle(
                                       fontSize: 14,
                                       color: Theme.of(context).colorScheme.primary,
@@ -273,9 +274,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
   Row parkHeader(Iterable<CarPark> myParking) {
     return Row(
       children: [
-        const Text(
-          'Parkplätze',
-          style: TextStyle(
+        Text(
+          t.car_bottom_sheet.parkings.title,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -296,7 +297,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
               turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
               child: const Icon(Icons.refresh),
             ),
-            label: const Text('Aktualisieren'),
+            label: Text(t.constants.update),
           ),
       ],
     );
@@ -305,9 +306,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
   Row sharedParkHeader(Iterable<CarPark> otherParking) {
     return Row(
       children: [
-        const Text(
-          'Geteilte Parkplätze',
-          style: TextStyle(
+        Text(
+          t.car_bottom_sheet.shared_parkings.title,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -347,7 +348,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
               turns: Tween(begin: 0.0, end: 1.0).animate(_controllerOthers),
               child: const Icon(Icons.refresh),
             ),
-            label: const Text('Aktualisieren'),
+            label: Text(t.constants.update),
           ),
       ],
     );
@@ -365,17 +366,17 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
             ? () async {
                 var res = await Get.dialog(
                   AlertDialog(
-                    title: const Text('Parkplatz synchronisieren'),
-                    content: const Text(
-                      'Möchtest du den Parkplatz synchronisieren?',
+                    title: Text(t.dialog.car_bottom_sheet.sync.title),
+                    content: Text(
+                      t.dialog.car_bottom_sheet.sync.subtitle,
                     ),
                     actions: [
                       TextButton(
-                        child: const Text('ABBRECHEN'),
+                        child: Text(t.dialog.no),
                         onPressed: () => Get.back(result: false),
                       ),
-                      ElevatedButton(
-                        child: const Text('SYNCHRONISIEREN'),
+                      OutlinedButton(
+                        child: Text(t.dialog.car_bottom_sheet.sync.action_1),
                         onPressed: () async {
                           int until = DateTime.now().add(30.days).millisecondsSinceEpoch;
                           var acc = await woAutoServer.createLocation(park, until.toString());
@@ -383,11 +384,11 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                             Get.back(result: false);
                             if (!mounted) return;
                             Get.snackbar(
-                              'Fehler',
-                              'Es ist ein Fehler aufgetreten.',
+                              t.constants.error,
+                              t.constants.error_description,
                               snackPosition: SnackPosition.TOP,
                               titleText: Text(
-                                'Fehler',
+                                t.constants.error,
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16,
@@ -395,7 +396,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                                 ),
                               ),
                               messageText: Text(
-                                'Es ist ein Fehler aufgetreten.',
+                                t.constants.error_description,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Theme.of(context).colorScheme.secondary,
@@ -440,14 +441,14 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
               },
       ),
       title: Text(
-        '${park.name} - ${woAuto.getCarParkDistance(park)}m',
+        '${park.name} - ${woAuto.getCarParkDistance(park)} m',
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Theme.of(context).colorScheme.primary,
         ),
       ),
       subtitle: Text(
-        park.adresse ?? 'Keine Adresse gefunden',
+        park.adresse ?? t.constants.default_address,
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Theme.of(context).colorScheme.primary,
@@ -500,7 +501,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 label: Text(
-                  'Karten App öffnen',
+                  t.car_bottom_sheet.menu.open_park_in_maps,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -515,7 +516,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                   color: Theme.of(context).colorScheme.primary,
                 ),
                 label: Text(
-                  'Zum Parkplatz',
+                  t.car_bottom_sheet.menu.to_park,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                   ),
@@ -530,7 +531,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                   color: Theme.of(context).colorScheme.error,
                 ),
                 label: Text(
-                  'Parkplatz löschen',
+                  t.car_bottom_sheet.menu.delete_park,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.error,
                   ),
@@ -558,16 +559,16 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
   _showSyncDialog(CarPark park) {
     Get.dialog(
       AlertDialog(
-        title: const Text('Parkplatz synchronisiert'),
-        content: const Text(
-          'Dieser Parkplatz ist nun auf den Servern von WoAuto.\nMöchtest du den Parkplatz teilen?',
+        title: Text(t.dialog.car_bottom_sheet.synced.title),
+        content: Text(
+          t.dialog.car_bottom_sheet.synced.subtitle,
         ),
         actions: [
           TextButton(
             style: ElevatedButton.styleFrom(
               foregroundColor: Theme.of(context).colorScheme.error,
             ),
-            child: const Text('AUFHEBEN'),
+            child: Text(t.dialog.delete),
             onPressed: () async {
               woAutoServer.deleteLocationAccount(park: park);
               park.sharing = false;
@@ -580,47 +581,49 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
               setState(() {});
             },
           ),
-          ElevatedButton(
-            child: const Text('TEILEN'),
+          OutlinedButton(
+            child: Text(t.dialog.share),
             onPressed: () async {
               pop();
               String website = 'https://yurtemre.de';
               String woLink =
                   '$website/sync?id=${Uri.encodeFull(park.uuid)}&view=${Uri.encodeFull(park.viewKey)}&name=${Uri.encodeFull(park.name)}';
-              Get.dialog(AlertDialog(
-                title: const Text('Parkplatz teilen'),
-                content: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('Lasse diesen QR Code scannen, um deinen Standort zu teilen'),
-                    5.h,
-                    SizedBox(
-                      height: 320,
-                      width: Get.width,
-                      child: QrImageView(
-                        data: woLink,
-                        size: 320,
-                        gapless: false,
+              Get.dialog(
+                AlertDialog(
+                  title: Text(t.dialog.car_bottom_sheet.sharing.title),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(t.dialog.car_bottom_sheet.sharing.subtitle),
+                      5.h,
+                      SizedBox(
+                        height: 320,
+                        width: Get.width,
+                        child: QrImageView(
+                          data: woLink,
+                          size: 320,
+                          gapless: false,
+                        ),
                       ),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      child: Text(t.dialog.abort),
+                      onPressed: () => Get.back(result: false),
+                    ),
+                    OutlinedButton(
+                      child: Text(t.dialog.car_bottom_sheet.sharing.action_1),
+                      onPressed: () async {
+                        Share.share(
+                          t.dialog.car_bottom_sheet.sharing.share_content(woLink: woLink),
+                        );
+                        Get.back();
+                      },
                     ),
                   ],
                 ),
-                actions: [
-                  TextButton(
-                    child: const Text('ABBRECHEN'),
-                    onPressed: () => Get.back(result: false),
-                  ),
-                  ElevatedButton(
-                    child: const Text('LINK TEILEN'),
-                    onPressed: () async {
-                      Share.share(
-                        'Hier ist mein synchronisierter Parkplatz:\n$woLink',
-                      );
-                      Get.back();
-                    },
-                  ),
-                ],
-              ));
+              );
             },
           ),
         ],

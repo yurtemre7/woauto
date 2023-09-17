@@ -1,7 +1,9 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/screens/home.dart';
@@ -15,7 +17,7 @@ late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  LocaleSettings.useDeviceLocale();
   woAuto = Get.put(await WoAuto.load());
   Get.put(WoAutoServer.load());
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -42,7 +44,7 @@ void main() async {
     logMessage(
         'Couldn\'t create Notification Channel or Initialize Android Notification Settings: $e');
   }
-  runApp(const MyApp());
+  runApp(TranslationProvider(child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -77,7 +79,7 @@ class MyApp extends StatelessWidget {
             woAuto.dayColorScheme.value = lightColorScheme;
             woAuto.nightColorScheme.value = darkColorScheme;
             return GetMaterialApp(
-              title: 'WoAuto',
+              title: t.constants.app_name,
               theme: ThemeData(
                 useMaterial3: true,
                 colorScheme: lightColorScheme,
@@ -95,6 +97,9 @@ class MyApp extends StatelessWidget {
                   logMessage(text, tag: 'INFO');
                 }
               },
+              locale: TranslationProvider.of(context).flutterLocale,
+              supportedLocales: AppLocaleUtils.supportedLocales,
+              localizationsDelegates: GlobalMaterialLocalizations.delegates,
             );
           },
         );

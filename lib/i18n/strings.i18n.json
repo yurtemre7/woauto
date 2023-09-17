@@ -1,0 +1,371 @@
+{
+  "hello": "Hallo $name",
+  "constants": {
+    "app_name": "WoAuto",
+    "default_park_title": "Mein Auto",
+    "default_shared_title": "Anderes Auto",
+    "default_park_info": "z.B. Parkdeck 2",
+    "default_address": "Keine Adresse gefunden",
+    "address_na": "Adresse nicht gefunden.",
+    "update": "Aktualisieren",
+    "error": "Fehler",
+    "error_description": "Es ist ein Fehler aufgetreten.",
+    "parked_rn": "gerade eben geparkt",
+    "parked_duration_string": "vor $duration geparkt"
+  },
+  "park_duration": {
+    "hours": {
+      "one": "$n Stunde",
+      "other": "$n Stunden"
+    },
+    "minutes": {
+      "one": "$n Minute",
+      "other": "$n Minuten"
+    },
+    "days": {
+      "one": "$n Tag",
+      "other": "$n Tage"
+    }
+  },
+  "park_dialog": {
+    "title": "Neuer Parkplatz",
+    "content_1": "Neuen Parkplatz speichern?",
+    "park_name": {
+      "label": "Name"
+    },
+    "content_2": "Zusätzliche Infos",
+    "info": {
+      "label": "Info"
+    },
+    "ticket": {
+      "title": "Parkticket",
+      "hint": "z.B. Parkdeck 2",
+      "help": "Parkticket läuft ab um",
+      "until": "Parkticket gilt bis $time Uhr"
+    },
+    "photo": {
+      "title": "Foto"
+    }
+  },
+  "marker_dialog": {
+    "shared": {
+      "content": "Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n$address."
+    },
+    "mine": {
+      "content": "Du hast $formattedDate.\n\nDein Auto steht an folgender Adresse:\n$address.\n$description"
+    },
+    "action_1": "Parkplatz löschen"
+  },
+  "home": {
+    "navigation_1": "Karte",
+    "navigation_2": "Mein Auto",
+    "navigation_3": "Historie",
+    "navigation_4": "Einstellungen",
+    "quick_actions": {
+      "action_parkings": "Parkplätze ansehen",
+      "action_save": "Parkplatz speichern"
+    }
+  },
+  "history": {
+    "title": "Historie",
+    "empty": {
+      "title": "Keine Einträge",
+      "subtitle": "Du hast noch keine Einträge in deiner Historie."
+    },
+    "export": {
+      "title": "Exportiere als CSV",
+      "subtitle": "Exportiere deine Historie als CSV-Datei. Hier werden alle alte Parkplätze exportiert."
+    },
+    "delete": {
+      "title": "Lösche alle Einträge",
+      "subtitle": "Lösche alle Einträge in deiner Historie."
+    }
+  },
+  "info_sheet": {
+    "park_save": "Parkplatz speichern",
+    "current_position": "Zur aktuellen Position",
+    "parkings": "Parkplätze",
+    "badge_label": "Sync"
+  },
+  "top_header": {
+    "driving_mode_tooltip": "Driving Modus"
+  },
+  "car_bottom_sheet": {
+    "empty": {
+      "parkings": "Du hast keine Parkplätze.",
+      "shared_parkings": "Du hast keine geteilten Parkplätze."
+    },
+    "distance_calculation": {
+      "title": "Wie wird die Entfernung berechnet, fragst du dich?"
+    },
+    "parkings": {
+      "title": "Parkplätze"
+    },
+    "shared_parkings": {
+      "title": "Geteilte Parkplätze"
+    },
+    "menu": {
+      "open_park_in_maps": "Karten App öffnen",
+      "to_park": "Zum Parkplatz",
+      "delete_park": "Parkplatz löschen"
+    }
+  },
+  "my_car": {
+    "title": "Mein Auto",
+    "shared_content": "Das ist mein Auto! 🚗",
+    "built": {
+      "title": "Baujahr: $baujahr ($jahre Jahre)",
+      "title_short": "Baujahr: $baujahr",
+      "title_dialog": "Baujahr",
+      "subtitle": "Ändere das Baujahr deines Autos.",
+      "default_year": "2002",
+      "validate_null": "Bitte gib ein gültiges Baujahr ein",
+      "validate_year": "Bitte gib ein gültiges Baujahr zwischen 1900 und $year ein"
+    },
+    "driven": {
+      "title": "$km km gefahren",
+      "title_short": "Kilometerstand: $km",
+      "title_dialog": "Kilometerstand",
+      "subtitle": "Ändere den Kilometerstand deines Autos.",
+      "hint": "123456"
+    },
+    "plate": {
+      "title": "Kennzeichen: $plate",
+      "subtitle": "Ändere das Kennzeichen deines Autos.",
+      "title_short": "Kennzeichen",
+      "hint": "B-DE-1234"
+    },
+    "park_name": {
+      "title": "Titel: $name",
+      "subtitle": "Ändere den Titel, der auf deinem Parkplatz steht, z.B: Mercedes, Audi oder BMW",
+      "validate": "Bitte gib einen Namen ein",
+      "park_title": "Name des Parkplatzes"
+    },
+    "tuv": {
+      "title": "TÜV bis $date",
+      "subtitle": "Ändere das Datum, an dem dein TÜV abläuft",
+      "help": "Gebe als Tag den \"1.\" an, also z.B. \"1.1.2022\"",
+      "add_to_calender": "Zum Kalender hinzufügen",
+      "calender_title": "TÜV abgelaufen",
+      "calender_content": "Dein TÜV ist abgelaufen! Bitte vereinbare einen Termin.\n\nLg. Dein WoAuto-Team",
+      "expired_info": "Dein TÜV ist abgelaufen!",
+      "expiring_info": "Dein TÜV läuft bald ab! Bitte vereinbare einen Termin."
+    },
+    "secure_notice": "Deine privaten Auto-Daten werden lokal auf deinem Gerät gespeichert. Wir haben keinen Zugriff auf deine Daten. Du kannst deine Daten außerdem jederzeit in den Einstellungen löschen."
+  },
+  "maps": {
+    "loading": "Lädt Karte...",
+    "traffic": {
+      "show": "Verkehr anzeigen",
+      "hide": "Verkehr ausblenden"
+    }
+  },
+  "intro": {
+    "page_1": {
+      "page_title": "WoAuto",
+      "title": "Willkommen bei WoAuto",
+      "content_1": "Mit WoAuto kannst du deinen Parkplatz speichern und später ansehen, mit anderen teilen und sogar dorthin navigieren.",
+      "content_2": "Dein Parkplatz ist sicher und bleibt immer auf deinem Gerät.",
+      "content_3": "Speichere in nur 2 Klicks deinen Parkplatz.",
+      "action_1": "Weiter"
+    },
+    "page_2": {
+      "page_title": "App-Voreinstellungen",
+      "parking_title": "Name für dein Auto setzen",
+      "parking_content": "Gib deinem Auto einen coolen Namen.",
+      "parking_hint": "Mein Auto",
+      "theme_title": "App-Theme einstellen",
+      "theme_content": "Wähle das Theme aus, das dir am besten gefällt.",
+      "location_title": "Echtzeit-Standortberechtigung erlauben",
+      "location_content": "Damit WoAuto deinen Standort speichern kann, musst du die Echtzeit-Standortberechtigung erlauben. Dies ist notwendig, um deinen Parkplatz zu finden und die Karte zu laden.",
+      "location_checkbox": "Echtzeit-Standortberechtigung",
+      "location_checkbox_error": "Bitte erlaube der App, deinen Standort während der App-Nutzung abzufragen.",
+      "notification_checkbox": "Benachrichtigungen (optional)",
+      "action_1": "Fertig"
+    }
+  },
+  "bottom_sheet": {
+    "photo": "Foto auswählen",
+    "camera": "Foto aufnehmen",
+    "photo_delete": "Foto löschen"
+  },
+  "snackbar": {
+    "locked": {
+      "title": "Hast du dein Auto abgeschlossen?",
+      "subtitle": "Dies ist eine Erinnerung, ob du dein Auto abgeschlossen hast.",
+      "action": "Ja, hab' ich"
+    },
+    "shared_parking": {
+      "title": "Ein geteilter Online Parkplatz wurde hinzugefügt",
+      "subtitle": "Schaue auf der Karte oder in der Liste nach."
+    },
+    "distance_calculation": {
+      "title": "Wie wird die Entfernung berechnet?",
+      "subtitle": "Die Entfernung wird mit Hilfe der Haversine-Formel berechnet. Die Formel ist eine spezielle Form der Pythagoras-Formel, die für die Berechnung der Entfernung zwischen zwei Punkten auf einer Kugel verwendet wird. Die Formel ist auch als \"Kugelentfernung\" bekannt.",
+      "subsubtitle": "Tippe um mehr zu erfahren."
+    }
+  },
+  "dialog": {
+    "abort": "Abbrechen",
+    "delete": "Löschen",
+    "leave": "Verlassen",
+    "confirm": "Bestätigen",
+    "ok": "Ok",
+    "yes": "Ja",
+    "no": "Nein",
+    "share": "Teilen",
+    "save": "Speichern",
+    "open_settings": "Einstellungen öffnen",
+    "navigation": {
+      "title": "Standort Info",
+      "subtitle": "Möchtest du den Standort deines Autos ansehen oder dorthin navigieren?",
+      "distance_info": "Abstand zum aktuellen Standort: $distance m",
+      "action_1": "Navigation starten"
+    },
+    "notifications": {
+      "na": {
+        "title": "Benachrichtigungen nicht verfügbar",
+        "subtitle": "Benachrichtigungen sind auf deinem Gerät nicht verfügbar."
+      },
+      "denied": {
+        "title": "Benachrichtigungen verweigert",
+        "subtitle": "Du hast die Benachrichtigungen verweigert. Bitte gehe in die Einstellungen und erlaube die Benachrichtigungen."
+      },
+      "sent": {
+        "title": "Auto geparkt",
+        "subtitle": "Möchtest du Benachrichtigungen aktivieren? Du kannst diese Einstellung später in den Einstellungen ändern."
+      },
+      "expiring": {
+        "title": "Dein Parkticket läuft bald ab",
+        "subtitle": "In ca. $minutesLeft Minuten läuft dein Parkticket ab, bereite dich langsam auf die Abfahrt vor."
+      }
+    },
+    "car_bottom_sheet": {
+      "sync": {
+        "title": "Parkplatz synchronisieren",
+        "subtitle": "Möchtest du den Parkplatz synchronisieren?",
+        "action_1": "Synchronisieren"
+      },
+      "synced": {
+        "title": "Parkplatz synchronisiert",
+        "subtitle": "Dieser Parkplatz ist nun auf den Servern von WoAuto.\nMöchtest du den Parkplatz teilen?"
+      },
+      "sharing": {
+        "title": "Parkplatz teilen",
+        "subtitle": "Lasse diesen QR Code scannen, um deinen Standort zu teilen",
+        "action_1": "Link teilen",
+        "share_content": "Hier ist mein synchronisierter Parkplatz:\n\n$woLink"
+      }
+    },
+    "maps": {
+      "driving_mode": {
+        "title": "Driving Modus erkannt",
+        "subtitle": "Du bist gerade (wahrscheinlich) mit deinem Auto unterwegs. Möchtest du in den Driving Modus wechseln?"
+      },
+      "location_denied": {
+        "title": "Standortberechtigung verweigert",
+        "subtitle": "Du hast die Standortberechtigung verweigert. Bitte gehe in die Einstellungen und erlaube den Zugriff auf deinen Standort."
+      }
+    },
+    "history": {
+      "info": {
+        "title": "Historie",
+        "subtitle": "Hier werden dir die letzten 15 Parkplätze angezeigt"
+      },
+      "delete": {
+        "title": "Lösche alle Einträge",
+        "subtitle": "Bist du sicher, dass du alle Einträge löschen möchtest?"
+      }
+    },
+    "leave_info": {
+      "title": "App verlassen",
+      "subtitle": "Bist du sicher, dass du die App verlassen möchtest?",
+      "action_1": "Verlassen"
+    },
+    "app_info": {
+      "title": "App Info",
+      "subtitle": "Diese App wurde von Emre Yurtseven entwickelt, ist Open-Source und natürlich auf Github verfügbar.",
+      "action_1": "GitHub"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "subtitle": "Schreibe mir gerne eine E-Mail, trete unserem Telegram-Channel bei oder schreibe mir eine private Nachricht auf Telegram:",
+      "action_1": "Telegram-Channel",
+      "action_2": "Telegram (Privat)"
+    },
+    "data_security": {
+      "title": "Datenschutz und Impressum",
+      "content_1": "Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 01.09.2023):",
+      "content_2": "- Die App kommuniziert mit Google Maps, um die Karte anzuzeigen.",
+      "content_3": "- Die App kommuniziert mit meinem VPS Server auf Deutschem Boden, um synchronisierte Parkplätze anzuzeigen, anzulegen und zu verwalten.",
+      "content_4": "- Die App speichert keine Metadaten, wie z.B. die IP-Adresse, Gerätename oder Betriebssystemversion.",
+      "content_5": "- Die App speichert natürlich, unter anderem, deinen Standort, den Namen des Parkplatzes und die Koordinaten, gibt diese aber ",
+      "content_6": "nicht an Dritte weiter.",
+      "content_7": "\n\nEs findet ein Datenaustausch mit meinem Server und mit den Servern von Google bei der Bereitstellung der Google Maps Karten statt. ",
+      "content_8": "Die App speichert sont alle Daten nur auf deinem Gerät und du kannst sie jederzeit löschen, dann sind sie auch aus meinem Server gelöscht (in den Einstellungen ganz unten).",
+      "action_1": "Impressum",
+      "action_2": "Datenschutz"
+    },
+    "app_data": {
+      "title": "App-Daten löschen",
+      "subtitle": "Bist du sicher, dass du alle App-Daten löschen möchtest?"
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "theme": {
+      "title": "Theme",
+      "subtitle": "Wähle das Theme aus, das dir am besten gefällt.",
+      "dropdown_1": "System",
+      "dropdown_2": "Hell",
+      "dropdown_3": "Dunkel"
+    },
+    "map_type": {
+      "title": "Karten Typ",
+      "subtitle": "Wähle den Karten Typ aus, der dir am besten gefällt.",
+      "dropdown_1": "Normal",
+      "dropdown_2": "Satellit",
+      "dropdown_3": "Hybrid",
+      "dropdown_4": "Terrain"
+    },
+    "traffic": {
+      "title": "Verkehrslage",
+      "subtitle": "Zeige die aktuelle Verkehrslage auf der Karte an."
+    },
+    "park_ticket": {
+      "title": "Parkticket Zeitpuffer",
+      "subtitle": "Lege einen Zeitpuffer fest, damit du vor dem Parkticketablauf noch Zeit hast, das Ticket zu erneuern oder zum Auto zurückzukehren.",
+      "dropdown_value": "$value Minuten"
+    },
+    "driving_mode": {
+      "title": "Driving Modus Erkennung",
+      "subtitle": "Lege fest, wie schnell du fahren musst, damit die App den Driving Modus erkennt.",
+      "dropdown_value": "$value km/h"
+    },
+    "app_info": {
+      "title": "App Info",
+      "subtitle": "Version $appVersion+$buildNumber"
+    },
+    "credits": {
+      "title": "Credits",
+      "subtitle": "Dank an Google Maps API und natürlich an die Flutter Community."
+    },
+    "share": {
+      "title": "App Teilen",
+      "subtitle": "Teile die App doch mit deinen Freunden und deiner Familie.",
+      "share_content": "Hast du auch vergessen, wo du zuletzt geparkt hast? Jetzt ist Schluss. Mit WoAuto kannst du deinen Parkplatz ganz einfach speichern und später ansehen, mit anderen teilen und sogar dorthin navigieren.\nDein Parkplatz ist sicher und bleibt immer auf deinem Gerät.\n\nWarum lädst du es nicht herunter und probierst es selbst aus? https://play.google.com/store/apps/details?id=de.emredev.woauto"
+    },
+    "feedback": {
+      "title": "Feedback",
+      "subtitle": "Hast du Verbesserungsvorschläge, Fehler oder etwas anderes zu sagen?"
+    },
+    "data_security": {
+      "title": "Datenschutz und Impressum",
+      "subtitle": "Erfahre wie deine Daten geschützt werden."
+    },
+    "app_data": {
+      "title": "Lösche alle App-Daten",
+      "subtitle": "Halte hier gedrückt, um all deine App-Daten zu löschen."
+    }
+  }
+}

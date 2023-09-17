@@ -5,6 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/div.dart';
+import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/extensions.dart';
@@ -41,7 +42,7 @@ class _SettingsState extends State<Settings> {
                   left: 20.0,
                 ),
                 title: Text(
-                  'Einstellungen',
+                  t.settings.title,
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -62,18 +63,18 @@ class _SettingsState extends State<Settings> {
                           var themeMode = woAuto.themeMode.value;
                           DropdownButton<int> dropdownButton = DropdownButton<int>(
                             value: themeMode,
-                            items: const [
+                            items: [
                               DropdownMenuItem(
                                 value: 0,
-                                child: Text('System'),
+                                child: Text(t.settings.theme.dropdown_1),
                               ),
                               DropdownMenuItem(
                                 value: 1,
-                                child: Text('Hell'),
+                                child: Text(t.settings.theme.dropdown_2),
                               ),
                               DropdownMenuItem(
                                 value: 2,
-                                child: Text('Dunkel'),
+                                child: Text(t.settings.theme.dropdown_3),
                               ),
                             ],
                             onChanged: (v) async {
@@ -106,11 +107,11 @@ class _SettingsState extends State<Settings> {
 
                           return ListTile(
                             title: Text(
-                              'Theme',
+                              t.settings.theme.title,
                               style: TextStyle(color: Theme.of(context).colorScheme.primary),
                             ),
-                            subtitle: const Text(
-                              'Entscheide selbst, ob du das System-Theme, das Light-Theme oder das Dark-Theme verwenden möchtest.',
+                            subtitle: Text(
+                              t.settings.theme.subtitle,
                             ),
                             trailing: dropdownButton,
                           );
@@ -121,22 +122,22 @@ class _SettingsState extends State<Settings> {
                           var mapType = woAuto.mapType.value;
                           DropdownButton<MapType> dropdownButton = DropdownButton<MapType>(
                             value: mapType,
-                            items: const [
+                            items: [
                               DropdownMenuItem(
                                 value: MapType.normal,
-                                child: Text('Normal'),
+                                child: Text(t.settings.map_type.dropdown_1),
                               ),
                               DropdownMenuItem(
                                 value: MapType.satellite,
-                                child: Text('Satellit'),
+                                child: Text(t.settings.map_type.dropdown_2),
                               ),
                               DropdownMenuItem(
                                 value: MapType.hybrid,
-                                child: Text('Hybrid'),
+                                child: Text(t.settings.map_type.dropdown_3),
                               ),
                               DropdownMenuItem(
                                 value: MapType.terrain,
-                                child: Text('Terrain'),
+                                child: Text(t.settings.map_type.dropdown_4),
                               ),
                             ],
                             onChanged: (v) async {
@@ -147,11 +148,11 @@ class _SettingsState extends State<Settings> {
 
                           return ListTile(
                             title: Text(
-                              'Map-Typ',
+                              t.settings.map_type.title,
                               style: TextStyle(color: Theme.of(context).colorScheme.primary),
                             ),
-                            subtitle: const Text(
-                              'Zeigt die Karte in verschiedenen Typen an.',
+                            subtitle: Text(
+                              t.settings.map_type.subtitle,
                             ),
                             trailing: dropdownButton,
                           );
@@ -161,11 +162,11 @@ class _SettingsState extends State<Settings> {
                         () => SwitchListTile(
                           value: woAuto.showTraffic.value,
                           title: Text(
-                            'Verkehr',
+                            t.settings.traffic.title,
                             style: TextStyle(color: Theme.of(context).colorScheme.primary),
                           ),
-                          subtitle: const Text(
-                            'Zeigt den Verkehr auf der Karte an, sofern verfügbar.',
+                          subtitle: Text(
+                            t.settings.traffic.subtitle,
                           ),
                           onChanged: (v) async {
                             woAuto.showTraffic.value = v;
@@ -178,30 +179,30 @@ class _SettingsState extends State<Settings> {
                           var time = woAuto.timePuffer.value;
                           DropdownButton<int> dropdownButton = DropdownButton<int>(
                             value: time,
-                            items: const [
+                            items: [
                               DropdownMenuItem(
                                 value: 5,
-                                child: Text('5 Minuten'),
+                                child: Text(t.settings.park_ticket.dropdown_value(value: 5)),
                               ),
                               DropdownMenuItem(
                                 value: 10,
-                                child: Text('10 Minuten'),
+                                child: Text(t.settings.park_ticket.dropdown_value(value: 10)),
                               ),
                               DropdownMenuItem(
                                 value: 15,
-                                child: Text('15 Minuten'),
+                                child: Text(t.settings.park_ticket.dropdown_value(value: 15)),
                               ),
                               DropdownMenuItem(
                                 value: 20,
-                                child: Text('20 Minuten'),
+                                child: Text(t.settings.park_ticket.dropdown_value(value: 20)),
                               ),
                               DropdownMenuItem(
                                 value: 25,
-                                child: Text('25 Minuten'),
+                                child: Text(t.settings.park_ticket.dropdown_value(value: 25)),
                               ),
                               DropdownMenuItem(
                                 value: 30,
-                                child: Text('30 Minuten'),
+                                child: Text(t.settings.park_ticket.dropdown_value(value: 30)),
                               ),
                             ],
                             onChanged: (v) {
@@ -213,11 +214,11 @@ class _SettingsState extends State<Settings> {
 
                           return ListTile(
                             title: Text(
-                              'Parkticket Zeitpuffer',
+                              t.settings.park_ticket.title,
                               style: TextStyle(color: Theme.of(context).colorScheme.primary),
                             ),
-                            subtitle: const Text(
-                              'Lege einen Zeitpuffer fest, damit du vor dem Parkticketablauf noch Zeit hast, das Ticket zu erneuern oder zum Auto zurückzukehren.',
+                            subtitle: Text(
+                              t.settings.park_ticket.subtitle,
                             ),
                             trailing: dropdownButton,
                           );
@@ -228,26 +229,26 @@ class _SettingsState extends State<Settings> {
                           var speed = woAuto.drivingModeDetectionSpeed.value;
                           DropdownButton<int> dropdownButton = DropdownButton<int>(
                             value: speed,
-                            items: const [
+                            items: [
                               DropdownMenuItem(
                                 value: 20,
-                                child: Text('20 km/h'),
+                                child: Text(t.settings.driving_mode.dropdown_value(value: 20)),
                               ),
                               DropdownMenuItem(
                                 value: 25,
-                                child: Text('25 km/h'),
+                                child: Text(t.settings.driving_mode.dropdown_value(value: 25)),
                               ),
                               DropdownMenuItem(
                                 value: 30,
-                                child: Text('30 km/h'),
+                                child: Text(t.settings.driving_mode.dropdown_value(value: 30)),
                               ),
                               DropdownMenuItem(
                                 value: 35,
-                                child: Text('35 km/h'),
+                                child: Text(t.settings.driving_mode.dropdown_value(value: 35)),
                               ),
                               DropdownMenuItem(
                                 value: 40,
-                                child: Text('40 km/h'),
+                                child: Text(t.settings.driving_mode.dropdown_value(value: 40)),
                               ),
                             ],
                             onChanged: (v) {
@@ -259,11 +260,11 @@ class _SettingsState extends State<Settings> {
 
                           return ListTile(
                             title: Text(
-                              'Driving Modus Erkennung',
+                              t.settings.driving_mode.title,
                               style: TextStyle(color: Theme.of(context).colorScheme.primary),
                             ),
-                            subtitle: const Text(
-                              'Lege fest, wie schnell du fahren musst, damit die App den Driving Modus erkennt.',
+                            subtitle: Text(
+                              t.settings.driving_mode.subtitle,
                             ),
                             trailing: dropdownButton,
                           );
@@ -280,23 +281,28 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           title: Text(
-                            'App Info',
+                            t.settings.app_info.title,
                             style: TextStyle(color: Theme.of(context).colorScheme.primary),
                           ),
-                          subtitle: Text('Version ${woAuto.appVersion}+${woAuto.appBuildNumber}'),
+                          subtitle: Text(
+                            t.settings.app_info.subtitle(
+                              appVersion: woAuto.appVersion,
+                              buildNumber: woAuto.appBuildNumber,
+                            ),
+                          ),
                           onTap: () {
                             Get.dialog(
                               AlertDialog(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                title: const Text('App Info'),
-                                content: const Text(
-                                  'Diese App wurde von Emre Yurtseven entwickelt, ist Open-Source und natürlich auf Github verfügbar.',
+                                title: Text(t.dialog.app_info.title),
+                                content: Text(
+                                  t.dialog.app_info.subtitle,
                                 ),
                                 actions: [
                                   ElevatedButton(
-                                    child: const Text('Github'),
+                                    child: Text(t.dialog.app_info.action_1),
                                     onPressed: () {
                                       launchUrl(
                                         Uri.parse('https://github.com/yurtemre7/woauto'),
@@ -320,11 +326,11 @@ class _SettingsState extends State<Settings> {
                           ),
                         ),
                         title: Text(
-                          'Credits',
+                          t.settings.credits.title,
                           style: TextStyle(color: Theme.of(context).colorScheme.primary),
                         ),
-                        subtitle: const Text(
-                          'Dank an Google Maps API und natürlich an die Flutter Community.',
+                        subtitle: Text(
+                          t.settings.credits.subtitle,
                         ),
                       ),
                       ListTile(
@@ -336,18 +342,15 @@ class _SettingsState extends State<Settings> {
                           ),
                         ),
                         title: Text(
-                          'App Teilen',
+                          t.settings.share.title,
                           style: TextStyle(color: Theme.of(context).colorScheme.primary),
                         ),
-                        subtitle: const Text(
-                            'Teile die App doch mit deinen Freunden und deiner Familie.'),
+                        subtitle: Text(
+                          t.settings.share.subtitle,
+                        ),
                         onTap: () {
                           Share.share(
-                            'Hast du auch vergessen, wo du zuletzt geparkt hast? '
-                            'Jetzt ist Schluss. '
-                            'Mit WoAuto kannst du deinen Parkplatz ganz einfach speichern und später ansehen, mit anderen teilen und sogar dorthin navigieren.\n'
-                            'Dein Parkplatz ist sicher und bleibt immer auf deinem Gerät.\n\n'
-                            'Warum lädst du es nicht herunter und probierst es selbst aus? https://play.google.com/store/apps/details?id=de.emredev.woauto',
+                            t.settings.share.share_content,
                           );
                         },
                       ),
@@ -360,24 +363,23 @@ class _SettingsState extends State<Settings> {
                           ),
                         ),
                         title: Text(
-                          'Feedback',
+                          t.settings.feedback.title,
                           style: TextStyle(color: Theme.of(context).colorScheme.primary),
                         ),
-                        subtitle: const Text(
-                            'Hast du Verbesserungsvorschläge, Fehler oder etwas anderes zu sagen?'),
+                        subtitle: Text(t.settings.feedback.subtitle),
                         onTap: () {
                           Get.dialog(
                             AlertDialog(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              title: const Text('Feedback'),
-                              content: const Text(
-                                'Schreibe mir gerne eine E-Mail, trete unserem Telegram-Channel bei oder schreibe mir eine private Nachricht auf Telegram:',
+                              title: Text(t.dialog.feedback.title),
+                              content: Text(
+                                t.dialog.feedback.subtitle,
                               ),
                               actions: [
                                 ElevatedButton(
-                                  child: const Text('Telegram-Channel'),
+                                  child: Text(t.dialog.feedback.action_1),
                                   onPressed: () {
                                     launchUrl(
                                       Uri.parse('https://t.me/programmiererfreunde'),
@@ -386,7 +388,7 @@ class _SettingsState extends State<Settings> {
                                   },
                                 ),
                                 ElevatedButton(
-                                  child: const Text('Telegram (Privat)'),
+                                  child: Text(t.dialog.feedback.action_2),
                                   onPressed: () {
                                     launchUrl(
                                       Uri.parse('https://t.me/emredev'),
@@ -409,59 +411,56 @@ class _SettingsState extends State<Settings> {
                           ),
                         ),
                         title: Text(
-                          'Datenschutz und Impressum',
+                          t.settings.data_security.title,
                           style: TextStyle(color: Theme.of(context).colorScheme.primary),
                         ),
-                        subtitle: const Text('Erfahre wie deine Daten geschützt werden.'),
+                        subtitle: Text(t.settings.data_security.subtitle),
                         onTap: () {
                           Get.dialog(
                             AlertDialog(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              title: const Text('Datenschutz und Impressum'),
-                              content: const SingleChildScrollView(
+                              title: Text(t.dialog.data_security.title),
+                              content: SingleChildScrollView(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Text(
-                                      'Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 01.09.2023):',
-                                      style: TextStyle(
+                                      t.dialog.data_security.content_1,
+                                      style: const TextStyle(
                                         fontSize: 16,
                                       ),
                                     ),
-                                    SizedBox(height: 8),
+                                    const SizedBox(height: 8),
                                     Text(
-                                      '- Die App kommuniziert mit Google Maps, um die Karte anzuzeigen.',
+                                      t.dialog.data_security.content_2,
                                     ),
-                                    SizedBox(height: 5),
+                                    const SizedBox(height: 5),
                                     Text(
-                                      '- Die App kommuniziert mit meinem VPS Server auf Deutschem Boden, um synchronisierte Parkplätze anzuzeigen, anzulegen und zu verwalten.',
+                                      t.dialog.data_security.content_3,
                                     ),
-                                    SizedBox(height: 5),
+                                    const SizedBox(height: 5),
                                     Text(
-                                      '- Die App speichert keine Metadaten, wie z.B. die IP-Adresse, Gerätename oder Betriebssystemversion.',
+                                      t.dialog.data_security.content_4,
                                     ),
-                                    SizedBox(height: 5),
+                                    const SizedBox(height: 5),
                                     Text.rich(
                                       TextSpan(
-                                        text:
-                                            '- Die App speichert natürlich, unter anderem, deinen Standort, den Namen des Parkplatzes und die Koordinaten, gibt diese aber ',
+                                        text: t.dialog.data_security.content_5,
                                         children: [
                                           TextSpan(
-                                            text: 'nicht an Dritte weiter.',
-                                            style: TextStyle(
+                                            text: t.dialog.data_security.content_6,
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               decoration: TextDecoration.underline,
                                             ),
                                           ),
                                           TextSpan(
-                                            text:
-                                                '\nEs findet ein Datenaustausch mit meinem Server und mit den Servern von Google bei der Bereitstellung der Google Maps Karten statt. ',
+                                            text: t.dialog.data_security.content_7,
                                           ),
                                           TextSpan(
-                                            text:
-                                                'Die App speichert sont alle Daten nur auf deinem Gerät und du kannst sie jederzeit löschen, dann sind sie auch aus meinem Server gelöscht (in den Einstellungen ganz unten).',
+                                            text: t.dialog.data_security.content_8,
                                           )
                                         ],
                                       ),
@@ -471,7 +470,7 @@ class _SettingsState extends State<Settings> {
                               ),
                               actions: [
                                 ElevatedButton(
-                                  child: const Text('Impressum'),
+                                  child: Text(t.dialog.data_security.action_1),
                                   onPressed: () {
                                     launchUrl(
                                       Uri.parse('https://www.yurtemre.de/impressum'),
@@ -480,7 +479,7 @@ class _SettingsState extends State<Settings> {
                                   },
                                 ),
                                 ElevatedButton(
-                                  child: const Text('Datenschutz'),
+                                  child: Text(t.dialog.data_security.action_2),
                                   onPressed: () {
                                     launchUrl(
                                       Uri.parse('https://www.yurtemre.de/datenschutz'),
@@ -504,27 +503,26 @@ class _SettingsState extends State<Settings> {
                           ),
                         ),
                         title: Text(
-                          'Lösche alle App-Daten',
+                          t.settings.app_data.title,
                           style: TextStyle(
                             color: Theme.of(context).colorScheme.error,
                           ),
                         ),
-                        subtitle:
-                            const Text('Halte hier gedrückt, um all deine App-Daten zu löschen.'),
+                        subtitle: Text(t.settings.app_data.subtitle),
                         onLongPress: () {
                           Get.dialog(
                             AlertDialog(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12),
                               ),
-                              title: const Text('App-Daten löschen'),
-                              content: const Text('Möchtest du alle App-Daten löschen?'),
+                              title: Text(t.dialog.app_data.title),
+                              content: Text(t.dialog.app_data.subtitle),
                               actions: [
                                 TextButton(
                                   style: TextButton.styleFrom(
                                     foregroundColor: Theme.of(context).colorScheme.error,
                                   ),
-                                  child: const Text('Löschen'),
+                                  child: Text(t.dialog.delete),
                                   onPressed: () async {
                                     WoAutoServer woAutoServer = Get.find();
                                     var parkings = woAuto.carParkings;
@@ -541,7 +539,7 @@ class _SettingsState extends State<Settings> {
                                   },
                                 ),
                                 ElevatedButton(
-                                  child: const Text('Abbrechen'),
+                                  child: Text(t.dialog.abort),
                                   onPressed: () {
                                     pop();
                                   },
