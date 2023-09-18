@@ -268,7 +268,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
             if (woAuto.currentIndex.value == 0 && woAuto.drivingMode.value)
               Obx(
                 () => Positioned(
-                  bottom: 16,
+                  bottom: isIOS() ? 32 : 16,
                   right: 16,
                   child: FloatingActionButton.extended(
                     onPressed: () {

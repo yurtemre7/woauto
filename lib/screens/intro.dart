@@ -292,39 +292,41 @@ class _IntroState extends State<Intro> {
         ),
       ),
       bottomNavigationBar: Obx(
-        () => ButtonBar(
-          alignment: MainAxisAlignment.end,
-          children: [
-            ElevatedButton.icon(
-              onPressed: pageIndex.value == 0
-                  ? () =>
-                      pageController.nextPage(duration: 500.milliseconds, curve: Curves.easeInOut)
-                  : () async {
-                      FocusScope.of(context).requestFocus(FocusNode());
-                      if (!allowed.value) {
-                        showError.value = true;
-                        return;
-                      }
-                      showError.value = false;
+        () => SafeArea(
+          child: ButtonBar(
+            alignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton.icon(
+                onPressed: pageIndex.value == 0
+                    ? () =>
+                        pageController.nextPage(duration: 500.milliseconds, curve: Curves.easeInOut)
+                    : () async {
+                        FocusScope.of(context).requestFocus(FocusNode());
+                        if (!allowed.value) {
+                          showError.value = true;
+                          return;
+                        }
+                        showError.value = false;
 
-                      woAuto.subText.value = tec.text.trim();
-                      if (woAuto.subText.value.isEmpty) {
-                        woAuto.subText.value = t.constants.default_park_title;
-                      }
+                        woAuto.subText.value = tec.text.trim();
+                        if (woAuto.subText.value.isEmpty) {
+                          woAuto.subText.value = t.constants.default_park_title;
+                        }
 
-                      woAuto.welcome.value = false;
+                        woAuto.welcome.value = false;
 
-                      await woAuto.save();
-                      pop();
-                    },
-              label: pageIndex.value == 0
-                  ? Text(t.intro.page_1.action_1)
-                  : Text(t.intro.page_2.action_1),
-              icon: pageIndex.value == 0
-                  ? const Icon(Icons.arrow_right_alt_outlined)
-                  : const Icon(Icons.check),
-            ),
-          ],
+                        await woAuto.save();
+                        pop();
+                      },
+                label: pageIndex.value == 0
+                    ? Text(t.intro.page_1.action_1)
+                    : Text(t.intro.page_2.action_1),
+                icon: pageIndex.value == 0
+                    ? const Icon(Icons.arrow_right_alt_outlined)
+                    : const Icon(Icons.check),
+              ),
+            ],
+          ),
         ),
       ),
     );
