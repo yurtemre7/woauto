@@ -325,6 +325,10 @@
       "title": "Verkehrslage",
       "subtitle": "Zeige die aktuelle Verkehrslage auf der Karte an."
     },
+    "new_ios": {
+      "title": "iOS Design",
+      "subtitle": "Aktiviere das neue iOS Design mit Cupertino Widgets."
+    },
     "park_ticket": {
       "title": "Parkticket Zeitpuffer",
       "subtitle": "Lege einen Zeitpuffer fest, damit du vor dem Parkticketablauf noch Zeit hast, das Ticket zu erneuern oder zum Auto zurückzukehren.",
@@ -358,7 +362,8 @@
     },
     "app_data": {
       "title": "Lösche alle App-Daten",
-      "subtitle": "Halte hier gedrückt, um all deine App-Daten zu löschen."
+      "subtitle": "Halte hier gedrückt, um all deine App-Daten zu löschen.",
+      "subtitle_ios": "Tippe hier, um all deine App-Daten zu löschen."
     }
   }
 }

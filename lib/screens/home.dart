@@ -180,6 +180,22 @@ class _HomeState extends State<Home> {
                   child: MapInfoSheet(),
                 ),
               ),
+              Visibility(
+                visible: woAuto.currentIndex.value == 0 && woAuto.drivingMode.value,
+                child: Positioned(
+                  bottom: isIOS() ? 32 : 16,
+                  right: 16,
+                  child: FloatingActionButton.extended(
+                    onPressed: () {
+                      woAuto.showTraffic.value = !woAuto.showTraffic.value;
+                      setState(() {});
+                    },
+                    label: Text(
+                      woAuto.showTraffic.value ? t.maps.traffic.hide : t.maps.traffic.show,
+                    ),
+                  ),
+                ),
+              ),
               if (woAuto.currentIndex.value == 1) ...[
                 const MyCar(),
               ],

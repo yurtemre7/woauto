@@ -265,22 +265,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
               onLongPress: _onMapLongPress,
               onTap: woAuto.onNewParking,
             ),
-            if (woAuto.currentIndex.value == 0 && woAuto.drivingMode.value)
-              Obx(
-                () => Positioned(
-                  bottom: isIOS() ? 32 : 16,
-                  right: 16,
-                  child: FloatingActionButton.extended(
-                    onPressed: () {
-                      woAuto.showTraffic.value = !woAuto.showTraffic.value;
-                      setState(() {});
-                    },
-                    label: Text(
-                      woAuto.showTraffic.value ? t.maps.traffic.hide : t.maps.traffic.show,
-                    ),
-                  ),
-                ),
-              ),
             if (mapLoading.value)
               Container(
                 color: getBackgroundColor(context),

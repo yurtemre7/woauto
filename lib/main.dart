@@ -1,4 +1,5 @@
 import 'package:dynamic_color/dynamic_color.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -9,6 +10,7 @@ import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/screens/home.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:woauto/screens/intro.dart';
+import 'package:woauto/screens/ios_screens/ios_home.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -52,11 +54,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // if (!isIOS()) {
-    //   return GetCupertinoApp(
-    //     home: woAuto.welcome.value ? const Intro() : const IOSHome(),
-    //   );
-    // }
     return DynamicColorBuilder(
       builder: (lightDynamic, darkDynamic) {
         ColorScheme lightColorScheme;
@@ -76,6 +73,22 @@ class MyApp extends StatelessWidget {
         }
         return Obx(
           () {
+            if (isIOS() && woAuto.newIOS.value) {
+              return GetCupertinoApp(
+                home: woAuto.welcome.value ? const Intro() : const IOSHome(),
+                title: t.constants.app_name,
+                locale: TranslationProvider.of(context).flutterLocale,
+                supportedLocales: AppLocaleUtils.supportedLocales,
+                localizationsDelegates: GlobalMaterialLocalizations.delegates,
+                theme: CupertinoThemeData(
+                  brightness: woAuto.themeMode.value == 0
+                      ? null
+                      : woAuto.themeMode.value == 1
+                          ? Brightness.light
+                          : Brightness.dark,
+                ),
+              );
+            }
             woAuto.dayColorScheme.value = lightColorScheme;
             woAuto.nightColorScheme.value = darkColorScheme;
             return GetMaterialApp(

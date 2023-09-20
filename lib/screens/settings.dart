@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,7 @@ import 'package:woauto/components/div.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
+import 'package:woauto/screens/ios_screens/ios_home.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -270,6 +273,26 @@ class _SettingsState extends State<Settings> {
                           );
                         },
                       ),
+                      if (kDebugMode)
+                        Obx(
+                          () => CupertinoListTile(
+                            title: Text(
+                              t.settings.new_ios.title,
+                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            ),
+                            subtitle: Text(
+                              t.settings.new_ios.subtitle,
+                            ),
+                            trailing: CupertinoSwitch(
+                              value: woAuto.newIOS.value,
+                              onChanged: (v) async {
+                                woAuto.newIOS.value = v;
+                                await woAuto.save();
+                                Get.offAll(() => const IOSHome());
+                              },
+                            ),
+                          ),
+                        ),
                       const Div(),
                       Obx(
                         () => ListTile(

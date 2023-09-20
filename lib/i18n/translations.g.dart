@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 416 (208 per locale)
+/// Strings: 422 (211 per locale)
 ///
-/// Built on 2023-09-17 at 16:48 UTC
+/// Built on 2023-09-20 at 16:25 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -403,6 +403,7 @@ class _TranslationsSettingsDe {
 	late final _TranslationsSettingsThemeDe theme = _TranslationsSettingsThemeDe._(_root);
 	late final _TranslationsSettingsMapTypeDe map_type = _TranslationsSettingsMapTypeDe._(_root);
 	late final _TranslationsSettingsTrafficDe traffic = _TranslationsSettingsTrafficDe._(_root);
+	late final _TranslationsSettingsNewIosDe new_ios = _TranslationsSettingsNewIosDe._(_root);
 	late final _TranslationsSettingsParkTicketDe park_ticket = _TranslationsSettingsParkTicketDe._(_root);
 	late final _TranslationsSettingsDrivingModeDe driving_mode = _TranslationsSettingsDrivingModeDe._(_root);
 	late final _TranslationsSettingsAppInfoDe app_info = _TranslationsSettingsAppInfoDe._(_root);
@@ -892,6 +893,17 @@ class _TranslationsSettingsTrafficDe {
 	String get subtitle => 'Zeige die aktuelle Verkehrslage auf der Karte an.';
 }
 
+// Path: settings.new_ios
+class _TranslationsSettingsNewIosDe {
+	_TranslationsSettingsNewIosDe._(this._root);
+
+	final _TranslationsDe _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'iOS Design';
+	String get subtitle => 'Aktiviere das neue iOS Design mit Cupertino Widgets.';
+}
+
 // Path: settings.park_ticket
 class _TranslationsSettingsParkTicketDe {
 	_TranslationsSettingsParkTicketDe._(this._root);
@@ -981,6 +993,7 @@ class _TranslationsSettingsAppDataDe {
 	// Translations
 	String get title => 'Lösche alle App-Daten';
 	String get subtitle => 'Halte hier gedrückt, um all deine App-Daten zu löschen.';
+	String get subtitle_ios => 'Tippe hier, um all deine App-Daten zu löschen.';
 }
 
 // Path: dialog.notifications.na
@@ -1228,7 +1241,7 @@ class _TranslationsHomeEn extends _TranslationsHomeDe {
 
 	// Translations
 	@override String get navigation_1 => 'Map';
-	@override String get navigation_2 => 'Your Car';
+	@override String get navigation_2 => 'My Car';
 	@override String get navigation_3 => 'History';
 	@override String get navigation_4 => 'Settings';
 	@override late final _TranslationsHomeQuickActionsEn quick_actions = _TranslationsHomeQuickActionsEn._(_root);
@@ -1386,6 +1399,7 @@ class _TranslationsSettingsEn extends _TranslationsSettingsDe {
 	@override late final _TranslationsSettingsThemeEn theme = _TranslationsSettingsThemeEn._(_root);
 	@override late final _TranslationsSettingsMapTypeEn map_type = _TranslationsSettingsMapTypeEn._(_root);
 	@override late final _TranslationsSettingsTrafficEn traffic = _TranslationsSettingsTrafficEn._(_root);
+	@override late final _TranslationsSettingsNewIosEn new_ios = _TranslationsSettingsNewIosEn._(_root);
 	@override late final _TranslationsSettingsParkTicketEn park_ticket = _TranslationsSettingsParkTicketEn._(_root);
 	@override late final _TranslationsSettingsDrivingModeEn driving_mode = _TranslationsSettingsDrivingModeEn._(_root);
 	@override late final _TranslationsSettingsAppInfoEn app_info = _TranslationsSettingsAppInfoEn._(_root);
@@ -1798,7 +1812,7 @@ class _TranslationsDialogFeedbackEn extends _TranslationsDialogFeedbackDe {
 	@override final _TranslationsEn _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'feedback';
+	@override String get title => 'Feedback';
 	@override String get subtitle => 'Feel free to email me, join our Telegram channel, or send me a private message on Telegram:';
 	@override String get action_1 => 'Telegram Channel';
 	@override String get action_2 => 'Telegram (Private)';
@@ -1873,6 +1887,17 @@ class _TranslationsSettingsTrafficEn extends _TranslationsSettingsTrafficDe {
 	// Translations
 	@override String get title => 'Traffic';
 	@override String get subtitle => 'Show the current traffic situation on the map.';
+}
+
+// Path: settings.new_ios
+class _TranslationsSettingsNewIosEn extends _TranslationsSettingsNewIosDe {
+	_TranslationsSettingsNewIosEn._(_TranslationsEn root) : this._root = root, super._(root);
+
+	@override final _TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'iOS only design';
+	@override String get subtitle => 'Use the iOS only design with Cupertino widgets.';
 }
 
 // Path: settings.park_ticket
@@ -1964,6 +1989,7 @@ class _TranslationsSettingsAppDataEn extends _TranslationsSettingsAppDataDe {
 	// Translations
 	@override String get title => 'Delete all app data';
 	@override String get subtitle => 'Press and hold here to delete all your app data.';
+	@override String get subtitle_ios => 'Tap here to delete all your app data.';
 }
 
 // Path: dialog.notifications.na
@@ -2290,6 +2316,8 @@ extension on _TranslationsDe {
 			case 'settings.map_type.dropdown_4': return 'Terrain';
 			case 'settings.traffic.title': return 'Verkehrslage';
 			case 'settings.traffic.subtitle': return 'Zeige die aktuelle Verkehrslage auf der Karte an.';
+			case 'settings.new_ios.title': return 'iOS Design';
+			case 'settings.new_ios.subtitle': return 'Aktiviere das neue iOS Design mit Cupertino Widgets.';
 			case 'settings.park_ticket.title': return 'Parkticket Zeitpuffer';
 			case 'settings.park_ticket.subtitle': return 'Lege einen Zeitpuffer fest, damit du vor dem Parkticketablauf noch Zeit hast, das Ticket zu erneuern oder zum Auto zurückzukehren.';
 			case 'settings.park_ticket.dropdown_value': return ({required Object value}) => '${value} Minuten';
@@ -2309,6 +2337,7 @@ extension on _TranslationsDe {
 			case 'settings.data_security.subtitle': return 'Erfahre wie deine Daten geschützt werden.';
 			case 'settings.app_data.title': return 'Lösche alle App-Daten';
 			case 'settings.app_data.subtitle': return 'Halte hier gedrückt, um all deine App-Daten zu löschen.';
+			case 'settings.app_data.subtitle_ios': return 'Tippe hier, um all deine App-Daten zu löschen.';
 			default: return null;
 		}
 	}
@@ -2353,7 +2382,7 @@ extension on _TranslationsEn {
 			case 'marker_dialog.mine.content': return ({required Object formattedDate, required Object address, required Object description}) => 'You have ${formattedDate}.\n\nYour car is at the following address:\n${address}.\n${description}';
 			case 'marker_dialog.action_1': return 'Delete parking';
 			case 'home.navigation_1': return 'Map';
-			case 'home.navigation_2': return 'Your Car';
+			case 'home.navigation_2': return 'My Car';
 			case 'home.navigation_3': return 'History';
 			case 'home.navigation_4': return 'Settings';
 			case 'home.quick_actions.action_parkings': return 'Open parking spots';
@@ -2481,7 +2510,7 @@ extension on _TranslationsEn {
 			case 'dialog.app_info.title': return 'App Info';
 			case 'dialog.app_info.subtitle': return 'This app was developed by Emre Yurtseven, is open-source and of course available on Github.';
 			case 'dialog.app_info.action_1': return 'GitHub';
-			case 'dialog.feedback.title': return 'feedback';
+			case 'dialog.feedback.title': return 'Feedback';
 			case 'dialog.feedback.subtitle': return 'Feel free to email me, join our Telegram channel, or send me a private message on Telegram:';
 			case 'dialog.feedback.action_1': return 'Telegram Channel';
 			case 'dialog.feedback.action_2': return 'Telegram (Private)';
@@ -2512,6 +2541,8 @@ extension on _TranslationsEn {
 			case 'settings.map_type.dropdown_4': return 'Terrain';
 			case 'settings.traffic.title': return 'Traffic';
 			case 'settings.traffic.subtitle': return 'Show the current traffic situation on the map.';
+			case 'settings.new_ios.title': return 'iOS only design';
+			case 'settings.new_ios.subtitle': return 'Use the iOS only design with Cupertino widgets.';
 			case 'settings.park_ticket.title': return 'Parking ticket time buffer';
 			case 'settings.park_ticket.subtitle': return 'Set a time buffer so you have time to renew the ticket or return to the car before the parking ticket expires.';
 			case 'settings.park_ticket.dropdown_value': return ({required Object value}) => '${value} minutes';
@@ -2531,6 +2562,7 @@ extension on _TranslationsEn {
 			case 'settings.data_security.subtitle': return 'Learn how your data is protected.';
 			case 'settings.app_data.title': return 'Delete all app data';
 			case 'settings.app_data.subtitle': return 'Press and hold here to delete all your app data.';
+			case 'settings.app_data.subtitle_ios': return 'Tap here to delete all your app data.';
 			default: return null;
 		}
 	}
