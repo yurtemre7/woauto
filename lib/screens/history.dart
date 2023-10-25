@@ -122,7 +122,7 @@ class _HistoryState extends State<History> {
                                 trailing: Text(
                                   formatDateTimeToTimeAndDate(
                                     DateTime.fromMillisecondsSinceEpoch(
-                                      park.createdAt ?? DateTime.now().millisecondsSinceEpoch,
+                                      park.updatedAt ?? DateTime.now().millisecondsSinceEpoch,
                                     ),
                                   ),
                                 ),
@@ -187,7 +187,7 @@ class _HistoryState extends State<History> {
                                     [
                                       park.name,
                                       park.adresse ?? t.constants.default_address,
-                                      DateTime.fromMillisecondsSinceEpoch(park.createdAt ??
+                                      DateTime.fromMillisecondsSinceEpoch(park.updatedAt ??
                                               DateTime.now().millisecondsSinceEpoch)
                                           .toString(),
                                       park.latitude.toString(),

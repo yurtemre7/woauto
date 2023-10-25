@@ -582,9 +582,9 @@ class WoAuto extends GetxController {
   }
 
   showCarParkDialog(CarPark park) {
-    var datum = park.createdAt == null
+    var datum = park.updatedAt == null
         ? DateTime.now()
-        : DateTime.fromMillisecondsSinceEpoch(park.createdAt!);
+        : DateTime.fromMillisecondsSinceEpoch(park.updatedAt!);
     Get.dialog(
       AlertDialog(
         shape: RoundedRectangleBorder(
