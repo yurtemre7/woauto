@@ -275,7 +275,7 @@ class _IntroState extends State<Intro> {
                                   var v = await flutterLocalNotificationsPlugin
                                       .resolvePlatformSpecificImplementation<
                                           AndroidFlutterLocalNotificationsPlugin>()
-                                      ?.requestPermission();
+                                      ?.requestNotificationsPermission();
                                   notifAllowed.value = v ?? false;
                                 },
                               ),
