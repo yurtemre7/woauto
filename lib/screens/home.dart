@@ -128,14 +128,15 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => WillPopScope(
-        onWillPop: () async {
+      () => PopScope(
+        canPop: false,
+        onPopInvoked: (didPop) {
           if (woAuto.currentIndex.value != 0) {
             woAuto.currentIndex.value = 0;
-            return false;
+            return;
           }
 
-          return await Get.dialog(
+          Get.dialog(
             AlertDialog(
               title: Text(t.dialog.leave_info.title),
               content: Text(t.dialog.leave_info.subtitle),
