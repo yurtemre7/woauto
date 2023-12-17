@@ -51,7 +51,6 @@ class _IOSHomeState extends State<IOSHome> {
                   () => Stack(
                     children: [
                       const GMap(),
-                      const GMap(),
                       const CupertinoTopHeader(),
                       Visibility(
                         visible: !woAuto.drivingMode.value,

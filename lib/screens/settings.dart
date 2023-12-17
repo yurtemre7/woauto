@@ -273,26 +273,6 @@ class _SettingsState extends State<Settings> {
                           );
                         },
                       ),
-                      if (kDebugMode)
-                        Obx(
-                          () => CupertinoListTile(
-                            title: Text(
-                              t.settings.new_ios.title,
-                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
-                            ),
-                            subtitle: Text(
-                              t.settings.new_ios.subtitle,
-                            ),
-                            trailing: CupertinoSwitch(
-                              value: woAuto.newIOS.value,
-                              onChanged: (v) async {
-                                woAuto.newIOS.value = v;
-                                await woAuto.save();
-                                Get.offAll(() => const IOSHome());
-                              },
-                            ),
-                          ),
-                        ),
                       const Div(),
                       Obx(
                         () => ListTile(

@@ -57,7 +57,6 @@ class WoAuto extends GetxController {
   final showTraffic = false.obs;
   final timePuffer = 10.obs;
   final drivingModeDetectionSpeed = 20.obs;
-  final newIOS = false.obs;
 
   // my car data
   final subText = 'Mein Auto'.obs;
@@ -107,7 +106,6 @@ class WoAuto extends GetxController {
       'welcome': welcome.value,
       'timePuffer': timePuffer.value,
       'drivingModeDetectionSpeed': drivingModeDetectionSpeed.value,
-      'newIOS': newIOS.value,
     });
   }
 
@@ -120,7 +118,6 @@ class WoAuto extends GetxController {
     woAuto.welcome.value = jsonMap['welcome'] ?? true;
     woAuto.timePuffer.value = jsonMap['timePuffer'] ?? 10;
     woAuto.drivingModeDetectionSpeed.value = jsonMap['drivingModeDetectionSpeed'] ?? 20;
-    woAuto.newIOS.value = jsonMap['newIOS'] ?? false;
 
     var carParkings = jsonMap['carParkings'] ?? [];
     for (int i = 0; i < carParkings.length; i++) {
@@ -211,7 +208,6 @@ class WoAuto extends GetxController {
     logMessage('Show Traffic: $showTraffic');
     logMessage('Time Puffer: $timePuffer');
     logMessage('Driving Mode Detection Speed: $drivingModeDetectionSpeed');
-    logMessage('New iOS: $newIOS');
 
     logMessage('---' * 15);
   }
@@ -236,7 +232,6 @@ class WoAuto extends GetxController {
     sp.clear();
     welcome.value = true;
     currentIndex.value = 0;
-    newIOS.value = false;
 
     await woAuto.save();
   }

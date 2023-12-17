@@ -11,6 +11,7 @@ import 'package:woauto/screens/home.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:woauto/screens/intro.dart';
 import 'package:woauto/screens/ios_screens/ios_home.dart';
+import 'package:woauto/screens/ios_screens/ios_intro.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -73,9 +74,9 @@ class MyApp extends StatelessWidget {
         }
         return Obx(
           () {
-            if (isIOS() && woAuto.newIOS.value) {
+            if (isIOS()) {
               return GetCupertinoApp(
-                home: woAuto.welcome.value ? const Intro() : const IOSHome(),
+                home: woAuto.welcome.value ? const IOSIntro() : const IOSHome(),
                 title: t.constants.app_name,
                 locale: TranslationProvider.of(context).flutterLocale,
                 supportedLocales: AppLocaleUtils.supportedLocales,
