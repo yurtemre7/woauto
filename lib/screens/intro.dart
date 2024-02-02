@@ -22,6 +22,7 @@ class _IntroState extends State<Intro> {
   var pageIndex = 0.obs;
   final allowed = false.obs;
   final notifAllowed = false.obs;
+  final notifExactAllowed = false.obs;
   final showError = false.obs;
 
   @override
@@ -276,10 +277,35 @@ class _IntroState extends State<Intro> {
                                       .resolvePlatformSpecificImplementation<
                                           AndroidFlutterLocalNotificationsPlugin>()
                                       ?.requestNotificationsPermission();
+
                                   notifAllowed.value = v ?? false;
                                 },
                               ),
                             ),
+                            if (isAndroid())
+                              Obx(
+                                () => CheckboxListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Text(t.intro.page_2.exact_notification_checkbox),
+                                  subtitle: Text(t.intro.page_2.exact_notification_description),
+                                  value: notifExactAllowed.value,
+                                  onChanged: (val) async {
+                                    if (val == null) return;
+
+                                    if (!val) {
+                                      notifExactAllowed.value = val;
+                                      return;
+                                    }
+
+                                    var v = await flutterLocalNotificationsPlugin
+                                        .resolvePlatformSpecificImplementation<
+                                            AndroidFlutterLocalNotificationsPlugin>()
+                                        ?.requestExactAlarmsPermission();
+
+                                    notifExactAllowed.value = v ?? false;
+                                  },
+                                ),
+                              ),
                           ],
                         ),
                       ),
