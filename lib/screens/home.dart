@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
 import 'package:quick_actions/quick_actions.dart';
+import 'package:woauto/components/car_bottom_sheet.dart';
 import 'package:woauto/components/g_map.dart';
 import 'package:woauto/components/map_info_sheet.dart';
 import 'package:woauto/components/top_header.dart';
@@ -78,7 +79,6 @@ class _HomeState extends State<Home> {
             ),
             backgroundColor: Get.theme.colorScheme.primaryContainer,
           );
-          break;
         case 'action_parkings':
           if (Get.isBottomSheetOpen ?? false) {
             Get.back();
@@ -89,7 +89,6 @@ class _HomeState extends State<Home> {
               name: 'CarBottomSheet',
             ),
           );
-          break;
       }
     });
     var shortCuts = [

@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 428 (214 per locale)
+/// Strings: 430 (215 per locale)
 ///
-/// Built on 2024-02-02 at 18:32 UTC
+/// Built on 2024-02-02 at 19:05 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -568,6 +568,7 @@ class _TranslationsCarBottomSheetMenuDe {
 
 	// Translations
 	String get open_park_in_maps => 'Karten App öffnen';
+	String get share_park => 'Parkplatz teilen';
 	String get to_park => 'Zum Parkplatz';
 	String get delete_park => 'Parkplatz löschen';
 }
@@ -1576,6 +1577,7 @@ class _TranslationsCarBottomSheetMenuEn extends _TranslationsCarBottomSheetMenuD
 
 	// Translations
 	@override String get open_park_in_maps => 'Open in a maps app';
+	@override String get share_park => 'Share parking spot';
 	@override String get to_park => 'Go to parking spot';
 	@override String get delete_park => 'Delete parking spot';
 }
@@ -2203,6 +2205,7 @@ extension on Translations {
 			case 'car_bottom_sheet.parkings.title': return 'Parkplätze';
 			case 'car_bottom_sheet.shared_parkings.title': return 'Geteilte Parkplätze';
 			case 'car_bottom_sheet.menu.open_park_in_maps': return 'Karten App öffnen';
+			case 'car_bottom_sheet.menu.share_park': return 'Parkplatz teilen';
 			case 'car_bottom_sheet.menu.to_park': return 'Zum Parkplatz';
 			case 'car_bottom_sheet.menu.delete_park': return 'Parkplatz löschen';
 			case 'my_car.title': return 'Mein Auto';
@@ -2431,6 +2434,7 @@ extension on _TranslationsEn {
 			case 'car_bottom_sheet.parkings.title': return 'Parkings';
 			case 'car_bottom_sheet.shared_parkings.title': return 'Shared Parkings';
 			case 'car_bottom_sheet.menu.open_park_in_maps': return 'Open in a maps app';
+			case 'car_bottom_sheet.menu.share_park': return 'Share parking spot';
 			case 'car_bottom_sheet.menu.to_park': return 'Go to parking spot';
 			case 'car_bottom_sheet.menu.delete_park': return 'Delete parking spot';
 			case 'my_car.title': return 'My Car';

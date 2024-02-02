@@ -104,6 +104,7 @@
     },
     "menu": {
       "open_park_in_maps": "Open in a maps app",
+      "share_park": "Share parking spot",
       "to_park": "Go to parking spot",
       "delete_park": "Delete parking spot"
     }

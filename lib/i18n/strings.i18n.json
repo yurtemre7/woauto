@@ -104,6 +104,7 @@
     },
     "menu": {
       "open_park_in_maps": "Karten App öffnen",
+      "share_park": "Parkplatz teilen",
       "to_park": "Zum Parkplatz",
       "delete_park": "Parkplatz löschen"
     }
