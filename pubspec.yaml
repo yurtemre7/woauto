@@ -51,6 +51,7 @@ dependencies:
   # Languages
   slang: ^3.29.0
   slang_flutter: ^3.29.0
+  animated_digit: ^3.2.3
   # Run: `dart run slang`
 
 dev_dependencies:

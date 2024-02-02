@@ -1,3 +1,4 @@
+import 'package:animated_digit/animated_digit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:woauto/i18n/translations.g.dart';
@@ -51,15 +52,37 @@ class _TopHeaderState extends State<TopHeader> {
                                     0) *
                                 3.6);
                         return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             if (woAuto.drivingMode.value) ...[
                               if (woAuto.currentVelocity.value >= 0.0)
-                                Text(
-                                  '${kmh.toStringAsFixed(1)} km/h',
-                                  style: const TextStyle(
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.bold,
-                                  ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      // ! such a stupid hack, cuz the package is
+                                      // ! not centering it properly xD
+                                      margin: const EdgeInsets.only(bottom: 6),
+                                      child: AnimatedDigitWidget(
+                                        boxDecoration: const BoxDecoration(),
+                                        value: kmh,
+                                        fractionDigits: 1,
+                                        textStyle: TextStyle(
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: context.theme.colorScheme.primary,
+                                        ),
+                                        loop: false,
+                                      ),
+                                    ),
+                                    Text(
+                                      ' km/h',
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: context.theme.colorScheme.primary,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               8.w,
                             ],
