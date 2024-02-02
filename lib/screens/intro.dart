@@ -193,15 +193,13 @@ class _IntroState extends State<Intro> {
                                                   : null,
                                         );
                                         await woAuto.save();
+                                        woAuto.setTheme();
                                         if (!mounted) return;
                                         Future.delayed(500.milliseconds, () {
                                           SystemChrome.setSystemUIOverlayStyle(
                                             SystemUiOverlayStyle(
-                                              systemNavigationBarColor: v == 1
-                                                  ? woAuto.dayColorScheme.value.background
-                                                  : v == 2
-                                                      ? woAuto.nightColorScheme.value.background
-                                                      : Theme.of(context).colorScheme.background,
+                                              systemNavigationBarColor:
+                                                  Theme.of(context).colorScheme.background,
                                             ),
                                           );
                                         });

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
@@ -8,7 +7,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
-import 'package:woauto/screens/home.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class IOSSettings extends StatefulWidget {
@@ -66,15 +64,15 @@ class _IOSSettingsState extends State<IOSSettings> {
                             Future.delayed(
                               500.milliseconds,
                               () {
-                                SystemChrome.setSystemUIOverlayStyle(
-                                  SystemUiOverlayStyle(
-                                    systemNavigationBarColor: value == 1
-                                        ? woAuto.dayColorScheme.value.background
-                                        : value == 2
-                                            ? woAuto.nightColorScheme.value.background
-                                            : Theme.of(context).colorScheme.background,
-                                  ),
-                                );
+                                // SystemChrome.setSystemUIOverlayStyle(
+                                //   SystemUiOverlayStyle(
+                                //     systemNavigationBarColor: value == 1
+                                //         ? woAuto.dayColorScheme.value.background
+                                //         : value == 2
+                                //             ? woAuto.nightColorScheme.value.background
+                                //             : Theme.of(context).colorScheme.background,
+                                //   ),
+                                // );
                               },
                             );
                           },

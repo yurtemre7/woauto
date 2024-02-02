@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
@@ -189,15 +188,15 @@ class _IntroState extends State<IOSIntro> {
                                       Future.delayed(
                                         500.milliseconds,
                                         () {
-                                          SystemChrome.setSystemUIOverlayStyle(
-                                            SystemUiOverlayStyle(
-                                              systemNavigationBarColor: value == 1
-                                                  ? woAuto.dayColorScheme.value.background
-                                                  : value == 2
-                                                      ? woAuto.nightColorScheme.value.background
-                                                      : Theme.of(context).colorScheme.background,
-                                            ),
-                                          );
+                                          // SystemChrome.setSystemUIOverlayStyle(
+                                          //   SystemUiOverlayStyle(
+                                          //     systemNavigationBarColor: value == 1
+                                          //         ? woAuto.dayColorScheme.value.background
+                                          //         : value == 2
+                                          //             ? woAuto.nightColorScheme.value.background
+                                          //             : Theme.of(context).colorScheme.background,
+                                          //   ),
+                                          // );
                                         },
                                       );
                                     },

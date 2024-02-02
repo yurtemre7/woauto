@@ -1,5 +1,3 @@
-import 'package:dynamic_color/dynamic_color.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -8,10 +6,9 @@ import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/screens/home.dart';
+
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:woauto/screens/intro.dart';
-import 'package:woauto/screens/ios_screens/ios_home.dart';
-import 'package:woauto/screens/ios_screens/ios_intro.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -55,67 +52,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DynamicColorBuilder(
-      builder: (lightDynamic, darkDynamic) {
-        ColorScheme lightColorScheme;
-        ColorScheme darkColorScheme;
-
-        if (lightDynamic != null && darkDynamic != null) {
-          lightColorScheme = lightDynamic.harmonized();
-          darkColorScheme = darkDynamic.harmonized();
-        } else {
-          lightColorScheme = ColorScheme.fromSeed(
-            seedColor: Colors.blue,
-          );
-          darkColorScheme = ColorScheme.fromSeed(
-            seedColor: Colors.blue,
-            brightness: Brightness.dark,
-          );
-        }
-        return Obx(
-          () {
-            if (isIOS()) {
-              return GetCupertinoApp(
-                home: woAuto.welcome.value ? const IOSIntro() : const IOSHome(),
-                title: t.constants.app_name,
-                locale: TranslationProvider.of(context).flutterLocale,
-                supportedLocales: AppLocaleUtils.supportedLocales,
-                localizationsDelegates: GlobalMaterialLocalizations.delegates,
-                theme: CupertinoThemeData(
-                  brightness: woAuto.themeMode.value == 0
-                      ? null
-                      : woAuto.themeMode.value == 1
-                          ? Brightness.light
-                          : Brightness.dark,
-                ),
-              );
-            }
-            woAuto.dayColorScheme.value = lightColorScheme;
-            woAuto.nightColorScheme.value = darkColorScheme;
-            return GetMaterialApp(
-              title: t.constants.app_name,
-              theme: ThemeData(
-                useMaterial3: true,
-                colorScheme: lightColorScheme,
-              ),
-              darkTheme: ThemeData(
-                useMaterial3: true,
-                colorScheme: darkColorScheme,
-              ),
-              themeMode: getThemeMode(woAuto.themeMode.value),
-              home: woAuto.welcome.value ? const Intro() : const Home(),
-              logWriterCallback: (text, {isError = false}) {
-                if (isError == true) {
-                  logMessage(text, tag: 'ERROR');
-                } else {
-                  logMessage(text, tag: 'INFO');
-                }
-              },
-              locale: TranslationProvider.of(context).flutterLocale,
-              supportedLocales: AppLocaleUtils.supportedLocales,
-              localizationsDelegates: GlobalMaterialLocalizations.delegates,
-            );
-          },
+    return Obx(
+      () {
+        return GetMaterialApp(
+          title: t.constants.app_name,
+          themeMode: getThemeMode(woAuto.themeMode.value),
+          theme: ThemeData(
+            brightness: woAuto.themeMode.value == 0
+                ? MediaQuery.of(context).platformBrightness
+                : woAuto.themeMode.value == 1
+                    ? Brightness.light
+                    : Brightness.dark,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Color(woAuto.appColor.value),
+              brightness: woAuto.themeMode.value == 0
+                  ? MediaQuery.of(context).platformBrightness
+                  : woAuto.themeMode.value == 1
+                      ? Brightness.light
+                      : Brightness.dark,
+            ),
+          ),
+          home: woAuto.welcome.value ? const Intro() : const Home(),
+          locale: TranslationProvider.of(context).flutterLocale,
+          supportedLocales: AppLocaleUtils.supportedLocales,
+          localizationsDelegates: GlobalMaterialLocalizations.delegates,
         );
       },
     );

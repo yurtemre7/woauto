@@ -53,6 +53,7 @@ class WoAuto extends GetxController {
 
   // settings
   final themeMode = 0.obs;
+  final appColor = Colors.orange.value.obs;
   final mapType = MapType.normal.obs;
   final showTraffic = false.obs;
   final timePuffer = 10.obs;
@@ -68,13 +69,6 @@ class WoAuto extends GetxController {
 
   // data
   final currentVelocity = 0.0.obs;
-  final dayColorScheme = ColorScheme.fromSeed(
-    seedColor: Colors.blue,
-  ).obs;
-  final nightColorScheme = ColorScheme.fromSeed(
-    seedColor: Colors.blue,
-    brightness: Brightness.dark,
-  ).obs;
 
   late SharedPreferences sp;
 
@@ -101,6 +95,7 @@ class WoAuto extends GetxController {
       'carPicture': carPicture.value,
       'carPictureDate': carBaujahr.value,
       'themeMode': themeMode.value,
+      'appColor': appColor.value.toString(),
       'carParkings': carParkings.map((e) => e.toJson()).toList(),
       'carParkHistory': carParkingHistory.map((e) => e.toJson()).toList(),
       'welcome': welcome.value,
@@ -146,6 +141,7 @@ class WoAuto extends GetxController {
     woAuto.carBaujahr.value = jsonMap['carPictureDate'] ?? DateTime.now().year.toString();
     // settings
     woAuto.themeMode.value = jsonMap['themeMode'] ?? 0;
+    woAuto.appColor.value = int.parse(jsonMap['appColor'] ?? Colors.orange.value.toString());
 
     return woAuto;
   }
@@ -222,6 +218,7 @@ class WoAuto extends GetxController {
     carBaujahr.value = DateTime.now().year.toString();
 
     themeMode.value = 0;
+    appColor.value = Colors.orange.value;
     timePuffer.value = 10;
     drivingModeDetectionSpeed.value = 20;
 
@@ -234,6 +231,24 @@ class WoAuto extends GetxController {
     currentIndex.value = 0;
 
     await woAuto.save();
+  }
+
+  void setTheme() {
+    var brightness = woAuto.themeMode.value == 0
+        ? Get.mediaQuery.platformBrightness
+        : woAuto.themeMode.value == 1
+            ? Brightness.light
+            : Brightness.dark;
+    Get.changeTheme(
+      ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color(appColor.value),
+          brightness: brightness,
+        ),
+        useMaterial3: true,
+        brightness: brightness,
+      ),
+    );
   }
 
   Future<void> onNewParking(LatLng newPosition) async {

@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -10,7 +8,6 @@ import 'package:woauto/components/div.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
-import 'package:woauto/screens/ios_screens/ios_home.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -88,18 +85,17 @@ class _SettingsState extends State<Settings> {
                                     ? Brightness.light
                                     : v == 2
                                         ? Brightness.dark
-                                        : null,
+                                        : Get.mediaQuery.platformBrightness,
                               );
+                              // todo fix
+                              woAuto.setTheme();
                               await woAuto.save();
                               if (!mounted) return;
                               Future.delayed(500.milliseconds, () {
                                 SystemChrome.setSystemUIOverlayStyle(
                                   SystemUiOverlayStyle(
-                                    systemNavigationBarColor: v == 1
-                                        ? woAuto.dayColorScheme.value.background
-                                        : v == 2
-                                            ? woAuto.nightColorScheme.value.background
-                                            : Theme.of(context).colorScheme.background,
+                                    systemNavigationBarColor:
+                                        Theme.of(context).colorScheme.background,
                                   ),
                                 );
                               });
@@ -119,6 +115,51 @@ class _SettingsState extends State<Settings> {
                             trailing: dropdownButton,
                           );
                         },
+                      ),
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Obx(
+                          () => Row(
+                            children: [
+                              ...Colors.primaries.map((color) {
+                                return Container(
+                                  margin: const EdgeInsets.all(8),
+                                  child: ChoiceChip(
+                                    label: Text(
+                                      t.settings.color.choice,
+                                      style: TextStyle(
+                                        color: color.computeLuminance() > 0.5
+                                            ? Colors.black
+                                            : Colors.white,
+                                      ),
+                                    ),
+                                    backgroundColor: color,
+                                    selectedColor: color,
+                                    color: MaterialStatePropertyAll(color),
+                                    checkmarkColor: color.computeLuminance() > 0.5
+                                        ? Colors.black
+                                        : Colors.white,
+                                    selected: color.value == woAuto.appColor.value,
+                                    onSelected: (value) {
+                                      woAuto.appColor.value = color.value;
+                                      woAuto.save();
+                                      woAuto.setTheme();
+                                      if (!mounted) return;
+                                      Future.delayed(500.milliseconds, () {
+                                        SystemChrome.setSystemUIOverlayStyle(
+                                          SystemUiOverlayStyle(
+                                            systemNavigationBarColor:
+                                                Theme.of(context).colorScheme.background,
+                                          ),
+                                        );
+                                      });
+                                    },
+                                  ),
+                                );
+                              }),
+                            ],
+                          ),
+                        ),
                       ),
                       Obx(
                         () {
