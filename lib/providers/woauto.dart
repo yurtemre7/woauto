@@ -793,12 +793,15 @@ class WoAuto extends GetxController {
               sound: true,
             );
       } else if (isAndroid()) {
-        res = await flutterLocalNotificationsPlugin
-            .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-            ?.requestNotificationsPermission();
-        res = await flutterLocalNotificationsPlugin
-            .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-            ?.requestExactAlarmsPermission();
+        res = (await flutterLocalNotificationsPlugin
+                .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+                ?.requestNotificationsPermission()) ??
+            false;
+        var res2 = (await flutterLocalNotificationsPlugin
+                .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+                ?.requestExactAlarmsPermission()) ??
+            false;
+        res = res && res2;
       } else {
         Get.dialog(
           AlertDialog(
