@@ -47,6 +47,6 @@ app.*.map.json
 /android/app/release
 lib/key.dart
 .fleet/settings.json
-android/pc-api-7086122894529242474-140-98f3a9e29896.json
 android/fastlane/report.xml
 android/fastlane/metadata/android/de-DE/changelogs/
+android/pc-api-*.json
