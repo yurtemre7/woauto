@@ -796,6 +796,9 @@ class WoAuto extends GetxController {
         res = await flutterLocalNotificationsPlugin
             .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
             ?.requestNotificationsPermission();
+        res = await flutterLocalNotificationsPlugin
+            .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+            ?.requestExactAlarmsPermission();
       } else {
         Get.dialog(
           AlertDialog(
