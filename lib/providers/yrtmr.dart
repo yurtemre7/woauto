@@ -90,9 +90,8 @@ class YrtmrDeeplinks {
       switch (deeplink.link) {
         case 'add-location':
           await addLocation(deeplink);
-          break;
         default:
-          break;
+          return;
       }
     } catch (e) {
       logMessage('YrtmrDeeplinks Error: ${e.toString()}');
