@@ -178,6 +178,8 @@
       "location_checkbox": "Echtzeit-Standortberechtigung",
       "location_checkbox_error": "Bitte erlaube der App, deinen Standort während der App-Nutzung abzufragen.",
       "notification_checkbox": "Benachrichtigungen (optional)",
+      "exact_notification_checkbox": "Geplante Benachrichtigungen (optional)",
+      "exact_notification_description": "Erhalte somit Benachrichtigungen, wenn dein Parkticket bald abläuft.",
       "action_1": "Fertig"
     }
   },
@@ -312,6 +314,9 @@
       "dropdown_1": "System",
       "dropdown_2": "Hell",
       "dropdown_3": "Dunkel"
+    },
+    "color": {
+      "choice": "Farbe"
     },
     "map_type": {
       "title": "Karten Typ",

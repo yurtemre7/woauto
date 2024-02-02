@@ -179,6 +179,8 @@
       "location_checkbox": "Real-time location permission",
       "location_checkbox_error": "Please allow the app to query your location while using the app.",
       "notification_checkbox": "Notifications (optional)",
+      "exact_notification_checkbox": "Scheduled notifications (optional)",
+      "exact_notification_description": "Receive a notification when your parking ticket is about to expire.",
       "action_1": "Done"
     }
   },
@@ -313,6 +315,9 @@
       "dropdown_1": "System",
       "dropdown_2": "Light",
       "dropdown_3": "Dark"
+    },
+    "color": {
+      "choice": "Color"
     },
     "map_type": {
       "title": "Map type",

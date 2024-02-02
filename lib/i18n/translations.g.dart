@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 422 (211 per locale)
+/// Strings: 428 (214 per locale)
 ///
-/// Built on 2023-09-20 at 16:25 UTC
+/// Built on 2024-02-02 at 18:32 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -24,8 +24,8 @@ const AppLocale _baseLocale = AppLocale.de;
 /// - LocaleSettings.setLocale(AppLocale.de) // set locale
 /// - Locale locale = AppLocale.de.flutterLocale // get flutter locale from enum
 /// - if (LocaleSettings.currentLocale == AppLocale.de) // locale check
-enum AppLocale with BaseAppLocale<AppLocale, _TranslationsDe> {
-	de(languageCode: 'de', build: _TranslationsDe.build),
+enum AppLocale with BaseAppLocale<AppLocale, Translations> {
+	de(languageCode: 'de', build: Translations.build),
 	en(languageCode: 'en', build: _TranslationsEn.build);
 
 	const AppLocale({required this.languageCode, this.scriptCode, this.countryCode, required this.build}); // ignore: unused_element
@@ -33,10 +33,10 @@ enum AppLocale with BaseAppLocale<AppLocale, _TranslationsDe> {
 	@override final String languageCode;
 	@override final String? scriptCode;
 	@override final String? countryCode;
-	@override final TranslationBuilder<AppLocale, _TranslationsDe> build;
+	@override final TranslationBuilder<AppLocale, Translations> build;
 
 	/// Gets current instance managed by [LocaleSettings].
-	_TranslationsDe get translations => LocaleSettings.instance.translationMap[this]!;
+	Translations get translations => LocaleSettings.instance.translationMap[this]!;
 }
 
 /// Method A: Simple
@@ -48,7 +48,7 @@ enum AppLocale with BaseAppLocale<AppLocale, _TranslationsDe> {
 /// Usage:
 /// String a = t.someKey.anotherKey;
 /// String b = t['someKey.anotherKey']; // Only for edge cases!
-_TranslationsDe get t => LocaleSettings.instance.currentTranslations;
+Translations get t => LocaleSettings.instance.currentTranslations;
 
 /// Method B: Advanced
 ///
@@ -65,17 +65,10 @@ _TranslationsDe get t => LocaleSettings.instance.currentTranslations;
 /// final t = Translations.of(context); // Get t variable.
 /// String a = t.someKey.anotherKey; // Use t variable.
 /// String b = t['someKey.anotherKey']; // Only for edge cases!
-class Translations {
-	Translations._(); // no constructor
-
-	static _TranslationsDe of(BuildContext context) => InheritedLocaleData.of<AppLocale, _TranslationsDe>(context).translations;
-}
-
-/// The provider for method B
-class TranslationProvider extends BaseTranslationProvider<AppLocale, _TranslationsDe> {
+class TranslationProvider extends BaseTranslationProvider<AppLocale, Translations> {
 	TranslationProvider({required super.child}) : super(settings: LocaleSettings.instance);
 
-	static InheritedLocaleData<AppLocale, _TranslationsDe> of(BuildContext context) => InheritedLocaleData.of<AppLocale, _TranslationsDe>(context);
+	static InheritedLocaleData<AppLocale, Translations> of(BuildContext context) => InheritedLocaleData.of<AppLocale, Translations>(context);
 }
 
 /// Method B shorthand via [BuildContext] extension method.
@@ -84,11 +77,11 @@ class TranslationProvider extends BaseTranslationProvider<AppLocale, _Translatio
 /// Usage (e.g. in a widget's build method):
 /// context.t.someKey.anotherKey
 extension BuildContextTranslationsExtension on BuildContext {
-	_TranslationsDe get t => TranslationProvider.of(this).translations;
+	Translations get t => TranslationProvider.of(this).translations;
 }
 
 /// Manages all translation instances and the current locale
-class LocaleSettings extends BaseFlutterLocaleSettings<AppLocale, _TranslationsDe> {
+class LocaleSettings extends BaseFlutterLocaleSettings<AppLocale, Translations> {
 	LocaleSettings._() : super(utils: AppLocaleUtils.instance);
 
 	static final instance = LocaleSettings._();
@@ -110,7 +103,7 @@ class LocaleSettings extends BaseFlutterLocaleSettings<AppLocale, _TranslationsD
 }
 
 /// Provides utility functions without any side effects.
-class AppLocaleUtils extends BaseAppLocaleUtils<AppLocale, _TranslationsDe> {
+class AppLocaleUtils extends BaseAppLocaleUtils<AppLocale, Translations> {
 	AppLocaleUtils._() : super(baseLocale: _baseLocale, locales: AppLocale.values);
 
 	static final instance = AppLocaleUtils._();
@@ -126,11 +119,16 @@ class AppLocaleUtils extends BaseAppLocaleUtils<AppLocale, _TranslationsDe> {
 // translations
 
 // Path: <root>
-class _TranslationsDe implements BaseTranslations<AppLocale, _TranslationsDe> {
+class Translations implements BaseTranslations<AppLocale, Translations> {
+	/// Returns the current translations of the given [context].
+	///
+	/// Usage:
+	/// final t = Translations.of(context);
+	static Translations of(BuildContext context) => InheritedLocaleData.of<AppLocale, Translations>(context).translations;
 
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
-	_TranslationsDe.build({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver})
+	Translations.build({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver})
 		: assert(overrides == null, 'Set "translation_overrides: true" in order to enable this feature.'),
 		  $meta = TranslationMetadata(
 		    locale: AppLocale.de,
@@ -142,12 +140,12 @@ class _TranslationsDe implements BaseTranslations<AppLocale, _TranslationsDe> {
 	}
 
 	/// Metadata for the translations of <de>.
-	@override final TranslationMetadata<AppLocale, _TranslationsDe> $meta;
+	@override final TranslationMetadata<AppLocale, Translations> $meta;
 
 	/// Access flat map
 	dynamic operator[](String key) => $meta.getTranslation(key);
 
-	late final _TranslationsDe _root = this; // ignore: unused_field
+	late final Translations _root = this; // ignore: unused_field
 
 	// Translations
 	late final _TranslationsConstantsDe constants = _TranslationsConstantsDe._(_root);
@@ -172,7 +170,7 @@ class _TranslationsDe implements BaseTranslations<AppLocale, _TranslationsDe> {
 class _TranslationsConstantsDe {
 	_TranslationsConstantsDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get app_name => 'WoAuto';
@@ -192,7 +190,7 @@ class _TranslationsConstantsDe {
 class _TranslationsParkDurationDe {
 	_TranslationsParkDurationDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String hours({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('de'))(n,
@@ -213,7 +211,7 @@ class _TranslationsParkDurationDe {
 class _TranslationsParkDialogDe {
 	_TranslationsParkDialogDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Neuer Parkplatz';
@@ -229,7 +227,7 @@ class _TranslationsParkDialogDe {
 class _TranslationsMarkerDialogDe {
 	_TranslationsMarkerDialogDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	late final _TranslationsMarkerDialogSharedDe shared = _TranslationsMarkerDialogSharedDe._(_root);
@@ -241,7 +239,7 @@ class _TranslationsMarkerDialogDe {
 class _TranslationsHomeDe {
 	_TranslationsHomeDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get navigation_1 => 'Karte';
@@ -255,7 +253,7 @@ class _TranslationsHomeDe {
 class _TranslationsHistoryDe {
 	_TranslationsHistoryDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Historie';
@@ -268,7 +266,7 @@ class _TranslationsHistoryDe {
 class _TranslationsInfoSheetDe {
 	_TranslationsInfoSheetDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get park_save => 'Parkplatz speichern';
@@ -281,7 +279,7 @@ class _TranslationsInfoSheetDe {
 class _TranslationsTopHeaderDe {
 	_TranslationsTopHeaderDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get driving_mode_tooltip => 'Driving Modus';
@@ -291,7 +289,7 @@ class _TranslationsTopHeaderDe {
 class _TranslationsCarBottomSheetDe {
 	_TranslationsCarBottomSheetDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	late final _TranslationsCarBottomSheetEmptyDe empty = _TranslationsCarBottomSheetEmptyDe._(_root);
@@ -305,7 +303,7 @@ class _TranslationsCarBottomSheetDe {
 class _TranslationsMyCarDe {
 	_TranslationsMyCarDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Mein Auto';
@@ -322,7 +320,7 @@ class _TranslationsMyCarDe {
 class _TranslationsMapsDe {
 	_TranslationsMapsDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get loading => 'Lädt Karte...';
@@ -333,7 +331,7 @@ class _TranslationsMapsDe {
 class _TranslationsIntroDe {
 	_TranslationsIntroDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	late final _TranslationsIntroPage1De page_1 = _TranslationsIntroPage1De._(_root);
@@ -344,7 +342,7 @@ class _TranslationsIntroDe {
 class _TranslationsBottomSheetDe {
 	_TranslationsBottomSheetDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get photo => 'Foto auswählen';
@@ -356,7 +354,7 @@ class _TranslationsBottomSheetDe {
 class _TranslationsSnackbarDe {
 	_TranslationsSnackbarDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	late final _TranslationsSnackbarLockedDe locked = _TranslationsSnackbarLockedDe._(_root);
@@ -368,7 +366,7 @@ class _TranslationsSnackbarDe {
 class _TranslationsDialogDe {
 	_TranslationsDialogDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get abort => 'Abbrechen';
@@ -396,11 +394,12 @@ class _TranslationsDialogDe {
 class _TranslationsSettingsDe {
 	_TranslationsSettingsDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Einstellungen';
 	late final _TranslationsSettingsThemeDe theme = _TranslationsSettingsThemeDe._(_root);
+	late final _TranslationsSettingsColorDe color = _TranslationsSettingsColorDe._(_root);
 	late final _TranslationsSettingsMapTypeDe map_type = _TranslationsSettingsMapTypeDe._(_root);
 	late final _TranslationsSettingsTrafficDe traffic = _TranslationsSettingsTrafficDe._(_root);
 	late final _TranslationsSettingsNewIosDe new_ios = _TranslationsSettingsNewIosDe._(_root);
@@ -418,7 +417,7 @@ class _TranslationsSettingsDe {
 class _TranslationsParkDialogParkNameDe {
 	_TranslationsParkDialogParkNameDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get label => 'Name';
@@ -428,7 +427,7 @@ class _TranslationsParkDialogParkNameDe {
 class _TranslationsParkDialogInfoDe {
 	_TranslationsParkDialogInfoDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get label => 'Info';
@@ -438,7 +437,7 @@ class _TranslationsParkDialogInfoDe {
 class _TranslationsParkDialogTicketDe {
 	_TranslationsParkDialogTicketDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Parkticket';
@@ -450,7 +449,7 @@ class _TranslationsParkDialogTicketDe {
 class _TranslationsParkDialogPhotoDe {
 	_TranslationsParkDialogPhotoDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Foto';
@@ -460,7 +459,7 @@ class _TranslationsParkDialogPhotoDe {
 class _TranslationsMarkerDialogSharedDe {
 	_TranslationsMarkerDialogSharedDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String content({required Object address}) => 'Dieser Parkplatz wurde dir geteilt.\n\nDas Auto steht an folgender Adresse:\n${address}.';
@@ -470,7 +469,7 @@ class _TranslationsMarkerDialogSharedDe {
 class _TranslationsMarkerDialogMineDe {
 	_TranslationsMarkerDialogMineDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String content({required Object formattedDate, required Object address, required Object description}) => 'Du hast ${formattedDate}.\n\nDein Auto steht an folgender Adresse:\n${address}.\n${description}';
@@ -480,7 +479,7 @@ class _TranslationsMarkerDialogMineDe {
 class _TranslationsHomeQuickActionsDe {
 	_TranslationsHomeQuickActionsDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get action_parkings => 'Parkplätze ansehen';
@@ -491,7 +490,7 @@ class _TranslationsHomeQuickActionsDe {
 class _TranslationsHistoryEmptyDe {
 	_TranslationsHistoryEmptyDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Keine Einträge';
@@ -502,7 +501,7 @@ class _TranslationsHistoryEmptyDe {
 class _TranslationsHistoryExportDe {
 	_TranslationsHistoryExportDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Exportiere als CSV';
@@ -513,7 +512,7 @@ class _TranslationsHistoryExportDe {
 class _TranslationsHistoryDeleteDe {
 	_TranslationsHistoryDeleteDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Lösche alle Einträge';
@@ -524,7 +523,7 @@ class _TranslationsHistoryDeleteDe {
 class _TranslationsCarBottomSheetEmptyDe {
 	_TranslationsCarBottomSheetEmptyDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get parkings => 'Du hast keine Parkplätze.';
@@ -535,7 +534,7 @@ class _TranslationsCarBottomSheetEmptyDe {
 class _TranslationsCarBottomSheetDistanceCalculationDe {
 	_TranslationsCarBottomSheetDistanceCalculationDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Wie wird die Entfernung berechnet, fragst du dich?';
@@ -545,7 +544,7 @@ class _TranslationsCarBottomSheetDistanceCalculationDe {
 class _TranslationsCarBottomSheetParkingsDe {
 	_TranslationsCarBottomSheetParkingsDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Parkplätze';
@@ -555,7 +554,7 @@ class _TranslationsCarBottomSheetParkingsDe {
 class _TranslationsCarBottomSheetSharedParkingsDe {
 	_TranslationsCarBottomSheetSharedParkingsDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Geteilte Parkplätze';
@@ -565,7 +564,7 @@ class _TranslationsCarBottomSheetSharedParkingsDe {
 class _TranslationsCarBottomSheetMenuDe {
 	_TranslationsCarBottomSheetMenuDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get open_park_in_maps => 'Karten App öffnen';
@@ -577,7 +576,7 @@ class _TranslationsCarBottomSheetMenuDe {
 class _TranslationsMyCarBuiltDe {
 	_TranslationsMyCarBuiltDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String title({required Object baujahr, required Object jahre}) => 'Baujahr: ${baujahr} (${jahre} Jahre)';
@@ -593,7 +592,7 @@ class _TranslationsMyCarBuiltDe {
 class _TranslationsMyCarDrivenDe {
 	_TranslationsMyCarDrivenDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String title({required Object km}) => '${km} km gefahren';
@@ -607,7 +606,7 @@ class _TranslationsMyCarDrivenDe {
 class _TranslationsMyCarPlateDe {
 	_TranslationsMyCarPlateDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String title({required Object plate}) => 'Kennzeichen: ${plate}';
@@ -620,7 +619,7 @@ class _TranslationsMyCarPlateDe {
 class _TranslationsMyCarParkNameDe {
 	_TranslationsMyCarParkNameDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String title({required Object name}) => 'Titel: ${name}';
@@ -632,7 +631,7 @@ class _TranslationsMyCarParkNameDe {
 class _TranslationsMyCarTuvDe {
 	_TranslationsMyCarTuvDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String title({required Object date}) => 'TÜV bis ${date}';
@@ -649,7 +648,7 @@ class _TranslationsMyCarTuvDe {
 class _TranslationsMapsTrafficDe {
 	_TranslationsMapsTrafficDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get show => 'Verkehr anzeigen';
@@ -660,7 +659,7 @@ class _TranslationsMapsTrafficDe {
 class _TranslationsIntroPage1De {
 	_TranslationsIntroPage1De._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get page_title => 'WoAuto';
@@ -675,7 +674,7 @@ class _TranslationsIntroPage1De {
 class _TranslationsIntroPage2De {
 	_TranslationsIntroPage2De._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get page_title => 'App-Voreinstellungen';
@@ -689,6 +688,8 @@ class _TranslationsIntroPage2De {
 	String get location_checkbox => 'Echtzeit-Standortberechtigung';
 	String get location_checkbox_error => 'Bitte erlaube der App, deinen Standort während der App-Nutzung abzufragen.';
 	String get notification_checkbox => 'Benachrichtigungen (optional)';
+	String get exact_notification_checkbox => 'Geplante Benachrichtigungen (optional)';
+	String get exact_notification_description => 'Erhalte somit Benachrichtigungen, wenn dein Parkticket bald abläuft.';
 	String get action_1 => 'Fertig';
 }
 
@@ -696,7 +697,7 @@ class _TranslationsIntroPage2De {
 class _TranslationsSnackbarLockedDe {
 	_TranslationsSnackbarLockedDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Hast du dein Auto abgeschlossen?';
@@ -708,7 +709,7 @@ class _TranslationsSnackbarLockedDe {
 class _TranslationsSnackbarSharedParkingDe {
 	_TranslationsSnackbarSharedParkingDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Ein geteilter Online Parkplatz wurde hinzugefügt';
@@ -719,7 +720,7 @@ class _TranslationsSnackbarSharedParkingDe {
 class _TranslationsSnackbarDistanceCalculationDe {
 	_TranslationsSnackbarDistanceCalculationDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Wie wird die Entfernung berechnet?';
@@ -731,7 +732,7 @@ class _TranslationsSnackbarDistanceCalculationDe {
 class _TranslationsDialogNavigationDe {
 	_TranslationsDialogNavigationDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Standort Info';
@@ -743,7 +744,7 @@ class _TranslationsDialogNavigationDe {
 class _TranslationsDialogNotificationsDe {
 	_TranslationsDialogNotificationsDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	late final _TranslationsDialogNotificationsNaDe na = _TranslationsDialogNotificationsNaDe._(_root);
@@ -756,7 +757,7 @@ class _TranslationsDialogNotificationsDe {
 class _TranslationsDialogCarBottomSheetDe {
 	_TranslationsDialogCarBottomSheetDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	late final _TranslationsDialogCarBottomSheetSyncDe sync = _TranslationsDialogCarBottomSheetSyncDe._(_root);
@@ -768,7 +769,7 @@ class _TranslationsDialogCarBottomSheetDe {
 class _TranslationsDialogMapsDe {
 	_TranslationsDialogMapsDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	late final _TranslationsDialogMapsDrivingModeDe driving_mode = _TranslationsDialogMapsDrivingModeDe._(_root);
@@ -779,7 +780,7 @@ class _TranslationsDialogMapsDe {
 class _TranslationsDialogHistoryDe {
 	_TranslationsDialogHistoryDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	late final _TranslationsDialogHistoryInfoDe info = _TranslationsDialogHistoryInfoDe._(_root);
@@ -790,7 +791,7 @@ class _TranslationsDialogHistoryDe {
 class _TranslationsDialogLeaveInfoDe {
 	_TranslationsDialogLeaveInfoDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'App verlassen';
@@ -801,7 +802,7 @@ class _TranslationsDialogLeaveInfoDe {
 class _TranslationsDialogAppInfoDe {
 	_TranslationsDialogAppInfoDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'App Info';
@@ -813,7 +814,7 @@ class _TranslationsDialogAppInfoDe {
 class _TranslationsDialogFeedbackDe {
 	_TranslationsDialogFeedbackDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Feedback';
@@ -826,7 +827,7 @@ class _TranslationsDialogFeedbackDe {
 class _TranslationsDialogDataSecurityDe {
 	_TranslationsDialogDataSecurityDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Datenschutz und Impressum';
@@ -846,7 +847,7 @@ class _TranslationsDialogDataSecurityDe {
 class _TranslationsDialogAppDataDe {
 	_TranslationsDialogAppDataDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'App-Daten löschen';
@@ -857,7 +858,7 @@ class _TranslationsDialogAppDataDe {
 class _TranslationsSettingsThemeDe {
 	_TranslationsSettingsThemeDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Theme';
@@ -867,11 +868,21 @@ class _TranslationsSettingsThemeDe {
 	String get dropdown_3 => 'Dunkel';
 }
 
+// Path: settings.color
+class _TranslationsSettingsColorDe {
+	_TranslationsSettingsColorDe._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get choice => 'Farbe';
+}
+
 // Path: settings.map_type
 class _TranslationsSettingsMapTypeDe {
 	_TranslationsSettingsMapTypeDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Karten Typ';
@@ -886,7 +897,7 @@ class _TranslationsSettingsMapTypeDe {
 class _TranslationsSettingsTrafficDe {
 	_TranslationsSettingsTrafficDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Verkehrslage';
@@ -897,7 +908,7 @@ class _TranslationsSettingsTrafficDe {
 class _TranslationsSettingsNewIosDe {
 	_TranslationsSettingsNewIosDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'iOS Design';
@@ -908,7 +919,7 @@ class _TranslationsSettingsNewIosDe {
 class _TranslationsSettingsParkTicketDe {
 	_TranslationsSettingsParkTicketDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Parkticket Zeitpuffer';
@@ -920,7 +931,7 @@ class _TranslationsSettingsParkTicketDe {
 class _TranslationsSettingsDrivingModeDe {
 	_TranslationsSettingsDrivingModeDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Driving Modus Erkennung';
@@ -932,7 +943,7 @@ class _TranslationsSettingsDrivingModeDe {
 class _TranslationsSettingsAppInfoDe {
 	_TranslationsSettingsAppInfoDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'App Info';
@@ -943,7 +954,7 @@ class _TranslationsSettingsAppInfoDe {
 class _TranslationsSettingsCreditsDe {
 	_TranslationsSettingsCreditsDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Credits';
@@ -954,7 +965,7 @@ class _TranslationsSettingsCreditsDe {
 class _TranslationsSettingsShareDe {
 	_TranslationsSettingsShareDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'App Teilen';
@@ -966,7 +977,7 @@ class _TranslationsSettingsShareDe {
 class _TranslationsSettingsFeedbackDe {
 	_TranslationsSettingsFeedbackDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Feedback';
@@ -977,7 +988,7 @@ class _TranslationsSettingsFeedbackDe {
 class _TranslationsSettingsDataSecurityDe {
 	_TranslationsSettingsDataSecurityDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Datenschutz und Impressum';
@@ -988,7 +999,7 @@ class _TranslationsSettingsDataSecurityDe {
 class _TranslationsSettingsAppDataDe {
 	_TranslationsSettingsAppDataDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Lösche alle App-Daten';
@@ -1000,7 +1011,7 @@ class _TranslationsSettingsAppDataDe {
 class _TranslationsDialogNotificationsNaDe {
 	_TranslationsDialogNotificationsNaDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Benachrichtigungen nicht verfügbar';
@@ -1011,7 +1022,7 @@ class _TranslationsDialogNotificationsNaDe {
 class _TranslationsDialogNotificationsDeniedDe {
 	_TranslationsDialogNotificationsDeniedDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Benachrichtigungen verweigert';
@@ -1022,7 +1033,7 @@ class _TranslationsDialogNotificationsDeniedDe {
 class _TranslationsDialogNotificationsSentDe {
 	_TranslationsDialogNotificationsSentDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Auto geparkt';
@@ -1032,7 +1043,7 @@ class _TranslationsDialogNotificationsSentDe {
 class _TranslationsDialogNotificationsExpiringDe {
 	_TranslationsDialogNotificationsExpiringDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Dein Parkticket läuft bald ab';
@@ -1043,7 +1054,7 @@ class _TranslationsDialogNotificationsExpiringDe {
 class _TranslationsDialogCarBottomSheetSyncDe {
 	_TranslationsDialogCarBottomSheetSyncDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Parkplatz synchronisieren';
@@ -1055,7 +1066,7 @@ class _TranslationsDialogCarBottomSheetSyncDe {
 class _TranslationsDialogCarBottomSheetSyncedDe {
 	_TranslationsDialogCarBottomSheetSyncedDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Parkplatz synchronisiert';
@@ -1066,7 +1077,7 @@ class _TranslationsDialogCarBottomSheetSyncedDe {
 class _TranslationsDialogCarBottomSheetSharingDe {
 	_TranslationsDialogCarBottomSheetSharingDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Parkplatz teilen';
@@ -1079,7 +1090,7 @@ class _TranslationsDialogCarBottomSheetSharingDe {
 class _TranslationsDialogMapsDrivingModeDe {
 	_TranslationsDialogMapsDrivingModeDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Driving Modus erkannt';
@@ -1090,7 +1101,7 @@ class _TranslationsDialogMapsDrivingModeDe {
 class _TranslationsDialogMapsLocationDeniedDe {
 	_TranslationsDialogMapsLocationDeniedDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Standortberechtigung verweigert';
@@ -1101,7 +1112,7 @@ class _TranslationsDialogMapsLocationDeniedDe {
 class _TranslationsDialogHistoryInfoDe {
 	_TranslationsDialogHistoryInfoDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Historie';
@@ -1112,7 +1123,7 @@ class _TranslationsDialogHistoryInfoDe {
 class _TranslationsDialogHistoryDeleteDe {
 	_TranslationsDialogHistoryDeleteDe._(this._root);
 
-	final _TranslationsDe _root; // ignore: unused_field
+	final Translations _root; // ignore: unused_field
 
 	// Translations
 	String get title => 'Lösche alle Einträge';
@@ -1120,8 +1131,7 @@ class _TranslationsDialogHistoryDeleteDe {
 }
 
 // Path: <root>
-class _TranslationsEn extends _TranslationsDe {
-
+class _TranslationsEn extends Translations {
 	/// You can call this constructor and build your own translation instance of this locale.
 	/// Constructing via the enum [AppLocale.build] is preferred.
 	_TranslationsEn.build({Map<String, Node>? overrides, PluralResolver? cardinalResolver, PluralResolver? ordinalResolver})
@@ -1138,7 +1148,7 @@ class _TranslationsEn extends _TranslationsDe {
 	}
 
 	/// Metadata for the translations of <en>.
-	@override final TranslationMetadata<AppLocale, _TranslationsDe> $meta;
+	@override final TranslationMetadata<AppLocale, Translations> $meta;
 
 	/// Access flat map
 	@override dynamic operator[](String key) => $meta.getTranslation(key) ?? super.$meta.getTranslation(key);
@@ -1397,6 +1407,7 @@ class _TranslationsSettingsEn extends _TranslationsSettingsDe {
 	// Translations
 	@override String get title => 'Settings';
 	@override late final _TranslationsSettingsThemeEn theme = _TranslationsSettingsThemeEn._(_root);
+	@override late final _TranslationsSettingsColorEn color = _TranslationsSettingsColorEn._(_root);
 	@override late final _TranslationsSettingsMapTypeEn map_type = _TranslationsSettingsMapTypeEn._(_root);
 	@override late final _TranslationsSettingsTrafficEn traffic = _TranslationsSettingsTrafficEn._(_root);
 	@override late final _TranslationsSettingsNewIosEn new_ios = _TranslationsSettingsNewIosEn._(_root);
@@ -1685,6 +1696,8 @@ class _TranslationsIntroPage2En extends _TranslationsIntroPage2De {
 	@override String get location_checkbox => 'Real-time location permission';
 	@override String get location_checkbox_error => 'Please allow the app to query your location while using the app.';
 	@override String get notification_checkbox => 'Notifications (optional)';
+	@override String get exact_notification_checkbox => 'Scheduled notifications (optional)';
+	@override String get exact_notification_description => 'Receive a notification when your parking ticket is about to expire.';
 	@override String get action_1 => 'Done';
 }
 
@@ -1861,6 +1874,16 @@ class _TranslationsSettingsThemeEn extends _TranslationsSettingsThemeDe {
 	@override String get dropdown_1 => 'System';
 	@override String get dropdown_2 => 'Light';
 	@override String get dropdown_3 => 'Dark';
+}
+
+// Path: settings.color
+class _TranslationsSettingsColorEn extends _TranslationsSettingsColorDe {
+	_TranslationsSettingsColorEn._(_TranslationsEn root) : this._root = root, super._(root);
+
+	@override final _TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get choice => 'Color';
 }
 
 // Path: settings.map_type
@@ -2118,7 +2141,7 @@ class _TranslationsDialogHistoryDeleteEn extends _TranslationsDialogHistoryDelet
 /// Flat map(s) containing all translations.
 /// Only for edge cases! For simple maps, use the map function of this library.
 
-extension on _TranslationsDe {
+extension on Translations {
 	dynamic _flatMapFunction(String path) {
 		switch (path) {
 			case 'constants.app_name': return 'WoAuto';
@@ -2232,6 +2255,8 @@ extension on _TranslationsDe {
 			case 'intro.page_2.location_checkbox': return 'Echtzeit-Standortberechtigung';
 			case 'intro.page_2.location_checkbox_error': return 'Bitte erlaube der App, deinen Standort während der App-Nutzung abzufragen.';
 			case 'intro.page_2.notification_checkbox': return 'Benachrichtigungen (optional)';
+			case 'intro.page_2.exact_notification_checkbox': return 'Geplante Benachrichtigungen (optional)';
+			case 'intro.page_2.exact_notification_description': return 'Erhalte somit Benachrichtigungen, wenn dein Parkticket bald abläuft.';
 			case 'intro.page_2.action_1': return 'Fertig';
 			case 'bottom_sheet.photo': return 'Foto auswählen';
 			case 'bottom_sheet.camera': return 'Foto aufnehmen';
@@ -2308,6 +2333,7 @@ extension on _TranslationsDe {
 			case 'settings.theme.dropdown_1': return 'System';
 			case 'settings.theme.dropdown_2': return 'Hell';
 			case 'settings.theme.dropdown_3': return 'Dunkel';
+			case 'settings.color.choice': return 'Farbe';
 			case 'settings.map_type.title': return 'Karten Typ';
 			case 'settings.map_type.subtitle': return 'Wähle den Karten Typ aus, der dir am besten gefällt.';
 			case 'settings.map_type.dropdown_1': return 'Normal';
@@ -2457,6 +2483,8 @@ extension on _TranslationsEn {
 			case 'intro.page_2.location_checkbox': return 'Real-time location permission';
 			case 'intro.page_2.location_checkbox_error': return 'Please allow the app to query your location while using the app.';
 			case 'intro.page_2.notification_checkbox': return 'Notifications (optional)';
+			case 'intro.page_2.exact_notification_checkbox': return 'Scheduled notifications (optional)';
+			case 'intro.page_2.exact_notification_description': return 'Receive a notification when your parking ticket is about to expire.';
 			case 'intro.page_2.action_1': return 'Done';
 			case 'bottom_sheet.photo': return 'Choose photo';
 			case 'bottom_sheet.camera': return 'Take photo';
@@ -2533,6 +2561,7 @@ extension on _TranslationsEn {
 			case 'settings.theme.dropdown_1': return 'System';
 			case 'settings.theme.dropdown_2': return 'Light';
 			case 'settings.theme.dropdown_3': return 'Dark';
+			case 'settings.color.choice': return 'Color';
 			case 'settings.map_type.title': return 'Map type';
 			case 'settings.map_type.subtitle': return 'Choose the map type you like best.';
 			case 'settings.map_type.dropdown_1': return 'Normal';
