@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/providers/woauto_server.dart';
@@ -71,6 +72,7 @@ class MyApp extends StatelessWidget {
                       ? Brightness.light
                       : Brightness.dark,
             ),
+            fontFamily: GoogleFonts.ptSansCaption().fontFamily,
           ),
           home: woAuto.welcome.value ? const Intro() : const Home(),
           locale: TranslationProvider.of(context).flutterLocale,
