@@ -43,7 +43,7 @@ dependencies:
   keep_screen_on: ^3.0.0
 
   # Data & Internet
-  http: ^1.2.1
+  http: ^1.2.0
   uuid: ^4.3.3
 
   # UI
