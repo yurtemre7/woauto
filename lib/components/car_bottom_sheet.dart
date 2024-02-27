@@ -88,7 +88,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                             ),
                           ...myParking
                               .map(
-                                (park) => buildParkTile(park, context),
+                                (park) => buildParkTile(park),
                               )
                               .toList(),
                           const Div(),
@@ -109,7 +109,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                             ),
                           ...otherParking
                               .map(
-                                (park) => buildParkTile(park, context),
+                                (park) => buildParkTile(park),
                               )
                               .toList(),
                         ],
@@ -264,7 +264,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
     );
   }
 
-  ListTile buildParkTile(CarPark park, BuildContext context) {
+  ListTile buildParkTile(CarPark park) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       leading: IconButton(

@@ -4,7 +4,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 2.7.0+1
 
 environment:
-  sdk: ">=3.0.0 <4.0.0"
+  sdk: ">=3.3.0 <4.0.0"
 
 dependencies:
   flutter:
@@ -19,15 +19,15 @@ dependencies:
   google_maps_flutter: ^2.5.3
   google_fonts: ^6.1.0
   location: ^5.0.3
-  geocoding: ^2.1.1
-  geolocator: ^10.1.0
+  geocoding: ^2.2.0
+  geolocator: ^11.0.0
 
   expandable: ^5.0.1
   uni_links: ^0.5.1
 
   package_info_plus: ^5.0.1
   share_plus: ^7.2.2
-  url_launcher: ^6.2.4
+  url_launcher: ^6.2.5
   shared_preferences: ^2.2.2
   to_csv: ^2.2.1 # 1.1.1
   add_2_calendar: ^3.0.1
@@ -43,7 +43,7 @@ dependencies:
   keep_screen_on: ^3.0.0
 
   # Data & Internet
-  http: ^1.2.0
+  http: ^1.2.1
   uuid: ^4.3.3
 
   # UI
@@ -59,7 +59,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^2.0.3
   flutter_launcher_icons: ^0.13.1
 
 flutter_icons:

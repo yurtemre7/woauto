@@ -180,7 +180,7 @@ class _CupertinoCarBottomSheetState extends State<CupertinoCarBottomSheet>
                       ),
                     ...myParking
                         .map(
-                          (park) => buildParkTile(park, context),
+                          (park) => buildParkTile(park),
                         )
                         .toList(),
                     // const Div(),
@@ -201,7 +201,7 @@ class _CupertinoCarBottomSheetState extends State<CupertinoCarBottomSheet>
                       ),
                     ...otherParking
                         .map(
-                          (park) => buildParkTile(park, context),
+                          (park) => buildParkTile(park),
                         )
                         .toList(),
                   ],
@@ -353,7 +353,7 @@ class _CupertinoCarBottomSheetState extends State<CupertinoCarBottomSheet>
     );
   }
 
-  Widget buildParkTile(CarPark park, BuildContext context) {
+  Widget buildParkTile(CarPark park) {
     return CupertinoListTile(
       leading: IconButton(
         onPressed: !park.sharing
