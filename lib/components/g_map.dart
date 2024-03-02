@@ -6,8 +6,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as loc;
-import 'package:maps_launcher/maps_launcher.dart';
-import 'package:woauto/components/div.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
@@ -240,87 +238,70 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        return Stack(
-          children: [
-            GoogleMap(
-              initialCameraPosition: woAuto.carMarkers.isEmpty
-                  ? woAuto.currentPosition.value
-                  : CameraPosition(
-                      target: woAuto.carMarkers.elementAt(0).position,
-                      zoom: 16,
-                    ),
-              // padding: const EdgeInsets.all(20),
-              trafficEnabled: woAuto.showTraffic.value,
-              mapToolbarEnabled: false,
-              onMapCreated: _onMapCreated,
-              compassEnabled: false,
-              mapType: woAuto.mapType.value,
-              myLocationEnabled: true,
-              myLocationButtonEnabled: false,
-              zoomControlsEnabled: false,
-              padding: const EdgeInsets.only(left: 10, right: 10),
-              markers: woAuto.carMarkers.toSet()..addAll(woAuto.tempMarkers.toSet()),
-              onLongPress: _onMapLongPress,
-              onTap: woAuto.onNewParking,
-            ),
-            if (mapLoading.value)
-              Container(
-                color: getBackgroundColor(context),
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const CircularProgressIndicator(),
-                      const SizedBox(height: 10),
-                      Text(
-                        t.maps.loading,
+    return Scaffold(
+      backgroundColor: getBackgroundColor(context),
+      body: Obx(
+        () {
+          return Stack(
+            children: [
+              GoogleMap(
+                initialCameraPosition: woAuto.carMarkers.isEmpty
+                    ? woAuto.currentPosition.value
+                    : CameraPosition(
+                        target: woAuto.carMarkers.elementAt(0).position,
+                        zoom: 16,
                       ),
-                    ],
+                // padding: const EdgeInsets.all(20),
+                trafficEnabled: woAuto.showTraffic.value,
+                mapToolbarEnabled: false,
+                onMapCreated: _onMapCreated,
+                compassEnabled: false,
+                mapType: woAuto.mapType.value,
+                myLocationEnabled: true,
+                myLocationButtonEnabled: false,
+                zoomControlsEnabled: false,
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                markers: woAuto.carMarkers.toSet()..addAll(woAuto.tempMarkers.toSet()),
+                onTap: (pos) {
+                  if (woAuto.tempMarkers.isNotEmpty) {
+                    woAuto.tempMarkers.removeWhere((element) => element.markerId.value == 'temp');
+                  }
+                  woAuto.tempMarkers.add(
+                    Marker(
+                      markerId: const MarkerId('temp'),
+                      position: pos,
+                      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+                      onTap: () {
+                        woAuto.tempMarkers
+                            .removeWhere((element) => element.markerId.value == 'temp');
+                        woAuto.currentSelectedPosition.value = null;
+                      },
+                    ),
+                  );
+                  woAuto.currentSelectedPosition.value = pos;
+                },
+              ),
+              if (mapLoading.value)
+                Container(
+                  color: getBackgroundColor(context),
+                  child: Center(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const CircularProgressIndicator(),
+                        const SizedBox(height: 10),
+                        Text(
+                          t.maps.loading,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-          ],
-        );
-      },
-    );
-  }
-
-  Future<void> _onMapLongPress(LatLng newPosition) async {
-    logMessage('Long Pressed at $newPosition');
-    woAuto.tempMarkers.add(
-      Marker(
-        markerId: const MarkerId('temp'),
-        position: newPosition,
-        icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
+            ],
+          );
+        },
       ),
     );
-    await Get.dialog(
-      AlertDialog(
-        title: Text(t.dialog.navigation.title),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              title: Text(t.dialog.navigation.action_1),
-              onTap: () {
-                Get.back();
-                MapsLauncher.launchCoordinates(
-                  newPosition.latitude,
-                  newPosition.longitude,
-                );
-              },
-              leading: const Icon(Icons.directions),
-            ),
-            const Div(),
-            Text(t.dialog.navigation.distance_info(distance: woAuto.getDistance(newPosition))),
-          ],
-        ),
-      ),
-    );
-    flutterLocalNotificationsPlugin.cancelAll();
-    woAuto.tempMarkers.removeWhere((element) => element.markerId.value == 'temp');
   }
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
