@@ -36,6 +36,8 @@ class WoAuto extends GetxController {
     zoom: 16,
   ).obs;
 
+  final currentSelectedPosition = Rxn<LatLng>();
+
   final carParkings = <CarPark>[].obs;
   RxList<Marker> get carMarkers => carParkings.map((park) => makeCarMarker(park)).toList().obs;
   final tempMarkers = <Marker>{}.obs;
@@ -260,7 +262,7 @@ class WoAuto extends GetxController {
     var tillTime = Rxn<TimeOfDay>();
     var carPicturePath = ''.obs;
 
-    Get.dialog(
+    await Get.dialog(
       GestureDetector(
         onTap: () => FocusScope.of(Get.context!).unfocus(),
         child: AlertDialog(
