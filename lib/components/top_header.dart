@@ -1,6 +1,7 @@
 import 'package:animated_digit/animated_digit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maps_launcher/maps_launcher.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/extensions.dart';
@@ -110,6 +111,74 @@ class _TopHeaderState extends State<TopHeader> {
                 ),
               ),
             ),
+            Obx(() {
+              if (woAuto.currentSelectedPosition.value != null) {
+                return Container(
+                  padding: const EdgeInsets.all(8),
+                  alignment: Alignment.topLeft,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      children: [
+                        ChoiceChip(
+                          label: Text(
+                            '${woAuto.getDistance(woAuto.currentSelectedPosition.value!)} m',
+                          ),
+                          selected: false,
+                          showCheckmark: false,
+                          avatar: Icon(
+                            Icons.info_outline,
+                            color: context.theme.colorScheme.primary,
+                          ),
+                          onSelected: (value) {
+                            Get.dialog(
+                              AlertDialog(
+                                title: const Text(
+                                  'Entfernung',
+                                ),
+                                content: Text(
+                                  '${woAuto.getDistance(woAuto.currentSelectedPosition.value!)} m.\n\nWas hast du denn noch erwartet?!',
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Get.back();
+                                    },
+                                    child: const Text(
+                                      'OK',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                        8.w,
+                        ChoiceChip(
+                          label: const Text(
+                            'Navigieren',
+                          ),
+                          selected: false,
+                          onSelected: (value) {
+                            var pos = woAuto.currentSelectedPosition.value!;
+                            MapsLauncher.launchCoordinates(
+                              pos.latitude,
+                              pos.longitude,
+                            );
+                          },
+                          showCheckmark: false,
+                          avatar: Icon(
+                            Icons.navigation_outlined,
+                            color: context.theme.colorScheme.primary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              }
+              return 0.h;
+            }),
           ],
         ),
       ),
