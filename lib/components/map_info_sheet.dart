@@ -46,7 +46,16 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
               ),
             ),
           FloatingActionButton.extended(
-            onPressed: () => woAuto.onNewParking(woAuto.currentPosition.value.target),
+            onPressed: () async {
+              var pos = woAuto.currentPosition.value.target;
+              if (woAuto.currentSelectedPosition.value != null) {
+                pos = woAuto.currentSelectedPosition.value!;
+              }
+              await woAuto.onNewParking(pos);
+              flutterLocalNotificationsPlugin.cancelAll();
+              woAuto.tempMarkers.removeWhere((element) => element.markerId.value == 'temp');
+              woAuto.currentSelectedPosition.value = null;
+            },
             label: Text(
               t.info_sheet.park_save,
               style: const TextStyle(
