@@ -75,7 +75,7 @@ class WoAutoServer extends GetxController {
       save();
       return account;
     } catch (e) {
-      logMessage(e.toString());
+      logMessage('Could not create location: $e');
       return null;
     }
   }
@@ -100,7 +100,7 @@ class WoAutoServer extends GetxController {
       save();
       return account;
     } catch (e) {
-      logMessage(e.toString());
+      logMessage('Could not update location: $e');
       return null;
     }
   }
@@ -122,7 +122,7 @@ class WoAutoServer extends GetxController {
       save();
       return jsonMap['msg'] == 'deleted';
     } catch (e) {
-      logMessage(e.toString());
+      logMessage('Could not delete location: $e');
       return null;
     }
   }
@@ -146,7 +146,7 @@ class WoAutoServer extends GetxController {
       save();
       return location;
     } catch (e) {
-      logMessage(e.toString());
+      logMessage('Could not get location: $e');
       return null;
     }
   }
