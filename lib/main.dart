@@ -43,7 +43,8 @@ void main() async {
     );
   } catch (e) {
     logMessage(
-        'Couldn\'t create Notification Channel or Initialize Android Notification Settings: $e');
+      'Couldn\'t create Notification Channel or Initialize Android Notification Settings: $e',
+    );
   }
   runApp(TranslationProvider(child: const MyApp()));
 }
