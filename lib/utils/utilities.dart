@@ -73,10 +73,12 @@ Color getForegroundColor(context) {
 
 Future<String?> getAddress(LatLng position) async {
   try {
+    await setLocaleIdentifier(
+      '${Get.locale?.languageCode ?? 'de'}_${Get.locale?.countryCode ?? 'DE'}',
+    );
     List<Placemark> placemarks = await placemarkFromCoordinates(
       position.latitude,
       position.longitude,
-      localeIdentifier: '${Get.locale?.languageCode ?? 'de'}_${Get.locale?.countryCode ?? 'DE'}',
     );
 
     String street = placemarks.first.thoroughfare ?? '';
