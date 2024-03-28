@@ -37,6 +37,7 @@ class WoAuto extends GetxController {
   ).obs;
 
   final currentSelectedPosition = Rxn<LatLng>();
+  final currentSelectedCarPark = Rxn<CarPark>();
 
   final carParkings = <CarPark>[].obs;
   RxList<Marker> get carMarkers => carParkings.map((park) => makeCarMarker(park)).toList().obs;
@@ -585,7 +586,8 @@ class WoAuto extends GetxController {
             ),
           ),
         );
-        woAuto.showCarParkDialog(park);
+        woAuto.currentSelectedPosition.value = park.latLng;
+        woAuto.currentSelectedCarPark.value = park;
       },
       icon: park.mine
           ? BitmapDescriptor.defaultMarker

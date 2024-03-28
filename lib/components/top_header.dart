@@ -120,6 +120,23 @@ class _TopHeaderState extends State<TopHeader> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
+                        // woAuto.showCarParkDialog(park);
+                        if (woAuto.currentSelectedCarPark.value != null)
+                          ChoiceChip(
+                            label: Text(
+                              woAuto.currentSelectedCarPark.value!.name,
+                            ),
+                            selected: false,
+                            showCheckmark: false,
+                            avatar: Icon(
+                              Icons.info_outline,
+                              color: context.theme.colorScheme.primary,
+                            ),
+                            onSelected: (value) {
+                              woAuto.showCarParkDialog(woAuto.currentSelectedCarPark.value!);
+                            },
+                          ),
+                        8.w,
                         ChoiceChip(
                           label: Text(
                             '${woAuto.getDistance(woAuto.currentSelectedPosition.value!)} m',

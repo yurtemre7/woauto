@@ -275,6 +275,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                         woAuto.tempMarkers
                             .removeWhere((element) => element.markerId.value == 'temp');
                         woAuto.currentSelectedPosition.value = null;
+                        woAuto.currentSelectedCarPark.value = null;
                       },
                     ),
                   );
