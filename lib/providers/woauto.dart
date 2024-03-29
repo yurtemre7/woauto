@@ -586,6 +586,7 @@ class WoAuto extends GetxController {
             ),
           ),
         );
+        woAuto.tempMarkers.clear();
         woAuto.currentSelectedPosition.value = park.latLng;
         woAuto.currentSelectedCarPark.value = park;
       },

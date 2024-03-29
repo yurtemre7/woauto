@@ -271,6 +271,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                     ),
                   );
                   woAuto.currentSelectedPosition.value = pos;
+                  woAuto.currentSelectedCarPark.value = null;
                 },
               ),
               if (mapLoading.value)

@@ -220,6 +220,8 @@ class _HomeState extends State<Home> {
                   KeepScreenOn.turnOff();
                 }
                 woAuto.tempMarkers.clear();
+                woAuto.currentSelectedPosition.value = null;
+                woAuto.currentSelectedCarPark.value = null;
               },
               destinations: [
                 NavigationDestination(
