@@ -8,7 +8,7 @@ import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/logger.dart';
 
 class WoAutoServer extends GetxController {
-  var httpClient = GetHttpClient(baseUrl: scheme + host);
+  var httpClient = GetHttpClient(baseUrl: '$scheme$host:$port');
 
   var locations = <String, CardLocation>{}.obs;
   var accounts = <String, Account>{}.obs;
