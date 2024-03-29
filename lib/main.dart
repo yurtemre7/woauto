@@ -60,20 +60,19 @@ class MyApp extends StatelessWidget {
           title: t.constants.app_name,
           themeMode: getThemeMode(woAuto.themeMode.value),
           theme: ThemeData(
-            brightness: woAuto.themeMode.value == 0
-                ? MediaQuery.of(context).platformBrightness
-                : woAuto.themeMode.value == 1
-                    ? Brightness.light
-                    : Brightness.dark,
+            brightness: Brightness.light,
             colorScheme: ColorScheme.fromSeed(
               seedColor: Color(woAuto.appColor.value),
-              brightness: woAuto.themeMode.value == 0
-                  ? MediaQuery.of(context).platformBrightness
-                  : woAuto.themeMode.value == 1
-                      ? Brightness.light
-                      : Brightness.dark,
             ),
-            fontFamily: GoogleFonts.ptSansCaption().fontFamily,
+            fontFamily: GoogleFonts.roboto().fontFamily,
+          ),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
+            colorScheme: ColorScheme.fromSeed(
+              seedColor: Color(woAuto.appColor.value),
+              brightness: Brightness.dark,
+            ),
+            fontFamily: GoogleFonts.roboto().fontFamily,
           ),
           home: woAuto.welcome.value ? const Intro() : const Home(),
           locale: TranslationProvider.of(context).flutterLocale,
