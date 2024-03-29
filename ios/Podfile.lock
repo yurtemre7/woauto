@@ -12,7 +12,7 @@ PODS:
     - Flutter
   - google_maps_flutter_ios (0.0.1):
     - Flutter
-    - GoogleMaps (< 8.0)
+    - GoogleMaps (< 9.0)
   - GoogleMaps (5.2.0):
     - GoogleMaps/Maps (= 5.2.0)
   - GoogleMaps/Base (5.2.0)
@@ -110,15 +110,15 @@ SPEC CHECKSUMS:
   file_saver: 503e386464dbe118f630e17b4c2e1190fa0cf808
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
-  geocoding_ios: a389ea40f6f548de6e63006a2e31bf66ff80769a
+  geocoding_ios: d7460f56e80e118d57678efe5c2cdc888739ff18
   geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
-  google_maps_flutter_ios: abdac20d6ce8931f6ebc5f46616df241bfaa2cfd
+  google_maps_flutter_ios: f135b968a67c05679e0a53538e900b5c174b0d99
   GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
   image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
   keep_screen_on: bc3e0a8520835eb03d3697ff76e8b1c34637353c
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
   maps_launcher: 2e5b6a2d664ec6c27f82ffa81b74228d770ab203
-  package_info_plus: 115f4ad11e0698c8c1c5d8a689390df880f47e85
+  package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   quick_actions_ios: 9e80dcfadfbc5d47d9cf8f47bcf428b11cf383d4
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
