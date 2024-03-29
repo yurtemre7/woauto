@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+// import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/i18n/translations.g.dart';
@@ -79,32 +79,32 @@ class _IOSSettingsState extends State<IOSSettings> {
           ),
           Obx(
             () {
-              var mapType = woAuto.mapType.value;
-              DropdownButton<MapType> dropdownButton = DropdownButton<MapType>(
-                value: mapType,
-                items: [
-                  DropdownMenuItem(
-                    value: MapType.normal,
-                    child: Text(t.settings.map_type.dropdown_1),
-                  ),
-                  DropdownMenuItem(
-                    value: MapType.satellite,
-                    child: Text(t.settings.map_type.dropdown_2),
-                  ),
-                  DropdownMenuItem(
-                    value: MapType.hybrid,
-                    child: Text(t.settings.map_type.dropdown_3),
-                  ),
-                  DropdownMenuItem(
-                    value: MapType.terrain,
-                    child: Text(t.settings.map_type.dropdown_4),
-                  ),
-                ],
-                onChanged: (v) async {
-                  woAuto.mapType.value = v!;
-                  // pop();
-                },
-              );
+              // var mapType = woAuto.mapType.value;
+              // DropdownButton<MapType> dropdownButton = DropdownButton<MapType>(
+              //   value: mapType,
+              //   items: [
+              //     DropdownMenuItem(
+              //       value: MapType.normal,
+              //       child: Text(t.settings.map_type.dropdown_1),
+              //     ),
+              //     DropdownMenuItem(
+              //       value: MapType.satellite,
+              //       child: Text(t.settings.map_type.dropdown_2),
+              //     ),
+              //     DropdownMenuItem(
+              //       value: MapType.hybrid,
+              //       child: Text(t.settings.map_type.dropdown_3),
+              //     ),
+              //     DropdownMenuItem(
+              //       value: MapType.terrain,
+              //       child: Text(t.settings.map_type.dropdown_4),
+              //     ),
+              //   ],
+              //   onChanged: (v) async {
+              //     woAuto.mapType.value = v!;
+              //     // pop();
+              //   },
+              // );
 
               return CupertinoListTile(
                 title: Text(
@@ -138,41 +138,41 @@ class _IOSSettingsState extends State<IOSSettings> {
           ),
           Obx(
             () {
-              var time = woAuto.timePuffer.value;
-              DropdownButton<int> dropdownButton = DropdownButton<int>(
-                value: time,
-                items: [
-                  DropdownMenuItem(
-                    value: 5,
-                    child: Text(t.settings.park_ticket.dropdown_value(value: 5)),
-                  ),
-                  DropdownMenuItem(
-                    value: 10,
-                    child: Text(t.settings.park_ticket.dropdown_value(value: 10)),
-                  ),
-                  DropdownMenuItem(
-                    value: 15,
-                    child: Text(t.settings.park_ticket.dropdown_value(value: 15)),
-                  ),
-                  DropdownMenuItem(
-                    value: 20,
-                    child: Text(t.settings.park_ticket.dropdown_value(value: 20)),
-                  ),
-                  DropdownMenuItem(
-                    value: 25,
-                    child: Text(t.settings.park_ticket.dropdown_value(value: 25)),
-                  ),
-                  DropdownMenuItem(
-                    value: 30,
-                    child: Text(t.settings.park_ticket.dropdown_value(value: 30)),
-                  ),
-                ],
-                onChanged: (v) {
-                  woAuto.timePuffer.value = v!;
-                  woAuto.save();
-                  // pop();
-                },
-              );
+              // var time = woAuto.timePuffer.value;
+              // DropdownButton<int> dropdownButton = DropdownButton<int>(
+              //   value: time,
+              //   items: [
+              //     DropdownMenuItem(
+              //       value: 5,
+              //       child: Text(t.settings.park_ticket.dropdown_value(value: 5)),
+              //     ),
+              //     DropdownMenuItem(
+              //       value: 10,
+              //       child: Text(t.settings.park_ticket.dropdown_value(value: 10)),
+              //     ),
+              //     DropdownMenuItem(
+              //       value: 15,
+              //       child: Text(t.settings.park_ticket.dropdown_value(value: 15)),
+              //     ),
+              //     DropdownMenuItem(
+              //       value: 20,
+              //       child: Text(t.settings.park_ticket.dropdown_value(value: 20)),
+              //     ),
+              //     DropdownMenuItem(
+              //       value: 25,
+              //       child: Text(t.settings.park_ticket.dropdown_value(value: 25)),
+              //     ),
+              //     DropdownMenuItem(
+              //       value: 30,
+              //       child: Text(t.settings.park_ticket.dropdown_value(value: 30)),
+              //     ),
+              //   ],
+              //   onChanged: (v) {
+              //     woAuto.timePuffer.value = v!;
+              //     woAuto.save();
+              //     // pop();
+              //   },
+              // );
 
               return CupertinoListTile(
                 title: Text(
@@ -188,37 +188,37 @@ class _IOSSettingsState extends State<IOSSettings> {
           ),
           Obx(
             () {
-              var speed = woAuto.drivingModeDetectionSpeed.value;
-              DropdownButton<int> dropdownButton = DropdownButton<int>(
-                value: speed,
-                items: [
-                  DropdownMenuItem(
-                    value: 20,
-                    child: Text(t.settings.driving_mode.dropdown_value(value: 20)),
-                  ),
-                  DropdownMenuItem(
-                    value: 25,
-                    child: Text(t.settings.driving_mode.dropdown_value(value: 25)),
-                  ),
-                  DropdownMenuItem(
-                    value: 30,
-                    child: Text(t.settings.driving_mode.dropdown_value(value: 30)),
-                  ),
-                  DropdownMenuItem(
-                    value: 35,
-                    child: Text(t.settings.driving_mode.dropdown_value(value: 35)),
-                  ),
-                  DropdownMenuItem(
-                    value: 40,
-                    child: Text(t.settings.driving_mode.dropdown_value(value: 40)),
-                  ),
-                ],
-                onChanged: (v) {
-                  woAuto.drivingModeDetectionSpeed.value = v!;
-                  woAuto.save();
-                  // pop();
-                },
-              );
+              // var speed = woAuto.drivingModeDetectionSpeed.value;
+              // DropdownButton<int> dropdownButton = DropdownButton<int>(
+              //   value: speed,
+              //   items: [
+              //     DropdownMenuItem(
+              //       value: 20,
+              //       child: Text(t.settings.driving_mode.dropdown_value(value: 20)),
+              //     ),
+              //     DropdownMenuItem(
+              //       value: 25,
+              //       child: Text(t.settings.driving_mode.dropdown_value(value: 25)),
+              //     ),
+              //     DropdownMenuItem(
+              //       value: 30,
+              //       child: Text(t.settings.driving_mode.dropdown_value(value: 30)),
+              //     ),
+              //     DropdownMenuItem(
+              //       value: 35,
+              //       child: Text(t.settings.driving_mode.dropdown_value(value: 35)),
+              //     ),
+              //     DropdownMenuItem(
+              //       value: 40,
+              //       child: Text(t.settings.driving_mode.dropdown_value(value: 40)),
+              //     ),
+              //   ],
+              //   onChanged: (v) {
+              //     woAuto.drivingModeDetectionSpeed.value = v!;
+              //     woAuto.save();
+              //     // pop();
+              //   },
+              // );
 
               return CupertinoListTile(
                 title: Text(
@@ -337,7 +337,7 @@ class _IOSSettingsState extends State<IOSSettings> {
                       },
                     ),
                     ElevatedButton(
-                      child: Text(t.dialog.feedback.action_2),
+                      child: Text(t.dialog.feedback.action_1),
                       onPressed: () {
                         launchUrl(
                           Uri.parse('https://t.me/emredev'),
