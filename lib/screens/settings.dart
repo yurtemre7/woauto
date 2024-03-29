@@ -366,11 +366,13 @@ class _SettingsState extends State<Settings> {
                             ),
                           ),
                           title: Text(
-                            'WoAuto Server',
+                            t.settings.woauto_server.title,
                             style: TextStyle(color: Theme.of(context).colorScheme.primary),
                           ),
                           subtitle: Text(
-                            'Server Status: ${woAutoServer.serverWorks.value ? 'Online' : 'Offline'}',
+                            t.settings.woauto_server.subtitle(
+                              status: woAutoServer.serverWorks.value ? 'Online' : 'Offline',
+                            ),
                           ),
                         ),
                       ),
@@ -437,15 +439,6 @@ class _SettingsState extends State<Settings> {
                               actions: [
                                 ElevatedButton(
                                   child: Text(t.dialog.feedback.action_1),
-                                  onPressed: () {
-                                    launchUrl(
-                                      Uri.parse('https://t.me/programmiererfreunde'),
-                                      mode: LaunchMode.externalApplication,
-                                    );
-                                  },
-                                ),
-                                ElevatedButton(
-                                  child: Text(t.dialog.feedback.action_2),
                                   onPressed: () {
                                     launchUrl(
                                       Uri.parse('https://t.me/emredev'),

@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 430 (215 per locale)
+/// Strings: 432 (216 per locale)
 ///
-/// Built on 2024-02-02 at 19:05 UTC
+/// Built on 2024-03-29 at 12:01 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -407,6 +407,7 @@ class _TranslationsSettingsDe {
 	late final _TranslationsSettingsDrivingModeDe driving_mode = _TranslationsSettingsDrivingModeDe._(_root);
 	late final _TranslationsSettingsAppInfoDe app_info = _TranslationsSettingsAppInfoDe._(_root);
 	late final _TranslationsSettingsCreditsDe credits = _TranslationsSettingsCreditsDe._(_root);
+	late final _TranslationsSettingsWoautoServerDe woauto_server = _TranslationsSettingsWoautoServerDe._(_root);
 	late final _TranslationsSettingsShareDe share = _TranslationsSettingsShareDe._(_root);
 	late final _TranslationsSettingsFeedbackDe feedback = _TranslationsSettingsFeedbackDe._(_root);
 	late final _TranslationsSettingsDataSecurityDe data_security = _TranslationsSettingsDataSecurityDe._(_root);
@@ -820,8 +821,7 @@ class _TranslationsDialogFeedbackDe {
 	// Translations
 	String get title => 'Feedback';
 	String get subtitle => 'Schreibe mir gerne eine E-Mail, trete unserem Telegram-Channel bei oder schreibe mir eine private Nachricht auf Telegram:';
-	String get action_1 => 'Telegram-Channel';
-	String get action_2 => 'Telegram (Privat)';
+	String get action_1 => 'Telegram';
 }
 
 // Path: dialog.data_security
@@ -960,6 +960,17 @@ class _TranslationsSettingsCreditsDe {
 	// Translations
 	String get title => 'Credits';
 	String get subtitle => 'Dank an Google Maps API und natürlich an die Flutter Community.';
+}
+
+// Path: settings.woauto_server
+class _TranslationsSettingsWoautoServerDe {
+	_TranslationsSettingsWoautoServerDe._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'WoAuto Server';
+	String subtitle({required Object status}) => 'Server Status: ${status}';
 }
 
 // Path: settings.share
@@ -1416,6 +1427,7 @@ class _TranslationsSettingsEn extends _TranslationsSettingsDe {
 	@override late final _TranslationsSettingsDrivingModeEn driving_mode = _TranslationsSettingsDrivingModeEn._(_root);
 	@override late final _TranslationsSettingsAppInfoEn app_info = _TranslationsSettingsAppInfoEn._(_root);
 	@override late final _TranslationsSettingsCreditsEn credits = _TranslationsSettingsCreditsEn._(_root);
+	@override late final _TranslationsSettingsWoautoServerEn woauto_server = _TranslationsSettingsWoautoServerEn._(_root);
 	@override late final _TranslationsSettingsShareEn share = _TranslationsSettingsShareEn._(_root);
 	@override late final _TranslationsSettingsFeedbackEn feedback = _TranslationsSettingsFeedbackEn._(_root);
 	@override late final _TranslationsSettingsDataSecurityEn data_security = _TranslationsSettingsDataSecurityEn._(_root);
@@ -1829,8 +1841,7 @@ class _TranslationsDialogFeedbackEn extends _TranslationsDialogFeedbackDe {
 	// Translations
 	@override String get title => 'Feedback';
 	@override String get subtitle => 'Feel free to email me, join our Telegram channel, or send me a private message on Telegram:';
-	@override String get action_1 => 'Telegram Channel';
-	@override String get action_2 => 'Telegram (Private)';
+	@override String get action_1 => 'Telegram';
 }
 
 // Path: dialog.data_security
@@ -1969,6 +1980,17 @@ class _TranslationsSettingsCreditsEn extends _TranslationsSettingsCreditsDe {
 	// Translations
 	@override String get title => 'Credits';
 	@override String get subtitle => 'Thanks to Google Maps API and of course to the Flutter community.';
+}
+
+// Path: settings.woauto_server
+class _TranslationsSettingsWoautoServerEn extends _TranslationsSettingsWoautoServerDe {
+	_TranslationsSettingsWoautoServerEn._(_TranslationsEn root) : this._root = root, super._(root);
+
+	@override final _TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'WoAuto Server';
+	@override String subtitle({required Object status}) => 'Server status: ${status}';
 }
 
 // Path: settings.share
@@ -2315,8 +2337,7 @@ extension on Translations {
 			case 'dialog.app_info.action_1': return 'GitHub';
 			case 'dialog.feedback.title': return 'Feedback';
 			case 'dialog.feedback.subtitle': return 'Schreibe mir gerne eine E-Mail, trete unserem Telegram-Channel bei oder schreibe mir eine private Nachricht auf Telegram:';
-			case 'dialog.feedback.action_1': return 'Telegram-Channel';
-			case 'dialog.feedback.action_2': return 'Telegram (Privat)';
+			case 'dialog.feedback.action_1': return 'Telegram';
 			case 'dialog.data_security.title': return 'Datenschutz und Impressum';
 			case 'dialog.data_security.content_1': return 'Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 01.09.2023):';
 			case 'dialog.data_security.content_2': return '- Die App kommuniziert mit Google Maps, um die Karte anzuzeigen.';
@@ -2357,6 +2378,8 @@ extension on Translations {
 			case 'settings.app_info.subtitle': return ({required Object appVersion, required Object buildNumber}) => 'Version ${appVersion}+${buildNumber}';
 			case 'settings.credits.title': return 'Credits';
 			case 'settings.credits.subtitle': return 'Dank an Google Maps API und natürlich an die Flutter Community.';
+			case 'settings.woauto_server.title': return 'WoAuto Server';
+			case 'settings.woauto_server.subtitle': return ({required Object status}) => 'Server Status: ${status}';
 			case 'settings.share.title': return 'App Teilen';
 			case 'settings.share.subtitle': return 'Teile die App doch mit deinen Freunden und deiner Familie.';
 			case 'settings.share.share_content': return 'Hast du auch vergessen, wo du zuletzt geparkt hast? Jetzt ist Schluss. Mit WoAuto kannst du deinen Parkplatz ganz einfach speichern und später ansehen, mit anderen teilen und sogar dorthin navigieren.\nDein Parkplatz ist sicher und bleibt immer auf deinem Gerät.\n\nWarum lädst du es nicht herunter und probierst es selbst aus? https://play.google.com/store/apps/details?id=de.emredev.woauto';
@@ -2544,8 +2567,7 @@ extension on _TranslationsEn {
 			case 'dialog.app_info.action_1': return 'GitHub';
 			case 'dialog.feedback.title': return 'Feedback';
 			case 'dialog.feedback.subtitle': return 'Feel free to email me, join our Telegram channel, or send me a private message on Telegram:';
-			case 'dialog.feedback.action_1': return 'Telegram Channel';
-			case 'dialog.feedback.action_2': return 'Telegram (Private)';
+			case 'dialog.feedback.action_1': return 'Telegram';
 			case 'dialog.data_security.title': return 'Privacy Policy and Legal Notice';
 			case 'dialog.data_security.content_1': return 'Brief summary of privacy policy in our own words (as of 01/09/2023):';
 			case 'dialog.data_security.content_2': return '- The app communicates with Google Maps to display the map.';
@@ -2586,6 +2608,8 @@ extension on _TranslationsEn {
 			case 'settings.app_info.subtitle': return ({required Object appVersion, required Object buildNumber}) => 'Version ${appVersion}+${buildNumber}';
 			case 'settings.credits.title': return 'Credits';
 			case 'settings.credits.subtitle': return 'Thanks to Google Maps API and of course to the Flutter community.';
+			case 'settings.woauto_server.title': return 'WoAuto Server';
+			case 'settings.woauto_server.subtitle': return ({required Object status}) => 'Server status: ${status}';
 			case 'settings.share.title': return 'Share App';
 			case 'settings.share.subtitle': return 'Why not share the app with your friends and family?';
 			case 'settings.share.share_content': return 'Did you also forget where you parked last? No more. With WoAuto you can easily save your parking spot and view it later, share it with others and even navigate to it.\nYour parking spot is safe and always stays on your device.\n\nWhy don\'t you download it and try it out for yourself? https://play.google.com/store/apps/details?id=de.emredev.woauto';

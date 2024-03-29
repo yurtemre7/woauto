@@ -287,8 +287,7 @@
     "feedback": {
       "title": "Feedback",
       "subtitle": "Feel free to email me, join our Telegram channel, or send me a private message on Telegram:",
-      "action_1": "Telegram Channel",
-      "action_2": "Telegram (Private)"
+      "action_1": "Telegram"
     },
     "data_security": {
       "title": "Privacy Policy and Legal Notice",
@@ -353,6 +352,10 @@
     "credits": {
       "title": "Credits",
       "subtitle": "Thanks to Google Maps API and of course to the Flutter community."
+    },
+    "woauto_server": {
+      "title": "WoAuto Server",
+      "subtitle": "Server status: $status"
     },
     "share": {
       "title": "Share App",
