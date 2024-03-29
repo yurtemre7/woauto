@@ -95,6 +95,8 @@ class _TopHeaderState extends State<TopHeader> {
                               ),
                               onPressed: () {
                                 woAuto.drivingMode.toggle();
+                                woAuto.currentSelectedCarPark.value = null;
+                                woAuto.currentSelectedPosition.value = null;
                               },
                               icon: Icon(
                                 woAuto.drivingMode.value

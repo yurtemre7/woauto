@@ -151,6 +151,9 @@ class _HistoryState extends State<History> {
                                       .removeWhere((element) => element.markerId.value == 'temp');
                                   woAuto.tempMarkers.add(m);
                                   woAuto.tempMarkers.refresh();
+
+                                  woAuto.currentSelectedCarPark.value = park;
+                                  woAuto.currentSelectedPosition.value = park.latLng;
                                 },
                               ),
                             ),

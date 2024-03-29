@@ -241,7 +241,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                         target: woAuto.carMarkers.elementAt(0).position,
                         zoom: 16,
                       ),
-                // padding: const EdgeInsets.all(20),
                 trafficEnabled: woAuto.showTraffic.value,
                 style: woAuto.getMapStyle(),
                 mapToolbarEnabled: false,
