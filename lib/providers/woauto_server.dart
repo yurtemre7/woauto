@@ -13,6 +13,8 @@ class WoAutoServer extends GetxController {
   var locations = <String, CardLocation>{}.obs;
   var accounts = <String, Account>{}.obs;
 
+  var serverWorks = false.obs;
+
   toJson() {
     return json.encode({
       'locations': locations.values.map((e) => e.toJson()).toList(),
@@ -73,9 +75,11 @@ class WoAutoServer extends GetxController {
       }
       Account account = Account.fromJson(jsonMap);
       save();
+      serverWorks.value = true;
       return account;
     } catch (e) {
       logMessage('Could not create location: $e');
+      serverWorks.value = false;
       return null;
     }
   }
@@ -98,9 +102,11 @@ class WoAutoServer extends GetxController {
       }
       Account account = Account.fromJson(jsonMap);
       save();
+      serverWorks.value = true;
       return account;
     } catch (e) {
       logMessage('Could not update location: $e');
+      serverWorks.value = false;
       return null;
     }
   }
@@ -120,9 +126,11 @@ class WoAutoServer extends GetxController {
       }
 
       save();
+      serverWorks.value = true;
       return jsonMap['msg'] == 'deleted';
     } catch (e) {
       logMessage('Could not delete location: $e');
+      serverWorks.value = false;
       return null;
     }
   }
@@ -144,9 +152,11 @@ class WoAutoServer extends GetxController {
       location.view = view;
       location.accountId = id;
       save();
+      serverWorks.value = true;
       return location;
     } catch (e) {
       logMessage('Could not get location: $e');
+      serverWorks.value = false;
       return null;
     }
   }

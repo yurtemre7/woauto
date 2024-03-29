@@ -19,6 +19,8 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
+  final WoAutoServer woAutoServer = Get.find();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -350,6 +352,26 @@ class _SettingsState extends State<Settings> {
                               name: 'App Info',
                             );
                           },
+                        ),
+                      ),
+                      Obx(
+                        () => ListTile(
+                          leading: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(
+                              woAutoServer.serverWorks.value
+                                  ? Icons.wifi_outlined
+                                  : Icons.wifi_off_outlined,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          title: Text(
+                            'WoAuto Server',
+                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                          ),
+                          subtitle: Text(
+                            'Server Status: ${woAutoServer.serverWorks.value ? 'Online' : 'Offline'}',
+                          ),
                         ),
                       ),
                       ListTile(
