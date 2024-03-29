@@ -6,7 +6,7 @@
 /// Locales: 2
 /// Strings: 432 (216 per locale)
 ///
-/// Built on 2024-03-29 at 12:01 UTC
+/// Built on 2024-03-29 at 12:12 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -184,6 +184,7 @@ class _TranslationsConstantsDe {
 	String get error_description => 'Es ist ein Fehler aufgetreten.';
 	String get parked_rn => 'gerade eben geparkt';
 	String parked_duration_string({required Object duration}) => 'vor ${duration} geparkt';
+	String get navigate => 'Navigiere';
 }
 
 // Path: park_duration
@@ -378,7 +379,7 @@ class _TranslationsDialogDe {
 	String get share => 'Teilen';
 	String get save => 'Speichern';
 	String get open_settings => 'Einstellungen öffnen';
-	late final _TranslationsDialogNavigationDe navigation = _TranslationsDialogNavigationDe._(_root);
+	late final _TranslationsDialogDistanceDe distance = _TranslationsDialogDistanceDe._(_root);
 	late final _TranslationsDialogNotificationsDe notifications = _TranslationsDialogNotificationsDe._(_root);
 	late final _TranslationsDialogCarBottomSheetDe car_bottom_sheet = _TranslationsDialogCarBottomSheetDe._(_root);
 	late final _TranslationsDialogMapsDe maps = _TranslationsDialogMapsDe._(_root);
@@ -730,16 +731,15 @@ class _TranslationsSnackbarDistanceCalculationDe {
 	String get subsubtitle => 'Tippe um mehr zu erfahren.';
 }
 
-// Path: dialog.navigation
-class _TranslationsDialogNavigationDe {
-	_TranslationsDialogNavigationDe._(this._root);
+// Path: dialog.distance
+class _TranslationsDialogDistanceDe {
+	_TranslationsDialogDistanceDe._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'Standort Info';
-	String distance_info({required Object distance}) => 'Abstand zum aktuellen Standort: ${distance} m';
-	String get action_1 => 'Navigation starten';
+	String get title => 'Standort Entfernung';
+	String content({required Object distance}) => 'Abstand zum Standort: ${distance} m';
 }
 
 // Path: dialog.notifications
@@ -1204,6 +1204,7 @@ class _TranslationsConstantsEn extends _TranslationsConstantsDe {
 	@override String get error_description => 'An error occurred.';
 	@override String get parked_rn => 'parked right now';
 	@override String parked_duration_string({required Object duration}) => 'parked since ${duration}';
+	@override String get navigate => 'Navigate';
 }
 
 // Path: park_duration
@@ -1398,7 +1399,7 @@ class _TranslationsDialogEn extends _TranslationsDialogDe {
 	@override String get share => 'Share';
 	@override String get save => 'Save';
 	@override String get open_settings => 'Open settings';
-	@override late final _TranslationsDialogNavigationEn navigation = _TranslationsDialogNavigationEn._(_root);
+	@override late final _TranslationsDialogDistanceEn distance = _TranslationsDialogDistanceEn._(_root);
 	@override late final _TranslationsDialogNotificationsEn notifications = _TranslationsDialogNotificationsEn._(_root);
 	@override late final _TranslationsDialogCarBottomSheetEn car_bottom_sheet = _TranslationsDialogCarBottomSheetEn._(_root);
 	@override late final _TranslationsDialogMapsEn maps = _TranslationsDialogMapsEn._(_root);
@@ -1750,16 +1751,15 @@ class _TranslationsSnackbarDistanceCalculationEn extends _TranslationsSnackbarDi
 	@override String get subsubtitle => 'Click here to know more.';
 }
 
-// Path: dialog.navigation
-class _TranslationsDialogNavigationEn extends _TranslationsDialogNavigationDe {
-	_TranslationsDialogNavigationEn._(_TranslationsEn root) : this._root = root, super._(root);
+// Path: dialog.distance
+class _TranslationsDialogDistanceEn extends _TranslationsDialogDistanceDe {
+	_TranslationsDialogDistanceEn._(_TranslationsEn root) : this._root = root, super._(root);
 
 	@override final _TranslationsEn _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Location info';
-	@override String distance_info({required Object distance}) => 'Distance to current location: ${distance} m';
-	@override String get action_1 => 'Start navigation';
+	@override String get title => 'Distance calculation';
+	@override String content({required Object distance}) => 'The calculated distance is ${distance} m';
 }
 
 // Path: dialog.notifications
@@ -2179,6 +2179,7 @@ extension on Translations {
 			case 'constants.error_description': return 'Es ist ein Fehler aufgetreten.';
 			case 'constants.parked_rn': return 'gerade eben geparkt';
 			case 'constants.parked_duration_string': return ({required Object duration}) => 'vor ${duration} geparkt';
+			case 'constants.navigate': return 'Navigiere';
 			case 'park_duration.hours': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('de'))(n,
 				one: '${n} Stunde',
 				other: '${n} Stunden',
@@ -2303,9 +2304,8 @@ extension on Translations {
 			case 'dialog.share': return 'Teilen';
 			case 'dialog.save': return 'Speichern';
 			case 'dialog.open_settings': return 'Einstellungen öffnen';
-			case 'dialog.navigation.title': return 'Standort Info';
-			case 'dialog.navigation.distance_info': return ({required Object distance}) => 'Abstand zum aktuellen Standort: ${distance} m';
-			case 'dialog.navigation.action_1': return 'Navigation starten';
+			case 'dialog.distance.title': return 'Standort Entfernung';
+			case 'dialog.distance.content': return ({required Object distance}) => 'Abstand zum Standort: ${distance} m';
 			case 'dialog.notifications.na.title': return 'Benachrichtigungen nicht verfügbar';
 			case 'dialog.notifications.na.subtitle': return 'Benachrichtigungen sind auf deinem Gerät nicht verfügbar.';
 			case 'dialog.notifications.denied.title': return 'Benachrichtigungen verweigert';
@@ -2409,6 +2409,7 @@ extension on _TranslationsEn {
 			case 'constants.error_description': return 'An error occurred.';
 			case 'constants.parked_rn': return 'parked right now';
 			case 'constants.parked_duration_string': return ({required Object duration}) => 'parked since ${duration}';
+			case 'constants.navigate': return 'Navigate';
 			case 'park_duration.hours': return ({required num n}) => (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(n,
 				one: '${n} hour',
 				other: '${n} hours',
@@ -2533,9 +2534,8 @@ extension on _TranslationsEn {
 			case 'dialog.share': return 'Share';
 			case 'dialog.save': return 'Save';
 			case 'dialog.open_settings': return 'Open settings';
-			case 'dialog.navigation.title': return 'Location info';
-			case 'dialog.navigation.distance_info': return ({required Object distance}) => 'Distance to current location: ${distance} m';
-			case 'dialog.navigation.action_1': return 'Start navigation';
+			case 'dialog.distance.title': return 'Distance calculation';
+			case 'dialog.distance.content': return ({required Object distance}) => 'The calculated distance is ${distance} m';
 			case 'dialog.notifications.na.title': return 'Notifications are not available';
 			case 'dialog.notifications.na.subtitle': return 'notifications are not available on your device';
 			case 'dialog.notifications.denied.title': return 'Notifications access denied';

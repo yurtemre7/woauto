@@ -10,7 +10,8 @@
     "error": "Fehler",
     "error_description": "Es ist ein Fehler aufgetreten.",
     "parked_rn": "gerade eben geparkt",
-    "parked_duration_string": "vor $duration geparkt"
+    "parked_duration_string": "vor $duration geparkt",
+    "navigate": "Navigiere"
   },
   "park_duration": {
     "hours": {
@@ -215,10 +216,9 @@
     "share": "Teilen",
     "save": "Speichern",
     "open_settings": "Einstellungen öffnen",
-    "navigation": {
-      "title": "Standort Info",
-      "distance_info": "Abstand zum aktuellen Standort: $distance m",
-      "action_1": "Navigation starten"
+    "distance": {
+      "title": "Standort Entfernung",
+      "content": "Abstand zum Standort: $distance m"
     },
     "notifications": {
       "na": {

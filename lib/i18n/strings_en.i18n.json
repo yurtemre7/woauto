@@ -10,7 +10,8 @@
     "error": "Error",
     "error_description": "An error occurred.",
     "parked_rn": "parked right now",
-    "parked_duration_string": "parked since $duration"
+    "parked_duration_string": "parked since $duration",
+    "navigate": "Navigate"
   },
   "park_duration": {
     "hours": {
@@ -216,10 +217,9 @@
     "share": "Share",
     "save": "Save",
     "open_settings": "Open settings",
-    "navigation": {
-      "title": "Location info",
-      "distance_info": "Distance to current location: $distance m",
-      "action_1": "Start navigation"
+    "distance": {
+      "title": "Distance calculation",
+      "content": "The calculated distance is $distance m"
     },
     "notifications": {
       "na": {

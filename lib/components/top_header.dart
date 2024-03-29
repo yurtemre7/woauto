@@ -152,19 +152,23 @@ class _TopHeaderState extends State<TopHeader> {
                           onSelected: (value) {
                             Get.dialog(
                               AlertDialog(
-                                title: const Text(
-                                  'Entfernung',
+                                title: Text(
+                                  t.dialog.distance.title,
                                 ),
                                 content: Text(
-                                  '${woAuto.getDistance(woAuto.currentSelectedPosition.value!)} m.\n\nWas hast du denn noch erwartet?!',
+                                  t.dialog.distance.content(
+                                    distance: woAuto.getDistance(
+                                      woAuto.currentSelectedPosition.value!,
+                                    ),
+                                  ),
                                 ),
                                 actions: [
                                   TextButton(
                                     onPressed: () {
                                       Get.back();
                                     },
-                                    child: const Text(
-                                      'OK',
+                                    child: Text(
+                                      t.dialog.ok,
                                     ),
                                   ),
                                 ],
@@ -174,8 +178,8 @@ class _TopHeaderState extends State<TopHeader> {
                         ),
                         8.w,
                         ChoiceChip(
-                          label: const Text(
-                            'Navigieren',
+                          label: Text(
+                            t.constants.navigate,
                           ),
                           selected: false,
                           onSelected: (value) {
