@@ -35,16 +35,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
   }
 
   @override
-  void didChangePlatformBrightness() {
-    if (mounted) {
-      setState(() {
-        woAuto.setMapStyle();
-      });
-    }
-    super.didChangePlatformBrightness();
-  }
-
-  @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     positionStream?.cancel();
@@ -253,6 +243,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                       ),
                 // padding: const EdgeInsets.all(20),
                 trafficEnabled: woAuto.showTraffic.value,
+                style: woAuto.getMapStyle(),
                 mapToolbarEnabled: false,
                 onMapCreated: _onMapCreated,
                 compassEnabled: false,

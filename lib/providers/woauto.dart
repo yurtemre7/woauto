@@ -886,29 +886,12 @@ class WoAuto extends GetxController {
     }
   }
 
-  Future setMapStyle({Brightness? brightness}) async {
-    if (woAuto.mapController.value == null) {
-      return;
-    }
-    var controller = woAuto.mapController.value!;
-    if (brightness != null) {
-      controller.setMapStyle(
-        brightness == Brightness.dark ? darkMapStyle : lightMapStyle,
-      );
-      return;
-    }
+  String? getMapStyle() {
     if (woAuto.themeMode.value != 0) {
-      controller.setMapStyle(
-        woAuto.themeMode.value == 2 ? darkMapStyle : lightMapStyle,
-      );
-      return;
+      return woAuto.themeMode.value == 2 ? darkMapStyle : lightMapStyle;
     }
-    var theme = WidgetsBinding.instance.platformDispatcher.platformBrightness;
-    if (theme == Brightness.dark) {
-      controller.setMapStyle(darkMapStyle);
-    } else {
-      controller.setMapStyle(lightMapStyle);
-    }
+
+    return Get.theme.brightness == Brightness.dark ? darkMapStyle : lightMapStyle;
   }
 
   Future<void> fetchPackageInfo() async {

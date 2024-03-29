@@ -79,15 +79,6 @@ class _SettingsState extends State<Settings> {
                             ],
                             onChanged: (v) async {
                               woAuto.themeMode.value = v!;
-
-                              await woAuto.setMapStyle(
-                                brightness: v == 1
-                                    ? Brightness.light
-                                    : v == 2
-                                        ? Brightness.dark
-                                        : Get.mediaQuery.platformBrightness,
-                              );
-                              // todo fix
                               woAuto.setTheme();
                               await woAuto.save();
                               if (!mounted) return;

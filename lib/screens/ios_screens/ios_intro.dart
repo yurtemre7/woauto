@@ -176,13 +176,6 @@ class _IntroState extends State<IOSIntro> {
                                     onSelectedItemChanged: (value) async {
                                       woAuto.themeMode.value = value;
 
-                                      await woAuto.setMapStyle(
-                                        brightness: value == 1
-                                            ? Brightness.light
-                                            : value == 2
-                                                ? Brightness.dark
-                                                : null,
-                                      );
                                       await woAuto.save();
                                       if (!mounted) return;
                                       Future.delayed(

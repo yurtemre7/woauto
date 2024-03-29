@@ -20,7 +20,6 @@ final animationSpeed = 800.milliseconds;
 Future loadMapStyles() async {
   darkMapStyle = await rootBundle.loadString('assets/map_styles/dark.json');
   lightMapStyle = await rootBundle.loadString('assets/map_styles/light.json');
-  woAuto.setMapStyle();
 }
 
 void pop<T>({T? result}) => Get.back<T>(result: result);

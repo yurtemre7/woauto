@@ -185,13 +185,7 @@ class _IntroState extends State<Intro> {
                                       ],
                                       onChanged: (v) async {
                                         woAuto.themeMode.value = v!;
-                                        await woAuto.setMapStyle(
-                                          brightness: v == 1
-                                              ? Brightness.light
-                                              : v == 2
-                                                  ? Brightness.dark
-                                                  : null,
-                                        );
+
                                         await woAuto.save();
                                         woAuto.setTheme();
                                         if (!mounted) return;
