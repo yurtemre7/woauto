@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:isolate';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +31,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     loadPositionData();
-    Isolate.run(fetchSyncLocations);
   }
 
   @override
@@ -193,6 +191,8 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         }
       }
     });
+
+    fetchSyncLocations();
   }
 
   Future<void> fetchSyncLocations() async {
