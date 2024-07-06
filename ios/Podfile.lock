@@ -1,6 +1,8 @@
 PODS:
   - add_2_calendar (0.0.1):
     - Flutter
+  - app_links (0.0.1):
+    - Flutter
   - file_saver (0.0.1):
     - Flutter
   - Flutter (1.0.0)
@@ -12,11 +14,11 @@ PODS:
     - Flutter
   - google_maps_flutter_ios (0.0.1):
     - Flutter
-    - GoogleMaps (< 9.0)
-  - GoogleMaps (5.2.0):
-    - GoogleMaps/Maps (= 5.2.0)
-  - GoogleMaps/Base (5.2.0)
-  - GoogleMaps/Maps (5.2.0):
+    - GoogleMaps (< 10.0, >= 8.4)
+  - GoogleMaps (8.4.0):
+    - GoogleMaps/Maps (= 8.4.0)
+  - GoogleMaps/Base (8.4.0)
+  - GoogleMaps/Maps (8.4.0):
     - GoogleMaps/Base
   - image_picker_ios (0.0.1):
     - Flutter
@@ -38,13 +40,12 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - uni_links (0.0.1):
-    - Flutter
   - url_launcher_ios (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - add_2_calendar (from `.symlinks/plugins/add_2_calendar/ios`)
+  - app_links (from `.symlinks/plugins/app_links/ios`)
   - file_saver (from `.symlinks/plugins/file_saver/ios`)
   - Flutter (from `Flutter`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
@@ -60,7 +61,6 @@ DEPENDENCIES:
   - quick_actions_ios (from `.symlinks/plugins/quick_actions_ios/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
-  - uni_links (from `.symlinks/plugins/uni_links/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
@@ -70,6 +70,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   add_2_calendar:
     :path: ".symlinks/plugins/add_2_calendar/ios"
+  app_links:
+    :path: ".symlinks/plugins/app_links/ios"
   file_saver:
     :path: ".symlinks/plugins/file_saver/ios"
   Flutter:
@@ -100,32 +102,30 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
-  uni_links:
-    :path: ".symlinks/plugins/uni_links/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
   add_2_calendar: 5eee66d5a3b99cd5e1487a7e03abd4e3ac4aff11
+  app_links: e70ca16b4b0f88253b3b3660200d4a10b4ea9795
   file_saver: 503e386464dbe118f630e17b4c2e1190fa0cf808
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_local_notifications: 4cde75091f6327eb8517fa068a0a5950212d2086
   geocoding_ios: d7460f56e80e118d57678efe5c2cdc888739ff18
-  geolocator_apple: cc556e6844d508c95df1e87e3ea6fa4e58c50401
-  google_maps_flutter_ios: f135b968a67c05679e0a53538e900b5c174b0d99
-  GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
-  image_picker_ios: 4a8aadfbb6dc30ad5141a2ce3832af9214a705b5
+  geolocator_apple: 6cbaf322953988e009e5ecb481f07efece75c450
+  google_maps_flutter_ios: 5bc2be60ad012e79b182ce0fb0ef5030a50fb03e
+  GoogleMaps: 8939898920281c649150e0af74aa291c60f2e77d
+  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
   keep_screen_on: bc3e0a8520835eb03d3697ff76e8b1c34637353c
   location: d5cf8598915965547c3f36761ae9cc4f4e87d22e
   maps_launcher: 2e5b6a2d664ec6c27f82ffa81b74228d770ab203
   package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
-  quick_actions_ios: 9e80dcfadfbc5d47d9cf8f47bcf428b11cf383d4
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  quick_actions_ios: 56f3cbaa71e94f212838d1f9fe354bd0734779bf
   share_plus: c3fef564749587fc939ef86ffb283ceac0baf9f5
-  shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
-  uni_links: d97da20c7701486ba192624d99bffaaffcfc298a
-  url_launcher_ios: 68d46cc9766d0c41dbdc884310529557e3cd7a86
+  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
+  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
-PODFILE CHECKSUM: 4e8f8b2be68aeea4c0d5beb6ff1e79fface1d048
+PODFILE CHECKSUM: 775997f741c536251164e3eacf6e34abf2eb7a17
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
