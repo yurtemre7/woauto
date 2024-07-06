@@ -9,6 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:woauto/components/div.dart';
+import 'package:woauto/components/login_dialog.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/extensions.dart';
@@ -162,6 +163,22 @@ class _MyCarState extends State<MyCar> {
                       },
                     ),
                   ),
+                  4.w,
+                  IconButton(
+                    onPressed: () {
+                      Get.dialog(const LoginDialog());
+                    },
+                    icon: const Icon(
+                      Icons.account_box_outlined,
+                    ),
+                    iconSize: 38,
+                    tooltip: 'Login',
+                    style: IconButton.styleFrom(
+                      foregroundColor: context.theme.colorScheme.primary,
+                      disabledForegroundColor: Colors.grey.withOpacity(0.3),
+                    ),
+                  ),
+                  4.w,
                 ],
                 backgroundColor: Theme.of(context).colorScheme.surface,
               ),
