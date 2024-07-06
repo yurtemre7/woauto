@@ -353,7 +353,7 @@
       "subtitle": "Dank an Google Maps API und natürlich an die Flutter Community."
     },
     "woauto_server": {
-      "title": "WoAuto Server",
+      "title": "WoAuto Server (PocketBase)",
       "subtitle": "Server Status: $status"
     },
     "share": {

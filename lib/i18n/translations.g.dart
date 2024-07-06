@@ -6,7 +6,7 @@
 /// Locales: 2
 /// Strings: 432 (216 per locale)
 ///
-/// Built on 2024-03-29 at 12:16 UTC
+/// Built on 2024-07-06 at 16:48 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -969,7 +969,7 @@ class _TranslationsSettingsWoautoServerDe {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'WoAuto Server';
+	String get title => 'WoAuto Server (PocketBase)';
 	String subtitle({required Object status}) => 'Server Status: ${status}';
 }
 
@@ -1989,7 +1989,7 @@ class _TranslationsSettingsWoautoServerEn extends _TranslationsSettingsWoautoSer
 	@override final _TranslationsEn _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'WoAuto Server';
+	@override String get title => 'WoAuto Server (PocketBase)';
 	@override String subtitle({required Object status}) => 'Server status: ${status}';
 }
 
@@ -2378,7 +2378,7 @@ extension on Translations {
 			case 'settings.app_info.subtitle': return ({required Object appVersion, required Object buildNumber}) => 'Version ${appVersion}+${buildNumber}';
 			case 'settings.credits.title': return 'Credits';
 			case 'settings.credits.subtitle': return 'Dank an Google Maps API und natürlich an die Flutter Community.';
-			case 'settings.woauto_server.title': return 'WoAuto Server';
+			case 'settings.woauto_server.title': return 'WoAuto Server (PocketBase)';
 			case 'settings.woauto_server.subtitle': return ({required Object status}) => 'Server Status: ${status}';
 			case 'settings.share.title': return 'App Teilen';
 			case 'settings.share.subtitle': return 'Teile die App doch mit deinen Freunden und deiner Familie.';
@@ -2608,7 +2608,7 @@ extension on _TranslationsEn {
 			case 'settings.app_info.subtitle': return ({required Object appVersion, required Object buildNumber}) => 'Version ${appVersion}+${buildNumber}';
 			case 'settings.credits.title': return 'Credits';
 			case 'settings.credits.subtitle': return 'Thanks to Google Maps API and of course to the Flutter community.';
-			case 'settings.woauto_server.title': return 'WoAuto Server';
+			case 'settings.woauto_server.title': return 'WoAuto Server (PocketBase)';
 			case 'settings.woauto_server.subtitle': return ({required Object status}) => 'Server status: ${status}';
 			case 'settings.share.title': return 'Share App';
 			case 'settings.share.subtitle': return 'Why not share the app with your friends and family?';

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:pocketbase/pocketbase.dart';
 import 'package:woauto/classes/account.dart';
 import 'package:woauto/classes/car_location.dart';
 import 'package:woauto/classes/car_park.dart';
@@ -8,6 +9,8 @@ import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/logger.dart';
 
 class WoAutoServer extends GetxController {
+  /// Our PocketBase instance
+  final pb = PocketBase('https://woauto.yurtemre.de');
   var httpClient = GetHttpClient(baseUrl: '$scheme$host:$port');
 
   var locations = <String, CardLocation>{}.obs;
@@ -42,13 +45,21 @@ class WoAutoServer extends GetxController {
     sp.setString('woauto_server', toJson());
   }
 
-  static WoAutoServer load() {
+  static Future<WoAutoServer> load() async {
     var sp = woAuto.sp;
     var jsonString = sp.getString('woauto_server');
-    if (jsonString == null) {
-      return WoAutoServer();
+    var server = WoAutoServer();
+    if (jsonString != null) {
+      server = WoAutoServer.fromJson(jsonString);
     }
-    return WoAutoServer.fromJson(jsonString);
+    var hCheck = await server.pb.health.check();
+    var code = hCheck.code;
+
+    if (code >= 200 && code <= 299) {
+      server.serverWorks.value = true;
+    }
+
+    return server;
   }
 
   reset() {

@@ -20,7 +20,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LocaleSettings.useDeviceLocale();
   woAuto = Get.put(await WoAuto.load());
-  Get.put(WoAutoServer.load());
+  Get.put(await WoAutoServer.load());
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   tz.initializeTimeZones();
   try {
