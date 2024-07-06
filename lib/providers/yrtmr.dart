@@ -8,10 +8,10 @@
 */
 
 import 'dart:async';
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:uni_links/uni_links.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
@@ -20,6 +20,7 @@ import 'package:woauto/utils/logger.dart';
 
 class YrtmrDeeplinks {
   static YrtmrDeeplinks? _instance;
+  static final appLinks = AppLinks();
   bool once = false;
 
   YrtmrDeeplinks._() {
@@ -43,7 +44,7 @@ class YrtmrDeeplinks {
       if (appmldrLinks.once) {
         return;
       }
-      var initialUri = await getInitialUri();
+      var initialUri = await appLinks.getInitialLink();
       appmldrLinks.once = true;
 
       if (initialUri == null) {
@@ -64,7 +65,7 @@ class YrtmrDeeplinks {
   }
 
   static StreamSubscription<Uri?> yrtmrLinksListener() {
-    return uriLinkStream.listen((Uri? uri) async {
+    return appLinks.uriLinkStream.listen((Uri? uri) async {
       if (uri == null) {
         // log('YrtmrLinks: No initial link found.');
         return;
