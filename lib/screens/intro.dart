@@ -193,7 +193,7 @@ class _IntroState extends State<Intro> {
                                           SystemChrome.setSystemUIOverlayStyle(
                                             SystemUiOverlayStyle(
                                               systemNavigationBarColor:
-                                                  Theme.of(context).colorScheme.background,
+                                                  Theme.of(context).colorScheme.surface,
                                             ),
                                           );
                                         });

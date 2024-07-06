@@ -75,7 +75,7 @@ class _HistoryState extends State<History> {
                   color: Theme.of(context).colorScheme.primary,
                 ),
               ],
-              backgroundColor: Theme.of(context).colorScheme.background,
+              backgroundColor: Theme.of(context).colorScheme.surface,
             ),
             SliverList(
               delegate: SliverChildListDelegate.fixed(

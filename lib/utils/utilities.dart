@@ -60,7 +60,7 @@ Color getBackgroundColor(context) {
   if (woAuto.themeMode.value != 0) {
     return woAuto.themeMode.value == 1 ? Colors.white : darkBg;
   }
-  return Theme.of(context).colorScheme.background;
+  return Theme.of(context).colorScheme.surface;
 }
 
 Color getForegroundColor(context) {

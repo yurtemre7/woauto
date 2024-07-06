@@ -34,7 +34,7 @@ class _CupertinoMyCarState extends State<CupertinoMyCar> {
   Future<void> showPictureBottomSheet() async {
     Get.bottomSheet(
       Card(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(12),

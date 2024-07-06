@@ -33,7 +33,7 @@ class _MyCarState extends State<MyCar> {
   Future<void> showPictureBottomSheet() async {
     Get.bottomSheet(
       Card(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(12),
@@ -163,7 +163,7 @@ class _MyCarState extends State<MyCar> {
                     ),
                   ),
                 ],
-                backgroundColor: Theme.of(context).colorScheme.background,
+                backgroundColor: Theme.of(context).colorScheme.surface,
               ),
               Obx(
                 () => SliverList(

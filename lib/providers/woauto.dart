@@ -385,7 +385,7 @@ class WoAuto extends GetxController {
                                 onPressed: () async {
                                   Get.bottomSheet(
                                     Card(
-                                      color: Get.theme.colorScheme.background,
+                                      color: Get.theme.colorScheme.surface,
                                       shape: const RoundedRectangleBorder(
                                         borderRadius: BorderRadius.vertical(
                                           top: Radius.circular(12),

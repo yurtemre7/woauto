@@ -52,7 +52,7 @@ class _SettingsState extends State<Settings> {
                   ),
                 ),
               ),
-              backgroundColor: Theme.of(context).colorScheme.background,
+              backgroundColor: Theme.of(context).colorScheme.surface,
             ),
             SliverList(
               delegate: SliverChildListDelegate.fixed(
@@ -87,8 +87,7 @@ class _SettingsState extends State<Settings> {
                               Future.delayed(500.milliseconds, () {
                                 SystemChrome.setSystemUIOverlayStyle(
                                   SystemUiOverlayStyle(
-                                    systemNavigationBarColor:
-                                        Theme.of(context).colorScheme.background,
+                                    systemNavigationBarColor: Theme.of(context).colorScheme.surface,
                                   ),
                                 );
                               });
@@ -128,7 +127,7 @@ class _SettingsState extends State<Settings> {
                                     ),
                                     backgroundColor: color,
                                     selectedColor: color,
-                                    color: MaterialStatePropertyAll(color),
+                                    color: WidgetStatePropertyAll(color),
                                     checkmarkColor: color.computeLuminance() > 0.5
                                         ? Colors.black
                                         : Colors.white,
@@ -142,7 +141,7 @@ class _SettingsState extends State<Settings> {
                                         SystemChrome.setSystemUIOverlayStyle(
                                           SystemUiOverlayStyle(
                                             systemNavigationBarColor:
-                                                Theme.of(context).colorScheme.background,
+                                                Theme.of(context).colorScheme.surface,
                                           ),
                                         );
                                       });

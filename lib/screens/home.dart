@@ -110,7 +110,7 @@ class _HomeState extends State<Home> {
   void didChangeDependencies() {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
-        systemNavigationBarColor: Theme.of(context).colorScheme.background,
+        systemNavigationBarColor: Theme.of(context).colorScheme.surface,
       ),
     );
     super.didChangeDependencies();
