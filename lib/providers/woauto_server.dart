@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woauto/classes/account.dart';
 import 'package:woauto/classes/car_location.dart';
 import 'package:woauto/classes/car_park.dart';
@@ -10,7 +11,7 @@ import 'package:woauto/utils/logger.dart';
 
 class WoAutoServer extends GetxController {
   /// Our PocketBase instance
-  final pb = PocketBase('https://woauto.yurtemre.de');
+  late PocketBase pb;
   var httpClient = GetHttpClient(baseUrl: '$scheme$host:$port');
 
   var locations = <String, CardLocation>{}.obs;
@@ -52,6 +53,14 @@ class WoAutoServer extends GetxController {
     if (jsonString != null) {
       server = WoAutoServer.fromJson(jsonString);
     }
+    var prefs = await SharedPreferences.getInstance();
+
+    var store = AsyncAuthStore(
+      save: (String data) async => prefs.setString('pb_auth', data),
+      initial: prefs.getString('pb_auth'),
+    );
+
+    server.pb = PocketBase('https://woauto.yurtemre.de', authStore: store);
     var hCheck = await server.pb.health.check();
     var code = hCheck.code;
 
