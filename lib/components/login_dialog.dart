@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/extensions.dart';
+import 'package:woauto/utils/utilities.dart';
 
 class LoginDialog extends StatefulWidget {
   const LoginDialog({super.key});
@@ -73,6 +74,9 @@ class _LoginDialogState extends State<LoginDialog> {
 
                         return null;
                       },
+                      onChanged: (value) {
+                        setState(() {});
+                      },
                       decoration: InputDecoration(
                         label: const Text('Password'),
                         suffixIcon: IconButton(
@@ -96,10 +100,10 @@ class _LoginDialogState extends State<LoginDialog> {
                         // pw forget
                         TextButton.icon(
                           onPressed: () async {
-                            var email = emailController.text;
-                            if (!email.isEmail) {
+                            if (!formKey.currentState!.validate()) {
                               return;
                             }
+                            var email = emailController.text;
                             // forget password
                             await woAutoServer.pb.collection('users').requestPasswordReset(email);
                           },
@@ -142,14 +146,50 @@ class _LoginDialogState extends State<LoginDialog> {
                     ButtonBar(
                       children: [
                         TextButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // Register
+                            if (!formKey.currentState!.validate()) {
+                              return;
+                            }
+
+                            var email = emailController.text;
+                            var password = passwordController.text;
+                            try {
+                              var data = {
+                                'username': email.split('@').first,
+                                'email': email,
+                                'emailVisibility': true,
+                                'password': password,
+                                'passwordConfirm': password,
+                              };
+
+                              var record =
+                                  await woAutoServer.pb.collection('users').create(body: data);
+                            } catch (e) {
+                              debugPrint(e.toString());
+                            }
+
+                            pop();
                           },
                           child: const Text('Register'),
                         ),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // Login
+                            if (!formKey.currentState!.validate()) {
+                              return;
+                            }
+                            var email = emailController.text;
+                            var password = passwordController.text;
+                            try {
+                              var userData = await woAutoServer.pb
+                                  .collection('users')
+                                  .authWithPassword(email, password);
+                            } catch (e) {
+                              debugPrint(e.toString());
+                            }
+
+                            pop();
                           },
                           child: const Text('Login'),
                         ),
