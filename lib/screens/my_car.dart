@@ -7,11 +7,13 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pocketbase/pocketbase.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/components/login_dialog.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
@@ -24,6 +26,8 @@ class MyCar extends StatefulWidget {
 }
 
 class _MyCarState extends State<MyCar> {
+  final WoAutoServer woAutoServer = Get.find();
+
   var maxHeight = 128.0;
   var minHeight = 64.0;
 
@@ -165,7 +169,26 @@ class _MyCarState extends State<MyCar> {
                   ),
                   4.w,
                   IconButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      var authValid = woAutoServer.pb.authStore.isValid;
+                      if (authValid) {
+                        print('User is valid:');
+                        var user = woAutoServer.pb.authStore.model as RecordModel;
+                        print(user.toString());
+                        return await Get.dialog(AlertDialog(
+                          title: Text('Hey ${user.data['username']}'),
+                          content: const Text('Du bist eingeloggt!'),
+                          actions: [
+                            OutlinedButton(
+                              onPressed: () {
+                                woAutoServer.pb.authStore.clear();
+                                pop();
+                              },
+                              child: const Text('Ausloggen'),
+                            ),
+                          ],
+                        ));
+                      }
                       Get.dialog(const LoginDialog());
                     },
                     icon: const Icon(
