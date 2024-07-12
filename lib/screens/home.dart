@@ -14,7 +14,7 @@ import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/yrtmr.dart';
 import 'package:woauto/screens/history.dart';
-import 'package:woauto/screens/my_car.dart';
+import 'package:woauto/screens/me.dart';
 import 'package:woauto/screens/settings.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/logger.dart';
@@ -197,7 +197,7 @@ class _HomeState extends State<Home> {
                 ),
               ),
               if (woAuto.currentIndex.value == 1) ...[
-                const MyCar(),
+                const Me(),
               ],
               if (woAuto.currentIndex.value == 2) ...[
                 const History(),

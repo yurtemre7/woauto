@@ -18,14 +18,14 @@ import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
-class MyCar extends StatefulWidget {
-  const MyCar({super.key});
+class Me extends StatefulWidget {
+  const Me({super.key});
 
   @override
-  State<MyCar> createState() => _MyCarState();
+  State<Me> createState() => _MeState();
 }
 
-class _MyCarState extends State<MyCar> {
+class _MeState extends State<Me> {
   final WoAutoServer woAutoServer = Get.find();
 
   var maxHeight = 128.0;
@@ -34,6 +34,24 @@ class _MyCarState extends State<MyCar> {
   var height = 128.0.obs;
 
   final big = true.obs;
+
+  @override
+  void initState() {
+    super.initState();
+
+    Future.delayed(0.seconds, () async {
+      var authValid = woAutoServer.pb.authStore.isValid;
+
+      if (!authValid) {
+        await Get.bottomSheet(
+          const LoginSheet(),
+          isScrollControlled: true,
+        );
+
+        setState(() {});
+      }
+    });
+  }
 
   Future<void> showPictureBottomSheet() async {
     Get.bottomSheet(
@@ -168,39 +186,35 @@ class _MyCarState extends State<MyCar> {
                     ),
                   ),
                   4.w,
-                  IconButton(
-                    onPressed: () async {
-                      var authValid = woAutoServer.pb.authStore.isValid;
-                      if (authValid) {
-                        print('User is valid:');
-                        var user = woAutoServer.pb.authStore.model as RecordModel;
-                        print(user.toString());
+                  if (woAutoServer.pb.authStore.isValid)
+                    IconButton(
+                      onPressed: () async {
                         return await Get.dialog(AlertDialog(
-                          title: Text('Hey ${user.data['username']}'),
-                          content: const Text('Du bist eingeloggt!'),
+                          title: const Text('Ausloggen'),
+                          content:
+                              const Text('Bist du dir sicher, dass du dich ausloggen möchtest?'),
                           actions: [
                             OutlinedButton(
                               onPressed: () {
                                 woAutoServer.pb.authStore.clear();
                                 pop();
+                                setState(() {});
                               },
                               child: const Text('Ausloggen'),
                             ),
                           ],
                         ));
-                      }
-                      Get.dialog(const LoginDialog());
-                    },
-                    icon: const Icon(
-                      Icons.account_box_outlined,
+                      },
+                      icon: const Icon(
+                        Icons.logout_outlined,
+                      ),
+                      iconSize: 38,
+                      tooltip: 'Logout',
+                      style: IconButton.styleFrom(
+                        foregroundColor: context.theme.colorScheme.primary,
+                        disabledForegroundColor: Colors.grey.withOpacity(0.3),
+                      ),
                     ),
-                    iconSize: 38,
-                    tooltip: 'Login',
-                    style: IconButton.styleFrom(
-                      foregroundColor: context.theme.colorScheme.primary,
-                      disabledForegroundColor: Colors.grey.withOpacity(0.3),
-                    ),
-                  ),
                   4.w,
                 ],
                 backgroundColor: Theme.of(context).colorScheme.surface,
