@@ -56,7 +56,7 @@ class WoAuto extends GetxController {
 
   // settings
   final themeMode = 0.obs;
-  final appColor = Colors.orange.value.obs;
+  final appColor = appColorDefault.value.obs;
   final mapType = MapType.normal.obs;
   final showTraffic = false.obs;
   final timePuffer = 10.obs;
@@ -144,7 +144,7 @@ class WoAuto extends GetxController {
     woAuto.carBaujahr.value = jsonMap['carPictureDate'] ?? DateTime.now().year.toString();
     // settings
     woAuto.themeMode.value = jsonMap['themeMode'] ?? 0;
-    woAuto.appColor.value = int.parse(jsonMap['appColor'] ?? Colors.orange.value.toString());
+    woAuto.appColor.value = int.parse(jsonMap['appColor'] ?? appColorDefault.value.toString());
 
     return woAuto;
   }
@@ -221,7 +221,7 @@ class WoAuto extends GetxController {
     carBaujahr.value = DateTime.now().year.toString();
 
     themeMode.value = 0;
-    appColor.value = Colors.orange.value;
+    appColor.value = appColorDefault.value;
     timePuffer.value = 10;
     drivingModeDetectionSpeed.value = 20;
 
