@@ -50,3 +50,4 @@ lib/key.dart
 android/fastlane/report.xml
 android/fastlane/metadata/android/de-DE/changelogs/
 android/pc-api-*.json
+android/app/key.keystore.old
