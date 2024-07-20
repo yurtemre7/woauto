@@ -124,18 +124,25 @@ class WoAutoServer extends GetxController {
                 uuid: simplePosition.id,
                 newName: friend.data['username'],
               );
+            } else {
+              woAuto.deleteFriendPosition(uuid: fUser.id);
             }
+
             var fParkings = friend.expand['parkings'];
             if (fParkings != null) {
               for (var fPark in fParkings) {
                 logMessage('Parking ${fPark.id}: ${fPark.data}', tag: fUser.id);
                 var fPosition = WaPosition.fromRecord(fPark);
-                woAuto.addFriendPosition(
+                woAuto.addFriendCarPosition(
                   newPosition: fPosition.latLng,
                   uuid: fPosition.id,
                   newName: fPosition.name,
                 );
               }
+            } else {
+              woAuto.friendCarPositions.clear();
+              woAuto.friendCarPositions.refresh();
+              woAuto.save();
             }
           },
         );
@@ -221,7 +228,7 @@ class WoAutoServer extends GetxController {
       // example create body
       var user = pb.authStore.model as RecordModel;
       // var user = await pb.collection('users').getOne(userOld.id);
-      var parkingsData = user.data['parkings'] as List<String>;
+      var parkingsData = user.data['parkings'] as List<dynamic>;
       // debugPrint(user.data.toString());
       if (parkingsData.isEmpty) {
         return;

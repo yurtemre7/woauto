@@ -784,6 +784,20 @@ class WoAuto extends GetxController {
     woAuto.save();
   }
 
+  Future<void> deleteFriendPosition({
+    required String uuid,
+  }) async {
+    var idx = friendPositions.indexOf((element) => element.uuid == uuid && !element.mine);
+
+    if (idx == -1) {
+      return;
+    }
+
+    friendPositions.removeAt(idx);
+    friendPositions.refresh();
+    save();
+  }
+
   Future<void> addFriendCarPosition({
     required LatLng newPosition,
     required String uuid,
@@ -822,6 +836,20 @@ class WoAuto extends GetxController {
     woAuto.friendCarPositions.add(carPark);
     woAuto.friendCarPositions.refresh();
     woAuto.save();
+  }
+
+  Future<void> deleteFriendCarPosition({
+    required String uuid,
+  }) async {
+    var idx = friendCarPositions.indexOf((element) => element.uuid == uuid);
+
+    if (idx == -1) {
+      return;
+    }
+
+    friendCarPositions.removeAt(idx);
+    friendCarPositions.refresh();
+    save();
   }
 
   Future<void> addParkticketNotification(TimeOfDay? tillTime) async {
