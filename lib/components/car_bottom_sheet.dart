@@ -24,7 +24,7 @@ class CarBottomSheet extends StatefulWidget {
 }
 
 class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStateMixin {
-  final woAutoServer = Get.find<WoAutoServer>();
+  final WoAutoServer woAutoServer = Get.find();
 
   late AnimationController _controller;
   late AnimationController _controllerOthers;
@@ -64,14 +64,15 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                 Obx(
                   () {
                     var carParkingList = woAuto.carParkings.toList();
+                    var friendsParkingList = woAuto.friendCarParkings.toList();
 
                     var myParking = carParkingList.where((element) => element.mine);
-                    var otherParking = carParkingList.where((element) => !element.mine);
+                    var otherParking = friendsParkingList.where((element) => !element.mine);
 
                     return Column(
                       children: [
                         if (carParkingList.isNotEmpty) ...[
-                          const SizedBox(height: 15),
+                          // const SizedBox(height: 15),
                           parkHeader(myParking),
                           if (myParking.isEmpty)
                             Container(
@@ -177,175 +178,36 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
     );
   }
 
-  Row parkHeader(Iterable<CarPark> myParking) {
-    return Row(
+  Widget parkHeader(Iterable<CarPark> myParking) {
+    return const Row(
       children: [
         Text(
-          t.car_bottom_sheet.parkings.title,
-          style: const TextStyle(
+          'You',
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
         ),
-        const Spacer(),
-        if (myParking.isNotEmpty)
-          TextButton.icon(
-            onPressed: () async {
-              _controller.forward().whenComplete(() => _controller.reset());
-
-              for (var element in myParking) {
-                if (element.sharing) {
-                  await woAutoServer.updateLocation(park: element);
-                }
-              }
-            },
-            icon: RotationTransition(
-              turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
-              child: const Icon(Icons.refresh),
-            ),
-            label: Text(t.constants.update),
-          ),
       ],
     );
   }
 
-  Row sharedParkHeader(Iterable<CarPark> otherParking) {
-    return Row(
+  Widget sharedParkHeader(Iterable<CarPark> otherParking) {
+    return const Row(
       children: [
         Text(
-          t.car_bottom_sheet.shared_parkings.title,
-          style: const TextStyle(
+          'Friends',
+          style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
         ),
-        const Spacer(),
-        if (otherParking.isNotEmpty)
-          TextButton.icon(
-            onPressed: () async {
-              _controllerOthers.forward().whenComplete(() => _controllerOthers.reset());
-              for (var element in otherParking) {
-                if (element.sharing) {
-                  var loc = await woAutoServer.getLocation(id: element.uuid, view: element.viewKey);
-                  if (loc == null) {
-                    logMessage(
-                      'Couldn\'t fetch location for ${element.name} (${element.uuid})',
-                    );
-                    // remove from sync list
-                    woAuto.carParkings.removeWhere((e) => e.uuid == element.uuid);
-                    woAuto.carParkings.refresh();
-                    continue;
-                  }
-                  logMessage(
-                    'Adding fetched location for ${element.name} (${element.uuid})',
-                  );
-                  woAuto.addAnotherCarPark(
-                    newPosition: LatLng(
-                      double.parse(loc.lat),
-                      double.parse(loc.long),
-                    ),
-                    uuid: element.uuid,
-                    view: loc.view,
-                  );
-                }
-              }
-            },
-            icon: RotationTransition(
-              turns: Tween(begin: 0.0, end: 1.0).animate(_controllerOthers),
-              child: const Icon(Icons.refresh),
-            ),
-            label: Text(t.constants.update),
-          ),
       ],
     );
   }
 
-  ListTile buildParkTile(CarPark park) {
+  Widget buildParkTile(CarPark park) {
     return ListTile(
-      contentPadding: EdgeInsets.zero,
-      leading: IconButton(
-        icon: Icon(
-          park.sharing ? Icons.sync_sharp : Icons.sync_disabled_sharp,
-          color: Theme.of(context).colorScheme.primary,
-        ),
-        onPressed: !park.sharing
-            ? () async {
-                var res = await Get.dialog(
-                  AlertDialog(
-                    title: Text(t.dialog.car_bottom_sheet.sync.title),
-                    content: Text(
-                      t.dialog.car_bottom_sheet.sync.subtitle,
-                    ),
-                    actions: [
-                      TextButton(
-                        child: Text(t.dialog.no),
-                        onPressed: () => Get.back(result: false),
-                      ),
-                      OutlinedButton(
-                        child: Text(t.dialog.car_bottom_sheet.sync.action_1),
-                        onPressed: () async {
-                          int until = DateTime.now().add(30.days).millisecondsSinceEpoch;
-                          var acc = await woAutoServer.createLocation(park, until.toString());
-                          if (acc == null) {
-                            Get.back(result: false);
-                            if (!mounted) return;
-                            Get.snackbar(
-                              t.constants.error,
-                              t.constants.error_description,
-                              snackPosition: SnackPosition.TOP,
-                              titleText: Text(
-                                t.constants.error,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                              messageText: Text(
-                                t.constants.error_description,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Theme.of(context).colorScheme.secondary,
-                                ),
-                              ),
-                              borderRadius: 12,
-                              margin: const EdgeInsets.all(20),
-                              duration: 10.seconds,
-                              backgroundColor: Theme.of(context).colorScheme.surface,
-                              colorText: Theme.of(context).colorScheme.onSurface,
-                            );
-                            return;
-                          }
-
-                          park.sharing = true;
-                          park.viewKey = acc.viewKey;
-                          park.editKey = acc.editKey;
-                          park.until = until;
-                          woAuto.save();
-
-                          Get.back(result: true);
-                          setState(() {});
-                        },
-                      ),
-                    ],
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  name: 'Parkplatz synchronisieren',
-                );
-
-                if (res == null || res == false) {
-                  return;
-                }
-
-                if (!mounted) return;
-                _showSyncDialog(park);
-              }
-            : () async {
-                _showSyncDialog(park);
-              },
-      ),
       title: Text(
         '${park.name} - ${woAuto.getCarParkDistance(park)} m',
         style: TextStyle(
@@ -392,10 +254,10 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                   ),
                 ),
               );
+              woAuto.currentSelectedPosition.value = park.latLng;
+              woAuto.currentSelectedCarPark.value = park;
             case 3:
-              if (park.sharing) {
-                woAutoServer.deleteLocationAccount(park: park);
-              }
+              // TODO when deleting, delete from server as well
               woAuto.carParkings.removeWhere((element) => element.uuid == park.uuid);
               woAuto.carParkings.refresh();
 
@@ -479,87 +341,10 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
             ),
           ),
         );
+        woAuto.currentSelectedPosition.value = park.latLng;
+        woAuto.currentSelectedCarPark.value = park;
         pop();
       },
-    );
-  }
-
-  _showSyncDialog(CarPark park) {
-    Get.dialog(
-      AlertDialog(
-        title: Text(t.dialog.car_bottom_sheet.synced.title),
-        content: Text(
-          t.dialog.car_bottom_sheet.synced.subtitle,
-        ),
-        actions: [
-          TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: Theme.of(context).colorScheme.error,
-            ),
-            child: Text(t.dialog.delete),
-            onPressed: () async {
-              woAutoServer.deleteLocationAccount(park: park);
-              park.sharing = false;
-              park.editKey = '';
-              park.viewKey = '';
-              park.until = null;
-              woAuto.save();
-
-              Get.back();
-              setState(() {});
-            },
-          ),
-          OutlinedButton(
-            child: Text(t.dialog.share),
-            onPressed: () async {
-              pop();
-              String website = 'https://yurtemre.de';
-              String woLink =
-                  '$website/sync?id=${Uri.encodeFull(park.uuid)}&view=${Uri.encodeFull(park.viewKey)}&name=${Uri.encodeFull(park.name)}';
-              Get.dialog(
-                AlertDialog(
-                  title: Text(t.dialog.car_bottom_sheet.sharing.title),
-                  content: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(t.dialog.car_bottom_sheet.sharing.subtitle),
-                      5.h,
-                      SizedBox(
-                        height: 320,
-                        width: Get.width,
-                        child: QrImageView(
-                          data: woLink,
-                          size: 320,
-                          gapless: false,
-                        ),
-                      ),
-                    ],
-                  ),
-                  actions: [
-                    TextButton(
-                      child: Text(t.dialog.abort),
-                      onPressed: () => Get.back(result: false),
-                    ),
-                    ElevatedButton(
-                      child: Text(t.dialog.car_bottom_sheet.sharing.action_1),
-                      onPressed: () async {
-                        Share.share(
-                          t.dialog.car_bottom_sheet.sharing.share_content(woLink: woLink),
-                        );
-                        Get.back();
-                      },
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        ],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-      name: 'Parkplatz synchronisiert Info',
     );
   }
 }
