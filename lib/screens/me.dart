@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pocketbase/pocketbase.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/components/login_dialog.dart';
@@ -31,9 +30,9 @@ class _MeState extends State<Me> {
   var maxHeight = 128.0;
   var minHeight = 64.0;
 
-  var height = 128.0.obs;
+  var height = 64.0.obs;
 
-  final big = true.obs;
+  final big = false.obs;
 
   @override
   void initState() {
@@ -65,74 +64,76 @@ class _MeState extends State<Me> {
         margin: EdgeInsets.zero,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ListTile(
-                title: Text(t.bottom_sheet.camera),
-                leading: const Icon(Icons.camera_alt),
-                onTap: () async {
-                  pop();
-                  XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
-
-                  if (image == null) return;
-
-                  String duplicateFilePath = (await getApplicationDocumentsDirectory()).path;
-
-                  var fileName = image.path.split('/').last;
-                  File localImage = await File(image.path).copy('$duplicateFilePath/$fileName');
-                  woAuto.carPicture.value = localImage.path;
-                  woAuto.save();
-                },
-              ),
-              const Div(),
-              ListTile(
-                title: Text(t.bottom_sheet.photo),
-                leading: const Icon(Icons.photo),
-                onTap: () async {
-                  pop();
-                  XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-                  if (image == null) return;
-
-                  String duplicateFilePath = (await getApplicationDocumentsDirectory()).path;
-
-                  var fileName = image.path.split('/').last;
-                  File localImage = await File(image.path).copy('$duplicateFilePath/$fileName');
-                  woAuto.carPicture.value = localImage.path;
-                  woAuto.save();
-                },
-              ),
-              if (woAuto.carPicture.isNotEmpty) ...[
-                const Div(),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
                 ListTile(
-                  title: Text(
-                    t.bottom_sheet.photo_delete,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.error,
-                    ),
-                  ),
-                  leading: Icon(
-                    Icons.delete,
-                    color: Theme.of(context).colorScheme.error,
-                  ),
+                  title: Text(t.bottom_sheet.camera),
+                  leading: const Icon(Icons.camera_alt),
                   onTap: () async {
-                    try {
-                      File localImage = File(woAuto.carPicture.value);
-                      if (await localImage.exists()) {
-                        await localImage.delete();
-                      }
-                    } catch (e) {
-                      logMessage('Couldn\'t delete image: $e');
-                    }
-
                     pop();
-                    woAuto.carPicture.value = '';
+                    XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
+
+                    if (image == null) return;
+
+                    String duplicateFilePath = (await getApplicationDocumentsDirectory()).path;
+
+                    var fileName = image.path.split('/').last;
+                    File localImage = await File(image.path).copy('$duplicateFilePath/$fileName');
+                    woAuto.carPicture.value = localImage.path;
                     woAuto.save();
                   },
                 ),
+                const Div(),
+                ListTile(
+                  title: Text(t.bottom_sheet.photo),
+                  leading: const Icon(Icons.photo),
+                  onTap: () async {
+                    pop();
+                    XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+                    if (image == null) return;
+
+                    String duplicateFilePath = (await getApplicationDocumentsDirectory()).path;
+
+                    var fileName = image.path.split('/').last;
+                    File localImage = await File(image.path).copy('$duplicateFilePath/$fileName');
+                    woAuto.carPicture.value = localImage.path;
+                    woAuto.save();
+                  },
+                ),
+                if (woAuto.carPicture.isNotEmpty) ...[
+                  const Div(),
+                  ListTile(
+                    title: Text(
+                      t.bottom_sheet.photo_delete,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                    ),
+                    leading: Icon(
+                      Icons.delete,
+                      color: Theme.of(context).colorScheme.error,
+                    ),
+                    onTap: () async {
+                      try {
+                        File localImage = File(woAuto.carPicture.value);
+                        if (await localImage.exists()) {
+                          await localImage.delete();
+                        }
+                      } catch (e) {
+                        logMessage('Couldn\'t delete image: $e');
+                      }
+
+                      pop();
+                      woAuto.carPicture.value = '';
+                      woAuto.save();
+                    },
+                  ),
+                ],
               ],
-            ],
+            ),
           ),
         ),
       ),
@@ -252,6 +253,12 @@ class _MeState extends State<Me> {
                                           : FileImage(File(woAuto.carPicture.value)),
                                       backgroundColor:
                                           Theme.of(context).colorScheme.primaryContainer,
+                                      onBackgroundImageError: woAuto.carPicture.isEmpty
+                                          ? null
+                                          : (exception, stackTrace) {
+                                              woAuto.carPicture.value = '';
+                                              woAuto.save();
+                                            },
                                     ),
                                     if (woAuto.carPicture.isEmpty)
                                       Positioned(
@@ -349,6 +356,101 @@ class _MeState extends State<Me> {
                         ),
                       ),
                       16.h,
+                      if (woAutoServer.pb.authStore.isValid) ...[
+                        SwitchListTile(
+                          title: Text(
+                            'Teile meinen letzten Standort',
+                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                          ),
+                          subtitle: const Text(
+                              'Während der App Nutzung wird dein Live-Standort auf unserem Server gespeichert und deine Freunde, nur sie, können ihn dann einsehen. Sobald die App geschlossen wurde, bleibt der zuletzt gesetzte Standort sichtbar.'),
+                          value: woAutoServer.shareMyLastLiveLocation.value,
+                          onChanged: (s) async {
+                            if (s == false) {
+                              var res = await Get.dialog(
+                                    AlertDialog(
+                                      title: const Text('Teilen beenden'),
+                                      content: const Text(
+                                          'Wenn du dein Teilen beendest, wird erst dein Standort von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            pop(result: false);
+                                          },
+                                          child: const Text('Abbrechen'),
+                                        ),
+                                        OutlinedButton(
+                                          onPressed: () async {
+                                            // delete
+                                            await woAutoServer.deleteUserLocation();
+                                            pop(result: true);
+                                          },
+                                          child: const Text('Ausschalten'),
+                                        ),
+                                      ],
+                                    ),
+                                  ) ??
+                                  false;
+
+                              if (res == false) return;
+                            }
+                            woAutoServer.shareMyLastLiveLocation.toggle();
+                            woAutoServer.save();
+                          },
+                        ),
+                        SwitchListTile(
+                          title: Text(
+                            'Teile meine Parkplätze',
+                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                          ),
+                          subtitle: const Text(
+                              'Hiermit werden deine Parkplätze in unseren Servern gespeichert und so können deine Freunde, nur sie, deine Parkplätze einsehen, niemals aber deine Parkplatzhistorie.'),
+                          value: woAutoServer.shareMyParkings.value,
+                          onChanged: (s) async {
+                            if (s == false) {
+                              var res = await Get.dialog(
+                                    AlertDialog(
+                                      title: const Text('Teilen beenden'),
+                                      content: const Text(
+                                          'Wenn du dein Teilen beendest, werden erst deine Standorte deiner Parkplätze von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            pop(result: false);
+                                          },
+                                          child: const Text('Abbrechen'),
+                                        ),
+                                        OutlinedButton(
+                                          onPressed: () async {
+                                            await woAutoServer.deleteUserParkingLocations();
+                                            pop(result: true);
+                                          },
+                                          child: const Text('Ausschalten'),
+                                        ),
+                                      ],
+                                    ),
+                                  ) ??
+                                  false;
+
+                              if (res == false) return;
+                            }
+                            woAutoServer.shareMyParkings.toggle();
+                            woAutoServer.save();
+                          },
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Text(
+                            'Wenn du diese Einstellungen deaktivierst, wirst du nochmal nach einer Bestätigung der Aktion gefragt, da das ausschalten immer alle Daten vom Server zuerst löscht und dann das Speichern unterbindet, bis du es wieder einschaltest.',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                        const Divider(),
+                      ],
                       ListTile(
                         title: Text(
                           t.my_car.park_name.title(name: woAuto.subText.value),
