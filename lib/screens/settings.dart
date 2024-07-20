@@ -574,14 +574,8 @@ class _SettingsState extends State<Settings> {
                                   child: Text(t.dialog.delete),
                                   onPressed: () async {
                                     WoAutoServer woAutoServer = Get.find();
-                                    var parkings = woAuto.carParkings;
-                                    for (var parking in parkings) {
-                                      if (parking.sharing) {
-                                        woAutoServer.deleteLocationAccount(
-                                          park: parking,
-                                        );
-                                      }
-                                    }
+                                    await woAutoServer.deleteUserLocation();
+                                    await woAutoServer.deleteUserParkingLocations();
                                     // pop();
                                     pop();
                                     await woAuto.reset();
