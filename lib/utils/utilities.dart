@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -196,4 +198,20 @@ int calculateCarAge(String year) {
   var now = DateTime.now();
   var yearInt = int.parse(year);
   return now.year - yearInt;
+}
+
+double uuidToHue(String uuid) {
+  // Convert the UUID to bytes
+  List<int> bytes = utf8.encode(uuid);
+
+  // Simple hash function to process the bytes
+  int hash = 0;
+  for (int byte in bytes) {
+    hash = (hash * 31 + byte) & 0xFFFFFFFF;
+  }
+
+  // Map the hash value to a hue value between 0 and 360
+  double hue = (hash % 360).toDouble();
+
+  return hue;
 }
