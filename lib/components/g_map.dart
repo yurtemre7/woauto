@@ -247,6 +247,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 markers: woAuto.carMarkers.toSet()
                   ..addAll(woAuto.tempMarkers.toSet())
+                  ..addAll(woAuto.friendPositionMarkers.toSet())
                   ..addAll(woAuto.friendCarMarkers.toSet()),
                 onTap: (pos) {
                   if (woAuto.tempMarkers.isNotEmpty) {
