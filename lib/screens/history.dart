@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:to_csv/to_csv.dart';
+// import 'package:to_csv/to_csv.dart';
 import 'package:uuid/uuid.dart';
 import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/components/div.dart';
@@ -160,47 +160,50 @@ class _HistoryState extends State<History> {
                           ),
                           if (history.isNotEmpty) ...[
                             const Div(),
-                            ListTile(
-                              title: Text(
-                                t.history.export.title,
-                                style: TextStyle(color: Theme.of(context).colorScheme.primary),
-                              ),
-                              subtitle: Text(
-                                t.history.export.subtitle,
-                              ),
-                              leading: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(
-                                  Icons.table_rows_outlined,
-                                  color: Theme.of(context).colorScheme.primary,
+                            Visibility(
+                              visible: false,
+                              child: ListTile(
+                                title: Text(
+                                  t.history.export.title,
+                                  style: TextStyle(color: Theme.of(context).colorScheme.primary),
                                 ),
+                                subtitle: Text(
+                                  t.history.export.subtitle,
+                                ),
+                                leading: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Icon(
+                                    Icons.table_rows_outlined,
+                                    color: Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                                onTap: () async {
+                                  List<String> header = [
+                                    'Name',
+                                    'Adresse',
+                                    'Datum',
+                                    'Latitude',
+                                    'Longitude',
+                                    'Extra'
+                                  ];
+                                  List<List<String>> rows = [];
+                                  for (CarPark park in woAuto.carParkingHistory) {
+                                    rows.add(
+                                      [
+                                        park.name,
+                                        park.adresse ?? t.constants.default_address,
+                                        DateTime.fromMillisecondsSinceEpoch(park.updatedAt ??
+                                                DateTime.now().millisecondsSinceEpoch)
+                                            .toString(),
+                                        park.latitude.toString(),
+                                        park.longitude.toString(),
+                                        park.description ?? '',
+                                      ],
+                                    );
+                                  }
+                                  // await myCSV(header, rows);
+                                },
                               ),
-                              onTap: () async {
-                                List<String> header = [
-                                  'Name',
-                                  'Adresse',
-                                  'Datum',
-                                  'Latitude',
-                                  'Longitude',
-                                  'Extra'
-                                ];
-                                List<List<String>> rows = [];
-                                for (CarPark park in woAuto.carParkingHistory) {
-                                  rows.add(
-                                    [
-                                      park.name,
-                                      park.adresse ?? t.constants.default_address,
-                                      DateTime.fromMillisecondsSinceEpoch(park.updatedAt ??
-                                              DateTime.now().millisecondsSinceEpoch)
-                                          .toString(),
-                                      park.latitude.toString(),
-                                      park.longitude.toString(),
-                                      park.description ?? '',
-                                    ],
-                                  );
-                                }
-                                await myCSV(header, rows);
-                              },
                             ),
                             ListTile(
                               leading: Padding(
