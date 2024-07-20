@@ -86,11 +86,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                                 ),
                               ),
                             ),
-                          ...myParking
-                              .map(
-                                (park) => buildParkTile(park),
-                              )
-                              .toList(),
+                          ...myParking.map(
+                            (park) => buildParkTile(park),
+                          ),
                           const Div(),
                           8.h,
                           sharedParkHeader(otherParking),
@@ -107,11 +105,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                                 ),
                               ),
                             ),
-                          ...otherParking
-                              .map(
-                                (park) => buildParkTile(park),
-                              )
-                              .toList(),
+                          ...otherParking.map(
+                            (park) => buildParkTile(park),
+                          ),
                         ],
                         const Div(),
                         TextButton.icon(

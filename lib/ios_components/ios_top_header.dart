@@ -178,11 +178,9 @@ class _CupertinoCarBottomSheetState extends State<CupertinoCarBottomSheet>
                           ),
                         ),
                       ),
-                    ...myParking
-                        .map(
-                          (park) => buildParkTile(park),
-                        )
-                        .toList(),
+                    ...myParking.map(
+                      (park) => buildParkTile(park),
+                    ),
                     // const Div(),
                     12.h,
                     sharedParkHeader(otherParking),
@@ -199,11 +197,9 @@ class _CupertinoCarBottomSheetState extends State<CupertinoCarBottomSheet>
                           ),
                         ),
                       ),
-                    ...otherParking
-                        .map(
-                          (park) => buildParkTile(park),
-                        )
-                        .toList(),
+                    ...otherParking.map(
+                      (park) => buildParkTile(park),
+                    ),
                   ],
                   // const Div(),
                   TextButton.icon(
