@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:pocketbase/pocketbase.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/components/login_dialog.dart';
@@ -357,6 +358,16 @@ class _MeState extends State<Me> {
                       ),
                       16.h,
                       if (woAutoServer.pb.authStore.isValid) ...[
+                        Builder(builder: (context) {
+                          var user = woAutoServer.pb.authStore.model as RecordModel;
+                          return ListTile(
+                            title: Text(
+                              '@${user.data['username']}',
+                              style: TextStyle(color: context.theme.colorScheme.primary),
+                            ),
+                            subtitle: Text('${user.data['email']}'),
+                          );
+                        }),
                         SwitchListTile(
                           title: Text(
                             'Teile meinen letzten Standort',
