@@ -6,11 +6,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart' as loc;
+import 'package:woauto/classes/wa_position.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
-import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class GMap extends StatefulWidget {
@@ -23,6 +23,8 @@ class GMap extends StatefulWidget {
 class _GMapState extends State<GMap> with WidgetsBindingObserver {
   final mapLoading = true.obs;
   final WoAutoServer woAutoServer = Get.find();
+
+  late Timer timer;
 
   StreamSubscription<Position>? positionStream;
 
@@ -37,6 +39,7 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     positionStream?.cancel();
+    timer.cancel();
     super.dispose();
   }
 
@@ -120,6 +123,30 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
       );
     }
 
+    timer = Timer.periodic(10.seconds, (t) async {
+      var currentPosition = woAuto.currentPosition.value.target;
+
+      if (woAutoServer.shareMyLastLiveLocation.value) {
+        woAutoServer.setUserLocation(
+          LatLng(
+            currentPosition.latitude,
+            currentPosition.longitude,
+          ),
+        );
+      }
+
+      // share cars
+
+      if (woAutoServer.shareMyParkings.value) {
+        var carParkingList = woAuto.carParkings.toList();
+        var myParking = carParkingList.where((element) => element.mine);
+
+        for (var park in myParking) {
+          // TODO
+        }
+      }
+    });
+
     positionStream = Geolocator.getPositionStream(locationSettings: locationSettings)
         .listen((Position? position) async {
       if (!mounted || position == null) {
@@ -191,40 +218,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
         }
       }
     });
-
-    fetchSyncLocations();
-  }
-
-  Future<void> fetchSyncLocations() async {
-    logMessage('Fetching positions...');
-    var carParkingList = woAuto.carParkings.toList();
-    var myParking = carParkingList.where((element) => element.mine);
-    var otherParking = carParkingList.where((element) => !element.mine);
-
-    for (var element in myParking) {
-      if (element.sharing) {
-        woAutoServer.updateLocation(park: element);
-      }
-    }
-
-    for (var element in otherParking) {
-      if (element.sharing) {
-        var loc = await woAutoServer.getLocation(id: element.uuid, view: element.viewKey);
-        if (loc == null) {
-          logMessage('Couldn\'t fetch location for ${element.name} (${element.uuid})');
-          // remove from sync list
-          woAuto.carParkings.removeWhere((e) => e.uuid == element.uuid);
-          woAuto.carParkings.refresh();
-          continue;
-        }
-        logMessage('Adding fetched location for ${element.name} (${element.uuid})');
-        woAuto.addAnotherCarPark(
-          newPosition: LatLng(double.parse(loc.lat), double.parse(loc.long)),
-          uuid: element.uuid,
-          view: loc.view,
-        );
-      }
-    }
   }
 
   @override
@@ -252,7 +245,9 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
                 myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,
                 padding: const EdgeInsets.only(left: 10, right: 10),
-                markers: woAuto.carMarkers.toSet()..addAll(woAuto.tempMarkers.toSet()),
+                markers: woAuto.carMarkers.toSet()
+                  ..addAll(woAuto.tempMarkers.toSet())
+                  ..addAll(woAuto.friendCarMarkers.toSet()),
                 onTap: (pos) {
                   if (woAuto.tempMarkers.isNotEmpty) {
                     woAuto.tempMarkers.removeWhere((element) => element.markerId.value == 'temp');
