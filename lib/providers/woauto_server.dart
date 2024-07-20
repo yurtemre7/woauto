@@ -203,7 +203,8 @@ class WoAutoServer extends GetxController {
   Future<void> deleteUserLocation() async {
     try {
       // example create body
-      var user = pb.authStore.model as RecordModel;
+      var user = pb.authStore.model as RecordModel?;
+      if (user == null) return;
       // var user = await pb.collection('users').getOne(userOld.id);
       var positionData = user.data['position'].toString().trim();
       // debugPrint(user.data.toString());
@@ -226,7 +227,8 @@ class WoAutoServer extends GetxController {
   Future<void> deleteUserParkingLocations() async {
     try {
       // example create body
-      var user = pb.authStore.model as RecordModel;
+      var user = pb.authStore.model as RecordModel?;
+      if (user == null) return;
       // var user = await pb.collection('users').getOne(userOld.id);
       var parkingsData = user.data['parkings'] as List<dynamic>;
       // debugPrint(user.data.toString());
