@@ -64,10 +64,11 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                 Obx(
                   () {
                     var carParkingList = woAuto.carParkings.toList();
-                    var friendsParkingList = woAuto.friendCarParkings.toList();
+                    var friendsParkingList = woAuto.friendPositions.toList();
 
                     var myParking = carParkingList.where((element) => element.mine);
                     var otherParking = friendsParkingList.where((element) => !element.mine);
+                    otherParking.toList().addAll(woAuto.friendCarPositions.toList());
 
                     return Column(
                       children: [
