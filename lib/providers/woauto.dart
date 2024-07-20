@@ -40,6 +40,12 @@ class WoAuto extends GetxController {
   final currentSelectedCarPark = Rxn<CarPark>();
 
   final carParkings = <CarPark>[].obs;
+  final friendPositions = <CarPark>[].obs;
+  RxList<Marker> get friendPositionMarkers =>
+      friendPositions.map((park) => makeCarMarker(park)).toList().obs;
+  final friendCarPositions = <CarPark>[].obs;
+  RxList<Marker> get friendCarMarkers =>
+      friendCarPositions.map((park) => makeCarMarker(park)).toList().obs;
   RxList<Marker> get carMarkers => carParkings.map((park) => makeCarMarker(park)).toList().obs;
   final tempMarkers = <Marker>{}.obs;
   final carParkingHistory = <CarPark>[].obs;
@@ -119,8 +125,12 @@ class WoAuto extends GetxController {
 
     var carParkings = jsonMap['carParkings'] ?? [];
     for (int i = 0; i < carParkings.length; i++) {
-      woAuto.carParkings.add(CarPark.fromJson(carParkings[i]));
+      var park = CarPark.fromJson(carParkings[i]);
+      if (park.mine) {
+        woAuto.carParkings.add(park);
+      }
     }
+
     woAuto.carParkings.refresh();
     woAuto.carMarkers.refresh();
     var carParkingHistory = jsonMap['carParkHistory'] ?? [];
@@ -586,13 +596,14 @@ class WoAuto extends GetxController {
             ),
           ),
         );
+
         woAuto.tempMarkers.clear();
         woAuto.currentSelectedPosition.value = park.latLng;
         woAuto.currentSelectedCarPark.value = park;
       },
       icon: park.mine
           ? BitmapDescriptor.defaultMarker
-          : BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
+          : BitmapDescriptor.defaultMarkerWithHue(uuidToHue(park.uuid)),
     );
   }
 
@@ -661,9 +672,7 @@ class WoAuto extends GetxController {
             ),
             onPressed: () {
               WoAutoServer woAutoServer = Get.find();
-              if (park.sharing) {
-                woAutoServer.deleteLocationAccount(park: park);
-              }
+              // TODO delete park from server as well
               carParkings.removeWhere((element) => element.uuid == park.uuid);
               carParkings.refresh();
 
@@ -709,10 +718,8 @@ class WoAuto extends GetxController {
       woAuto.carParkingHistory.add(carPark);
       woAuto.carParkings.refresh();
       woAuto.save();
-      if (carPark.sharing) {
-        WoAutoServer woAutoServer = Get.find();
-        woAutoServer.updateLocation(park: carPark);
-      }
+
+      // TODO update car location in server
 
       return;
     }
@@ -722,6 +729,7 @@ class WoAuto extends GetxController {
     var carPark = CarPark(
       uuid: uuid.v4(),
       name: name,
+      mine: true,
       latitude: newPosition.latitude,
       longitude: newPosition.longitude,
       adresse: adresse,
@@ -737,45 +745,82 @@ class WoAuto extends GetxController {
     woAuto.save();
   }
 
-  Future<void> addAnotherCarPark({
+  Future<void> addFriendPosition({
     required LatLng newPosition,
     required String uuid,
-    required String view,
     String? newName,
   }) async {
     var adresse = await getAddress(newPosition);
     var name = newName ?? t.constants.default_shared_title;
 
-    if (carParkings.any((element) => element.uuid == uuid && !element.mine)) {
+    if (friendPositions.any((element) => element.uuid == uuid && !element.mine)) {
       // Update
-      logMessage('Update Another Car Park');
-      var carPark = carParkings.firstWhere((element) => element.uuid == uuid && !element.mine);
+      logMessage('Update Friend Position');
+      var carPark = friendPositions.firstWhere((element) => element.uuid == uuid && !element.mine);
       carPark.latitude = newPosition.latitude;
       carPark.longitude = newPosition.longitude;
       carPark.adresse = adresse;
-      carPark.sharing = true;
-      carPark.viewKey = view;
+      carPark.name = name;
       carPark.updatedAt = DateTime.now().millisecondsSinceEpoch;
-      woAuto.carParkings.refresh();
+      woAuto.friendPositions.refresh();
 
       woAuto.save();
       return;
     }
-    logMessage('Add Another Car Park');
+    logMessage('Add Friend Position');
     var carPark = CarPark(
       uuid: uuid,
       name: name,
-      viewKey: view,
       latitude: newPosition.latitude,
       longitude: newPosition.longitude,
       adresse: adresse,
-      sharing: true,
+      mine: false,
       createdAt: DateTime.now().millisecondsSinceEpoch,
       updatedAt: DateTime.now().millisecondsSinceEpoch,
     );
 
-    woAuto.carParkings.add(carPark);
-    woAuto.carParkings.refresh();
+    woAuto.friendPositions.add(carPark);
+    woAuto.friendPositions.refresh();
+    woAuto.save();
+  }
+
+  Future<void> addFriendCarPosition({
+    required LatLng newPosition,
+    required String uuid,
+    String? newName,
+  }) async {
+    var adresse = await getAddress(newPosition);
+    var name = newName ?? t.constants.default_shared_title;
+
+    if (friendCarPositions.any((element) => element.uuid == uuid && !element.mine)) {
+      // Update
+      logMessage('Update Friend Car Position');
+      var carPark =
+          friendCarPositions.firstWhere((element) => element.uuid == uuid && !element.mine);
+      carPark.latitude = newPosition.latitude;
+      carPark.longitude = newPosition.longitude;
+      carPark.adresse = adresse;
+      carPark.name = name;
+      carPark.updatedAt = DateTime.now().millisecondsSinceEpoch;
+      woAuto.friendCarPositions.refresh();
+
+      woAuto.save();
+      return;
+    }
+    logMessage('Add Friend Car Position');
+    var carPark = CarPark(
+      uuid: uuid,
+      name: name,
+      latitude: newPosition.latitude,
+      longitude: newPosition.longitude,
+      adresse: adresse,
+      mine: false,
+      createdAt: DateTime.now().millisecondsSinceEpoch,
+      updatedAt: DateTime.now().millisecondsSinceEpoch,
+    );
+
+    woAuto.friendCarPositions.add(carPark);
+    woAuto.friendCarPositions.refresh();
     woAuto.save();
   }
 
