@@ -188,8 +188,11 @@ class _LoginSheetState extends State<LoginSheet> {
                                     'passwordConfirm': password,
                                   };
 
-                                  var record =
-                                      await woAutoServer.pb.collection('users').create(body: data);
+                                  await woAutoServer.pb.collection('users').create(body: data);
+
+                                  await woAutoServer.pb
+                                      .collection('users')
+                                      .authWithPassword(email, password);
                                   pop();
                                 } on ClientException catch (e) {
                                   var code = e.response['code'];
@@ -208,7 +211,7 @@ class _LoginSheetState extends State<LoginSheet> {
                                 var email = emailController.text;
                                 var password = passwordController.text;
                                 try {
-                                  var userData = await woAutoServer.pb
+                                  await woAutoServer.pb
                                       .collection('users')
                                       .authWithPassword(email, password);
                                   pop();
