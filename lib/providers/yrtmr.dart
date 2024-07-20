@@ -89,8 +89,8 @@ class YrtmrDeeplinks {
       logMessage(deeplink.params.toString());
 
       switch (deeplink.link) {
-        case 'add-location':
-          await addLocation(deeplink);
+        // case 'add-location':
+        //   await addLocation(deeplink);
         default:
           return;
       }
@@ -99,49 +99,49 @@ class YrtmrDeeplinks {
     }
   }
 
-  addLocation(YrtmrDeeplink deeplink) async {
-    String? id = deeplink.params['id'];
-    String? view = deeplink.params['view'];
-    String? name = deeplink.params['name'];
+  // addLocation(YrtmrDeeplink deeplink) async {
+  //   String? id = deeplink.params['id'];
+  //   String? view = deeplink.params['view'];
+  //   String? name = deeplink.params['name'];
 
-    if (id == null || view == null || name == null) {
-      return;
-    }
-    logMessage('Adding Location: $name, $id, $view');
-    WoAutoServer woAutoServer = Get.find();
-    var location = await woAutoServer.getLocation(id: id, view: view);
-    if (location == null) {
-      return;
-    }
-    await woAuto.addAnotherCarPark(
-      newPosition: LatLng(double.parse(location.lat), double.parse(location.long)),
-      newName: location.name,
-      uuid: id,
-      view: view,
-    );
-    Get.snackbar(
-      t.snackbar.shared_parking.title,
-      t.snackbar.shared_parking.subtitle,
-      snackPosition: SnackPosition.TOP,
-      borderRadius: 12,
-      margin: const EdgeInsets.all(20),
-      backgroundColor: Get.theme.colorScheme.surface,
-      colorText: Get.theme.colorScheme.onSurface,
-    );
-    if (woAuto.mapController.value != null) {
-      woAuto.mapController.value!.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(
-              double.parse(location.lat),
-              double.parse(location.long),
-            ),
-            zoom: CAM_ZOOM,
-          ),
-        ),
-      );
-    }
-  }
+  //   if (id == null || view == null || name == null) {
+  //     return;
+  //   }
+  //   logMessage('Adding Location: $name, $id, $view');
+  //   WoAutoServer woAutoServer = Get.find();
+  //   var location = await woAutoServer.getLocation(id: id, view: view);
+  //   if (location == null) {
+  //     return;
+  //   }
+  //   await woAuto.addAnotherCarPark(
+  //     newPosition: LatLng(double.parse(location.lat), double.parse(location.long)),
+  //     newName: location.name,
+  //     uuid: id,
+  //     view: view,
+  //   );
+  //   Get.snackbar(
+  //     t.snackbar.shared_parking.title,
+  //     t.snackbar.shared_parking.subtitle,
+  //     snackPosition: SnackPosition.TOP,
+  //     borderRadius: 12,
+  //     margin: const EdgeInsets.all(20),
+  //     backgroundColor: Get.theme.colorScheme.surface,
+  //     colorText: Get.theme.colorScheme.onSurface,
+  //   );
+  //   if (woAuto.mapController.value != null) {
+  //     woAuto.mapController.value!.animateCamera(
+  //       CameraUpdate.newCameraPosition(
+  //         CameraPosition(
+  //           target: LatLng(
+  //             double.parse(location.lat),
+  //             double.parse(location.long),
+  //           ),
+  //           zoom: CAM_ZOOM,
+  //         ),
+  //       ),
+  //     );
+  //   }
+  // }
 
   YrtmrDeeplink parseUri(Uri deeplink) {
     return YrtmrDeeplink(
