@@ -38,19 +38,6 @@ class _MeState extends State<Me> {
   @override
   void initState() {
     super.initState();
-
-    Future.delayed(0.seconds, () async {
-      var authValid = woAutoServer.pb.authStore.isValid;
-
-      if (!authValid) {
-        await Get.bottomSheet(
-          const LoginSheet(),
-          isScrollControlled: true,
-        );
-
-        setState(() {});
-      }
-    });
   }
 
   Future<void> showPictureBottomSheet() async {
@@ -187,37 +174,7 @@ class _MeState extends State<Me> {
                       },
                     ),
                   ),
-                  4.w,
-                  if (woAutoServer.pb.authStore.isValid)
-                    IconButton(
-                      onPressed: () async {
-                        return await Get.dialog(AlertDialog(
-                          title: const Text('Ausloggen'),
-                          content:
-                              const Text('Bist du dir sicher, dass du dich ausloggen möchtest?'),
-                          actions: [
-                            OutlinedButton(
-                              onPressed: () {
-                                woAutoServer.pb.authStore.clear();
-                                pop();
-                                setState(() {});
-                              },
-                              child: const Text('Ausloggen'),
-                            ),
-                          ],
-                        ));
-                      },
-                      icon: const Icon(
-                        Icons.logout_outlined,
-                      ),
-                      iconSize: 38,
-                      tooltip: 'Logout',
-                      style: IconButton.styleFrom(
-                        foregroundColor: context.theme.colorScheme.primary,
-                        disabledForegroundColor: Colors.grey.withOpacity(0.3),
-                      ),
-                    ),
-                  4.w,
+                  8.w,
                 ],
                 backgroundColor: Theme.of(context).colorScheme.surface,
               ),
@@ -315,6 +272,7 @@ class _MeState extends State<Me> {
                                                   fontWeight: FontWeight.bold,
                                                   color: Theme.of(context).colorScheme.primary,
                                                 ),
+                                                textAlign: TextAlign.center,
                                               ),
                                               if (woAuto.kennzeichen.value.isNotEmpty)
                                                 Text(
@@ -322,6 +280,7 @@ class _MeState extends State<Me> {
                                                   style: TextStyle(
                                                     color: Theme.of(context).colorScheme.primary,
                                                   ),
+                                                  textAlign: TextAlign.center,
                                                 ),
                                               if (woAuto.carBaujahr.value.isNotEmpty)
                                                 Text(
@@ -332,6 +291,7 @@ class _MeState extends State<Me> {
                                                   style: TextStyle(
                                                     color: Theme.of(context).colorScheme.primary,
                                                   ),
+                                                  textAlign: TextAlign.center,
                                                 ),
                                               if (woAuto.kilometerStand.value.isNotEmpty)
                                                 Text(
@@ -341,6 +301,7 @@ class _MeState extends State<Me> {
                                                   style: TextStyle(
                                                     color: Theme.of(context).colorScheme.primary,
                                                   ),
+                                                  textAlign: TextAlign.center,
                                                 ),
                                             ],
                                           ),
@@ -360,12 +321,45 @@ class _MeState extends State<Me> {
                       if (woAutoServer.pb.authStore.isValid) ...[
                         Builder(builder: (context) {
                           var user = woAutoServer.pb.authStore.model as RecordModel;
-                          return ListTile(
-                            title: Text(
-                              '@${user.data['username']}',
-                              style: TextStyle(color: context.theme.colorScheme.primary),
+                          return SelectionArea(
+                            child: ListTile(
+                              title: Text(
+                                '@${user.data['username']}',
+                                style: TextStyle(color: context.theme.colorScheme.primary),
+                              ),
+                              subtitle: Text('${user.data['email']}'),
+                              trailing: IconButton(
+                                onPressed: () async {
+                                  return await Get.dialog(AlertDialog(
+                                    title: const Text('Ausloggen'),
+                                    content: const Text(
+                                        'Bist du dir sicher, dass du dich ausloggen möchtest?'),
+                                    actions: [
+                                      OutlinedButton(
+                                        style: OutlinedButton.styleFrom(
+                                          foregroundColor: context.theme.colorScheme.error,
+                                        ),
+                                        onPressed: () {
+                                          woAutoServer.pb.authStore.clear();
+                                          pop();
+                                          setState(() {});
+                                        },
+                                        child: const Text('Ausloggen'),
+                                      ),
+                                    ],
+                                  ));
+                                },
+                                icon: const Icon(
+                                  Icons.logout_outlined,
+                                ),
+                                iconSize: 38,
+                                tooltip: 'Logout',
+                                style: IconButton.styleFrom(
+                                  foregroundColor: context.theme.colorScheme.error,
+                                  disabledForegroundColor: Colors.grey.withOpacity(0.3),
+                                ),
+                              ),
                             ),
-                            subtitle: Text('${user.data['email']}'),
                           );
                         }),
                         SwitchListTile(
@@ -461,6 +455,21 @@ class _MeState extends State<Me> {
                           ),
                         ),
                         const Divider(),
+                      ] else ...[
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: OutlinedButton(
+                            onPressed: () async {
+                              await Get.bottomSheet(
+                                const LoginSheet(),
+                                isScrollControlled: true,
+                              );
+
+                              setState(() {});
+                            },
+                            child: const Text('Login or Register now'),
+                          ),
+                        ),
                       ],
                       ListTile(
                         title: Text(
