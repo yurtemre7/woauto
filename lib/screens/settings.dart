@@ -481,19 +481,19 @@ class _SettingsState extends State<Settings> {
                                         fontSize: 16,
                                       ),
                                     ),
-                                    const SizedBox(height: 8),
+                                    8.h,
                                     Text(
                                       t.dialog.data_security.content_2,
                                     ),
-                                    const SizedBox(height: 5),
+                                    5.h,
                                     Text(
                                       t.dialog.data_security.content_3,
                                     ),
-                                    const SizedBox(height: 5),
+                                    5.h,
                                     Text(
                                       t.dialog.data_security.content_4,
                                     ),
-                                    const SizedBox(height: 5),
+                                    5.h,
                                     Text.rich(
                                       TextSpan(
                                         text: t.dialog.data_security.content_5,

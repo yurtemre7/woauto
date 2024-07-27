@@ -83,21 +83,21 @@ class _IntroState extends State<Intro> {
                                 fontSize: 20,
                               ),
                             ),
-                            const SizedBox(height: 5),
+                            5.h,
                             const Div(),
-                            const SizedBox(height: 5),
+                            5.h,
                             Text(
                               t.intro.page_1.content_1,
                             ),
-                            const SizedBox(height: 5),
+                            5.h,
                             const Div(),
-                            const SizedBox(height: 5),
+                            5.h,
                             Text(
                               t.intro.page_1.content_2,
                             ),
-                            const SizedBox(height: 5),
+                            5.h,
                             const Div(),
-                            const SizedBox(height: 5),
+                            5.h,
                             Text(
                               t.intro.page_1.content_3,
                             ),
@@ -163,7 +163,7 @@ class _IntroState extends State<Intro> {
                                     t.intro.page_2.theme_content,
                                   ),
                                 ),
-                                const SizedBox(width: 15),
+                                15.h,
                                 Obx(
                                   () {
                                     var themeMode = woAuto.themeMode.value;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:woauto/utils/extensions.dart';
 
 class TextIcon extends StatelessWidget {
   final Widget label;
@@ -12,7 +13,7 @@ class TextIcon extends StatelessWidget {
       child: Row(
         children: [
           icon,
-          const SizedBox(width: 8),
+          8.w,
           label,
         ],
       ),
