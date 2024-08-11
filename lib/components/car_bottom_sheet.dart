@@ -65,15 +65,17 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                   () {
                     var carParkingList = woAuto.carParkings.toList();
                     var friendsParkingList = woAuto.friendPositions.toList();
+                    // var friendsCount = friendsParkingList.length;
 
                     var myParking = carParkingList.where((element) => element.mine);
-                    var otherParking = friendsParkingList.where((element) => !element.mine);
-                    otherParking.toList().addAll(woAuto.friendCarPositions.toList());
+                    var otherParking =
+                        friendsParkingList.where((element) => !element.mine).toList();
+                    otherParking.addAll(woAuto.friendCarPositions);
 
                     return Column(
                       children: [
-                        if (carParkingList.isNotEmpty) ...[
-                          // const SizedBox(height: 15),
+                        if (carParkingList.isNotEmpty || otherParking.isNotEmpty) ...[
+                          // 15.h,
                           parkHeader(myParking),
                           if (myParking.isEmpty)
                             Container(
@@ -210,7 +212,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
   Widget buildParkTile(CarPark park) {
     return ListTile(
       title: Text(
-        '${park.name} - ${woAuto.getCarParkDistance(park)} m',
+        '${park.name} - ${woAuto.getDistanceString(park.latLng)}',
         style: TextStyle(
           fontWeight: FontWeight.bold,
           color: Theme.of(context).colorScheme.primary,
