@@ -85,9 +85,10 @@ class _SettingsState extends State<Settings> {
                               await woAuto.save();
                               if (!mounted) return;
                               Future.delayed(500.milliseconds, () {
+                                if (!context.mounted) return;
                                 SystemChrome.setSystemUIOverlayStyle(
                                   SystemUiOverlayStyle(
-                                    systemNavigationBarColor: Theme.of(context).colorScheme.surface,
+                                    systemNavigationBarColor: context.theme.colorScheme.surface,
                                   ),
                                 );
                               });
@@ -138,6 +139,7 @@ class _SettingsState extends State<Settings> {
                                       woAuto.setTheme();
                                       if (!mounted) return;
                                       Future.delayed(500.milliseconds, () {
+                                        if (!context.mounted) return;
                                         SystemChrome.setSystemUIOverlayStyle(
                                           SystemUiOverlayStyle(
                                             systemNavigationBarColor:

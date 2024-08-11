@@ -129,7 +129,7 @@ class _HomeState extends State<Home> {
     return Obx(
       () => PopScope(
         canPop: false,
-        onPopInvoked: (didPop) {
+        onPopInvokedWithResult: (didPop, result) {
           if (woAuto.currentIndex.value != 0) {
             woAuto.currentIndex.value = 0;
             return;

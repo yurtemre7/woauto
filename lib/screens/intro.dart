@@ -190,6 +190,7 @@ class _IntroState extends State<Intro> {
                                         woAuto.setTheme();
                                         if (!mounted) return;
                                         Future.delayed(500.milliseconds, () {
+                                          if (!context.mounted) return;
                                           SystemChrome.setSystemUIOverlayStyle(
                                             SystemUiOverlayStyle(
                                               systemNavigationBarColor:
@@ -311,7 +312,7 @@ class _IntroState extends State<Intro> {
       ),
       bottomNavigationBar: Obx(
         () => SafeArea(
-          child: ButtonBar(
+          child: OverflowBar(
             alignment: MainAxisAlignment.end,
             children: [
               ElevatedButton.icon(
