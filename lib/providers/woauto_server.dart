@@ -3,13 +3,11 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/classes/wa_position.dart';
 import 'package:woauto/classes/wa_simple_position.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/logger.dart';
-import 'package:woauto/utils/utilities.dart';
 
 class WoAutoServer extends GetxController {
   /// Our PocketBase instance
@@ -77,77 +75,86 @@ class WoAutoServer extends GetxController {
       server.serverWorks.value = true;
     }
 
-    var user =
-        await server.getUser(expand: 'friends,friends.position,friends.parkings,parkings,position');
+    try {
+      var user = await server.getUser(
+        expand: 'friends,friends.position,friends.parkings,parkings,position',
+      );
 
-    if (user == null) return server;
+      if (user == null) return server;
 
-    var friends = user.expand['friends'];
-    if (friends != null) {
-      for (var friend in friends) {
-        var fPosition = friend.expand['position']?.first;
-        if (fPosition != null) {
-          logMessage('Position: ${fPosition.data}', tag: friend.id);
-          var simplePosition = WaSimplePosition.fromRecord(fPosition);
-          woAuto.addFriendPosition(
-            newPosition: simplePosition.latLng,
-            uuid: simplePosition.id,
-            newName: friend.data['username'],
-          );
-        }
-        var fParkings = friend.expand['parkings'];
-        if (fParkings != null) {
-          for (var fPark in fParkings) {
-            logMessage('Parking ${fPark.id}: ${fPark.data}', tag: friend.id);
-            var fPosition = WaPosition.fromRecord(fPark);
+      var friends = user.expand['friends'];
+      if (friends != null) {
+        for (var friend in friends) {
+          var fPosition = friend.expand['position']?.first;
+          if (fPosition != null) {
+            logMessage('Position: ${fPosition.data}', tag: friend.id);
+            var simplePosition = WaSimplePosition.fromRecord(fPosition);
             woAuto.addFriendPosition(
-              newPosition: fPosition.latLng,
-              uuid: fPosition.id,
-              newName: fPosition.name,
+              newPosition: simplePosition.latLng,
+              uuid: simplePosition.id,
+              newName: friend.data['username'],
             );
           }
-        }
-
-        server.pb.collection('users').subscribe(
-          friend.id,
-          expand: 'friends,friends.position,friends.parkings,parkings,position',
-          (userData) async {
-            var fUser = userData.record;
-            if (fUser == null) return;
-            logMessage('Friend updated', tag: fUser.id);
-            var fPosition = fUser.expand['position']?.first;
-            if (fPosition != null) {
-              logMessage('Position: ${fPosition.data}', tag: fUser.id);
-              var simplePosition = WaSimplePosition.fromRecord(fPosition);
-              woAuto.addFriendPosition(
-                newPosition: simplePosition.latLng,
-                uuid: simplePosition.id,
-                newName: friend.data['username'],
+          var fParkings = friend.expand['parkings'];
+          if (fParkings != null) {
+            for (var fPark in fParkings) {
+              logMessage('Parking ${fPark.id}: ${fPark.data}', tag: friend.id);
+              var fPosition = WaPosition.fromRecord(fPark);
+              woAuto.addFriendCarPosition(
+                newPosition: fPosition.latLng,
+                uuid: fPosition.id,
+                newName: '${fPosition.name ?? 'Parking'} from ${friend.data['username']}',
               );
-            } else {
-              woAuto.deleteFriendPosition(uuid: fUser.id);
             }
+          }
 
-            var fParkings = friend.expand['parkings'];
-            if (fParkings != null) {
-              for (var fPark in fParkings) {
-                logMessage('Parking ${fPark.id}: ${fPark.data}', tag: fUser.id);
-                var fPosition = WaPosition.fromRecord(fPark);
-                woAuto.addFriendCarPosition(
-                  newPosition: fPosition.latLng,
-                  uuid: fPosition.id,
-                  newName: fPosition.name,
+          server.pb.collection('users').subscribe(
+            friend.id,
+            expand: 'friends,friends.position,friends.parkings,parkings,position',
+            (userData) async {
+              var fUser = userData.record;
+              if (fUser == null) return;
+              logMessage('Friend updated', tag: fUser.id);
+              var fPosition = fUser.expand['position']?.first;
+              if (fPosition != null) {
+                logMessage('Position: ${fPosition.data}', tag: fUser.id);
+                var simplePosition = WaSimplePosition.fromRecord(fPosition);
+                woAuto.addFriendPosition(
+                  newPosition: simplePosition.latLng,
+                  uuid: simplePosition.id,
+                  newName: friend.data['username'],
                 );
+              } else {
+                woAuto.deleteFriendPosition(uuid: fUser.id);
               }
-            } else {
-              woAuto.friendCarPositions.clear();
-              woAuto.friendCarPositions.refresh();
-              woAuto.save();
-            }
-          },
-        );
+
+              var fParkings = friend.expand['parkings'];
+              if (fParkings != null) {
+                for (var fPark in fParkings) {
+                  logMessage('Parking ${fPark.id}: ${fPark.data}', tag: fUser.id);
+                  var fPosition = WaPosition.fromRecord(fPark);
+                  woAuto.addFriendCarPosition(
+                    newPosition: fPosition.latLng,
+                    uuid: fPosition.id,
+                    newName: fPosition.name,
+                  );
+                }
+              } else {
+                woAuto.friendCarPositions.clear();
+                woAuto.friendCarPositions.refresh();
+                woAuto.save();
+              }
+            },
+          );
+        }
       }
+    } catch (error, stackTrace) {
+      logMessage(
+        'Error has happened:\n\n${error.toString()}\n\n${stackTrace.toString()}',
+        tag: 'ERROR',
+      );
     }
+
     return server;
   }
 
@@ -160,7 +167,7 @@ class WoAutoServer extends GetxController {
   Future<RecordModel?> getUser({String? id, String? expand}) async {
     RecordModel user;
     var localUser = pb.authStore.model as RecordModel?;
-    if (localUser == null) return null;
+    if (localUser == null || !pb.authStore.isValid) return null;
     id ??= localUser.id;
     user = await pb.collection('users').getOne(id, expand: expand);
     logMessage('Fetched User $id: ${user.data}');
@@ -174,7 +181,7 @@ class WoAutoServer extends GetxController {
     try {
       // example create body
       var user = pb.authStore.model as RecordModel?;
-      if (user == null) return;
+      if (user == null || !pb.authStore.isValid) return;
       // var user = await pb.collection('users').getOne(userOld.id);
       var positionData = user.data['position'].toString().trim();
       // debugPrint(user.data.toString());
@@ -204,7 +211,7 @@ class WoAutoServer extends GetxController {
     try {
       // example create body
       var user = pb.authStore.model as RecordModel?;
-      if (user == null) return;
+      if (user == null || !pb.authStore.isValid) return;
       // var user = await pb.collection('users').getOne(userOld.id);
       var positionData = user.data['position'].toString().trim();
       // debugPrint(user.data.toString());
@@ -228,7 +235,7 @@ class WoAutoServer extends GetxController {
     try {
       // example create body
       var user = pb.authStore.model as RecordModel?;
-      if (user == null) return;
+      if (user == null || !pb.authStore.isValid) return;
       // var user = await pb.collection('users').getOne(userOld.id);
       var parkingsData = user.data['parkings'] as List<dynamic>;
       // debugPrint(user.data.toString());
