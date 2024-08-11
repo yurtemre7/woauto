@@ -141,7 +141,7 @@ class _TopHeaderState extends State<TopHeader> {
                         8.w,
                         ChoiceChip(
                           label: Text(
-                            '${woAuto.getDistance(woAuto.currentSelectedPosition.value!)} m',
+                            woAuto.getDistanceString(woAuto.currentSelectedPosition.value!),
                           ),
                           selected: false,
                           showCheckmark: false,
@@ -157,7 +157,7 @@ class _TopHeaderState extends State<TopHeader> {
                                 ),
                                 content: Text(
                                   t.dialog.distance.content(
-                                    distance: woAuto.getDistance(
+                                    distance: woAuto.getDistanceString(
                                       woAuto.currentSelectedPosition.value!,
                                     ),
                                   ),
