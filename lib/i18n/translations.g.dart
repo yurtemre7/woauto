@@ -6,7 +6,7 @@
 /// Locales: 2
 /// Strings: 432 (216 per locale)
 ///
-/// Built on 2024-07-06 at 16:48 UTC
+/// Built on 2024-08-11 at 17:18 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -739,7 +739,7 @@ class _TranslationsDialogDistanceDe {
 
 	// Translations
 	String get title => 'Standort Entfernung';
-	String content({required Object distance}) => 'Abstand zum Standort: ${distance} m';
+	String content({required Object distance}) => 'Abstand zum Standort: ${distance}';
 }
 
 // Path: dialog.notifications
@@ -1759,7 +1759,7 @@ class _TranslationsDialogDistanceEn extends _TranslationsDialogDistanceDe {
 
 	// Translations
 	@override String get title => 'Distance calculation';
-	@override String content({required Object distance}) => 'The calculated distance is ${distance} m';
+	@override String content({required Object distance}) => 'The calculated distance is ${distance}';
 }
 
 // Path: dialog.notifications
@@ -2305,7 +2305,7 @@ extension on Translations {
 			case 'dialog.save': return 'Speichern';
 			case 'dialog.open_settings': return 'Einstellungen öffnen';
 			case 'dialog.distance.title': return 'Standort Entfernung';
-			case 'dialog.distance.content': return ({required Object distance}) => 'Abstand zum Standort: ${distance} m';
+			case 'dialog.distance.content': return ({required Object distance}) => 'Abstand zum Standort: ${distance}';
 			case 'dialog.notifications.na.title': return 'Benachrichtigungen nicht verfügbar';
 			case 'dialog.notifications.na.subtitle': return 'Benachrichtigungen sind auf deinem Gerät nicht verfügbar.';
 			case 'dialog.notifications.denied.title': return 'Benachrichtigungen verweigert';
@@ -2535,7 +2535,7 @@ extension on _TranslationsEn {
 			case 'dialog.save': return 'Save';
 			case 'dialog.open_settings': return 'Open settings';
 			case 'dialog.distance.title': return 'Distance calculation';
-			case 'dialog.distance.content': return ({required Object distance}) => 'The calculated distance is ${distance} m';
+			case 'dialog.distance.content': return ({required Object distance}) => 'The calculated distance is ${distance}';
 			case 'dialog.notifications.na.title': return 'Notifications are not available';
 			case 'dialog.notifications.na.subtitle': return 'notifications are not available on your device';
 			case 'dialog.notifications.denied.title': return 'Notifications access denied';

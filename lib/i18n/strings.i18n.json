@@ -218,7 +218,7 @@
     "open_settings": "Einstellungen öffnen",
     "distance": {
       "title": "Standort Entfernung",
-      "content": "Abstand zum Standort: $distance m"
+      "content": "Abstand zum Standort: $distance"
     },
     "notifications": {
       "na": {

@@ -219,7 +219,7 @@
     "open_settings": "Open settings",
     "distance": {
       "title": "Distance calculation",
-      "content": "The calculated distance is $distance m"
+      "content": "The calculated distance is $distance"
     },
     "notifications": {
       "na": {
