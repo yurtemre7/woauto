@@ -22,18 +22,19 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
       () => Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (woAuto.carMarkers.isEmpty)
+          if (woAuto.carMarkers.isEmpty && woAuto.friendCarMarkers.isEmpty)
             Container(
               width: 49,
             ),
-          if (!woAuto.drivingMode.value && woAuto.carMarkers.isNotEmpty)
+          if (!woAuto.drivingMode.value &&
+              (woAuto.carMarkers.isNotEmpty || woAuto.friendCarMarkers.isNotEmpty))
             Badge(
               alignment: Alignment.topCenter,
               label: Text(t.info_sheet.badge_label),
               isLabelVisible: woAutoServer.shareMyParkings.value,
               child: FloatingActionButton(
                 tooltip: t.info_sheet.parkings,
-                onPressed: woAuto.carMarkers.isNotEmpty
+                onPressed: (woAuto.carMarkers.isNotEmpty || woAuto.friendCarMarkers.isNotEmpty)
                     ? () {
                         Get.bottomSheet(
                           const CarBottomSheet(),
