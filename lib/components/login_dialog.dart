@@ -89,7 +89,7 @@ class _LoginSheetState extends State<LoginSheet> {
                             setState(() {});
                           },
                           decoration: InputDecoration(
-                            label: const Text('Password'),
+                            label: const Text('Passwort'),
                             suffixIcon: IconButton(
                               padding: EdgeInsets.zero,
                               visualDensity: VisualDensity.compact,
@@ -118,7 +118,8 @@ class _LoginSheetState extends State<LoginSheet> {
                           ),
                           // 10.h,
                         ],
-                        ButtonBar(
+                        OverflowBar(
+                          spacing: 8,
                           children: [
                             // pw forget
                             TextButton.icon(
@@ -168,7 +169,9 @@ class _LoginSheetState extends State<LoginSheet> {
                             fontSize: 12,
                           ),
                         ),
-                        ButtonBar(
+                        OverflowBar(
+                          alignment: MainAxisAlignment.end,
+                          spacing: 16,
                           children: [
                             TextButton(
                               onPressed: () async {
