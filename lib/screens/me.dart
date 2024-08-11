@@ -341,6 +341,9 @@ class _MeState extends State<Me> {
                                         ),
                                         onPressed: () {
                                           woAutoServer.pb.authStore.clear();
+                                          woAuto.friendPositions.clear();
+                                          woAuto.friendCarPositions.clear();
+                                          woAuto.save();
                                           pop();
                                           setState(() {});
                                         },
