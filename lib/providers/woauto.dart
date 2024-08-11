@@ -978,15 +978,22 @@ class WoAuto extends GetxController {
     }
   }
 
-  double getCarParkDistance(CarPark park) {
+  String getDistanceString(LatLng position) {
     var myLat = currentPosition.value.target.latitude;
     var myLng = currentPosition.value.target.longitude;
-    return calculateDistance(
+    var distanceMeters = calculateDistance(
       myLat,
       myLng,
-      park.latitude,
-      park.longitude,
-    ).toPrecision(1);
+      position.latitude,
+      position.longitude,
+    );
+
+    if (distanceMeters > 1000) {
+      distanceMeters /= 1000;
+      return '${distanceMeters.toStringAsFixed(2)} km';
+    }
+
+    return '${distanceMeters.toStringAsFixed(2)} m';
   }
 
   double getDistance(LatLng pos) {
