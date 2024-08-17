@@ -75,15 +75,29 @@ class WoAutoServer extends GetxController {
       server.serverWorks.value = true;
     }
 
+    server.initFriendsLocations();
+
+    return server;
+  }
+
+  reset() {
+    shareMyLastLiveLocation.value = false;
+    shareMyParkings.value = false;
+    save();
+  }
+
+  Future<void> initFriendsLocations() async {
     try {
-      var user = await server.getUser(
+      var user = await getUser(
         expand: 'friends,friends.position,friends.parkings,parkings,position',
       );
 
-      if (user == null) return server;
+      if (user == null) return;
 
       var friends = user.expand['friends'];
       if (friends != null) {
+        woAuto.friendCarMarkers.clear();
+        woAuto.friendCarPositions.clear();
         for (var friend in friends) {
           var fPosition = friend.expand['position']?.first;
           if (fPosition != null) {
@@ -108,7 +122,7 @@ class WoAutoServer extends GetxController {
             }
           }
 
-          server.pb.collection('users').subscribe(
+          pb.collection('users').subscribe(
             friend.id,
             expand: 'friends,friends.position,friends.parkings,parkings,position',
             (userData) async {
@@ -154,14 +168,6 @@ class WoAutoServer extends GetxController {
         tag: 'ERROR',
       );
     }
-
-    return server;
-  }
-
-  reset() {
-    shareMyLastLiveLocation.value = false;
-    shareMyParkings.value = false;
-    save();
   }
 
   Future<RecordModel?> getUser({String? id, String? expand}) async {

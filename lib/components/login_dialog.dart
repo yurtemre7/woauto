@@ -196,6 +196,7 @@ class _LoginSheetState extends State<LoginSheet> {
                                   await woAutoServer.pb
                                       .collection('users')
                                       .authWithPassword(email, password);
+                                  woAutoServer.initFriendsLocations();
                                   pop();
                                 } on ClientException catch (e) {
                                   var code = e.response['code'];
@@ -217,6 +218,7 @@ class _LoginSheetState extends State<LoginSheet> {
                                   await woAutoServer.pb
                                       .collection('users')
                                       .authWithPassword(email, password);
+                                  woAutoServer.initFriendsLocations();
                                   pop();
                                 } on ClientException catch (e) {
                                   var code = e.response['code'];
