@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -260,6 +261,7 @@ class WoAuto extends GetxController {
         ),
         useMaterial3: true,
         brightness: brightness,
+        fontFamily: GoogleFonts.roboto().fontFamily,
       ),
     );
   }
