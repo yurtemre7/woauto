@@ -128,6 +128,62 @@ class _MeState extends State<Me> {
     );
   }
 
+  Future<void> showDeleteAccountSheet() async {
+    Get.bottomSheet(
+      Card(
+        color: Theme.of(context).colorScheme.surface,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(12),
+          ),
+        ),
+        margin: EdgeInsets.zero,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: OverflowBar(
+                    alignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () => pop(),
+                        child: const Text('Cancel'),
+                      ),
+                      OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          foregroundColor: context.theme.colorScheme.error,
+                          backgroundColor: context.theme.colorScheme.errorContainer,
+                        ),
+                        onPressed: () async {
+                          var user = await woAutoServer.getUser();
+                          if (user == null) return;
+                          await woAutoServer.pb.collection('users').delete(user.id);
+                          woAutoServer.pb.authStore.clear();
+                          woAuto.friendPositions.clear();
+                          woAuto.friendCarPositions.clear();
+                          woAutoServer.reset();
+                          woAuto.save();
+                          pop();
+                          setState(() {});
+                          pop();
+                        },
+                        child: const Text('Delete Account & Data'),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -456,6 +512,18 @@ class _MeState extends State<Me> {
                               color: Theme.of(context).colorScheme.primary,
                               fontSize: 12,
                             ),
+                          ),
+                        ),
+                        Center(
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: context.theme.colorScheme.error,
+                              backgroundColor: context.theme.colorScheme.errorContainer,
+                            ),
+                            onPressed: () async {
+                              showDeleteAccountSheet();
+                            },
+                            child: const Text('Delete Account & Data'),
                           ),
                         ),
                         const Divider(),
