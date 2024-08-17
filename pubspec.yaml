@@ -28,7 +28,7 @@ dependencies:
   package_info_plus: ^8.0.2
   share_plus: ^9.0.0
   url_launcher: ^6.3.0
-  shared_preferences: ^2.3.1
+  shared_preferences: ^2.3.2
   add_2_calendar: ^3.0.1
   quick_actions: ^1.0.7
   maps_launcher: ^2.2.1
