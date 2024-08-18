@@ -575,12 +575,13 @@ class _SettingsState extends State<Settings> {
                                   ),
                                   child: Text(t.dialog.delete),
                                   onPressed: () async {
-                                    WoAutoServer woAutoServer = Get.find();
                                     await woAutoServer.deleteUserLocation();
                                     await woAutoServer.deleteUserParkingLocations();
+                                    woAutoServer.pb.authStore.clear();
                                     // pop();
                                     pop();
                                     await woAuto.reset();
+                                    setState(() {});
                                   },
                                 ),
                                 OutlinedButton(
