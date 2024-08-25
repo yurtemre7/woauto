@@ -199,6 +199,18 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
             fontSize: 20,
           ),
         ),
+        const Spacer(),
+        TextButton.icon(
+          onPressed: () async {
+            _controllerOthers.forward().whenComplete(() => _controllerOthers.reset());
+            woAutoServer.initFriendsLocations();
+          },
+          icon: RotationTransition(
+            turns: Tween(begin: 0.0, end: 1.0).animate(_controllerOthers),
+            child: const Icon(Icons.refresh),
+          ),
+          label: Text(t.constants.update),
+        ),
       ],
     );
   }
@@ -270,7 +282,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
             case 3:
               woAuto.carParkings.removeWhere((element) => element.uuid == park.uuid);
               woAuto.carParkings.refresh();
-              woAutoServer.deleteUserParkingLocations();
+              woAutoServer.deleteUserParking(park.uuid);
 
               flutterLocalNotificationsPlugin.cancelAll();
               woAuto.save();
