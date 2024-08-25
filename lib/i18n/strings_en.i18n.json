@@ -110,7 +110,8 @@
       "title": "How are we calculating the distance?"
     },
     "you": {
-      "title": "You"
+      "title": "You",
+      "address": "On you"
     },
     "friends": {
       "title": "Friends"

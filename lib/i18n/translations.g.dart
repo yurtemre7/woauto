@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 482 (241 per locale)
+/// Strings: 484 (242 per locale)
 ///
-/// Built on 2024-08-25 at 11:32 UTC
+/// Built on 2024-08-25 at 11:58 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -582,6 +582,7 @@ class _TranslationsCarBottomSheetYouDe {
 
 	// Translations
 	String get title => 'Du';
+	String get address => 'Bei dir';
 }
 
 // Path: car_bottom_sheet.friends
@@ -1657,6 +1658,7 @@ class _TranslationsCarBottomSheetYouEn extends _TranslationsCarBottomSheetYouDe 
 
 	// Translations
 	@override String get title => 'You';
+	@override String get address => 'On you';
 }
 
 // Path: car_bottom_sheet.friends
@@ -2346,6 +2348,7 @@ extension on Translations {
 			case 'car_bottom_sheet.empty.shared_parkings': return 'Du hast keine geteilten Parkplätze.';
 			case 'car_bottom_sheet.distance_calculation.title': return 'Wie wird die Entfernung berechnet, fragst du dich?';
 			case 'car_bottom_sheet.you.title': return 'Du';
+			case 'car_bottom_sheet.you.address': return 'Bei dir';
 			case 'car_bottom_sheet.friends.title': return 'Freunde';
 			case 'car_bottom_sheet.menu.open_park_in_maps': return 'Karten App öffnen';
 			case 'car_bottom_sheet.menu.share_park': return 'Parkplatz teilen';
@@ -2601,6 +2604,7 @@ extension on _TranslationsEn {
 			case 'car_bottom_sheet.empty.shared_parkings': return 'You have no shared parking spots.';
 			case 'car_bottom_sheet.distance_calculation.title': return 'How are we calculating the distance?';
 			case 'car_bottom_sheet.you.title': return 'You';
+			case 'car_bottom_sheet.you.address': return 'On you';
 			case 'car_bottom_sheet.friends.title': return 'Friends';
 			case 'car_bottom_sheet.menu.open_park_in_maps': return 'Open in a maps app';
 			case 'car_bottom_sheet.menu.share_park': return 'Share parking spot';

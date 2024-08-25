@@ -110,7 +110,8 @@
       "title": "Wie wird die Entfernung berechnet, fragst du dich?"
     },
     "you": {
-      "title": "Du"
+      "title": "Du",
+      "address": "Bei dir"
     },
     "friends": {
       "title": "Freunde"

@@ -466,7 +466,7 @@ class _MeState extends State<Me> {
                             t.my_car.share_my_parkings,
                             style: TextStyle(color: Theme.of(context).colorScheme.primary),
                           ),
-                          subtitle: Text(t.my_car.share_my_last_location_description),
+                          subtitle: Text(t.my_car.share_my_parkings_description),
                           value: woAutoServer.shareMyParkings.value,
                           onChanged: (s) async {
                             if (s == false) {
