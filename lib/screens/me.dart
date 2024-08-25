@@ -151,7 +151,7 @@ class _MeState extends State<Me> {
                     children: [
                       TextButton(
                         onPressed: () => pop(),
-                        child: const Text('Cancel'),
+                        child: Text(t.dialog.abort),
                       ),
                       OutlinedButton(
                         style: OutlinedButton.styleFrom(
@@ -171,7 +171,7 @@ class _MeState extends State<Me> {
                           setState(() {});
                           pop();
                         },
-                        child: const Text('Delete Account & Data'),
+                        child: Text(t.dialog.account_data.title),
                       ),
                     ],
                   ),
@@ -387,9 +387,8 @@ class _MeState extends State<Me> {
                               trailing: IconButton(
                                 onPressed: () async {
                                   return await Get.dialog(AlertDialog(
-                                    title: const Text('Ausloggen'),
-                                    content: const Text(
-                                        'Bist du dir sicher, dass du dich ausloggen möchtest?'),
+                                    title: Text(t.dialog.logout),
+                                    content: Text(t.dialog.logout_confirm),
                                     actions: [
                                       OutlinedButton(
                                         style: OutlinedButton.styleFrom(
@@ -404,7 +403,7 @@ class _MeState extends State<Me> {
                                           pop();
                                           setState(() {});
                                         },
-                                        child: const Text('Ausloggen'),
+                                        child: Text(t.dialog.logout),
                                       ),
                                     ],
                                   ));
@@ -413,7 +412,6 @@ class _MeState extends State<Me> {
                                   Icons.logout_outlined,
                                 ),
                                 iconSize: 38,
-                                tooltip: 'Logout',
                                 style: IconButton.styleFrom(
                                   foregroundColor: context.theme.colorScheme.error,
                                   disabledForegroundColor: Colors.grey.withOpacity(0.3),
@@ -424,25 +422,25 @@ class _MeState extends State<Me> {
                         }),
                         SwitchListTile(
                           title: Text(
-                            'Teile meinen letzten Standort',
+                            t.my_car.share_my_last_location,
                             style: TextStyle(color: Theme.of(context).colorScheme.primary),
                           ),
-                          subtitle: const Text(
-                              'Während der App Nutzung wird dein Live-Standort auf unserem Server gespeichert und deine Freunde, nur sie, können ihn dann einsehen. Sobald die App geschlossen wurde, bleibt der zuletzt gesetzte Standort sichtbar.'),
+                          subtitle: Text(
+                            t.my_car.share_my_last_location_description,
+                          ),
                           value: woAutoServer.shareMyLastLiveLocation.value,
                           onChanged: (s) async {
                             if (s == false) {
                               var res = await Get.dialog(
                                     AlertDialog(
-                                      title: const Text('Teilen beenden'),
-                                      content: const Text(
-                                          'Wenn du dein Teilen beendest, wird erst dein Standort von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.'),
+                                      title: Text(t.dialog.share_location_parkings.title),
+                                      content: Text(t.my_car.share_my_last_location_deactivate),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
                                             pop(result: false);
                                           },
-                                          child: const Text('Abbrechen'),
+                                          child: Text(t.dialog.abort),
                                         ),
                                         OutlinedButton(
                                           onPressed: () async {
@@ -450,7 +448,7 @@ class _MeState extends State<Me> {
                                             await woAutoServer.deleteUserLocation();
                                             pop(result: true);
                                           },
-                                          child: const Text('Ausschalten'),
+                                          child: Text(t.dialog.share_location_parkings.deactivate),
                                         ),
                                       ],
                                     ),
@@ -465,32 +463,30 @@ class _MeState extends State<Me> {
                         ),
                         SwitchListTile(
                           title: Text(
-                            'Teile meine Parkplätze',
+                            t.my_car.share_my_parkings,
                             style: TextStyle(color: Theme.of(context).colorScheme.primary),
                           ),
-                          subtitle: const Text(
-                              'Hiermit werden deine Parkplätze in unseren Servern gespeichert und so können deine Freunde, nur sie, deine Parkplätze einsehen, niemals aber deine Parkplatzhistorie.'),
+                          subtitle: Text(t.my_car.share_my_last_location_description),
                           value: woAutoServer.shareMyParkings.value,
                           onChanged: (s) async {
                             if (s == false) {
                               var res = await Get.dialog(
                                     AlertDialog(
-                                      title: const Text('Teilen beenden'),
-                                      content: const Text(
-                                          'Wenn du dein Teilen beendest, werden erst deine Standorte deiner Parkplätze von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.'),
+                                      title: Text(t.dialog.share_location_parkings.title),
+                                      content: Text(t.my_car.share_my_parkings_deactivate),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
                                             pop(result: false);
                                           },
-                                          child: const Text('Abbrechen'),
+                                          child: Text(t.dialog.abort),
                                         ),
                                         OutlinedButton(
                                           onPressed: () async {
                                             await woAutoServer.deleteUserParkingLocations();
                                             pop(result: true);
                                           },
-                                          child: const Text('Ausschalten'),
+                                          child: Text(t.dialog.share_location_parkings.deactivate),
                                         ),
                                       ],
                                     ),
@@ -506,7 +502,7 @@ class _MeState extends State<Me> {
                         Container(
                           padding: const EdgeInsets.all(16.0),
                           child: Text(
-                            'Wenn du diese Einstellungen deaktivierst, wirst du nochmal nach einer Bestätigung der Aktion gefragt, da das ausschalten immer alle Daten vom Server zuerst löscht und dann das Speichern unterbindet, bis du es wieder einschaltest.',
+                            t.my_car.share_deactivate_info,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               color: Theme.of(context).colorScheme.primary,
@@ -523,7 +519,7 @@ class _MeState extends State<Me> {
                             onPressed: () async {
                               showDeleteAccountSheet();
                             },
-                            child: const Text('Delete Account & Data'),
+                            child: Text(t.dialog.account_data.title),
                           ),
                         ),
                         const Divider(),
@@ -539,7 +535,7 @@ class _MeState extends State<Me> {
 
                               setState(() {});
                             },
-                            child: const Text('Login or Register now'),
+                            child: Text(t.my_car.login_register),
                           ),
                         ),
                       ],

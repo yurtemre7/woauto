@@ -112,6 +112,7 @@
   },
   "my_car": {
     "title": "Mein Auto",
+    "login_register": "Einloggen oder jetzt Registrieren",
     "shared_content": "Das ist mein Auto! 🚗",
     "built": {
       "title": "Baujahr: $baujahr ($jahre Jahre)",
@@ -150,6 +151,13 @@
       "expired_info": "Dein TÜV ist abgelaufen!",
       "expiring_info": "Dein TÜV läuft bald ab! Bitte vereinbare einen Termin."
     },
+    "share_deactivate_info": "Wenn du diese Einstellungen deaktivierst, wirst du nochmal nach einer Bestätigung der Aktion gefragt, da das ausschalten immer alle Daten vom Server zuerst löscht und dann das Speichern unterbindet, bis du es wieder einschaltest.",
+    "share_my_last_location": "Teile meinen letzten Standort",
+    "share_my_last_location_description": "Während der App Nutzung wird dein Live-Standort auf unserem Server gespeichert und deine Freunde, nur sie, können ihn dann einsehen. Sobald die App geschlossen wurde, bleibt der zuletzt gesetzte Standort sichtbar.",
+    "share_my_last_location_deactivate": "Wenn du dein Teilen beendest, wird erst dein Standort von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.",
+    "share_my_parkings": "Teile meine Parkplätze",
+    "share_my_parkings_description": "Hiermit werden deine Parkplätze in unseren Servern gespeichert und so können deine Freunde, nur sie, deine Parkplätze einsehen, niemals aber deine Parkplatzhistorie.",
+    "share_my_parkings_deactivate": "Wenn du dein Teilen beendest, werden erst deine Standorte deiner Parkplätze von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.",
     "secure_notice": "Deine privaten Auto-Daten werden lokal auf deinem Gerät gespeichert. Wir haben keinen Zugriff auf deine Daten. Du kannst deine Daten außerdem jederzeit in den Einstellungen löschen."
   },
   "maps": {
@@ -210,12 +218,19 @@
     "abort": "Abbrechen",
     "delete": "Löschen",
     "leave": "Verlassen",
+    "logout": "Ausloggen",
     "ok": "Ok",
     "yes": "Ja",
     "no": "Nein",
     "share": "Teilen",
     "save": "Speichern",
     "open_settings": "Einstellungen öffnen",
+    "share_location_parkings": {
+      "title": "Teilen beenden",
+      "content_1": "",
+      "content_2": "TODO Wenn du dein Teilen beendest, werden erst deine Standorte deiner Parkplätze von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.",
+      "deactivate": "Ausschalten"
+    },
     "distance": {
       "title": "Standort Entfernung",
       "content": "Abstand zum Standort: $distance"
@@ -304,7 +319,11 @@
     "app_data": {
       "title": "App-Daten löschen",
       "subtitle": "Bist du sicher, dass du alle App-Daten löschen möchtest?"
-    }
+    },
+    "account_data": {
+      "title": "Konto & Daten löschen"
+    },
+    "logout_confirm": "Bist du dir sicher, dass du dich ausloggen möchtest?"
   },
   "settings": {
     "title": "Einstellungen",

@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 432 (216 per locale)
+/// Strings: 462 (231 per locale)
 ///
-/// Built on 2024-08-11 at 17:18 UTC
+/// Built on 2024-08-25 at 11:16 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -308,12 +308,20 @@ class _TranslationsMyCarDe {
 
 	// Translations
 	String get title => 'Mein Auto';
+	String get login_register => 'Einloggen oder jetzt Registrieren';
 	String get shared_content => 'Das ist mein Auto! 🚗';
 	late final _TranslationsMyCarBuiltDe built = _TranslationsMyCarBuiltDe._(_root);
 	late final _TranslationsMyCarDrivenDe driven = _TranslationsMyCarDrivenDe._(_root);
 	late final _TranslationsMyCarPlateDe plate = _TranslationsMyCarPlateDe._(_root);
 	late final _TranslationsMyCarParkNameDe park_name = _TranslationsMyCarParkNameDe._(_root);
 	late final _TranslationsMyCarTuvDe tuv = _TranslationsMyCarTuvDe._(_root);
+	String get share_deactivate_info => 'Wenn du diese Einstellungen deaktivierst, wirst du nochmal nach einer Bestätigung der Aktion gefragt, da das ausschalten immer alle Daten vom Server zuerst löscht und dann das Speichern unterbindet, bis du es wieder einschaltest.';
+	String get share_my_last_location => 'Teile meinen letzten Standort';
+	String get share_my_last_location_description => 'Während der App Nutzung wird dein Live-Standort auf unserem Server gespeichert und deine Freunde, nur sie, können ihn dann einsehen. Sobald die App geschlossen wurde, bleibt der zuletzt gesetzte Standort sichtbar.';
+	String get share_my_last_location_deactivate => 'Wenn du dein Teilen beendest, wird erst dein Standort von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.';
+	String get share_my_parkings => 'Teile meine Parkplätze';
+	String get share_my_parkings_description => 'Hiermit werden deine Parkplätze in unseren Servern gespeichert und so können deine Freunde, nur sie, deine Parkplätze einsehen, niemals aber deine Parkplatzhistorie.';
+	String get share_my_parkings_deactivate => 'Wenn du dein Teilen beendest, werden erst deine Standorte deiner Parkplätze von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.';
 	String get secure_notice => 'Deine privaten Auto-Daten werden lokal auf deinem Gerät gespeichert. Wir haben keinen Zugriff auf deine Daten. Du kannst deine Daten außerdem jederzeit in den Einstellungen löschen.';
 }
 
@@ -373,12 +381,14 @@ class _TranslationsDialogDe {
 	String get abort => 'Abbrechen';
 	String get delete => 'Löschen';
 	String get leave => 'Verlassen';
+	String get logout => 'Ausloggen';
 	String get ok => 'Ok';
 	String get yes => 'Ja';
 	String get no => 'Nein';
 	String get share => 'Teilen';
 	String get save => 'Speichern';
 	String get open_settings => 'Einstellungen öffnen';
+	late final _TranslationsDialogShareLocationParkingsDe share_location_parkings = _TranslationsDialogShareLocationParkingsDe._(_root);
 	late final _TranslationsDialogDistanceDe distance = _TranslationsDialogDistanceDe._(_root);
 	late final _TranslationsDialogNotificationsDe notifications = _TranslationsDialogNotificationsDe._(_root);
 	late final _TranslationsDialogCarBottomSheetDe car_bottom_sheet = _TranslationsDialogCarBottomSheetDe._(_root);
@@ -389,6 +399,8 @@ class _TranslationsDialogDe {
 	late final _TranslationsDialogFeedbackDe feedback = _TranslationsDialogFeedbackDe._(_root);
 	late final _TranslationsDialogDataSecurityDe data_security = _TranslationsDialogDataSecurityDe._(_root);
 	late final _TranslationsDialogAppDataDe app_data = _TranslationsDialogAppDataDe._(_root);
+	late final _TranslationsDialogAccountDataDe account_data = _TranslationsDialogAccountDataDe._(_root);
+	String get logout_confirm => 'Bist du dir sicher, dass du dich ausloggen möchtest?';
 }
 
 // Path: settings
@@ -731,6 +743,19 @@ class _TranslationsSnackbarDistanceCalculationDe {
 	String get subsubtitle => 'Tippe um mehr zu erfahren.';
 }
 
+// Path: dialog.share_location_parkings
+class _TranslationsDialogShareLocationParkingsDe {
+	_TranslationsDialogShareLocationParkingsDe._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Teilen beenden';
+	String get content_1 => '';
+	String get content_2 => 'TODO Wenn du dein Teilen beendest, werden erst deine Standorte deiner Parkplätze von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.';
+	String get deactivate => 'Ausschalten';
+}
+
 // Path: dialog.distance
 class _TranslationsDialogDistanceDe {
 	_TranslationsDialogDistanceDe._(this._root);
@@ -853,6 +878,16 @@ class _TranslationsDialogAppDataDe {
 	// Translations
 	String get title => 'App-Daten löschen';
 	String get subtitle => 'Bist du sicher, dass du alle App-Daten löschen möchtest?';
+}
+
+// Path: dialog.account_data
+class _TranslationsDialogAccountDataDe {
+	_TranslationsDialogAccountDataDe._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get title => 'Konto & Daten löschen';
 }
 
 // Path: settings.theme
@@ -1328,12 +1363,20 @@ class _TranslationsMyCarEn extends _TranslationsMyCarDe {
 
 	// Translations
 	@override String get title => 'My Car';
+	@override String get login_register => 'Login or Register now';
 	@override String get shared_content => 'This is my car! 🚗';
 	@override late final _TranslationsMyCarBuiltEn built = _TranslationsMyCarBuiltEn._(_root);
 	@override late final _TranslationsMyCarDrivenEn driven = _TranslationsMyCarDrivenEn._(_root);
 	@override late final _TranslationsMyCarPlateEn plate = _TranslationsMyCarPlateEn._(_root);
 	@override late final _TranslationsMyCarParkNameEn park_name = _TranslationsMyCarParkNameEn._(_root);
 	@override late final _TranslationsMyCarTuvEn tuv = _TranslationsMyCarTuvEn._(_root);
+	@override String get share_deactivate_info => 'If you deactivate these settings, you will be asked to confirm the action again, as switching off always deletes all data from the server first and then prevents it from being saved until you switch it on again.';
+	@override String get share_my_last_location => 'Share my last location';
+	@override String get share_my_last_location_description => 'While using the app, your live location is saved on our server and only your friends can view it. As soon as the app is closed, the last set location remains visible.';
+	@override String get share_my_last_location_deactivate => 'When you end your sharing, your location will first be deleted from our server and saving will be prevented until you reactivate it.';
+	@override String get share_my_parkings => 'Share my parking spaces';
+	@override String get share_my_parkings_description => 'This will save your parking spaces in our servers and so your friends, only they, can see your parking spaces, but never your parking history.';
+	@override String get share_my_parkings_deactivate => 'When you end your sharing, your parking locations will be deleted from our server and saving will be prevented until you reactivate it.';
 	@override String get secure_notice => 'Your private car data is stored locally on your device. We do not have access to your data. You can also delete your data at any time in the settings.';
 }
 
@@ -1393,12 +1436,14 @@ class _TranslationsDialogEn extends _TranslationsDialogDe {
 	@override String get abort => 'Cancel';
 	@override String get delete => 'Delete';
 	@override String get leave => 'Exit';
+	@override String get logout => 'Logout';
 	@override String get ok => 'Ok';
 	@override String get yes => 'Yes';
 	@override String get no => 'No';
 	@override String get share => 'Share';
 	@override String get save => 'Save';
 	@override String get open_settings => 'Open settings';
+	@override late final _TranslationsDialogShareLocationParkingsEn share_location_parkings = _TranslationsDialogShareLocationParkingsEn._(_root);
 	@override late final _TranslationsDialogDistanceEn distance = _TranslationsDialogDistanceEn._(_root);
 	@override late final _TranslationsDialogNotificationsEn notifications = _TranslationsDialogNotificationsEn._(_root);
 	@override late final _TranslationsDialogCarBottomSheetEn car_bottom_sheet = _TranslationsDialogCarBottomSheetEn._(_root);
@@ -1409,6 +1454,8 @@ class _TranslationsDialogEn extends _TranslationsDialogDe {
 	@override late final _TranslationsDialogFeedbackEn feedback = _TranslationsDialogFeedbackEn._(_root);
 	@override late final _TranslationsDialogDataSecurityEn data_security = _TranslationsDialogDataSecurityEn._(_root);
 	@override late final _TranslationsDialogAppDataEn app_data = _TranslationsDialogAppDataEn._(_root);
+	@override late final _TranslationsDialogAccountDataEn account_data = _TranslationsDialogAccountDataEn._(_root);
+	@override String get logout_confirm => 'Are you sure you want to logout?';
 }
 
 // Path: settings
@@ -1751,6 +1798,19 @@ class _TranslationsSnackbarDistanceCalculationEn extends _TranslationsSnackbarDi
 	@override String get subsubtitle => 'Click here to know more.';
 }
 
+// Path: dialog.share_location_parkings
+class _TranslationsDialogShareLocationParkingsEn extends _TranslationsDialogShareLocationParkingsDe {
+	_TranslationsDialogShareLocationParkingsEn._(_TranslationsEn root) : this._root = root, super._(root);
+
+	@override final _TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Deactivate Sharing';
+	@override String get content_1 => '';
+	@override String get content_2 => 'TODO Wenn du dein Teilen beendest, werden erst deine Standorte deiner Parkplätze von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.';
+	@override String get deactivate => 'Deactivate';
+}
+
 // Path: dialog.distance
 class _TranslationsDialogDistanceEn extends _TranslationsDialogDistanceDe {
 	_TranslationsDialogDistanceEn._(_TranslationsEn root) : this._root = root, super._(root);
@@ -1873,6 +1933,16 @@ class _TranslationsDialogAppDataEn extends _TranslationsDialogAppDataDe {
 	// Translations
 	@override String get title => 'Delete App Data';
 	@override String get subtitle => 'Are you sure you want to delete all app data?';
+}
+
+// Path: dialog.account_data
+class _TranslationsDialogAccountDataEn extends _TranslationsDialogAccountDataDe {
+	_TranslationsDialogAccountDataEn._(_TranslationsEn root) : this._root = root, super._(root);
+
+	@override final _TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get title => 'Delete Account & Data';
 }
 
 // Path: settings.theme
@@ -2232,6 +2302,7 @@ extension on Translations {
 			case 'car_bottom_sheet.menu.to_park': return 'Zum Parkplatz';
 			case 'car_bottom_sheet.menu.delete_park': return 'Parkplatz löschen';
 			case 'my_car.title': return 'Mein Auto';
+			case 'my_car.login_register': return 'Einloggen oder jetzt Registrieren';
 			case 'my_car.shared_content': return 'Das ist mein Auto! 🚗';
 			case 'my_car.built.title': return ({required Object baujahr, required Object jahre}) => 'Baujahr: ${baujahr} (${jahre} Jahre)';
 			case 'my_car.built.title_short': return ({required Object baujahr}) => 'Baujahr: ${baujahr}';
@@ -2260,6 +2331,13 @@ extension on Translations {
 			case 'my_car.tuv.calender_content': return 'Dein TÜV ist abgelaufen! Bitte vereinbare einen Termin.\n\nLg. Dein WoAuto-Team';
 			case 'my_car.tuv.expired_info': return 'Dein TÜV ist abgelaufen!';
 			case 'my_car.tuv.expiring_info': return 'Dein TÜV läuft bald ab! Bitte vereinbare einen Termin.';
+			case 'my_car.share_deactivate_info': return 'Wenn du diese Einstellungen deaktivierst, wirst du nochmal nach einer Bestätigung der Aktion gefragt, da das ausschalten immer alle Daten vom Server zuerst löscht und dann das Speichern unterbindet, bis du es wieder einschaltest.';
+			case 'my_car.share_my_last_location': return 'Teile meinen letzten Standort';
+			case 'my_car.share_my_last_location_description': return 'Während der App Nutzung wird dein Live-Standort auf unserem Server gespeichert und deine Freunde, nur sie, können ihn dann einsehen. Sobald die App geschlossen wurde, bleibt der zuletzt gesetzte Standort sichtbar.';
+			case 'my_car.share_my_last_location_deactivate': return 'Wenn du dein Teilen beendest, wird erst dein Standort von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.';
+			case 'my_car.share_my_parkings': return 'Teile meine Parkplätze';
+			case 'my_car.share_my_parkings_description': return 'Hiermit werden deine Parkplätze in unseren Servern gespeichert und so können deine Freunde, nur sie, deine Parkplätze einsehen, niemals aber deine Parkplatzhistorie.';
+			case 'my_car.share_my_parkings_deactivate': return 'Wenn du dein Teilen beendest, werden erst deine Standorte deiner Parkplätze von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.';
 			case 'my_car.secure_notice': return 'Deine privaten Auto-Daten werden lokal auf deinem Gerät gespeichert. Wir haben keinen Zugriff auf deine Daten. Du kannst deine Daten außerdem jederzeit in den Einstellungen löschen.';
 			case 'maps.loading': return 'Lädt Karte...';
 			case 'maps.traffic.show': return 'Verkehr anzeigen';
@@ -2298,12 +2376,17 @@ extension on Translations {
 			case 'dialog.abort': return 'Abbrechen';
 			case 'dialog.delete': return 'Löschen';
 			case 'dialog.leave': return 'Verlassen';
+			case 'dialog.logout': return 'Ausloggen';
 			case 'dialog.ok': return 'Ok';
 			case 'dialog.yes': return 'Ja';
 			case 'dialog.no': return 'Nein';
 			case 'dialog.share': return 'Teilen';
 			case 'dialog.save': return 'Speichern';
 			case 'dialog.open_settings': return 'Einstellungen öffnen';
+			case 'dialog.share_location_parkings.title': return 'Teilen beenden';
+			case 'dialog.share_location_parkings.content_1': return '';
+			case 'dialog.share_location_parkings.content_2': return 'TODO Wenn du dein Teilen beendest, werden erst deine Standorte deiner Parkplätze von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.';
+			case 'dialog.share_location_parkings.deactivate': return 'Ausschalten';
 			case 'dialog.distance.title': return 'Standort Entfernung';
 			case 'dialog.distance.content': return ({required Object distance}) => 'Abstand zum Standort: ${distance}';
 			case 'dialog.notifications.na.title': return 'Benachrichtigungen nicht verfügbar';
@@ -2351,6 +2434,8 @@ extension on Translations {
 			case 'dialog.data_security.action_2': return 'Datenschutz';
 			case 'dialog.app_data.title': return 'App-Daten löschen';
 			case 'dialog.app_data.subtitle': return 'Bist du sicher, dass du alle App-Daten löschen möchtest?';
+			case 'dialog.account_data.title': return 'Konto & Daten löschen';
+			case 'dialog.logout_confirm': return 'Bist du dir sicher, dass du dich ausloggen möchtest?';
 			case 'settings.title': return 'Einstellungen';
 			case 'settings.theme.title': return 'Theme';
 			case 'settings.theme.subtitle': return 'Wähle das Theme aus, das dir am besten gefällt.';
@@ -2462,6 +2547,7 @@ extension on _TranslationsEn {
 			case 'car_bottom_sheet.menu.to_park': return 'Go to parking spot';
 			case 'car_bottom_sheet.menu.delete_park': return 'Delete parking spot';
 			case 'my_car.title': return 'My Car';
+			case 'my_car.login_register': return 'Login or Register now';
 			case 'my_car.shared_content': return 'This is my car! 🚗';
 			case 'my_car.built.title': return ({required Object baujahr, required Object jahre}) => 'Year of manufacture: ${baujahr} (${jahre} Jahre)';
 			case 'my_car.built.title_short': return ({required Object baujahr}) => 'Year of manufacture: ${baujahr}';
@@ -2490,6 +2576,13 @@ extension on _TranslationsEn {
 			case 'my_car.tuv.calender_content': return 'Your MOT has expired! Please make an appointment.\n\nBest regards,\nYour WoAuto-Team';
 			case 'my_car.tuv.expired_info': return 'Your MOT has expired!';
 			case 'my_car.tuv.expiring_info': return 'Your MOT will expire soon! Please make an appointment.';
+			case 'my_car.share_deactivate_info': return 'If you deactivate these settings, you will be asked to confirm the action again, as switching off always deletes all data from the server first and then prevents it from being saved until you switch it on again.';
+			case 'my_car.share_my_last_location': return 'Share my last location';
+			case 'my_car.share_my_last_location_description': return 'While using the app, your live location is saved on our server and only your friends can view it. As soon as the app is closed, the last set location remains visible.';
+			case 'my_car.share_my_last_location_deactivate': return 'When you end your sharing, your location will first be deleted from our server and saving will be prevented until you reactivate it.';
+			case 'my_car.share_my_parkings': return 'Share my parking spaces';
+			case 'my_car.share_my_parkings_description': return 'This will save your parking spaces in our servers and so your friends, only they, can see your parking spaces, but never your parking history.';
+			case 'my_car.share_my_parkings_deactivate': return 'When you end your sharing, your parking locations will be deleted from our server and saving will be prevented until you reactivate it.';
 			case 'my_car.secure_notice': return 'Your private car data is stored locally on your device. We do not have access to your data. You can also delete your data at any time in the settings.';
 			case 'maps.loading': return 'Loading maps ...';
 			case 'maps.traffic.show': return 'Show traffic';
@@ -2528,12 +2621,17 @@ extension on _TranslationsEn {
 			case 'dialog.abort': return 'Cancel';
 			case 'dialog.delete': return 'Delete';
 			case 'dialog.leave': return 'Exit';
+			case 'dialog.logout': return 'Logout';
 			case 'dialog.ok': return 'Ok';
 			case 'dialog.yes': return 'Yes';
 			case 'dialog.no': return 'No';
 			case 'dialog.share': return 'Share';
 			case 'dialog.save': return 'Save';
 			case 'dialog.open_settings': return 'Open settings';
+			case 'dialog.share_location_parkings.title': return 'Deactivate Sharing';
+			case 'dialog.share_location_parkings.content_1': return '';
+			case 'dialog.share_location_parkings.content_2': return 'TODO Wenn du dein Teilen beendest, werden erst deine Standorte deiner Parkplätze von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.';
+			case 'dialog.share_location_parkings.deactivate': return 'Deactivate';
 			case 'dialog.distance.title': return 'Distance calculation';
 			case 'dialog.distance.content': return ({required Object distance}) => 'The calculated distance is ${distance}';
 			case 'dialog.notifications.na.title': return 'Notifications are not available';
@@ -2581,6 +2679,8 @@ extension on _TranslationsEn {
 			case 'dialog.data_security.action_2': return 'Privacy';
 			case 'dialog.app_data.title': return 'Delete App Data';
 			case 'dialog.app_data.subtitle': return 'Are you sure you want to delete all app data?';
+			case 'dialog.account_data.title': return 'Delete Account & Data';
+			case 'dialog.logout_confirm': return 'Are you sure you want to logout?';
 			case 'settings.title': return 'Settings';
 			case 'settings.theme.title': return 'Theme';
 			case 'settings.theme.subtitle': return 'Choose the theme you like best.';
