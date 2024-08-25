@@ -673,10 +673,11 @@ class WoAuto extends GetxController {
               foregroundColor: Get.theme.colorScheme.error,
             ),
             onPressed: () {
-              WoAutoServer woAutoServer = Get.find();
-              woAutoServer.deleteUserParkingLocations();
               carParkings.removeWhere((element) => element.uuid == park.uuid);
               carParkings.refresh();
+
+              WoAutoServer woAutoServer = Get.find();
+              woAutoServer.deleteUserParking(park.uuid);
 
               flutterLocalNotificationsPlugin.cancelAll();
               woAuto.save();

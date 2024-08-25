@@ -248,10 +248,10 @@ class WoAutoServer extends GetxController {
 
     try {
       // example create body
-      var user = pb.authStore.model as RecordModel?;
+      var user = await getUser(expand: 'parkings');
       if (user == null || !pb.authStore.isValid) return;
       // var user = await pb.collection('users').getOne(userOld.id);
-      var parkingsData = user.data['parkings'] as List<dynamic>;
+      var parkingsData = user.expand['parkings'] as List<RecordModel?>;
 
       if (parkingsData.isEmpty) {
         // create parking
@@ -262,29 +262,84 @@ class WoAutoServer extends GetxController {
           'name': park.name,
           'note': park.description,
           'user': user.id,
+          'uuid': park.uuid,
         };
 
         var parking = await pb.collection('positions').create(body: body);
         await pb.collection('users').update(user.id, body: {
-          'parkings': parking.id,
+          'parkings': [parking.id],
         });
       } else {
-        // update parking
-        var parkingId = parkingsData.first;
-        // example update body
-        var body = <String, dynamic>{
-          'latitude': park.latitude,
-          'longitude': park.longitude,
-          'name': park.name,
-          'note': park.description,
-        };
-        var parking = await pb.collection('positions').update(
-              parkingId,
-              body: body,
-            );
-        await pb.collection('users').update(user.id, body: {
-          'parkings': parking.id,
-        });
+        // find parking
+        RecordModel? foundParking;
+        for (var tPark in parkingsData) {
+          if (tPark == null) continue;
+
+          if (tPark.data['uuid'] == park.uuid) {
+            foundParking = tPark;
+            break;
+          }
+        }
+
+        if (foundParking != null) {
+          var parkingId = foundParking.id;
+          // example update body
+          var body = <String, dynamic>{
+            'latitude': park.latitude,
+            'longitude': park.longitude,
+            'name': park.name,
+            'note': park.description,
+            'uuid': park.uuid,
+          };
+          await pb.collection('positions').update(
+                parkingId,
+                body: body,
+              );
+        } else {
+          var body = <String, dynamic>{
+            'latitude': park.latitude,
+            'longitude': park.longitude,
+            'name': park.name,
+            'note': park.description,
+            'user': user.id,
+            'uuid': park.uuid,
+          };
+
+          var parking = await pb.collection('positions').create(body: body);
+          await pb.collection('users').update(user.id, body: {
+            'parkings': [...user.data['parkings'], parking.id],
+          });
+        }
+      }
+    } on ClientException catch (e) {
+      var code = e.response['code'];
+      var message = e.response['message'];
+      logMessage('Fehler $code:\n$message');
+    }
+  }
+
+  Future<void> deleteUserParking(String uuid) async {
+    try {
+      // example create body
+      var user = await getUser(expand: 'parkings');
+      if (user == null || !pb.authStore.isValid) return;
+      // var user = await pb.collection('users').getOne(userOld.id);
+      var parkingsData = user.expand['parkings'] as List<RecordModel?>;
+
+      if (parkingsData.isEmpty) {
+        // Cant delete parking, as it is not online.
+        return;
+      }
+
+      for (var parking in parkingsData) {
+        if (parking == null) continue;
+
+        var pUuid = parking.data['uuid'];
+
+        if (pUuid == uuid) {
+          await pb.collection('positions').delete(parking.id);
+          break;
+        }
       }
     } on ClientException catch (e) {
       var code = e.response['code'];
