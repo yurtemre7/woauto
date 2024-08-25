@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pocketbase/pocketbase.dart';
+import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
@@ -53,17 +54,17 @@ class _LoginSheetState extends State<LoginSheet> {
                           controller: emailController,
                           validator: (s) {
                             if (s == null || s.isEmpty) {
-                              return 'Bitte gebe etwas ein';
+                              return t.login_dialog.empty_validation;
                             }
 
                             if (!s.isEmail) {
-                              return 'Bitte gebe eine gültige E-Mail Adresse ein';
+                              return t.login_dialog.email_validation;
                             }
 
                             return null;
                           },
-                          decoration: const InputDecoration(
-                            label: Text('E-Mail'),
+                          decoration: InputDecoration(
+                            label: Text(t.login_dialog.email),
                           ),
                           autofillHints: const [
                             AutofillHints.email,
@@ -76,11 +77,11 @@ class _LoginSheetState extends State<LoginSheet> {
                           controller: passwordController,
                           validator: (s) {
                             if (s == null || s.isEmpty) {
-                              return 'Bitte gebe ein Passwort ein';
+                              return t.login_dialog.empty_validation;
                             }
 
                             if (s.length < 10) {
-                              return 'Bitte gebe eine sicheres mind. 10-stelliges Passwort ein';
+                              return t.login_dialog.password_validation;
                             }
 
                             return null;
@@ -89,7 +90,7 @@ class _LoginSheetState extends State<LoginSheet> {
                             setState(() {});
                           },
                           decoration: InputDecoration(
-                            label: const Text('Passwort'),
+                            label: Text(t.login_dialog.password),
                             suffixIcon: IconButton(
                               padding: EdgeInsets.zero,
                               visualDensity: VisualDensity.compact,
@@ -134,7 +135,7 @@ class _LoginSheetState extends State<LoginSheet> {
                                     .requestPasswordReset(email);
                               },
                               icon: const Text('😢'),
-                              label: const Text('Passwort vergessen'),
+                              label: Text(t.login_dialog.password_forgot),
                             ),
                             TextButton.icon(
                               onPressed: () {
@@ -157,15 +158,15 @@ class _LoginSheetState extends State<LoginSheet> {
                                 countGen.value++;
                               },
                               icon: const Text('✨'),
-                              label: const Text('Passwort generieren'),
+                              label: Text(t.login_dialog.password_generate),
                             ),
                           ],
                         ),
                         24.h,
-                        const Text(
-                          'Dein Passwort wird beim generieren in das Textfeld eingefügt. Es wird nicht von uns gespeichert! Guck dir den Code an, wenn du dir nicht sicher bist!',
+                        Text(
+                          t.login_dialog.password_generate_info,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 12,
                           ),
                         ),
@@ -204,7 +205,7 @@ class _LoginSheetState extends State<LoginSheet> {
                                   errorText.value = 'Fehler $code:\n$message';
                                 }
                               },
-                              child: const Text('Register'),
+                              child: Text(t.login_dialog.register),
                             ),
                             ElevatedButton(
                               onPressed: () async {
@@ -226,7 +227,7 @@ class _LoginSheetState extends State<LoginSheet> {
                                   errorText.value = 'Fehler $code:\n$message';
                                 }
                               },
-                              child: const Text('Login'),
+                              child: Text(t.login_dialog.login),
                             ),
                           ],
                         ),

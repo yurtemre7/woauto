@@ -27,6 +27,18 @@
       "other": "$n Tage"
     }
   },
+  "login_dialog": {
+    "email": "E-Mail",
+    "password": "Passwort",
+    "empty_validation": "Bitte gebe etwas ein",
+    "email_validation": "Bitte gebe eine gültige E-Mail Adresse ein",
+    "password_validation": "Bitte gebe eine sicheres mind. 10-stelliges Passwort ein",
+    "password_forgot": "Passwort vergessen",
+    "password_generate": "Generiere Passwort",
+    "password_generate_info": "Dein Passwort wird beim Generieren in das Textfeld eingefügt. Es wird nicht von uns gespeichert! Guck dir den Code an, wenn du dir nicht sicher bist!",
+    "register": "Registrieren",
+    "login": "Einloggen"
+  },
   "park_dialog": {
     "title": "Neuer Parkplatz",
     "content_1": "Neuen Parkplatz speichern?",
@@ -97,11 +109,11 @@
     "distance_calculation": {
       "title": "Wie wird die Entfernung berechnet, fragst du dich?"
     },
-    "parkings": {
-      "title": "Parkplätze"
+    "you": {
+      "title": "Du"
     },
-    "shared_parkings": {
-      "title": "Geteilte Parkplätze"
+    "friends": {
+      "title": "Freunde"
     },
     "menu": {
       "open_park_in_maps": "Karten App öffnen",

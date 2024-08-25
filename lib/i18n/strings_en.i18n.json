@@ -27,6 +27,18 @@
       "other": "$n days"
     }
   },
+  "login_dialog": {
+    "email": "E-Mail",
+    "password": "Password",
+    "empty_validation": "Please enter something in",
+    "email_validation": "Please enter a valid e-mail address",
+    "password_validation": "Please enter a secure, >= 10 characters long password",
+    "password_forgot": "Password forgot",
+    "password_generate": "Generate password",
+    "password_generate_info": "Your password will be inserted into the text field when you generate it. It will not be saved by us! Take a look at the code if you are not sure!",
+    "register": "Register",
+    "login": "Login"
+  },
   "park_dialog": {
     "title": "New Parking",
     "content_1": "Save the new parking?",
@@ -97,11 +109,11 @@
     "distance_calculation": {
       "title": "How are we calculating the distance?"
     },
-    "parkings": {
-      "title": "Parkings"
+    "you": {
+      "title": "You"
     },
-    "shared_parkings": {
-      "title": "Shared Parkings"
+    "friends": {
+      "title": "Friends"
     },
     "menu": {
       "open_park_in_maps": "Open in a maps app",

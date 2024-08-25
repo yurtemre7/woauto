@@ -182,11 +182,11 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
   }
 
   Widget parkHeader(Iterable<CarPark> myParking) {
-    return const Row(
+    return Row(
       children: [
         Text(
-          'You',
-          style: TextStyle(
+          t.car_bottom_sheet.you.title,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),
@@ -196,11 +196,11 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
   }
 
   Widget sharedParkHeader(Iterable<CarPark> otherParking) {
-    return const Row(
+    return Row(
       children: [
         Text(
-          'Friends',
-          style: TextStyle(
+          t.car_bottom_sheet.friends.title,
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20,
           ),

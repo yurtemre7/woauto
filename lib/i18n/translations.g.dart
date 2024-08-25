@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 462 (231 per locale)
+/// Strings: 482 (241 per locale)
 ///
-/// Built on 2024-08-25 at 11:16 UTC
+/// Built on 2024-08-25 at 11:32 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -150,6 +150,7 @@ class Translations implements BaseTranslations<AppLocale, Translations> {
 	// Translations
 	late final _TranslationsConstantsDe constants = _TranslationsConstantsDe._(_root);
 	late final _TranslationsParkDurationDe park_duration = _TranslationsParkDurationDe._(_root);
+	late final _TranslationsLoginDialogDe login_dialog = _TranslationsLoginDialogDe._(_root);
 	late final _TranslationsParkDialogDe park_dialog = _TranslationsParkDialogDe._(_root);
 	late final _TranslationsMarkerDialogDe marker_dialog = _TranslationsMarkerDialogDe._(_root);
 	late final _TranslationsHomeDe home = _TranslationsHomeDe._(_root);
@@ -206,6 +207,25 @@ class _TranslationsParkDurationDe {
 		one: '${n} Tag',
 		other: '${n} Tage',
 	);
+}
+
+// Path: login_dialog
+class _TranslationsLoginDialogDe {
+	_TranslationsLoginDialogDe._(this._root);
+
+	final Translations _root; // ignore: unused_field
+
+	// Translations
+	String get email => 'E-Mail';
+	String get password => 'Passwort';
+	String get empty_validation => 'Bitte gebe etwas ein';
+	String get email_validation => 'Bitte gebe eine gültige E-Mail Adresse ein';
+	String get password_validation => 'Bitte gebe eine sicheres mind. 10-stelliges Passwort ein';
+	String get password_forgot => 'Passwort vergessen';
+	String get password_generate => 'Generiere Passwort';
+	String get password_generate_info => 'Dein Passwort wird beim Generieren in das Textfeld eingefügt. Es wird nicht von uns gespeichert! Guck dir den Code an, wenn du dir nicht sicher bist!';
+	String get register => 'Registrieren';
+	String get login => 'Einloggen';
 }
 
 // Path: park_dialog
@@ -295,8 +315,8 @@ class _TranslationsCarBottomSheetDe {
 	// Translations
 	late final _TranslationsCarBottomSheetEmptyDe empty = _TranslationsCarBottomSheetEmptyDe._(_root);
 	late final _TranslationsCarBottomSheetDistanceCalculationDe distance_calculation = _TranslationsCarBottomSheetDistanceCalculationDe._(_root);
-	late final _TranslationsCarBottomSheetParkingsDe parkings = _TranslationsCarBottomSheetParkingsDe._(_root);
-	late final _TranslationsCarBottomSheetSharedParkingsDe shared_parkings = _TranslationsCarBottomSheetSharedParkingsDe._(_root);
+	late final _TranslationsCarBottomSheetYouDe you = _TranslationsCarBottomSheetYouDe._(_root);
+	late final _TranslationsCarBottomSheetFriendsDe friends = _TranslationsCarBottomSheetFriendsDe._(_root);
 	late final _TranslationsCarBottomSheetMenuDe menu = _TranslationsCarBottomSheetMenuDe._(_root);
 }
 
@@ -554,24 +574,24 @@ class _TranslationsCarBottomSheetDistanceCalculationDe {
 	String get title => 'Wie wird die Entfernung berechnet, fragst du dich?';
 }
 
-// Path: car_bottom_sheet.parkings
-class _TranslationsCarBottomSheetParkingsDe {
-	_TranslationsCarBottomSheetParkingsDe._(this._root);
+// Path: car_bottom_sheet.you
+class _TranslationsCarBottomSheetYouDe {
+	_TranslationsCarBottomSheetYouDe._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'Parkplätze';
+	String get title => 'Du';
 }
 
-// Path: car_bottom_sheet.shared_parkings
-class _TranslationsCarBottomSheetSharedParkingsDe {
-	_TranslationsCarBottomSheetSharedParkingsDe._(this._root);
+// Path: car_bottom_sheet.friends
+class _TranslationsCarBottomSheetFriendsDe {
+	_TranslationsCarBottomSheetFriendsDe._(this._root);
 
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'Geteilte Parkplätze';
+	String get title => 'Freunde';
 }
 
 // Path: car_bottom_sheet.menu
@@ -1205,6 +1225,7 @@ class _TranslationsEn extends Translations {
 	// Translations
 	@override late final _TranslationsConstantsEn constants = _TranslationsConstantsEn._(_root);
 	@override late final _TranslationsParkDurationEn park_duration = _TranslationsParkDurationEn._(_root);
+	@override late final _TranslationsLoginDialogEn login_dialog = _TranslationsLoginDialogEn._(_root);
 	@override late final _TranslationsParkDialogEn park_dialog = _TranslationsParkDialogEn._(_root);
 	@override late final _TranslationsMarkerDialogEn marker_dialog = _TranslationsMarkerDialogEn._(_root);
 	@override late final _TranslationsHomeEn home = _TranslationsHomeEn._(_root);
@@ -1261,6 +1282,25 @@ class _TranslationsParkDurationEn extends _TranslationsParkDurationDe {
 		one: '${n} day',
 		other: '${n} days',
 	);
+}
+
+// Path: login_dialog
+class _TranslationsLoginDialogEn extends _TranslationsLoginDialogDe {
+	_TranslationsLoginDialogEn._(_TranslationsEn root) : this._root = root, super._(root);
+
+	@override final _TranslationsEn _root; // ignore: unused_field
+
+	// Translations
+	@override String get email => 'E-Mail';
+	@override String get password => 'Password';
+	@override String get empty_validation => 'Please enter something in';
+	@override String get email_validation => 'Please enter a valid e-mail address';
+	@override String get password_validation => 'Please enter a secure, >= 10 characters long password';
+	@override String get password_forgot => 'Password forgot';
+	@override String get password_generate => 'Generate password';
+	@override String get password_generate_info => 'Your password will be inserted into the text field when you generate it. It will not be saved by us! Take a look at the code if you are not sure!';
+	@override String get register => 'Register';
+	@override String get login => 'Login';
 }
 
 // Path: park_dialog
@@ -1350,8 +1390,8 @@ class _TranslationsCarBottomSheetEn extends _TranslationsCarBottomSheetDe {
 	// Translations
 	@override late final _TranslationsCarBottomSheetEmptyEn empty = _TranslationsCarBottomSheetEmptyEn._(_root);
 	@override late final _TranslationsCarBottomSheetDistanceCalculationEn distance_calculation = _TranslationsCarBottomSheetDistanceCalculationEn._(_root);
-	@override late final _TranslationsCarBottomSheetParkingsEn parkings = _TranslationsCarBottomSheetParkingsEn._(_root);
-	@override late final _TranslationsCarBottomSheetSharedParkingsEn shared_parkings = _TranslationsCarBottomSheetSharedParkingsEn._(_root);
+	@override late final _TranslationsCarBottomSheetYouEn you = _TranslationsCarBottomSheetYouEn._(_root);
+	@override late final _TranslationsCarBottomSheetFriendsEn friends = _TranslationsCarBottomSheetFriendsEn._(_root);
 	@override late final _TranslationsCarBottomSheetMenuEn menu = _TranslationsCarBottomSheetMenuEn._(_root);
 }
 
@@ -1609,24 +1649,24 @@ class _TranslationsCarBottomSheetDistanceCalculationEn extends _TranslationsCarB
 	@override String get title => 'How are we calculating the distance?';
 }
 
-// Path: car_bottom_sheet.parkings
-class _TranslationsCarBottomSheetParkingsEn extends _TranslationsCarBottomSheetParkingsDe {
-	_TranslationsCarBottomSheetParkingsEn._(_TranslationsEn root) : this._root = root, super._(root);
+// Path: car_bottom_sheet.you
+class _TranslationsCarBottomSheetYouEn extends _TranslationsCarBottomSheetYouDe {
+	_TranslationsCarBottomSheetYouEn._(_TranslationsEn root) : this._root = root, super._(root);
 
 	@override final _TranslationsEn _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Parkings';
+	@override String get title => 'You';
 }
 
-// Path: car_bottom_sheet.shared_parkings
-class _TranslationsCarBottomSheetSharedParkingsEn extends _TranslationsCarBottomSheetSharedParkingsDe {
-	_TranslationsCarBottomSheetSharedParkingsEn._(_TranslationsEn root) : this._root = root, super._(root);
+// Path: car_bottom_sheet.friends
+class _TranslationsCarBottomSheetFriendsEn extends _TranslationsCarBottomSheetFriendsDe {
+	_TranslationsCarBottomSheetFriendsEn._(_TranslationsEn root) : this._root = root, super._(root);
 
 	@override final _TranslationsEn _root; // ignore: unused_field
 
 	// Translations
-	@override String get title => 'Shared Parkings';
+	@override String get title => 'Friends';
 }
 
 // Path: car_bottom_sheet.menu
@@ -2262,6 +2302,16 @@ extension on Translations {
 				one: '${n} Tag',
 				other: '${n} Tage',
 			);
+			case 'login_dialog.email': return 'E-Mail';
+			case 'login_dialog.password': return 'Passwort';
+			case 'login_dialog.empty_validation': return 'Bitte gebe etwas ein';
+			case 'login_dialog.email_validation': return 'Bitte gebe eine gültige E-Mail Adresse ein';
+			case 'login_dialog.password_validation': return 'Bitte gebe eine sicheres mind. 10-stelliges Passwort ein';
+			case 'login_dialog.password_forgot': return 'Passwort vergessen';
+			case 'login_dialog.password_generate': return 'Generiere Passwort';
+			case 'login_dialog.password_generate_info': return 'Dein Passwort wird beim Generieren in das Textfeld eingefügt. Es wird nicht von uns gespeichert! Guck dir den Code an, wenn du dir nicht sicher bist!';
+			case 'login_dialog.register': return 'Registrieren';
+			case 'login_dialog.login': return 'Einloggen';
 			case 'park_dialog.title': return 'Neuer Parkplatz';
 			case 'park_dialog.content_1': return 'Neuen Parkplatz speichern?';
 			case 'park_dialog.park_name.label': return 'Name';
@@ -2295,8 +2345,8 @@ extension on Translations {
 			case 'car_bottom_sheet.empty.parkings': return 'Du hast keine Parkplätze.';
 			case 'car_bottom_sheet.empty.shared_parkings': return 'Du hast keine geteilten Parkplätze.';
 			case 'car_bottom_sheet.distance_calculation.title': return 'Wie wird die Entfernung berechnet, fragst du dich?';
-			case 'car_bottom_sheet.parkings.title': return 'Parkplätze';
-			case 'car_bottom_sheet.shared_parkings.title': return 'Geteilte Parkplätze';
+			case 'car_bottom_sheet.you.title': return 'Du';
+			case 'car_bottom_sheet.friends.title': return 'Freunde';
 			case 'car_bottom_sheet.menu.open_park_in_maps': return 'Karten App öffnen';
 			case 'car_bottom_sheet.menu.share_park': return 'Parkplatz teilen';
 			case 'car_bottom_sheet.menu.to_park': return 'Zum Parkplatz';
@@ -2507,6 +2557,16 @@ extension on _TranslationsEn {
 				one: '${n} day',
 				other: '${n} days',
 			);
+			case 'login_dialog.email': return 'E-Mail';
+			case 'login_dialog.password': return 'Password';
+			case 'login_dialog.empty_validation': return 'Please enter something in';
+			case 'login_dialog.email_validation': return 'Please enter a valid e-mail address';
+			case 'login_dialog.password_validation': return 'Please enter a secure, >= 10 characters long password';
+			case 'login_dialog.password_forgot': return 'Password forgot';
+			case 'login_dialog.password_generate': return 'Generate password';
+			case 'login_dialog.password_generate_info': return 'Your password will be inserted into the text field when you generate it. It will not be saved by us! Take a look at the code if you are not sure!';
+			case 'login_dialog.register': return 'Register';
+			case 'login_dialog.login': return 'Login';
 			case 'park_dialog.title': return 'New Parking';
 			case 'park_dialog.content_1': return 'Save the new parking?';
 			case 'park_dialog.park_name.label': return 'Name';
@@ -2540,8 +2600,8 @@ extension on _TranslationsEn {
 			case 'car_bottom_sheet.empty.parkings': return 'You have no parking spots.';
 			case 'car_bottom_sheet.empty.shared_parkings': return 'You have no shared parking spots.';
 			case 'car_bottom_sheet.distance_calculation.title': return 'How are we calculating the distance?';
-			case 'car_bottom_sheet.parkings.title': return 'Parkings';
-			case 'car_bottom_sheet.shared_parkings.title': return 'Shared Parkings';
+			case 'car_bottom_sheet.you.title': return 'You';
+			case 'car_bottom_sheet.friends.title': return 'Friends';
 			case 'car_bottom_sheet.menu.open_park_in_maps': return 'Open in a maps app';
 			case 'car_bottom_sheet.menu.share_park': return 'Share parking spot';
 			case 'car_bottom_sheet.menu.to_park': return 'Go to parking spot';
