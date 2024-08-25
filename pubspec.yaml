@@ -26,13 +26,14 @@ dependencies:
   expandable: ^5.0.1
 
   package_info_plus: ^8.0.2
-  share_plus: ^9.0.0
+  share_plus: ^7.2.2
   url_launcher: ^6.3.0
   shared_preferences: ^2.3.2
   add_2_calendar: ^3.0.1
   quick_actions: ^1.0.7
   maps_launcher: ^2.2.1
   app_links: ^6.3.0
+  to_csv: ^4.0.0
 
   image_picker: ^1.1.2
   path_provider: ^2.1.4
