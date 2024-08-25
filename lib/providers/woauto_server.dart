@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/classes/wa_position.dart';
 import 'package:woauto/classes/wa_simple_position.dart';
+import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/logger.dart';
@@ -118,7 +119,8 @@ class WoAutoServer extends GetxController {
               woAuto.addFriendCarPosition(
                 newPosition: fPosition.latLng,
                 uuid: fPosition.id,
-                newName: '${fPosition.name ?? 'Parking'} from ${friend.data['username']}',
+                newName:
+                    '${fPosition.name ?? t.car_bottom_sheet.friends.park} ${t.car_bottom_sheet.friends.from} ${friend.data['username']}',
               );
             }
           }

@@ -114,7 +114,9 @@
       "address": "On you"
     },
     "friends": {
-      "title": "Friends"
+      "title": "Friends",
+      "park": "Parking",
+      "from": "from"
     },
     "menu": {
       "open_park_in_maps": "Open in a maps app",

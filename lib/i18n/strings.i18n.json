@@ -114,7 +114,9 @@
       "address": "Bei dir"
     },
     "friends": {
-      "title": "Freunde"
+      "title": "Freunde",
+      "park": "Parkplatz",
+      "from": "von"
     },
     "menu": {
       "open_park_in_maps": "Karten App öffnen",

@@ -4,9 +4,9 @@
 /// To regenerate, run: `dart run slang`
 ///
 /// Locales: 2
-/// Strings: 484 (242 per locale)
+/// Strings: 488 (244 per locale)
 ///
-/// Built on 2024-08-25 at 11:58 UTC
+/// Built on 2024-08-25 at 12:12 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -593,6 +593,8 @@ class _TranslationsCarBottomSheetFriendsDe {
 
 	// Translations
 	String get title => 'Freunde';
+	String get park => 'Parkplatz';
+	String get from => 'von';
 }
 
 // Path: car_bottom_sheet.menu
@@ -1669,6 +1671,8 @@ class _TranslationsCarBottomSheetFriendsEn extends _TranslationsCarBottomSheetFr
 
 	// Translations
 	@override String get title => 'Friends';
+	@override String get park => 'Parking';
+	@override String get from => 'from';
 }
 
 // Path: car_bottom_sheet.menu
@@ -2350,6 +2354,8 @@ extension on Translations {
 			case 'car_bottom_sheet.you.title': return 'Du';
 			case 'car_bottom_sheet.you.address': return 'Bei dir';
 			case 'car_bottom_sheet.friends.title': return 'Freunde';
+			case 'car_bottom_sheet.friends.park': return 'Parkplatz';
+			case 'car_bottom_sheet.friends.from': return 'von';
 			case 'car_bottom_sheet.menu.open_park_in_maps': return 'Karten App öffnen';
 			case 'car_bottom_sheet.menu.share_park': return 'Parkplatz teilen';
 			case 'car_bottom_sheet.menu.to_park': return 'Zum Parkplatz';
@@ -2606,6 +2612,8 @@ extension on _TranslationsEn {
 			case 'car_bottom_sheet.you.title': return 'You';
 			case 'car_bottom_sheet.you.address': return 'On you';
 			case 'car_bottom_sheet.friends.title': return 'Friends';
+			case 'car_bottom_sheet.friends.park': return 'Parking';
+			case 'car_bottom_sheet.friends.from': return 'from';
 			case 'car_bottom_sheet.menu.open_park_in_maps': return 'Open in a maps app';
 			case 'car_bottom_sheet.menu.share_park': return 'Share parking spot';
 			case 'car_bottom_sheet.menu.to_park': return 'Go to parking spot';
