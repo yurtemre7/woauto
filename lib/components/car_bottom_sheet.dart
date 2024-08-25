@@ -80,6 +80,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                         friendsParkingList.where((element) => !element.mine).toList();
                     otherParking.addAll(woAuto.friendCarPositions);
 
+                    // sort by name
+                    otherParking.sort((a, b) => a.name.compareTo(b.name));
+
                     return Column(
                       children: [
                         if (carParkingList.isNotEmpty || otherParking.isNotEmpty) ...[
