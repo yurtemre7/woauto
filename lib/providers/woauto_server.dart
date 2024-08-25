@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pocketbase/pocketbase.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/classes/wa_position.dart';
 import 'package:woauto/classes/wa_simple_position.dart';
 import 'package:woauto/main.dart';
@@ -230,6 +231,59 @@ class WoAutoServer extends GetxController {
       await pb.collection('users').update(user.id, body: {
         'position': null,
       });
+    } on ClientException catch (e) {
+      var code = e.response['code'];
+      var message = e.response['message'];
+      logMessage('Fehler $code:\n$message');
+    }
+  }
+
+  Future<void> addUserParkingLocation(CarPark park) async {
+    if (!shareMyParkings.value) {
+      logMessage('Not Sharing Parking');
+      return;
+    }
+
+    try {
+      // example create body
+      var user = pb.authStore.model as RecordModel?;
+      if (user == null || !pb.authStore.isValid) return;
+      // var user = await pb.collection('users').getOne(userOld.id);
+      var parkingsData = user.data['parkings'] as List<dynamic>;
+
+      if (parkingsData.isEmpty) {
+        // create parking
+        // example create body
+        var body = <String, dynamic>{
+          'latitude': park.latitude,
+          'longitude': park.longitude,
+          'name': park.name,
+          'note': park.description,
+          'user': user.id,
+        };
+
+        var parking = await pb.collection('positions').create(body: body);
+        await pb.collection('users').update(user.id, body: {
+          'parkings': parking.id,
+        });
+      } else {
+        // update parking
+        var parkingId = parkingsData.first;
+        // example update body
+        var body = <String, dynamic>{
+          'latitude': park.latitude,
+          'longitude': park.longitude,
+          'name': park.name,
+          'note': park.description,
+        };
+        var parking = await pb.collection('positions').update(
+              parkingId,
+              body: body,
+            );
+        await pb.collection('users').update(user.id, body: {
+          'parkings': parking.id,
+        });
+      }
     } on ClientException catch (e) {
       var code = e.response['code'];
       var message = e.response['message'];

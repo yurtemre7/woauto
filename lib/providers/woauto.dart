@@ -674,7 +674,7 @@ class WoAuto extends GetxController {
             ),
             onPressed: () {
               WoAutoServer woAutoServer = Get.find();
-              // TODO delete park from server as well
+              woAutoServer.deleteUserParkingLocations();
               carParkings.removeWhere((element) => element.uuid == park.uuid);
               carParkings.refresh();
 
@@ -721,7 +721,9 @@ class WoAuto extends GetxController {
       woAuto.carParkings.refresh();
       woAuto.save();
 
-      // TODO update car location in server
+      // safe to WoAutoServer
+      WoAutoServer woAutoServer = Get.find();
+      woAutoServer.addUserParkingLocation(carPark);
 
       return;
     }
@@ -745,6 +747,10 @@ class WoAuto extends GetxController {
     woAuto.carParkingHistory.add(carPark);
     woAuto.carParkings.refresh();
     woAuto.save();
+
+    // safe to WoAutoServer
+    WoAutoServer woAutoServer = Get.find();
+    woAutoServer.addUserParkingLocation(carPark);
   }
 
   Future<void> addFriendPosition({
