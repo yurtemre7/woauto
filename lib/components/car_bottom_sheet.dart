@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/classes/car_park.dart';
@@ -13,7 +12,6 @@ import 'package:woauto/main.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/extensions.dart';
-import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
 class CarBottomSheet extends StatefulWidget {
@@ -67,7 +65,17 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                     var friendsParkingList = woAuto.friendPositions.toList();
                     // var friendsCount = friendsParkingList.length;
 
-                    var myParking = carParkingList.where((element) => element.mine);
+                    var myParking = carParkingList.where((element) => element.mine).toList();
+                    var myPos = woAuto.currentPosition.value.target;
+                    var myPositonPark = CarPark(
+                      uuid: 'me',
+                      mine: true,
+                      name: t.car_bottom_sheet.you.title,
+                      latitude: myPos.latitude,
+                      longitude: myPos.longitude,
+                      adresse: t.car_bottom_sheet.you.address,
+                    );
+                    myParking.add(myPositonPark);
                     var otherParking =
                         friendsParkingList.where((element) => !element.mine).toList();
                     otherParking.addAll(woAuto.friendCarPositions);
@@ -260,9 +268,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
               woAuto.currentSelectedPosition.value = park.latLng;
               woAuto.currentSelectedCarPark.value = park;
             case 3:
-              // TODO when deleting, delete from server as well
               woAuto.carParkings.removeWhere((element) => element.uuid == park.uuid);
               woAuto.carParkings.refresh();
+              woAutoServer.deleteUserParkingLocations();
 
               flutterLocalNotificationsPlugin.cancelAll();
               woAuto.save();
@@ -316,21 +324,22 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                 ),
               ),
             ),
-            PopupMenuItem(
-              value: 3,
-              child: TextIcon(
-                icon: Icon(
-                  Icons.delete_outline,
-                  color: Theme.of(context).colorScheme.error,
-                ),
-                label: Text(
-                  t.car_bottom_sheet.menu.delete_park,
-                  style: TextStyle(
+            if (park.mine && park.uuid != 'me')
+              PopupMenuItem(
+                value: 3,
+                child: TextIcon(
+                  icon: Icon(
+                    Icons.delete_outline,
                     color: Theme.of(context).colorScheme.error,
+                  ),
+                  label: Text(
+                    t.car_bottom_sheet.menu.delete_park,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.error,
+                    ),
                   ),
                 ),
               ),
-            ),
           ];
         },
       ),
