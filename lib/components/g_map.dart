@@ -134,17 +134,6 @@ class _GMapState extends State<GMap> with WidgetsBindingObserver {
           ),
         );
       }
-
-      // share cars
-
-      if (woAutoServer.shareMyParkings.value) {
-        var carParkingList = woAuto.carParkings.toList();
-        var myParking = carParkingList.where((element) => element.mine);
-
-        for (var park in myParking) {
-          // TODO
-        }
-      }
     });
 
     positionStream = Geolocator.getPositionStream(locationSettings: locationSettings)
