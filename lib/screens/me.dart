@@ -144,6 +144,23 @@ class _MeState extends State<Me> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Text(
+                  t.dialog.account_data.title,
+                  style: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                4.h,
+                Text(
+                  t.dialog.account_data.content,
+                  style: const TextStyle(
+                    fontSize: 18,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                12.h,
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: OverflowBar(
@@ -166,6 +183,7 @@ class _MeState extends State<Me> {
                           woAuto.friendPositions.clear();
                           woAuto.friendCarPositions.clear();
                           woAutoServer.reset();
+                          await woAuto.reset();
                           woAuto.save();
                           pop();
                           setState(() {});

@@ -50,7 +50,7 @@ class WoAutoServer extends GetxController {
   }
 
   // save to local storage
-  save() async {
+  Future<void> save() async {
     var sp = woAuto.sp;
     sp.setString('woauto_server', toJson());
   }
@@ -82,7 +82,7 @@ class WoAutoServer extends GetxController {
     return server;
   }
 
-  reset() {
+  void reset() {
     shareMyLastLiveLocation.value = false;
     shareMyParkings.value = false;
     save();
@@ -120,7 +120,7 @@ class WoAutoServer extends GetxController {
                 newPosition: fPosition.latLng,
                 uuid: fPosition.id,
                 newName:
-                    '${fPosition.name ?? t.car_bottom_sheet.friends.park} ${t.car_bottom_sheet.friends.from} ${friend.data['username']}',
+                    '${friend.data['username']}\'s ${fPosition.name ?? t.car_bottom_sheet.friends.park}',
               );
             }
           }
@@ -365,7 +365,7 @@ class WoAutoServer extends GetxController {
       }
 
       await pb.collection('users').update(user.id, body: {
-        'parkings': null,
+        'parkings': [],
       });
     } on ClientException catch (e) {
       var code = e.response['code'];

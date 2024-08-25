@@ -581,6 +581,7 @@ class _SettingsState extends State<Settings> {
                                     // pop();
                                     pop();
                                     await woAuto.reset();
+                                    woAutoServer.reset();
                                     setState(() {});
                                   },
                                 ),

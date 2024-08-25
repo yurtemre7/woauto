@@ -6,7 +6,7 @@
 /// Locales: 2
 /// Strings: 488 (244 per locale)
 ///
-/// Built on 2024-08-25 at 12:12 UTC
+/// Built on 2024-08-25 at 12:58 UTC
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
@@ -594,7 +594,6 @@ class _TranslationsCarBottomSheetFriendsDe {
 	// Translations
 	String get title => 'Freunde';
 	String get park => 'Parkplatz';
-	String get from => 'von';
 }
 
 // Path: car_bottom_sheet.menu
@@ -880,9 +879,9 @@ class _TranslationsDialogDataSecurityDe {
 
 	// Translations
 	String get title => 'Datenschutz und Impressum';
-	String get content_1 => 'Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 01.09.2023):';
+	String get content_1 => 'Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 25.08.2024):';
 	String get content_2 => '- Die App kommuniziert mit Google Maps, um die Karte anzuzeigen.';
-	String get content_3 => '- Die App kommuniziert mit meinem VPS Server auf Deutschem Boden, um synchronisierte Parkplätze anzuzeigen, anzulegen und zu verwalten.';
+	String get content_3 => '- Die App kommuniziert mit meinem VPS Server auf Deutschem Boden, um synchronisierte Parkplätze anzuzeigen, anzulegen und zu verwalten. Zusätzlich deinen letzten Live Standort, aber auch nur sobald du es erlaubst.';
 	String get content_4 => '- Die App speichert keine Metadaten, wie z.B. die IP-Adresse, Gerätename oder Betriebssystemversion.';
 	String get content_5 => '- Die App speichert natürlich, unter anderem, deinen Standort, den Namen des Parkplatzes und die Koordinaten, gibt diese aber ';
 	String get content_6 => 'nicht an Dritte weiter.';
@@ -899,8 +898,8 @@ class _TranslationsDialogAppDataDe {
 	final Translations _root; // ignore: unused_field
 
 	// Translations
-	String get title => 'App-Daten löschen';
-	String get subtitle => 'Bist du sicher, dass du alle App-Daten löschen möchtest?';
+	String get title => 'App + Server Daten löschen & ausloggen';
+	String get subtitle => 'Bist du sicher, dass du alle App + Server Daten löschen und dich somit ausloggen möchtest? Dein Account bleibt bestehen.';
 }
 
 // Path: dialog.account_data
@@ -911,6 +910,7 @@ class _TranslationsDialogAccountDataDe {
 
 	// Translations
 	String get title => 'Konto & Daten löschen';
+	String get content => 'Hiermit wird dein Account gelöscht, mit samt allen Daten, die mit dir in Zusammenhang stecken, Parkplätze, Live Standorte etc. Außerdem werden alle App Daten gelöscht.';
 }
 
 // Path: settings.theme
@@ -1671,8 +1671,7 @@ class _TranslationsCarBottomSheetFriendsEn extends _TranslationsCarBottomSheetFr
 
 	// Translations
 	@override String get title => 'Friends';
-	@override String get park => 'Parking';
-	@override String get from => 'from';
+	@override String get park => 'parking';
 }
 
 // Path: car_bottom_sheet.menu
@@ -1958,9 +1957,9 @@ class _TranslationsDialogDataSecurityEn extends _TranslationsDialogDataSecurityD
 
 	// Translations
 	@override String get title => 'Privacy Policy and Legal Notice';
-	@override String get content_1 => 'Brief summary of privacy policy in our own words (as of 01/09/2023):';
+	@override String get content_1 => 'Brief summary of privacy policy in our own words (as of 25/08/2024):';
 	@override String get content_2 => '- The app communicates with Google Maps to display the map.';
-	@override String get content_3 => '- The app communicates with my VPS server on German soil to display, create and manage synchronized parking spots.';
+	@override String get content_3 => '- The app communicates with my VPS server on German soil to display, create and manage synchronized parking spots and your location data, only ever if you allow it.';
 	@override String get content_4 => '- The app does not store any metadata, such as IP address, device name, or operating system version.';
 	@override String get content_5 => '- The app stores, of course, among other things, your location, the name of the parking lot and the coordinates, but gives them ';
 	@override String get content_6 => 'not to any third parties.';
@@ -1989,6 +1988,7 @@ class _TranslationsDialogAccountDataEn extends _TranslationsDialogAccountDataDe 
 
 	// Translations
 	@override String get title => 'Delete Account & Data';
+	@override String get content => 'This will delete your account, all the data associated with you, parkings, locations etc. It will also reset all of app-data on device.';
 }
 
 // Path: settings.theme
@@ -2355,7 +2355,6 @@ extension on Translations {
 			case 'car_bottom_sheet.you.address': return 'Bei dir';
 			case 'car_bottom_sheet.friends.title': return 'Freunde';
 			case 'car_bottom_sheet.friends.park': return 'Parkplatz';
-			case 'car_bottom_sheet.friends.from': return 'von';
 			case 'car_bottom_sheet.menu.open_park_in_maps': return 'Karten App öffnen';
 			case 'car_bottom_sheet.menu.share_park': return 'Parkplatz teilen';
 			case 'car_bottom_sheet.menu.to_park': return 'Zum Parkplatz';
@@ -2481,9 +2480,9 @@ extension on Translations {
 			case 'dialog.feedback.subtitle': return 'Schreibe mir gerne eine E-Mail, trete unserem Telegram-Channel bei oder schreibe mir eine private Nachricht auf Telegram:';
 			case 'dialog.feedback.action_1': return 'Telegram';
 			case 'dialog.data_security.title': return 'Datenschutz und Impressum';
-			case 'dialog.data_security.content_1': return 'Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 01.09.2023):';
+			case 'dialog.data_security.content_1': return 'Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 25.08.2024):';
 			case 'dialog.data_security.content_2': return '- Die App kommuniziert mit Google Maps, um die Karte anzuzeigen.';
-			case 'dialog.data_security.content_3': return '- Die App kommuniziert mit meinem VPS Server auf Deutschem Boden, um synchronisierte Parkplätze anzuzeigen, anzulegen und zu verwalten.';
+			case 'dialog.data_security.content_3': return '- Die App kommuniziert mit meinem VPS Server auf Deutschem Boden, um synchronisierte Parkplätze anzuzeigen, anzulegen und zu verwalten. Zusätzlich deinen letzten Live Standort, aber auch nur sobald du es erlaubst.';
 			case 'dialog.data_security.content_4': return '- Die App speichert keine Metadaten, wie z.B. die IP-Adresse, Gerätename oder Betriebssystemversion.';
 			case 'dialog.data_security.content_5': return '- Die App speichert natürlich, unter anderem, deinen Standort, den Namen des Parkplatzes und die Koordinaten, gibt diese aber ';
 			case 'dialog.data_security.content_6': return 'nicht an Dritte weiter.';
@@ -2491,9 +2490,10 @@ extension on Translations {
 			case 'dialog.data_security.content_8': return 'Die App speichert sont alle Daten nur auf deinem Gerät und du kannst sie jederzeit löschen, dann sind sie auch aus meinem Server gelöscht (in den Einstellungen ganz unten).';
 			case 'dialog.data_security.action_1': return 'Impressum';
 			case 'dialog.data_security.action_2': return 'Datenschutz';
-			case 'dialog.app_data.title': return 'App-Daten löschen';
-			case 'dialog.app_data.subtitle': return 'Bist du sicher, dass du alle App-Daten löschen möchtest?';
+			case 'dialog.app_data.title': return 'App + Server Daten löschen & ausloggen';
+			case 'dialog.app_data.subtitle': return 'Bist du sicher, dass du alle App + Server Daten löschen und dich somit ausloggen möchtest? Dein Account bleibt bestehen.';
 			case 'dialog.account_data.title': return 'Konto & Daten löschen';
+			case 'dialog.account_data.content': return 'Hiermit wird dein Account gelöscht, mit samt allen Daten, die mit dir in Zusammenhang stecken, Parkplätze, Live Standorte etc. Außerdem werden alle App Daten gelöscht.';
 			case 'dialog.logout_confirm': return 'Bist du dir sicher, dass du dich ausloggen möchtest?';
 			case 'settings.title': return 'Einstellungen';
 			case 'settings.theme.title': return 'Theme';
@@ -2612,8 +2612,7 @@ extension on _TranslationsEn {
 			case 'car_bottom_sheet.you.title': return 'You';
 			case 'car_bottom_sheet.you.address': return 'On you';
 			case 'car_bottom_sheet.friends.title': return 'Friends';
-			case 'car_bottom_sheet.friends.park': return 'Parking';
-			case 'car_bottom_sheet.friends.from': return 'from';
+			case 'car_bottom_sheet.friends.park': return 'parking';
 			case 'car_bottom_sheet.menu.open_park_in_maps': return 'Open in a maps app';
 			case 'car_bottom_sheet.menu.share_park': return 'Share parking spot';
 			case 'car_bottom_sheet.menu.to_park': return 'Go to parking spot';
@@ -2739,9 +2738,9 @@ extension on _TranslationsEn {
 			case 'dialog.feedback.subtitle': return 'Feel free to email me, join our Telegram channel, or send me a private message on Telegram:';
 			case 'dialog.feedback.action_1': return 'Telegram';
 			case 'dialog.data_security.title': return 'Privacy Policy and Legal Notice';
-			case 'dialog.data_security.content_1': return 'Brief summary of privacy policy in our own words (as of 01/09/2023):';
+			case 'dialog.data_security.content_1': return 'Brief summary of privacy policy in our own words (as of 25/08/2024):';
 			case 'dialog.data_security.content_2': return '- The app communicates with Google Maps to display the map.';
-			case 'dialog.data_security.content_3': return '- The app communicates with my VPS server on German soil to display, create and manage synchronized parking spots.';
+			case 'dialog.data_security.content_3': return '- The app communicates with my VPS server on German soil to display, create and manage synchronized parking spots and your location data, only ever if you allow it.';
 			case 'dialog.data_security.content_4': return '- The app does not store any metadata, such as IP address, device name, or operating system version.';
 			case 'dialog.data_security.content_5': return '- The app stores, of course, among other things, your location, the name of the parking lot and the coordinates, but gives them ';
 			case 'dialog.data_security.content_6': return 'not to any third parties.';
@@ -2752,6 +2751,7 @@ extension on _TranslationsEn {
 			case 'dialog.app_data.title': return 'Delete App Data';
 			case 'dialog.app_data.subtitle': return 'Are you sure you want to delete all app data?';
 			case 'dialog.account_data.title': return 'Delete Account & Data';
+			case 'dialog.account_data.content': return 'This will delete your account, all the data associated with you, parkings, locations etc. It will also reset all of app-data on device.';
 			case 'dialog.logout_confirm': return 'Are you sure you want to logout?';
 			case 'settings.title': return 'Settings';
 			case 'settings.theme.title': return 'Theme';

@@ -115,8 +115,7 @@
     },
     "friends": {
       "title": "Friends",
-      "park": "Parking",
-      "from": "from"
+      "park": "parking"
     },
     "menu": {
       "open_park_in_maps": "Open in a maps app",
@@ -321,9 +320,9 @@
     },
     "data_security": {
       "title": "Privacy Policy and Legal Notice",
-      "content_1": "Brief summary of privacy policy in our own words (as of 01/09/2023):",
+      "content_1": "Brief summary of privacy policy in our own words (as of 25/08/2024):",
       "content_2": "- The app communicates with Google Maps to display the map.",
-      "content_3": "- The app communicates with my VPS server on German soil to display, create and manage synchronized parking spots.",
+      "content_3": "- The app communicates with my VPS server on German soil to display, create and manage synchronized parking spots and your location data, only ever if you allow it.",
       "content_4": "- The app does not store any metadata, such as IP address, device name, or operating system version.",
       "content_5": "- The app stores, of course, among other things, your location, the name of the parking lot and the coordinates, but gives them ",
       "content_6": "not to any third parties.",
@@ -337,7 +336,8 @@
       "subtitle": "Are you sure you want to delete all app data?"
     },
     "account_data": {
-      "title": "Delete Account & Data"
+      "title": "Delete Account & Data",
+      "content": "This will delete your account, all the data associated with you, parkings, locations etc. It will also reset all of app-data on device."
     },
     "logout_confirm": "Are you sure you want to logout?"
   },

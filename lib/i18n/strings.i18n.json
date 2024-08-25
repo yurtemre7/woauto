@@ -115,8 +115,7 @@
     },
     "friends": {
       "title": "Freunde",
-      "park": "Parkplatz",
-      "from": "von"
+      "park": "Parkplatz"
     },
     "menu": {
       "open_park_in_maps": "Karten App öffnen",
@@ -320,9 +319,9 @@
     },
     "data_security": {
       "title": "Datenschutz und Impressum",
-      "content_1": "Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 01.09.2023):",
+      "content_1": "Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 25.08.2024):",
       "content_2": "- Die App kommuniziert mit Google Maps, um die Karte anzuzeigen.",
-      "content_3": "- Die App kommuniziert mit meinem VPS Server auf Deutschem Boden, um synchronisierte Parkplätze anzuzeigen, anzulegen und zu verwalten.",
+      "content_3": "- Die App kommuniziert mit meinem VPS Server auf Deutschem Boden, um synchronisierte Parkplätze anzuzeigen, anzulegen und zu verwalten. Zusätzlich deinen letzten Live Standort, aber auch nur sobald du es erlaubst.",
       "content_4": "- Die App speichert keine Metadaten, wie z.B. die IP-Adresse, Gerätename oder Betriebssystemversion.",
       "content_5": "- Die App speichert natürlich, unter anderem, deinen Standort, den Namen des Parkplatzes und die Koordinaten, gibt diese aber ",
       "content_6": "nicht an Dritte weiter.",
@@ -332,11 +331,12 @@
       "action_2": "Datenschutz"
     },
     "app_data": {
-      "title": "App-Daten löschen",
-      "subtitle": "Bist du sicher, dass du alle App-Daten löschen möchtest?"
+      "title": "App Daten löschen",
+      "subtitle": "Bist du sicher, dass du alle App Daten löschen? Dein Account bleibt bestehen."
     },
     "account_data": {
-      "title": "Konto & Daten löschen"
+      "title": "Konto & Daten löschen",
+      "content": "Hiermit wird dein Account gelöscht, mit samt allen Daten, die mit dir in Zusammenhang stecken, Parkplätze, Live Standorte etc. Außerdem werden alle App Daten gelöscht."
     },
     "logout_confirm": "Bist du dir sicher, dass du dich ausloggen möchtest?"
   },
