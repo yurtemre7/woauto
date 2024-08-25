@@ -313,7 +313,7 @@ class _IntroState extends State<Intro> {
       bottomNavigationBar: Obx(
         () => SafeArea(
           child: Container(
-            padding: const EdgeInsets.only(right: 16),
+            padding: const EdgeInsets.only(right: 16, bottom: 16),
             child: OverflowBar(
               alignment: MainAxisAlignment.end,
               children: [
