@@ -28,7 +28,7 @@ void main() async {
         .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
     InitializationSettings initializationSettings = InitializationSettings(
-      android: const AndroidInitializationSettings('monochrome'),
+      android: const AndroidInitializationSettings('ic_launcher_monochrome'),
       iOS: DarwinInitializationSettings(
         requestAlertPermission: false,
         requestBadgePermission: false,
