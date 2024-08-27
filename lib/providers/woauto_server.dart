@@ -153,7 +153,8 @@ class WoAutoServer extends GetxController {
                   woAuto.addFriendCarPosition(
                     newPosition: fPosition.latLng,
                     uuid: fPosition.id,
-                    newName: fPosition.name,
+                    newName:
+                        '${friend.data['username']}\'s ${fPosition.name ?? t.car_bottom_sheet.friends.park}',
                   );
                 }
               } else {

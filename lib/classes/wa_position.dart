@@ -33,6 +33,8 @@ class WaPosition extends WaObject {
       longitude: model.data['longitude'].toDouble(),
       userId: model.data['user'],
       car: model.expand['car'] == null ? null : WaCar.fromRecord(model.expand['car']!.first),
+      name: model.data['name'],
+      note: model.data['note'],
     );
   }
 }
