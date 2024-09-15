@@ -207,9 +207,12 @@ class WoAutoServer extends GetxController {
         record = await pb.collection('simple_position').update(positionData, body: body);
       }
 
-      await pb.collection('users').update(user.id, body: {
-        'position': record.id,
-      });
+      await pb.collection('users').update(
+        user.id,
+        body: {
+          'position': record.id,
+        },
+      );
     } on ClientException catch (e) {
       var code = e.response['code'];
       var message = e.response['message'];
@@ -231,9 +234,12 @@ class WoAutoServer extends GetxController {
         await pb.collection('simple_position').delete(positionData);
       }
 
-      await pb.collection('users').update(user.id, body: {
-        'position': null,
-      });
+      await pb.collection('users').update(
+        user.id,
+        body: {
+          'position': null,
+        },
+      );
     } on ClientException catch (e) {
       var code = e.response['code'];
       var message = e.response['message'];
@@ -267,9 +273,12 @@ class WoAutoServer extends GetxController {
         };
 
         var parking = await pb.collection('positions').create(body: body);
-        await pb.collection('users').update(user.id, body: {
-          'parkings': [parking.id],
-        });
+        await pb.collection('users').update(
+          user.id,
+          body: {
+            'parkings': [parking.id],
+          },
+        );
       } else {
         // find parking
         RecordModel? foundParking;
@@ -307,9 +316,12 @@ class WoAutoServer extends GetxController {
           };
 
           var parking = await pb.collection('positions').create(body: body);
-          await pb.collection('users').update(user.id, body: {
-            'parkings': [...user.data['parkings'], parking.id],
-          });
+          await pb.collection('users').update(
+            user.id,
+            body: {
+              'parkings': [...user.data['parkings'], parking.id],
+            },
+          );
         }
       }
     } on ClientException catch (e) {
@@ -365,9 +377,12 @@ class WoAutoServer extends GetxController {
         }
       }
 
-      await pb.collection('users').update(user.id, body: {
-        'parkings': [],
-      });
+      await pb.collection('users').update(
+        user.id,
+        body: {
+          'parkings': [],
+        },
+      );
     } on ClientException catch (e) {
       var code = e.response['code'];
       var message = e.response['message'];
