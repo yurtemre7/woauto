@@ -258,7 +258,7 @@ class WoAutoServer extends GetxController {
       var user = await getUser(expand: 'parkings');
       if (user == null || !pb.authStore.isValid) return;
       // var user = await pb.collection('users').getOne(userOld.id);
-      var parkingsData = user.expand['parkings'] as List<RecordModel?>;
+      var parkingsData = user.expand['parkings'] as List<RecordModel?>? ?? [];
 
       if (parkingsData.isEmpty) {
         // create parking
@@ -337,7 +337,7 @@ class WoAutoServer extends GetxController {
       var user = await getUser(expand: 'parkings');
       if (user == null || !pb.authStore.isValid) return;
       // var user = await pb.collection('users').getOne(userOld.id);
-      var parkingsData = user.expand['parkings'] as List<RecordModel?>;
+      var parkingsData = user.expand['parkings'] as List<RecordModel?>? ?? [];
 
       if (parkingsData.isEmpty) {
         // Cant delete parking, as it is not online.
