@@ -101,7 +101,7 @@ class _HomeState extends State<Home> {
         type: 'action_parkings',
         localizedTitle: t.home.quick_actions.action_parkings,
         icon: 'monochrome',
-      )
+      ),
     ];
     quickActions.setShortcutItems(shortCuts);
   }
@@ -204,7 +204,7 @@ class _HomeState extends State<Home> {
               ],
               if (woAuto.currentIndex.value == 3) ...[
                 const Settings(),
-              ]
+              ],
             ],
           ),
           bottomNavigationBar: Visibility(

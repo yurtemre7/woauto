@@ -512,7 +512,7 @@ class _SettingsState extends State<Settings> {
                                           ),
                                           TextSpan(
                                             text: t.dialog.data_security.content_8,
-                                          )
+                                          ),
                                         ],
                                       ),
                                     ),

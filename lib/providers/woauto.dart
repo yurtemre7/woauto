@@ -337,8 +337,10 @@ class WoAuto extends GetxController {
                         if (search.isEmpty) return [];
 
                         List<String> carNames = carParkings
-                            .where((element) =>
-                                element.name.toLowerCase().startsWith(search.toLowerCase()))
+                            .where(
+                              (element) =>
+                                  element.name.toLowerCase().startsWith(search.toLowerCase()),
+                            )
                             .map((e) => e.name)
                             .toList();
 

@@ -58,22 +58,25 @@ class YrtmrDeeplinks {
   }
 
   static StreamSubscription<Uri?> yrtmrLinksListener() {
-    return appLinks.uriLinkStream.listen((Uri? uri) async {
-      if (uri == null) {
-        // log('YrtmrLinks: No initial link found.');
-        return;
-      }
-      YrtmrDeeplinks yrtmrLinks = YrtmrDeeplinks.getInstance();
+    return appLinks.uriLinkStream.listen(
+      (Uri? uri) async {
+        if (uri == null) {
+          // log('YrtmrLinks: No initial link found.');
+          return;
+        }
+        YrtmrDeeplinks yrtmrLinks = YrtmrDeeplinks.getInstance();
 
-      var deeplink = yrtmrLinks.parseUri(uri);
-      // log('YrtmrLinks: ${deeplink.toString()}');
-      await yrtmrLinks.handleDeeplink(deeplink);
-      yrtmrLinks.once = true;
-      // Use the uri and warn the user, if it is not correct
-    }, onError: (err) {
-      // Handle exception by warning the user their action did not succeed
-      return null;
-    });
+        var deeplink = yrtmrLinks.parseUri(uri);
+        // log('YrtmrLinks: ${deeplink.toString()}');
+        await yrtmrLinks.handleDeeplink(deeplink);
+        yrtmrLinks.once = true;
+        // Use the uri and warn the user, if it is not correct
+      },
+      onError: (err) {
+        // Handle exception by warning the user their action did not succeed
+        return null;
+      },
+    );
   }
 
   Future<void> handleDeeplink(YrtmrDeeplink deeplink) async {

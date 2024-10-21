@@ -320,7 +320,9 @@ class _IntroState extends State<Intro> {
                 ElevatedButton.icon(
                   onPressed: pageIndex.value == 0
                       ? () => pageController.nextPage(
-                          duration: 500.milliseconds, curve: Curves.easeInOut)
+                            duration: 500.milliseconds,
+                            curve: Curves.easeInOut,
+                          )
                       : () async {
                           FocusScope.of(context).requestFocus(FocusNode());
                           if (!allowed.value) {

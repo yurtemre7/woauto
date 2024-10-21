@@ -193,7 +193,7 @@ class _MeState extends State<Me> {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),
@@ -393,51 +393,55 @@ class _MeState extends State<Me> {
                       ),
                       16.h,
                       if (woAutoServer.pb.authStore.isValid) ...[
-                        Builder(builder: (context) {
-                          var user = woAutoServer.pb.authStore.model as RecordModel;
-                          return SelectionArea(
-                            child: ListTile(
-                              title: Text(
-                                '@${user.data['username']}',
-                                style: TextStyle(color: context.theme.colorScheme.primary),
-                              ),
-                              subtitle: Text('${user.data['email']}'),
-                              trailing: IconButton(
-                                onPressed: () async {
-                                  return await Get.dialog(AlertDialog(
-                                    title: Text(t.dialog.logout),
-                                    content: Text(t.dialog.logout_confirm),
-                                    actions: [
-                                      OutlinedButton(
-                                        style: OutlinedButton.styleFrom(
-                                          foregroundColor: context.theme.colorScheme.error,
-                                        ),
-                                        onPressed: () {
-                                          woAutoServer.pb.authStore.clear();
-                                          woAuto.friendPositions.clear();
-                                          woAuto.friendCarPositions.clear();
-                                          woAutoServer.reset();
-                                          woAuto.save();
-                                          pop();
-                                          setState(() {});
-                                        },
-                                        child: Text(t.dialog.logout),
+                        Builder(
+                          builder: (context) {
+                            var user = woAutoServer.pb.authStore.model as RecordModel;
+                            return SelectionArea(
+                              child: ListTile(
+                                title: Text(
+                                  '@${user.data['username']}',
+                                  style: TextStyle(color: context.theme.colorScheme.primary),
+                                ),
+                                subtitle: Text('${user.data['email']}'),
+                                trailing: IconButton(
+                                  onPressed: () async {
+                                    return await Get.dialog(
+                                      AlertDialog(
+                                        title: Text(t.dialog.logout),
+                                        content: Text(t.dialog.logout_confirm),
+                                        actions: [
+                                          OutlinedButton(
+                                            style: OutlinedButton.styleFrom(
+                                              foregroundColor: context.theme.colorScheme.error,
+                                            ),
+                                            onPressed: () {
+                                              woAutoServer.pb.authStore.clear();
+                                              woAuto.friendPositions.clear();
+                                              woAuto.friendCarPositions.clear();
+                                              woAutoServer.reset();
+                                              woAuto.save();
+                                              pop();
+                                              setState(() {});
+                                            },
+                                            child: Text(t.dialog.logout),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ));
-                                },
-                                icon: const Icon(
-                                  Icons.logout_outlined,
-                                ),
-                                iconSize: 38,
-                                style: IconButton.styleFrom(
-                                  foregroundColor: context.theme.colorScheme.error,
-                                  disabledForegroundColor: Colors.grey.withOpacity(0.3),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.logout_outlined,
+                                  ),
+                                  iconSize: 38,
+                                  style: IconButton.styleFrom(
+                                    foregroundColor: context.theme.colorScheme.error,
+                                    disabledForegroundColor: Colors.grey.withOpacity(0.3),
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        }),
+                            );
+                          },
+                        ),
                         SwitchListTile(
                           title: Text(
                             t.my_car.share_my_last_location,

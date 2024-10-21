@@ -182,7 +182,7 @@ class _HistoryState extends State<History> {
                                   'Datum',
                                   'Latitude',
                                   'Longitude',
-                                  'Extra'
+                                  'Extra',
                                 ];
                                 List<List<String>> rows = [];
                                 for (CarPark park in woAuto.carParkingHistory) {
@@ -190,9 +190,9 @@ class _HistoryState extends State<History> {
                                     [
                                       park.name,
                                       park.adresse ?? t.constants.default_address,
-                                      DateTime.fromMillisecondsSinceEpoch(park.updatedAt ??
-                                              DateTime.now().millisecondsSinceEpoch)
-                                          .toString(),
+                                      DateTime.fromMillisecondsSinceEpoch(
+                                        park.updatedAt ?? DateTime.now().millisecondsSinceEpoch,
+                                      ).toString(),
                                       park.latitude.toString(),
                                       park.longitude.toString(),
                                       park.description ?? '',
