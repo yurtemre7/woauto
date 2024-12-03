@@ -7,8 +7,6 @@ import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/screens/home.dart';
-
-import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:woauto/screens/intro.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
@@ -22,20 +20,16 @@ void main() async {
   woAuto = Get.put(await WoAuto.load());
   Get.put(await WoAutoServer.load());
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  tz.initializeTimeZones();
   try {
     await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
-    InitializationSettings initializationSettings = InitializationSettings(
-      android: const AndroidInitializationSettings('ic_launcher_monochrome'),
+    InitializationSettings initializationSettings = const InitializationSettings(
+      android: AndroidInitializationSettings('ic_launcher_monochrome'),
       iOS: DarwinInitializationSettings(
         requestAlertPermission: false,
         requestBadgePermission: false,
         requestSoundPermission: false,
-        onDidReceiveLocalNotification: (id, title, body, payload) {
-          logMessage('onDidReceiveLocalNotification called');
-        },
       ),
     );
     await flutterLocalNotificationsPlugin.initialize(

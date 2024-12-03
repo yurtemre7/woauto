@@ -25,7 +25,6 @@ import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:timezone/timezone.dart' as tz;
 
 /// The WoAuto GetXController class
 class WoAuto extends GetxController {
@@ -865,11 +864,11 @@ class WoAuto extends GetxController {
 
   Future<void> addParkticketNotification(TimeOfDay? tillTime) async {
     if (tillTime != null) {
-      var differenceInSecondsFromNow = tillTime.hour * 3600 +
-          tillTime.minute * 60 -
-          DateTime.now().hour * 3600 -
-          DateTime.now().minute * 60 -
-          DateTime.now().second;
+      // var differenceInSecondsFromNow = tillTime.hour * 3600 +
+      //     tillTime.minute * 60 -
+      //     DateTime.now().hour * 3600 -
+      //     DateTime.now().minute * 60 -
+      //     DateTime.now().second;
 
       bool? res;
 
@@ -946,28 +945,28 @@ class WoAuto extends GetxController {
         notificationDetails,
       );
 
-      int minutesLeft = 0;
-      int minutes = woAuto.timePuffer.value * 60;
-      if (differenceInSecondsFromNow > minutes) {
-        differenceInSecondsFromNow -= minutes;
-        minutesLeft = woAuto.timePuffer.value;
-      } else if (differenceInSecondsFromNow < 0) {
-        differenceInSecondsFromNow += 86400 - minutes;
-        minutesLeft = woAuto.timePuffer.value;
-      } else {
-        minutesLeft = differenceInSecondsFromNow ~/ 60;
-      }
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        t.dialog.notifications.expiring.title,
-        t.dialog.notifications.expiring.subtitle(minutesLeft: minutesLeft),
-        tz.TZDateTime.now(tz.local).add(Duration(seconds: differenceInSecondsFromNow)),
-        NotificationDetails(
-          android: androidNotificationDetails,
-        ),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      );
+      // int minutesLeft = 0;
+      // int minutes = woAuto.timePuffer.value * 60;
+      // if (differenceInSecondsFromNow > minutes) {
+      //   differenceInSecondsFromNow -= minutes;
+      //   minutesLeft = woAuto.timePuffer.value;
+      // } else if (differenceInSecondsFromNow < 0) {
+      //   differenceInSecondsFromNow += 86400 - minutes;
+      //   minutesLeft = woAuto.timePuffer.value;
+      // } else {
+      //   minutesLeft = differenceInSecondsFromNow ~/ 60;
+      // }
+      // await flutterLocalNotificationsPlugin.zonedSchedule(
+      //   0,
+      //   t.dialog.notifications.expiring.title,
+      //   t.dialog.notifications.expiring.subtitle(minutesLeft: minutesLeft),
+
+      //   NotificationDetails(
+      //     android: androidNotificationDetails,
+      //   ),
+      //   androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      //   uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      // );
     }
   }
 
