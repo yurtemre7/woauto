@@ -17,29 +17,29 @@ dependencies:
   get: ^4.6.6
   pocketbase: ^0.18.1
 
-  google_maps_flutter: ^2.9.0
+  google_maps_flutter: ^2.10.0
   google_fonts: ^6.2.1
   location: ^7.0.1
   geocoding: ^3.0.0
-  geolocator: ^13.0.1
+  geolocator: ^13.0.2
 
   expandable: ^5.0.1
 
-  package_info_plus: ^8.1.0
+  package_info_plus: ^8.1.2
   share_plus: ^7.2.2
   url_launcher: ^6.3.1
-  shared_preferences: ^2.3.2
+  shared_preferences: ^2.3.3
   add_2_calendar: ^3.0.1
-  quick_actions: ^1.0.8
+  quick_actions: ^1.1.0
   maps_launcher:
     git:
       url: https://github.com/EmreDET/flutter-maps-launcher.git
       tag: master
-  app_links: ^6.3.2
+  app_links: ^6.3.3
   to_csv: ^4.0.4
 
   image_picker: ^1.1.2
-  path_provider: ^2.1.4
+  path_provider: ^2.1.5
   qr_flutter: ^4.1.0
 
   flutter_local_notifications: ^18.0.1
@@ -53,8 +53,8 @@ dependencies:
   efficient_autocomplete_formfield: ^0.3.2+1
 
   # Languages
-  slang: ^3.32.0
-  slang_flutter: ^3.32.0
+  slang: ^4.4.0
+  slang_flutter: ^4.4.0
   animated_digit: ^3.2.3
   # Run: `dart run slang`
 
