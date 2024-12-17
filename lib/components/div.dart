@@ -6,7 +6,7 @@ class Div extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Divider(
-      color: Colors.grey.withOpacity(0.5),
+      color: Colors.grey.withValues(alpha: 0.5),
     );
   }
 }

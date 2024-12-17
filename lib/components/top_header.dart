@@ -91,7 +91,7 @@ class _TopHeaderState extends State<TopHeader> {
                               tooltip: t.top_header.driving_mode_tooltip,
                               style: IconButton.styleFrom(
                                 foregroundColor: context.theme.colorScheme.primary,
-                                disabledForegroundColor: Colors.grey.withOpacity(0.3),
+                                disabledForegroundColor: Colors.grey.withValues(alpha: 0.3),
                               ),
                               onPressed: () {
                                 woAuto.drivingMode.toggle();
