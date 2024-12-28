@@ -7,7 +7,6 @@ import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/screens/home.dart';
-import 'package:woauto/screens/intro.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -68,7 +67,7 @@ class MyApp extends StatelessWidget {
             ),
             fontFamily: GoogleFonts.roboto().fontFamily,
           ),
-          home: woAuto.welcome.value ? const Intro() : const Home(),
+          home: const Home(),
           locale: TranslationProvider.of(context).flutterLocale,
           supportedLocales: AppLocaleUtils.supportedLocales,
           localizationsDelegates: GlobalMaterialLocalizations.delegates,

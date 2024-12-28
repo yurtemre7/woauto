@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:keep_screen_on/keep_screen_on.dart';
@@ -12,13 +14,16 @@ import 'package:woauto/components/map_info_sheet.dart';
 import 'package:woauto/components/top_header.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/providers/yrtmr.dart';
 import 'package:woauto/screens/history.dart';
+import 'package:woauto/screens/intro.dart';
 import 'package:woauto/screens/me.dart';
 import 'package:woauto/screens/settings.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
+import 'package:location/location.dart' as loc;
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -29,6 +34,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   StreamSubscription? _sub;
+  late Timer timer;
+  StreamSubscription<Position>? positionStream;
+  final WoAutoServer woAutoServer = Get.find();
 
   @override
   void initState() {
@@ -38,6 +46,27 @@ class _HomeState extends State<Home> {
     _sub = YrtmrDeeplinks.yrtmrLinksListener();
 
     Future.delayed(0.seconds, () async {
+      if (woAuto.welcome.value) {
+        if (!mounted) return;
+        await Get.bottomSheet(
+          Container(
+            decoration: const BoxDecoration(
+              color: Colors.yellow,
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
+            ),
+            constraints: BoxConstraints(
+              maxHeight: context.height * 0.75,
+            ),
+            child: const Intro(),
+          ),
+          isScrollControlled: true,
+          isDismissible: false,
+        );
+        await loadPositionData();
+      }
+
       NotificationAppLaunchDetails? notificationAppLaunchDetails =
           await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
       if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
@@ -104,6 +133,170 @@ class _HomeState extends State<Home> {
       ),
     ];
     quickActions.setShortcutItems(shortCuts);
+  }
+
+  loadPositionData() async {
+    var location = loc.Location();
+
+    bool serviceEnabled;
+    serviceEnabled = await location.serviceEnabled();
+    if (!serviceEnabled) {
+      serviceEnabled = await location.requestService();
+      if (!serviceEnabled) {
+        return;
+      }
+    }
+    var permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        await Get.dialog(
+          AlertDialog(
+            title: Text(t.dialog.maps.location_denied.title),
+            content: Text(t.dialog.maps.location_denied.subtitle),
+            actions: [
+              TextButton(
+                onPressed: () async {
+                  await Geolocator.openAppSettings();
+                  pop();
+                },
+                child: Text(t.dialog.open_settings),
+              ),
+            ],
+          ),
+          name: 'Standort Berechtigung',
+        );
+
+        return loadPositionData();
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      await Get.dialog(
+        AlertDialog(
+          title: Text(t.dialog.maps.location_denied.title),
+          content: Text(t.dialog.maps.location_denied.subtitle),
+          actions: [
+            TextButton(
+              onPressed: () async {
+                await Geolocator.openAppSettings();
+                pop();
+              },
+              child: Text(t.dialog.open_settings),
+            ),
+          ],
+        ),
+        name: 'Standort Berechtigung',
+      );
+      return loadPositionData();
+    }
+
+    late LocationSettings locationSettings;
+
+    if (isAndroid()) {
+      locationSettings = AndroidSettings(
+        accuracy: LocationAccuracy.bestForNavigation,
+        forceLocationManager: true,
+        intervalDuration: 500.milliseconds,
+      );
+    } else if (isIOS()) {
+      locationSettings = AppleSettings(
+        accuracy: LocationAccuracy.bestForNavigation,
+        activityType: ActivityType.automotiveNavigation,
+        pauseLocationUpdatesAutomatically: true,
+        allowBackgroundLocationUpdates: false,
+      );
+    } else {
+      locationSettings = const LocationSettings(
+        accuracy: LocationAccuracy.bestForNavigation,
+      );
+    }
+
+    timer = Timer.periodic(10.seconds, (t) async {
+      var currentPosition = woAuto.currentPosition.value.target;
+
+      if (woAutoServer.shareMyLastLiveLocation.value) {
+        woAutoServer.setUserLocation(
+          LatLng(
+            currentPosition.latitude,
+            currentPosition.longitude,
+          ),
+        );
+      }
+    });
+
+    positionStream = Geolocator.getPositionStream(locationSettings: locationSettings)
+        .listen((Position? position) async {
+      if (!mounted || position == null) {
+        return;
+      }
+      woAuto.currentPosition.value = CameraPosition(
+        target: LatLng(
+          position.latitude,
+          position.longitude,
+        ),
+        zoom: CAM_ZOOM,
+      );
+
+      if (woAuto.drivingMode.value) {
+        if (woAuto.mapController.value != null) {
+          woAuto.currentPosition.value = CameraPosition(
+            target: LatLng(
+              position.latitude,
+              position.longitude,
+            ),
+            zoom: CAM_ZOOM,
+            bearing: position.heading,
+          );
+          woAuto.mapController.value!.animateCamera(
+            CameraUpdate.newCameraPosition(
+              woAuto.currentPosition.value,
+            ),
+          );
+        }
+      }
+
+      woAuto.currentVelocity.value = position.speed;
+
+      if (!woAuto.drivingMode.value && woAuto.askForDrivingMode.value) {
+        if (kDebugMode) return;
+        // show dialog to ask the user if he wants to switch to driving mode, IF his velocity is > woAuto.drivingModeDetectionSpeed.value
+        var kmh = ((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ?? 0) * 3.6);
+
+        if (kmh > woAuto.drivingModeDetectionSpeed.value) {
+          if (woAuto.currentIndex.value == 0) {
+            woAuto.askForDrivingMode.value = false;
+            var result = await Get.dialog<bool?>(
+              AlertDialog(
+                title: Text(t.dialog.maps.driving_mode.title),
+                content: Text(
+                  t.dialog.maps.driving_mode.subtitle,
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      pop(result: false);
+                    },
+                    child: Text(t.dialog.no),
+                  ),
+                  OutlinedButton(
+                    onPressed: () {
+                      pop(result: true);
+                    },
+                    child: Text(t.dialog.yes),
+                  ),
+                ],
+              ),
+              name: 'Fahrmodus',
+            );
+            if (result != null && result) {
+              woAuto.drivingMode.value = true;
+            }
+          }
+        }
+      }
+    });
   }
 
   @override
