@@ -19,6 +19,7 @@ import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/providers/wa_ext.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/extensions.dart';
@@ -62,7 +63,7 @@ class WoAuto extends GetxController {
 
   // settings
   final themeMode = 0.obs;
-  final appColor = appColorDefault.value.obs;
+  final appColor = appColorDefault.getValue.obs;
   final mapType = MapType.normal.obs;
   final showTraffic = false.obs;
   final timePuffer = 10.obs;
@@ -154,7 +155,7 @@ class WoAuto extends GetxController {
     woAuto.carBaujahr.value = jsonMap['carPictureDate'] ?? DateTime.now().year.toString();
     // settings
     woAuto.themeMode.value = jsonMap['themeMode'] ?? 0;
-    woAuto.appColor.value = int.parse(jsonMap['appColor'] ?? appColorDefault.value.toString());
+    woAuto.appColor.value = int.parse(jsonMap['appColor'] ?? appColorDefault.getValue.toString());
 
     return woAuto;
   }
@@ -231,7 +232,7 @@ class WoAuto extends GetxController {
     carBaujahr.value = DateTime.now().year.toString();
 
     themeMode.value = 0;
-    appColor.value = appColorDefault.value;
+    appColor.value = appColorDefault.getValue;
     timePuffer.value = 10;
     drivingModeDetectionSpeed.value = 20;
 

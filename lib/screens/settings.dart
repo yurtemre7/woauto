@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/providers/wa_ext.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
@@ -132,9 +133,9 @@ class _SettingsState extends State<Settings> {
                                     checkmarkColor: color.computeLuminance() > 0.5
                                         ? Colors.black
                                         : Colors.white,
-                                    selected: color.value == woAuto.appColor.value,
+                                    selected: color.getValue == woAuto.appColor.value,
                                     onSelected: (value) {
-                                      woAuto.appColor.value = color.value;
+                                      woAuto.appColor.value = color.getValue;
                                       woAuto.save();
                                       woAuto.setTheme();
                                       if (!mounted) return;
