@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:to_csv/to_csv.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:uuid/uuid.dart';
 import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/components/div.dart';
@@ -199,7 +199,31 @@ class _HistoryState extends State<History> {
                                     ],
                                   );
                                 }
-                                await myCSV(header, rows);
+
+                                String buildCsvString(
+                                  List<String> header,
+                                  List<List<String>> rows,
+                                ) {
+                                  // Combine header
+                                  var csv = StringBuffer();
+                                  csv.writeln(
+                                    header.join(','),
+                                  ); // Add the header row, separated by commas
+
+                                  // Add each row
+                                  for (List<String> row in rows) {
+                                    csv.writeln(
+                                      row
+                                          .map((field) => '"${field.replaceAll('"', '""')}"')
+                                          .join(','),
+                                    ); // Escape double quotes and join
+                                  }
+
+                                  return csv.toString(); // Convert StringBuffer to a string
+                                }
+
+                                String csvString = buildCsvString(header, rows);
+                                await Share.share(csvString);
                               },
                             ),
                             ListTile(
