@@ -49,19 +49,12 @@ class _HomeState extends State<Home> {
       if (woAuto.welcome.value) {
         if (!mounted) return;
         await Get.bottomSheet(
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.yellow,
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(20),
-              ),
-            ),
-            constraints: BoxConstraints(
-              maxHeight: context.height * 0.75,
+          ClipRRect(
+            borderRadius: BorderRadius.vertical(
+              top: Radius.circular(20),
             ),
             child: const Intro(),
           ),
-          isScrollControlled: true,
           isDismissible: false,
         );
         await loadPositionData();
