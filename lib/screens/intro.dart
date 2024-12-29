@@ -70,39 +70,29 @@ class _IntroState extends State<Intro> {
                           color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(
-                          top: 10,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              t.intro.page_1.title,
-                              style: const TextStyle(
-                                fontSize: 20,
-                              ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 5,
+                        children: [
+                          Text(
+                            t.intro.page_1.title,
+                            style: const TextStyle(
+                              fontSize: 20,
                             ),
-                            5.h,
-                            const Div(),
-                            5.h,
-                            Text(
-                              t.intro.page_1.content_1,
-                            ),
-                            5.h,
-                            const Div(),
-                            5.h,
-                            Text(
-                              t.intro.page_1.content_2,
-                            ),
-                            5.h,
-                            const Div(),
-                            5.h,
-                            Text(
-                              t.intro.page_1.content_3,
-                            ),
-                          ],
-                        ),
+                          ),
+                          const Div(),
+                          Text(
+                            '* ${t.intro.page_1.content_1}',
+                          ),
+                          5.h,
+                          Text(
+                            '* ${t.intro.page_1.content_2}',
+                          ),
+                          5.h,
+                          Text(
+                            '* ${t.intro.page_1.content_3}',
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -119,188 +109,183 @@ class _IntroState extends State<Intro> {
                           color: Theme.of(context).colorScheme.primary,
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(
-                          top: 10,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              t.intro.page_2.parking_title,
-                              style: const TextStyle(
-                                fontSize: 20,
-                              ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            t.intro.page_2.parking_title,
+                            style: const TextStyle(
+                              fontSize: 20,
                             ),
-                            const Div(),
-                            Text(
-                              t.intro.page_2.parking_content,
-                              style: const TextStyle(),
+                          ),
+                          const Div(),
+                          Text(
+                            t.intro.page_2.parking_content,
+                            style: const TextStyle(),
+                          ),
+                          16.h,
+                          TextFormField(
+                            controller: tec,
+                            maxLength: 30,
+                            autocorrect: false,
+                            decoration: InputDecoration(
+                              labelText: t.intro.page_2.parking_hint,
+                              border: const OutlineInputBorder(),
                             ),
-                            16.h,
-                            TextFormField(
-                              controller: tec,
-                              maxLength: 30,
-                              autocorrect: false,
-                              decoration: InputDecoration(
-                                labelText: t.intro.page_2.parking_hint,
-                                border: const OutlineInputBorder(),
-                              ),
+                          ),
+                          16.h,
+                          Text(
+                            t.intro.page_2.theme_title,
+                            style: const TextStyle(
+                              fontSize: 20,
                             ),
-                            16.h,
-                            Text(
-                              t.intro.page_2.theme_title,
-                              style: const TextStyle(
-                                fontSize: 20,
-                              ),
-                            ),
-                            const Div(),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    t.intro.page_2.theme_content,
-                                  ),
+                          ),
+                          const Div(),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  t.intro.page_2.theme_content,
                                 ),
-                                15.h,
-                                Obx(
-                                  () {
-                                    var themeMode = woAuto.themeMode.value;
-                                    DropdownButton<int> dropdownButton = DropdownButton<int>(
-                                      value: themeMode,
-                                      items: [
-                                        DropdownMenuItem(
-                                          value: 0,
-                                          child: Text(t.settings.theme.dropdown_1),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 1,
-                                          child: Text(t.settings.theme.dropdown_2),
-                                        ),
-                                        DropdownMenuItem(
-                                          value: 2,
-                                          child: Text(t.settings.theme.dropdown_3),
-                                        ),
-                                      ],
-                                      onChanged: (v) async {
-                                        woAuto.themeMode.value = v!;
+                              ),
+                              15.h,
+                              Obx(
+                                () {
+                                  var themeMode = woAuto.themeMode.value;
+                                  DropdownButton<int> dropdownButton = DropdownButton<int>(
+                                    value: themeMode,
+                                    items: [
+                                      DropdownMenuItem(
+                                        value: 0,
+                                        child: Text(t.settings.theme.dropdown_1),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 1,
+                                        child: Text(t.settings.theme.dropdown_2),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 2,
+                                        child: Text(t.settings.theme.dropdown_3),
+                                      ),
+                                    ],
+                                    onChanged: (v) async {
+                                      woAuto.themeMode.value = v!;
 
-                                        await woAuto.save();
-                                        woAuto.setTheme();
-                                        if (!mounted) return;
-                                        Future.delayed(500.milliseconds, () {
-                                          if (!context.mounted) return;
-                                          SystemChrome.setSystemUIOverlayStyle(
-                                            SystemUiOverlayStyle(
-                                              systemNavigationBarColor:
-                                                  Theme.of(context).colorScheme.surface,
-                                            ),
-                                          );
-                                        });
-                                      },
-                                    );
+                                      await woAuto.save();
+                                      woAuto.setTheme();
+                                      if (!mounted) return;
+                                      Future.delayed(500.milliseconds, () {
+                                        if (!context.mounted) return;
+                                        SystemChrome.setSystemUIOverlayStyle(
+                                          SystemUiOverlayStyle(
+                                            systemNavigationBarColor:
+                                                Theme.of(context).colorScheme.surface,
+                                          ),
+                                        );
+                                      });
+                                    },
+                                  );
 
-                                    return dropdownButton;
-                                  },
-                                ),
-                              ],
-                            ),
-                            16.h,
-                            Text(
-                              t.intro.page_2.location_title,
-                              style: const TextStyle(fontSize: 20),
-                            ),
-                            const Div(),
-                            Text(
-                              t.intro.page_2.location_content,
-                            ),
-                            16.h,
-                            Obx(
-                              () => CheckboxListTile(
-                                contentPadding: EdgeInsets.zero,
-                                title: Text(t.intro.page_2.location_checkbox),
-                                subtitle: showError.value
-                                    ? Text(
-                                        t.intro.page_2.location_checkbox_error,
-                                        style: TextStyle(
-                                          color: Theme.of(context).colorScheme.error,
-                                        ),
-                                      )
-                                    : null,
-                                value: allowed.value,
-                                onChanged: (val) async {
-                                  if (val == null) return;
-
-                                  if (!val) {
-                                    allowed.value = val;
-                                    return;
-                                  }
-                                  var v = await Location().requestPermission();
-                                  allowed.value = v == PermissionStatus.granted;
-                                  showError.value = !allowed.value;
+                                  return dropdownButton;
                                 },
                               ),
+                            ],
+                          ),
+                          16.h,
+                          Text(
+                            t.intro.page_2.location_title,
+                            style: const TextStyle(fontSize: 20),
+                          ),
+                          const Div(),
+                          Text(
+                            t.intro.page_2.location_content,
+                          ),
+                          16.h,
+                          Obx(
+                            () => CheckboxListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Text(t.intro.page_2.location_checkbox),
+                              subtitle: showError.value
+                                  ? Text(
+                                      t.intro.page_2.location_checkbox_error,
+                                      style: TextStyle(
+                                        color: Theme.of(context).colorScheme.error,
+                                      ),
+                                    )
+                                  : null,
+                              value: allowed.value,
+                              onChanged: (val) async {
+                                if (val == null) return;
+
+                                if (!val) {
+                                  allowed.value = val;
+                                  return;
+                                }
+                                var v = await Location().requestPermission();
+                                allowed.value = v == PermissionStatus.granted;
+                                showError.value = !allowed.value;
+                              },
                             ),
+                          ),
+                          Obx(
+                            () => CheckboxListTile(
+                              contentPadding: EdgeInsets.zero,
+                              title: Text(t.intro.page_2.notification_checkbox),
+                              value: notifAllowed.value,
+                              onChanged: (val) async {
+                                if (val == null) return;
+
+                                if (!val) {
+                                  notifAllowed.value = val;
+                                  return;
+                                }
+                                if (isIOS()) {
+                                  var result = await flutterLocalNotificationsPlugin
+                                      .resolvePlatformSpecificImplementation<
+                                          IOSFlutterLocalNotificationsPlugin>()
+                                      ?.requestPermissions(
+                                        alert: true,
+                                        badge: true,
+                                        sound: true,
+                                      );
+                                  notifAllowed.value = result ?? false;
+                                  return;
+                                }
+                                var v = await flutterLocalNotificationsPlugin
+                                    .resolvePlatformSpecificImplementation<
+                                        AndroidFlutterLocalNotificationsPlugin>()
+                                    ?.requestNotificationsPermission();
+
+                                notifAllowed.value = v ?? false;
+                              },
+                            ),
+                          ),
+                          if (isAndroid())
                             Obx(
                               () => CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: Text(t.intro.page_2.notification_checkbox),
-                                value: notifAllowed.value,
+                                title: Text(t.intro.page_2.exact_notification_checkbox),
+                                subtitle: Text(t.intro.page_2.exact_notification_description),
+                                value: notifExactAllowed.value,
                                 onChanged: (val) async {
                                   if (val == null) return;
 
                                   if (!val) {
-                                    notifAllowed.value = val;
+                                    notifExactAllowed.value = val;
                                     return;
                                   }
-                                  if (isIOS()) {
-                                    var result = await flutterLocalNotificationsPlugin
-                                        .resolvePlatformSpecificImplementation<
-                                            IOSFlutterLocalNotificationsPlugin>()
-                                        ?.requestPermissions(
-                                          alert: true,
-                                          badge: true,
-                                          sound: true,
-                                        );
-                                    notifAllowed.value = result ?? false;
-                                    return;
-                                  }
+
                                   var v = await flutterLocalNotificationsPlugin
                                       .resolvePlatformSpecificImplementation<
                                           AndroidFlutterLocalNotificationsPlugin>()
-                                      ?.requestNotificationsPermission();
+                                      ?.requestExactAlarmsPermission();
 
-                                  notifAllowed.value = v ?? false;
+                                  notifExactAllowed.value = v ?? false;
                                 },
                               ),
                             ),
-                            if (isAndroid())
-                              Obx(
-                                () => CheckboxListTile(
-                                  contentPadding: EdgeInsets.zero,
-                                  title: Text(t.intro.page_2.exact_notification_checkbox),
-                                  subtitle: Text(t.intro.page_2.exact_notification_description),
-                                  value: notifExactAllowed.value,
-                                  onChanged: (val) async {
-                                    if (val == null) return;
-
-                                    if (!val) {
-                                      notifExactAllowed.value = val;
-                                      return;
-                                    }
-
-                                    var v = await flutterLocalNotificationsPlugin
-                                        .resolvePlatformSpecificImplementation<
-                                            AndroidFlutterLocalNotificationsPlugin>()
-                                        ?.requestExactAlarmsPermission();
-
-                                    notifExactAllowed.value = v ?? false;
-                                  },
-                                ),
-                              ),
-                          ],
-                        ),
+                        ],
                       ),
                     ],
                   ),
