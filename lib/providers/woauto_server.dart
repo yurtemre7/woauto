@@ -26,7 +26,7 @@ class WoAutoServer extends GetxController {
   var shareMyParkings = false.obs;
 
   @override
-  onClose() async {
+  Future<void> onClose() async {
     logMessage('Disposing WoAuto Server');
     await pb.realtime.unsubscribe();
     logMessage('Unsubscribed from all real-time subscriptions');
