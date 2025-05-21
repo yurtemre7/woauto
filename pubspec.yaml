@@ -12,23 +12,23 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  cupertino_icons: ^1.0.8
+  cupertino_icons: 1.0.8
 
-  get: ^4.7.2
+  get: 4.7.2
   pocketbase: 0.18.1
 
-  google_maps_flutter: 2.11.0
+  google_maps_flutter: 2.12.2
   google_fonts: 6.2.1
   location: 8.0.0
   geocoding: 3.0.0
-  geolocator: 13.0.3
+  geolocator: 14.0.0
 
   expandable: 5.0.1
 
   package_info_plus: 8.3.0
   share_plus: 10.1.4
   url_launcher: 6.3.1
-  shared_preferences: 2.5.2
+  shared_preferences: 2.5.3
   add_2_calendar: 3.0.1
   quick_actions: 1.1.0
   maps_launcher:
@@ -41,7 +41,7 @@ dependencies:
   path_provider: 2.1.5
   qr_flutter: 4.1.0
 
-  flutter_local_notifications: 19.0.0
+  flutter_local_notifications: 19.2.1
   # timezone: ^0.9.4
   keep_screen_on: 4.0.0
 
@@ -52,8 +52,8 @@ dependencies:
   efficient_autocomplete_formfield: 0.3.2+1
 
   # Languages
-  slang: 4.6.0
-  slang_flutter: 4.6.0
+  slang: 4.7.1
+  slang_flutter: 4.7.0
   animated_digit: 3.2.3
   # Run: `dart run slang`
 
