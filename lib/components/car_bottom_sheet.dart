@@ -269,7 +269,7 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                   'query': '${park.latitude},${park.longitude}',
                 },
               );
-              Share.share(uri.toString());
+              SharePlus.instance.share(ShareParams(text: uri.toString()));
             case 2:
               GoogleMapController controller = woAuto.mapController.value!;
               controller.animateCamera(

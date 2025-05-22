@@ -318,11 +318,13 @@ class _MeState extends State<Me> {
                                       child: Center(
                                         child: IconButton(
                                           onPressed: () {
-                                            Share.shareXFiles(
-                                              [
-                                                XFile(woAuto.carPicture.value),
-                                              ],
-                                              text: t.my_car.shared_content,
+                                            SharePlus.instance.share(
+                                              ShareParams(
+                                                text: t.my_car.shared_content,
+                                                files: [
+                                                  XFile(woAuto.carPicture.value),
+                                                ],
+                                              ),
                                             );
                                           },
                                           icon: const Icon(Icons.share_outlined),

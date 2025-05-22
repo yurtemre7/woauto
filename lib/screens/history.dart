@@ -223,7 +223,7 @@ class _HistoryState extends State<History> {
                                 }
 
                                 String csvString = buildCsvString(header, rows);
-                                await Share.share(csvString);
+                                await SharePlus.instance.share(ShareParams(text: csvString));
                               },
                             ),
                             ListTile(

@@ -410,8 +410,10 @@ class _SettingsState extends State<Settings> {
                           t.settings.share.subtitle,
                         ),
                         onTap: () {
-                          Share.share(
-                            t.settings.share.share_content,
+                          SharePlus.instance.share(
+                            ShareParams(
+                              text: t.settings.share.share_content,
+                            ),
                           );
                         },
                       ),
