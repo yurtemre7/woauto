@@ -128,7 +128,7 @@ class _HomeState extends State<Home> {
     quickActions.setShortcutItems(shortCuts);
   }
 
-  loadPositionData() async {
+  Future<void> loadPositionData() async {
     var location = loc.Location();
 
     bool serviceEnabled;

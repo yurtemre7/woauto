@@ -58,14 +58,14 @@ final androidNotificationDetailsMAX = AndroidNotificationDetails(
   ongoing: true,
 );
 
-Color getBackgroundColor(context) {
+Color getBackgroundColor(BuildContext context) {
   if (woAuto.themeMode.value != 0) {
     return woAuto.themeMode.value == 1 ? Colors.white : darkBg;
   }
   return Theme.of(context).colorScheme.surface;
 }
 
-Color getForegroundColor(context) {
+Color getForegroundColor(BuildContext context) {
   if (woAuto.themeMode.value != 0) {
     return woAuto.themeMode.value != 1 ? Colors.white : darkBg;
   }
@@ -181,7 +181,7 @@ List<int> quickSort(List<int> list) {
   return [...quickSort(less), ...equal, ...quickSort(greater)];
 }
 
-getThemeMode(int themeMode) {
+ThemeMode getThemeMode(int themeMode) {
   switch (themeMode) {
     case 0:
       return ThemeMode.system;

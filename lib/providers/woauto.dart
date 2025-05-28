@@ -115,7 +115,7 @@ class WoAuto extends GetxController {
   }
 
   // from json string
-  static fromJson(String jsonString) async {
+  static Future<WoAuto> fromJson(String jsonString) async {
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
     WoAuto woAuto = WoAuto(await SharedPreferences.getInstance());
@@ -161,7 +161,7 @@ class WoAuto extends GetxController {
   }
 
   // save to local storage
-  save() async {
+  Future<void> save() async {
     var sp = await prefs;
     sp.setString('woauto', toJson());
   }
@@ -182,7 +182,7 @@ class WoAuto extends GetxController {
   }
 
   /// Bebug the current state of the Appmelder
-  printWoAuto() {
+  void printWoAuto() {
     logMessage('WoAuto');
     logMessage('App Version: $appVersion');
     logMessage('App Build Number: $appBuildNumber');
@@ -223,7 +223,7 @@ class WoAuto extends GetxController {
   }
 
   /// Resets the WoAuto provider
-  reset() async {
+  Future<void> reset() async {
     subText.value = t.constants.default_park_title;
     kennzeichen.value = '';
     kilometerStand.value = '';
@@ -244,7 +244,7 @@ class WoAuto extends GetxController {
     welcome.value = true;
     currentIndex.value = 0;
 
-    await woAuto.save();
+    woAuto.save();
   }
 
   void setTheme() {
@@ -611,7 +611,7 @@ class WoAuto extends GetxController {
     );
   }
 
-  showCarParkDialog(CarPark park) {
+  void showCarParkDialog(CarPark park) {
     var datum = park.updatedAt == null
         ? DateTime.now()
         : DateTime.fromMillisecondsSinceEpoch(park.updatedAt!);
@@ -1018,6 +1018,6 @@ class WoAuto extends GetxController {
     ).toPrecision(1);
   }
 
-  double calculateDistance(lat1, lon1, lat2, lon2) =>
+  double calculateDistance(double lat1, double lon1, double lat2, double lon2) =>
       Geolocator.distanceBetween(lat1, lon1, lat2, lon2);
 }

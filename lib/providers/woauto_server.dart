@@ -33,7 +33,7 @@ class WoAutoServer extends GetxController {
     super.onClose();
   }
 
-  toJson() {
+  String toJson() {
     return json.encode({
       'share_me': shareMyLastLiveLocation.value,
       'share_parkings': shareMyParkings.value,

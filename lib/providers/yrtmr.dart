@@ -24,7 +24,7 @@ class YrtmrDeeplinks {
     return _instance ?? YrtmrDeeplinks._();
   }
 
-  dispose() {
+  void dispose() {
     _instance!.once = false;
   }
 
