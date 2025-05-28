@@ -20,8 +20,8 @@ dependencies:
   google_maps_flutter: 2.12.2
   google_fonts: 6.2.1
   location: 8.0.0
-  geocoding: 3.0.0
-  geolocator: 14.0.0
+  geocoding: 4.0.0
+  geolocator: 14.0.1
 
   expandable: 5.0.1
 
@@ -52,7 +52,7 @@ dependencies:
   efficient_autocomplete_formfield: 0.3.2+1
 
   # Languages
-  slang: 4.7.1
+  slang: 4.7.2
   slang_flutter: 4.7.0
   animated_digit: 3.2.3
   # Run: `dart run slang`
@@ -61,7 +61,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: 5.0.0
+  flutter_lints: 6.0.0
   # Run: flutter pub run flutter_launcher_icons:main
   flutter_launcher_icons:
     git:
