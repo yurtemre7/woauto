@@ -17,11 +17,11 @@ dependencies:
   get: 4.7.2
   pocketbase: 0.18.1
 
-  google_maps_flutter: 2.12.2
+  google_maps_flutter: 2.12.3
   google_fonts: 6.2.1
-  location: 8.0.0
+  location: 8.0.1
   geocoding: 4.0.0
-  geolocator: 14.0.1
+  geolocator: 14.0.2
 
   expandable: 5.0.1
 
@@ -41,7 +41,7 @@ dependencies:
   path_provider: 2.1.5
   qr_flutter: 4.1.0
 
-  flutter_local_notifications: 19.2.1
+  flutter_local_notifications: 19.3.0
   # timezone: ^0.9.4
   keep_screen_on: 4.0.0
 
