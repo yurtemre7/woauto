@@ -21,7 +21,8 @@ class CarBottomSheet extends StatefulWidget {
   State<CarBottomSheet> createState() => _CarBottomSheetState();
 }
 
-class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStateMixin {
+class _CarBottomSheetState extends State<CarBottomSheet>
+    with TickerProviderStateMixin {
   final WoAutoServer woAutoServer = Get.find();
 
   late AnimationController _controller;
@@ -65,7 +66,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                     var friendsParkingList = woAuto.friendPositions.toList();
                     // var friendsCount = friendsParkingList.length;
 
-                    var myParking = carParkingList.where((element) => element.mine).toList();
+                    var myParking = carParkingList
+                        .where((element) => element.mine)
+                        .toList();
                     var myPos = woAuto.currentPosition.value.target;
                     var myPositonPark = CarPark(
                       uuid: 'me',
@@ -76,8 +79,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                       adresse: t.car_bottom_sheet.you.address,
                     );
                     myParking.add(myPositonPark);
-                    var otherParking =
-                        friendsParkingList.where((element) => !element.mine).toList();
+                    var otherParking = friendsParkingList
+                        .where((element) => !element.mine)
+                        .toList();
                     otherParking.addAll(woAuto.friendCarPositions);
 
                     // sort by name
@@ -85,7 +89,8 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
 
                     return Column(
                       children: [
-                        if (carParkingList.isNotEmpty || otherParking.isNotEmpty) ...[
+                        if (carParkingList.isNotEmpty ||
+                            otherParking.isNotEmpty) ...[
                           // 15.h,
                           parkHeader(myParking),
                           if (myParking.isEmpty)
@@ -150,7 +155,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                                     t.snackbar.distance_calculation.subtitle,
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: Theme.of(context).colorScheme.secondary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                     ),
                                   ),
                                   16.h,
@@ -158,7 +165,8 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                                     t.snackbar.distance_calculation.subsubtitle,
                                     style: TextStyle(
                                       fontSize: 14,
-                                      color: Theme.of(context).colorScheme.primary,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ],
@@ -174,8 +182,10 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
                                   mode: LaunchMode.externalApplication,
                                 );
                               },
-                              backgroundColor: Theme.of(context).colorScheme.surface,
-                              colorText: Theme.of(context).colorScheme.onSurface,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.surface,
+                              colorText:
+                                  Theme.of(context).colorScheme.onSurface,
                             );
                           },
                         ),
@@ -205,7 +215,9 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
         const Spacer(),
         TextButton.icon(
           onPressed: () async {
-            _controllerOthers.forward().whenComplete(() => _controllerOthers.reset());
+            _controllerOthers
+                .forward()
+                .whenComplete(() => _controllerOthers.reset());
             woAutoServer.initFriendsLocations();
           },
           icon: RotationTransition(
@@ -283,7 +295,8 @@ class _CarBottomSheetState extends State<CarBottomSheet> with TickerProviderStat
               woAuto.currentSelectedPosition.value = park.latLng;
               woAuto.currentSelectedCarPark.value = park;
             case 3:
-              woAuto.carParkings.removeWhere((element) => element.uuid == park.uuid);
+              woAuto.carParkings
+                  .removeWhere((element) => element.uuid == park.uuid);
               woAuto.carParkings.refresh();
               woAutoServer.deleteUserParking(park.uuid);
 

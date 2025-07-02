@@ -95,11 +95,14 @@ class _LoginSheetState extends State<LoginSheet> {
                               padding: EdgeInsets.zero,
                               visualDensity: VisualDensity.compact,
                               icon: Icon(
-                                showPwd.value ? Icons.visibility : Icons.visibility_off,
+                                showPwd.value
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
                               ),
                               onPressed: () => showPwd.toggle(),
                             ),
-                            counterText: passwordController.value.text.length.toString(),
+                            counterText:
+                                passwordController.value.text.length.toString(),
                           ),
                           obscureText: !showPwd.value,
                           autofillHints: const [
@@ -192,7 +195,9 @@ class _LoginSheetState extends State<LoginSheet> {
                                     'passwordConfirm': password,
                                   };
 
-                                  await woAutoServer.pb.collection('users').create(body: data);
+                                  await woAutoServer.pb
+                                      .collection('users')
+                                      .create(body: data);
 
                                   await woAutoServer.pb
                                       .collection('users')

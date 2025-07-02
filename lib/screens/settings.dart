@@ -64,7 +64,8 @@ class _SettingsState extends State<Settings> {
                       Obx(
                         () {
                           var themeMode = woAuto.themeMode.value;
-                          DropdownButton<int> dropdownButton = DropdownButton<int>(
+                          DropdownButton<int> dropdownButton =
+                              DropdownButton<int>(
                             value: themeMode,
                             items: [
                               DropdownMenuItem(
@@ -89,7 +90,8 @@ class _SettingsState extends State<Settings> {
                                 if (!context.mounted) return;
                                 SystemChrome.setSystemUIOverlayStyle(
                                   SystemUiOverlayStyle(
-                                    systemNavigationBarColor: context.theme.colorScheme.surface,
+                                    systemNavigationBarColor:
+                                        context.theme.colorScheme.surface,
                                   ),
                                 );
                               });
@@ -101,7 +103,8 @@ class _SettingsState extends State<Settings> {
                           return ListTile(
                             title: Text(
                               t.settings.theme.title,
-                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
                             ),
                             subtitle: Text(
                               t.settings.theme.subtitle,
@@ -130,10 +133,12 @@ class _SettingsState extends State<Settings> {
                                     backgroundColor: color,
                                     selectedColor: color,
                                     color: WidgetStatePropertyAll(color),
-                                    checkmarkColor: color.computeLuminance() > 0.5
-                                        ? Colors.black
-                                        : Colors.white,
-                                    selected: color.getValue == woAuto.appColor.value,
+                                    checkmarkColor:
+                                        color.computeLuminance() > 0.5
+                                            ? Colors.black
+                                            : Colors.white,
+                                    selected:
+                                        color.getValue == woAuto.appColor.value,
                                     onSelected: (value) {
                                       woAuto.appColor.value = color.getValue;
                                       woAuto.save();
@@ -144,7 +149,9 @@ class _SettingsState extends State<Settings> {
                                         SystemChrome.setSystemUIOverlayStyle(
                                           SystemUiOverlayStyle(
                                             systemNavigationBarColor:
-                                                Theme.of(context).colorScheme.surface,
+                                                Theme.of(context)
+                                                    .colorScheme
+                                                    .surface,
                                           ),
                                         );
                                       });
@@ -159,7 +166,8 @@ class _SettingsState extends State<Settings> {
                       Obx(
                         () {
                           var mapType = woAuto.mapType.value;
-                          DropdownButton<MapType> dropdownButton = DropdownButton<MapType>(
+                          DropdownButton<MapType> dropdownButton =
+                              DropdownButton<MapType>(
                             value: mapType,
                             items: [
                               DropdownMenuItem(
@@ -188,7 +196,8 @@ class _SettingsState extends State<Settings> {
                           return ListTile(
                             title: Text(
                               t.settings.map_type.title,
-                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
                             ),
                             subtitle: Text(
                               t.settings.map_type.subtitle,
@@ -202,7 +211,8 @@ class _SettingsState extends State<Settings> {
                           value: woAuto.showTraffic.value,
                           title: Text(
                             t.settings.traffic.title,
-                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           subtitle: Text(
                             t.settings.traffic.subtitle,
@@ -216,32 +226,39 @@ class _SettingsState extends State<Settings> {
                       Obx(
                         () {
                           var time = woAuto.timePuffer.value;
-                          DropdownButton<int> dropdownButton = DropdownButton<int>(
+                          DropdownButton<int> dropdownButton =
+                              DropdownButton<int>(
                             value: time,
                             items: [
                               DropdownMenuItem(
                                 value: 5,
-                                child: Text(t.settings.park_ticket.dropdown_value(value: 5)),
+                                child: Text(t.settings.park_ticket
+                                    .dropdown_value(value: 5)),
                               ),
                               DropdownMenuItem(
                                 value: 10,
-                                child: Text(t.settings.park_ticket.dropdown_value(value: 10)),
+                                child: Text(t.settings.park_ticket
+                                    .dropdown_value(value: 10)),
                               ),
                               DropdownMenuItem(
                                 value: 15,
-                                child: Text(t.settings.park_ticket.dropdown_value(value: 15)),
+                                child: Text(t.settings.park_ticket
+                                    .dropdown_value(value: 15)),
                               ),
                               DropdownMenuItem(
                                 value: 20,
-                                child: Text(t.settings.park_ticket.dropdown_value(value: 20)),
+                                child: Text(t.settings.park_ticket
+                                    .dropdown_value(value: 20)),
                               ),
                               DropdownMenuItem(
                                 value: 25,
-                                child: Text(t.settings.park_ticket.dropdown_value(value: 25)),
+                                child: Text(t.settings.park_ticket
+                                    .dropdown_value(value: 25)),
                               ),
                               DropdownMenuItem(
                                 value: 30,
-                                child: Text(t.settings.park_ticket.dropdown_value(value: 30)),
+                                child: Text(t.settings.park_ticket
+                                    .dropdown_value(value: 30)),
                               ),
                             ],
                             onChanged: (v) {
@@ -254,7 +271,8 @@ class _SettingsState extends State<Settings> {
                           return ListTile(
                             title: Text(
                               t.settings.park_ticket.title,
-                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
                             ),
                             subtitle: Text(
                               t.settings.park_ticket.subtitle,
@@ -266,28 +284,34 @@ class _SettingsState extends State<Settings> {
                       Obx(
                         () {
                           var speed = woAuto.drivingModeDetectionSpeed.value;
-                          DropdownButton<int> dropdownButton = DropdownButton<int>(
+                          DropdownButton<int> dropdownButton =
+                              DropdownButton<int>(
                             value: speed,
                             items: [
                               DropdownMenuItem(
                                 value: 20,
-                                child: Text(t.settings.driving_mode.dropdown_value(value: 20)),
+                                child: Text(t.settings.driving_mode
+                                    .dropdown_value(value: 20)),
                               ),
                               DropdownMenuItem(
                                 value: 25,
-                                child: Text(t.settings.driving_mode.dropdown_value(value: 25)),
+                                child: Text(t.settings.driving_mode
+                                    .dropdown_value(value: 25)),
                               ),
                               DropdownMenuItem(
                                 value: 30,
-                                child: Text(t.settings.driving_mode.dropdown_value(value: 30)),
+                                child: Text(t.settings.driving_mode
+                                    .dropdown_value(value: 30)),
                               ),
                               DropdownMenuItem(
                                 value: 35,
-                                child: Text(t.settings.driving_mode.dropdown_value(value: 35)),
+                                child: Text(t.settings.driving_mode
+                                    .dropdown_value(value: 35)),
                               ),
                               DropdownMenuItem(
                                 value: 40,
-                                child: Text(t.settings.driving_mode.dropdown_value(value: 40)),
+                                child: Text(t.settings.driving_mode
+                                    .dropdown_value(value: 40)),
                               ),
                             ],
                             onChanged: (v) {
@@ -300,7 +324,8 @@ class _SettingsState extends State<Settings> {
                           return ListTile(
                             title: Text(
                               t.settings.driving_mode.title,
-                              style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                              style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary),
                             ),
                             subtitle: Text(
                               t.settings.driving_mode.subtitle,
@@ -321,7 +346,8 @@ class _SettingsState extends State<Settings> {
                           ),
                           title: Text(
                             t.settings.app_info.title,
-                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           subtitle: Text(
                             t.settings.app_info.subtitle(
@@ -344,7 +370,8 @@ class _SettingsState extends State<Settings> {
                                     child: Text(t.dialog.app_info.action_1),
                                     onPressed: () {
                                       launchUrl(
-                                        Uri.parse('https://github.com/yurtemre7/woauto'),
+                                        Uri.parse(
+                                            'https://github.com/yurtemre7/woauto'),
                                         mode: LaunchMode.externalApplication,
                                       );
                                     },
@@ -369,11 +396,14 @@ class _SettingsState extends State<Settings> {
                           ),
                           title: Text(
                             t.settings.woauto_server.title,
-                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           subtitle: Text(
                             t.settings.woauto_server.subtitle(
-                              status: woAutoServer.serverWorks.value ? 'Online' : 'Offline',
+                              status: woAutoServer.serverWorks.value
+                                  ? 'Online'
+                                  : 'Offline',
                             ),
                           ),
                         ),
@@ -388,7 +418,8 @@ class _SettingsState extends State<Settings> {
                         ),
                         title: Text(
                           t.settings.credits.title,
-                          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
                         ),
                         subtitle: Text(
                           t.settings.credits.subtitle,
@@ -404,7 +435,8 @@ class _SettingsState extends State<Settings> {
                         ),
                         title: Text(
                           t.settings.share.title,
-                          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
                         ),
                         subtitle: Text(
                           t.settings.share.subtitle,
@@ -427,7 +459,8 @@ class _SettingsState extends State<Settings> {
                         ),
                         title: Text(
                           t.settings.feedback.title,
-                          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
                         ),
                         subtitle: Text(t.settings.feedback.subtitle),
                         onTap: () {
@@ -466,7 +499,8 @@ class _SettingsState extends State<Settings> {
                         ),
                         title: Text(
                           t.settings.data_security.title,
-                          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
                         ),
                         subtitle: Text(t.settings.data_security.subtitle),
                         onTap: () {
@@ -504,17 +538,21 @@ class _SettingsState extends State<Settings> {
                                         text: t.dialog.data_security.content_5,
                                         children: [
                                           TextSpan(
-                                            text: t.dialog.data_security.content_6,
+                                            text: t
+                                                .dialog.data_security.content_6,
                                             style: const TextStyle(
                                               fontWeight: FontWeight.bold,
-                                              decoration: TextDecoration.underline,
+                                              decoration:
+                                                  TextDecoration.underline,
                                             ),
                                           ),
                                           TextSpan(
-                                            text: t.dialog.data_security.content_7,
+                                            text: t
+                                                .dialog.data_security.content_7,
                                           ),
                                           TextSpan(
-                                            text: t.dialog.data_security.content_8,
+                                            text: t
+                                                .dialog.data_security.content_8,
                                           ),
                                         ],
                                       ),
@@ -527,7 +565,8 @@ class _SettingsState extends State<Settings> {
                                   child: Text(t.dialog.data_security.action_1),
                                   onPressed: () {
                                     launchUrl(
-                                      Uri.parse('https://www.yurtemre.de/impressum'),
+                                      Uri.parse(
+                                          'https://www.yurtemre.de/impressum'),
                                       mode: LaunchMode.externalApplication,
                                     );
                                   },
@@ -536,7 +575,8 @@ class _SettingsState extends State<Settings> {
                                   child: Text(t.dialog.data_security.action_2),
                                   onPressed: () {
                                     launchUrl(
-                                      Uri.parse('https://www.yurtemre.de/datenschutz'),
+                                      Uri.parse(
+                                          'https://www.yurtemre.de/datenschutz'),
                                       mode: LaunchMode.externalApplication,
                                     );
                                   },
@@ -574,12 +614,14 @@ class _SettingsState extends State<Settings> {
                               actions: [
                                 TextButton(
                                   style: TextButton.styleFrom(
-                                    foregroundColor: Theme.of(context).colorScheme.error,
+                                    foregroundColor:
+                                        Theme.of(context).colorScheme.error,
                                   ),
                                   child: Text(t.dialog.delete),
                                   onPressed: () async {
                                     await woAutoServer.deleteUserLocation();
-                                    await woAutoServer.deleteUserParkingLocations();
+                                    await woAutoServer
+                                        .deleteUserParkingLocations();
                                     woAutoServer.pb.authStore.clear();
                                     // pop();
                                     pop();

@@ -61,14 +61,17 @@ class _MeState extends State<Me> {
                   leading: const Icon(Icons.camera_alt),
                   onTap: () async {
                     pop();
-                    XFile? image = await ImagePicker().pickImage(source: ImageSource.camera);
+                    XFile? image = await ImagePicker()
+                        .pickImage(source: ImageSource.camera);
 
                     if (image == null) return;
 
-                    String duplicateFilePath = (await getApplicationDocumentsDirectory()).path;
+                    String duplicateFilePath =
+                        (await getApplicationDocumentsDirectory()).path;
 
                     var fileName = image.path.split('/').last;
-                    File localImage = await File(image.path).copy('$duplicateFilePath/$fileName');
+                    File localImage = await File(image.path)
+                        .copy('$duplicateFilePath/$fileName');
                     woAuto.carPicture.value = localImage.path;
                     woAuto.save();
                   },
@@ -79,14 +82,17 @@ class _MeState extends State<Me> {
                   leading: const Icon(Icons.photo),
                   onTap: () async {
                     pop();
-                    XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
+                    XFile? image = await ImagePicker()
+                        .pickImage(source: ImageSource.gallery);
 
                     if (image == null) return;
 
-                    String duplicateFilePath = (await getApplicationDocumentsDirectory()).path;
+                    String duplicateFilePath =
+                        (await getApplicationDocumentsDirectory()).path;
 
                     var fileName = image.path.split('/').last;
-                    File localImage = await File(image.path).copy('$duplicateFilePath/$fileName');
+                    File localImage = await File(image.path)
+                        .copy('$duplicateFilePath/$fileName');
                     woAuto.carPicture.value = localImage.path;
                     woAuto.save();
                   },
@@ -173,12 +179,15 @@ class _MeState extends State<Me> {
                       OutlinedButton(
                         style: OutlinedButton.styleFrom(
                           foregroundColor: context.theme.colorScheme.error,
-                          backgroundColor: context.theme.colorScheme.errorContainer,
+                          backgroundColor:
+                              context.theme.colorScheme.errorContainer,
                         ),
                         onPressed: () async {
                           var user = await woAutoServer.getUser();
                           if (user == null) return;
-                          await woAutoServer.pb.collection('users').delete(user.id);
+                          await woAutoServer.pb
+                              .collection('users')
+                              .delete(user.id);
                           woAutoServer.pb.authStore.clear();
                           woAuto.friendPositions.clear();
                           woAuto.friendCarPositions.clear();
@@ -264,7 +273,8 @@ class _MeState extends State<Me> {
                               duration: 450.milliseconds,
                               height: height.value * pi,
                               child: InkWell(
-                                borderRadius: BorderRadius.circular(height.value),
+                                borderRadius:
+                                    BorderRadius.circular(height.value),
                                 onTap: () {
                                   showPictureBottomSheet();
                                 },
@@ -282,15 +292,18 @@ class _MeState extends State<Me> {
                                       radius: height.value,
                                       backgroundImage: woAuto.carPicture.isEmpty
                                           ? null
-                                          : FileImage(File(woAuto.carPicture.value)),
-                                      backgroundColor:
-                                          Theme.of(context).colorScheme.primaryContainer,
-                                      onBackgroundImageError: woAuto.carPicture.isEmpty
-                                          ? null
-                                          : (exception, stackTrace) {
-                                              woAuto.carPicture.value = '';
-                                              woAuto.save();
-                                            },
+                                          : FileImage(
+                                              File(woAuto.carPicture.value)),
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .primaryContainer,
+                                      onBackgroundImageError:
+                                          woAuto.carPicture.isEmpty
+                                              ? null
+                                              : (exception, stackTrace) {
+                                                  woAuto.carPicture.value = '';
+                                                  woAuto.save();
+                                                },
                                     ),
                                     if (woAuto.carPicture.isEmpty)
                                       Positioned(
@@ -301,7 +314,9 @@ class _MeState extends State<Me> {
                                         child: Icon(
                                           Icons.add_a_photo,
                                           size: 42,
-                                          color: Theme.of(context).colorScheme.primary,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                   ],
@@ -322,20 +337,26 @@ class _MeState extends State<Me> {
                                               ShareParams(
                                                 text: t.my_car.shared_content,
                                                 files: [
-                                                  XFile(woAuto.carPicture.value),
+                                                  XFile(
+                                                      woAuto.carPicture.value),
                                                 ],
                                               ),
                                             );
                                           },
-                                          icon: const Icon(Icons.share_outlined),
-                                          color: Theme.of(context).colorScheme.primary,
+                                          icon:
+                                              const Icon(Icons.share_outlined),
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary,
                                         ),
                                       ),
                                     ),
                                     Expanded(
                                       flex: 2,
                                       child: Card(
-                                        color: Theme.of(context).colorScheme.primaryContainer,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primaryContainer,
                                         elevation: 0,
                                         child: Container(
                                           padding: const EdgeInsets.all(8.0),
@@ -346,36 +367,51 @@ class _MeState extends State<Me> {
                                                 style: TextStyle(
                                                   fontSize: 24,
                                                   fontWeight: FontWeight.bold,
-                                                  color: Theme.of(context).colorScheme.primary,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
                                                 ),
                                                 textAlign: TextAlign.center,
                                               ),
-                                              if (woAuto.kennzeichen.value.isNotEmpty)
+                                              if (woAuto
+                                                  .kennzeichen.value.isNotEmpty)
                                                 Text(
                                                   woAuto.kennzeichen.value,
                                                   style: TextStyle(
-                                                    color: Theme.of(context).colorScheme.primary,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
                                                   ),
                                                   textAlign: TextAlign.center,
                                                 ),
-                                              if (woAuto.carBaujahr.value.isNotEmpty)
+                                              if (woAuto
+                                                  .carBaujahr.value.isNotEmpty)
                                                 Text(
                                                   t.my_car.built.title(
-                                                    baujahr: woAuto.carBaujahr.value,
-                                                    jahre: calculateCarAge(woAuto.carBaujahr.value),
+                                                    baujahr:
+                                                        woAuto.carBaujahr.value,
+                                                    jahre: calculateCarAge(
+                                                        woAuto
+                                                            .carBaujahr.value),
                                                   ),
                                                   style: TextStyle(
-                                                    color: Theme.of(context).colorScheme.primary,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
                                                   ),
                                                   textAlign: TextAlign.center,
                                                 ),
-                                              if (woAuto.kilometerStand.value.isNotEmpty)
+                                              if (woAuto.kilometerStand.value
+                                                  .isNotEmpty)
                                                 Text(
                                                   t.my_car.driven.title(
-                                                    km: woAuto.kilometerStand.value,
+                                                    km: woAuto
+                                                        .kilometerStand.value,
                                                   ),
                                                   style: TextStyle(
-                                                    color: Theme.of(context).colorScheme.primary,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
                                                   ),
                                                   textAlign: TextAlign.center,
                                                 ),
@@ -397,12 +433,14 @@ class _MeState extends State<Me> {
                       if (woAutoServer.pb.authStore.isValid) ...[
                         Builder(
                           builder: (context) {
-                            var user = woAutoServer.pb.authStore.model as RecordModel;
+                            var user =
+                                woAutoServer.pb.authStore.model as RecordModel;
                             return SelectionArea(
                               child: ListTile(
                                 title: Text(
                                   '@${user.data['username']}',
-                                  style: TextStyle(color: context.theme.colorScheme.primary),
+                                  style: TextStyle(
+                                      color: context.theme.colorScheme.primary),
                                 ),
                                 subtitle: Text('${user.data['email']}'),
                                 trailing: IconButton(
@@ -414,7 +452,8 @@ class _MeState extends State<Me> {
                                         actions: [
                                           OutlinedButton(
                                             style: OutlinedButton.styleFrom(
-                                              foregroundColor: context.theme.colorScheme.error,
+                                              foregroundColor: context
+                                                  .theme.colorScheme.error,
                                             ),
                                             onPressed: () {
                                               woAutoServer.pb.authStore.clear();
@@ -436,8 +475,10 @@ class _MeState extends State<Me> {
                                   ),
                                   iconSize: 38,
                                   style: IconButton.styleFrom(
-                                    foregroundColor: context.theme.colorScheme.error,
-                                    disabledForegroundColor: Colors.grey.withValues(alpha: 0.3),
+                                    foregroundColor:
+                                        context.theme.colorScheme.error,
+                                    disabledForegroundColor:
+                                        Colors.grey.withValues(alpha: 0.3),
                                   ),
                                 ),
                               ),
@@ -447,7 +488,8 @@ class _MeState extends State<Me> {
                         SwitchListTile(
                           title: Text(
                             t.my_car.share_my_last_location,
-                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                           subtitle: Text(
                             t.my_car.share_my_last_location_description,
@@ -457,8 +499,10 @@ class _MeState extends State<Me> {
                             if (s == false) {
                               var res = await Get.dialog(
                                     AlertDialog(
-                                      title: Text(t.dialog.share_location_parkings.title),
-                                      content: Text(t.my_car.share_my_last_location_deactivate),
+                                      title: Text(t.dialog
+                                          .share_location_parkings.title),
+                                      content: Text(t.my_car
+                                          .share_my_last_location_deactivate),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
@@ -469,10 +513,14 @@ class _MeState extends State<Me> {
                                         OutlinedButton(
                                           onPressed: () async {
                                             // delete
-                                            await woAutoServer.deleteUserLocation();
+                                            await woAutoServer
+                                                .deleteUserLocation();
                                             pop(result: true);
                                           },
-                                          child: Text(t.dialog.share_location_parkings.deactivate),
+                                          child: Text(t
+                                              .dialog
+                                              .share_location_parkings
+                                              .deactivate),
                                         ),
                                       ],
                                     ),
@@ -488,16 +536,20 @@ class _MeState extends State<Me> {
                         SwitchListTile(
                           title: Text(
                             t.my_car.share_my_parkings,
-                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
                           ),
-                          subtitle: Text(t.my_car.share_my_parkings_description),
+                          subtitle:
+                              Text(t.my_car.share_my_parkings_description),
                           value: woAutoServer.shareMyParkings.value,
                           onChanged: (s) async {
                             if (s == false) {
                               var res = await Get.dialog(
                                     AlertDialog(
-                                      title: Text(t.dialog.share_location_parkings.title),
-                                      content: Text(t.my_car.share_my_parkings_deactivate),
+                                      title: Text(t.dialog
+                                          .share_location_parkings.title),
+                                      content: Text(t
+                                          .my_car.share_my_parkings_deactivate),
                                       actions: [
                                         TextButton(
                                           onPressed: () {
@@ -507,10 +559,14 @@ class _MeState extends State<Me> {
                                         ),
                                         OutlinedButton(
                                           onPressed: () async {
-                                            await woAutoServer.deleteUserParkingLocations();
+                                            await woAutoServer
+                                                .deleteUserParkingLocations();
                                             pop(result: true);
                                           },
-                                          child: Text(t.dialog.share_location_parkings.deactivate),
+                                          child: Text(t
+                                              .dialog
+                                              .share_location_parkings
+                                              .deactivate),
                                         ),
                                       ],
                                     ),
@@ -538,7 +594,8 @@ class _MeState extends State<Me> {
                           child: OutlinedButton(
                             style: OutlinedButton.styleFrom(
                               foregroundColor: context.theme.colorScheme.error,
-                              backgroundColor: context.theme.colorScheme.errorContainer,
+                              backgroundColor:
+                                  context.theme.colorScheme.errorContainer,
                             ),
                             onPressed: () async {
                               showDeleteAccountSheet();
@@ -566,11 +623,13 @@ class _MeState extends State<Me> {
                       ListTile(
                         title: Text(
                           t.my_car.park_name.title(name: woAuto.subText.value),
-                          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
                         ),
                         subtitle: Text(t.my_car.park_name.subtitle),
                         onTap: () {
-                          var tec = TextEditingController(text: woAuto.subText.value);
+                          var tec =
+                              TextEditingController(text: woAuto.subText.value);
                           Get.dialog(
                             AlertDialog(
                               shape: RoundedRectangleBorder(
@@ -599,7 +658,8 @@ class _MeState extends State<Me> {
                                     var oldName = woAuto.subText.value;
                                     woAuto.subText.value = tec.text.trim();
                                     if (woAuto.subText.value.isEmpty) {
-                                      woAuto.subText.value = t.constants.default_park_title;
+                                      woAuto.subText.value =
+                                          t.constants.default_park_title;
                                     }
                                     if (woAuto.carParkings.isNotEmpty) {
                                       for (var element in woAuto.carParkings) {
@@ -623,13 +683,16 @@ class _MeState extends State<Me> {
                         title: Badge(
                           isLabelVisible: woAuto.carBaujahr.value.isEmpty,
                           child: Text(
-                            t.my_car.built.title_short(baujahr: woAuto.carBaujahr.value),
-                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            t.my_car.built
+                                .title_short(baujahr: woAuto.carBaujahr.value),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                         ),
                         subtitle: Text(t.my_car.built.subtitle),
                         onTap: () {
-                          var tec = TextEditingController(text: woAuto.carBaujahr.value);
+                          var tec = TextEditingController(
+                              text: woAuto.carBaujahr.value);
                           var formkey = GlobalKey<FormState>();
                           Get.dialog(
                             AlertDialog(
@@ -648,11 +711,15 @@ class _MeState extends State<Me> {
                                     hintText: t.my_car.built.default_year,
                                   ),
                                   keyboardType: TextInputType.number,
-                                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.digitsOnly
+                                  ],
                                   validator: (value) {
-                                    if (value == null) return t.my_car.built.validate_null;
+                                    if (value == null)
+                                      return t.my_car.built.validate_null;
                                     int year = int.tryParse(value) ?? 0;
-                                    if (year < 1900 || year > DateTime.now().year) {
+                                    if (year < 1900 ||
+                                        year > DateTime.now().year) {
                                       return t.my_car.built.validate_year(
                                         year: DateTime.now().year,
                                       );
@@ -671,7 +738,8 @@ class _MeState extends State<Me> {
                                 OutlinedButton(
                                   child: Text(t.dialog.ok),
                                   onPressed: () async {
-                                    if (!formkey.currentState!.validate()) return;
+                                    if (!formkey.currentState!.validate())
+                                      return;
                                     woAuto.carBaujahr.value = tec.text.trim();
 
                                     await woAuto.save();
@@ -688,13 +756,16 @@ class _MeState extends State<Me> {
                         title: Badge(
                           isLabelVisible: woAuto.kennzeichen.value.isEmpty,
                           child: Text(
-                            t.my_car.plate.title(plate: woAuto.kennzeichen.value),
-                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            t.my_car.plate
+                                .title(plate: woAuto.kennzeichen.value),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                         ),
                         subtitle: Text(t.my_car.plate.subtitle),
                         onTap: () {
-                          var tec = TextEditingController(text: woAuto.kennzeichen.value);
+                          var tec = TextEditingController(
+                              text: woAuto.kennzeichen.value);
                           Get.dialog(
                             AlertDialog(
                               shape: RoundedRectangleBorder(
@@ -704,7 +775,8 @@ class _MeState extends State<Me> {
                               content: TextFormField(
                                 controller: tec,
                                 maxLength: 15,
-                                textCapitalization: TextCapitalization.characters,
+                                textCapitalization:
+                                    TextCapitalization.characters,
                                 autofocus: true,
                                 decoration: InputDecoration(
                                   hintText: t.my_car.plate.hint,
@@ -738,15 +810,18 @@ class _MeState extends State<Me> {
                           child: Text(
                             t.my_car.driven.title_short(
                               km: woAuto.kilometerStand.value +
-                                  (woAuto.kilometerStand.value.isNotEmpty ? ' km' : ''),
+                                  (woAuto.kilometerStand.value.isNotEmpty
+                                      ? ' km'
+                                      : ''),
                             ),
-                            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary),
                           ),
                         ),
                         subtitle: Text(t.my_car.driven.subtitle),
                         onTap: () {
-                          var tec =
-                              TextEditingController(text: woAuto.kilometerStand.value.toString());
+                          var tec = TextEditingController(
+                              text: woAuto.kilometerStand.value.toString());
                           Get.dialog(
                             AlertDialog(
                               shape: RoundedRectangleBorder(
@@ -764,7 +839,8 @@ class _MeState extends State<Me> {
                                   contentPadding: EdgeInsets.zero,
 
                                   helperStyle: TextStyle(
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                                 style: TextStyle(
@@ -781,7 +857,8 @@ class _MeState extends State<Me> {
                                 OutlinedButton(
                                   child: Text(t.dialog.ok),
                                   onPressed: () async {
-                                    woAuto.kilometerStand.value = tec.text.trim();
+                                    woAuto.kilometerStand.value =
+                                        tec.text.trim();
 
                                     await woAuto.save();
                                     Get.back();
@@ -796,17 +873,21 @@ class _MeState extends State<Me> {
                       ListTile(
                         title: Text(
                           t.my_car.tuv.title(
-                            date: formatDateTimeToMonthYear(woAuto.tuvUntil.value),
+                            date: formatDateTimeToMonthYear(
+                                woAuto.tuvUntil.value),
                           ),
-                          style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary),
                         ),
                         subtitle: Text(t.my_car.tuv.subtitle),
                         onTap: () async {
                           var date = await showDatePicker(
                             context: context,
                             initialDate: woAuto.tuvUntil.value,
-                            firstDate: DateTime.now().subtract(const Duration(days: 365 * 10)),
-                            lastDate: DateTime.now().add(const Duration(days: 365 * 10)),
+                            firstDate: DateTime.now()
+                                .subtract(const Duration(days: 365 * 10)),
+                            lastDate: DateTime.now()
+                                .add(const Duration(days: 365 * 10)),
                             helpText: t.my_car.tuv.help,
                             initialDatePickerMode: DatePickerMode.year,
                           );
@@ -815,7 +896,9 @@ class _MeState extends State<Me> {
                           await woAuto.save();
                           Get.back();
                         },
-                        trailing: (!woAuto.tuvUntil.value.difference(DateTime.now()).isNegative)
+                        trailing: (!woAuto.tuvUntil.value
+                                .difference(DateTime.now())
+                                .isNegative)
                             ? IconButton(
                                 icon: const Icon(Icons.calendar_month_outlined),
                                 color: Theme.of(context).colorScheme.primary,
@@ -826,8 +909,10 @@ class _MeState extends State<Me> {
                                     title: t.my_car.tuv.calender_title,
                                     description: t.my_car.tuv.calender_content,
                                     location: '',
-                                    startDate: woAuto.tuvUntil.value.subtract(1.seconds),
-                                    endDate: woAuto.tuvUntil.value.add(1.seconds),
+                                    startDate: woAuto.tuvUntil.value
+                                        .subtract(1.seconds),
+                                    endDate:
+                                        woAuto.tuvUntil.value.add(1.seconds),
                                     allDay: true,
                                     iosParams: const IOSParams(
                                       reminder: Duration(
@@ -840,7 +925,9 @@ class _MeState extends State<Me> {
                               )
                             : null,
                       ),
-                      if (woAuto.tuvUntil.value.difference(DateTime.now()).isNegative) ...[
+                      if (woAuto.tuvUntil.value
+                          .difference(DateTime.now())
+                          .isNegative) ...[
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Card(
@@ -856,12 +943,18 @@ class _MeState extends State<Me> {
                           ),
                         ),
                       ],
-                      if (!woAuto.tuvUntil.value.difference(DateTime.now()).isNegative) ...[
-                        if (DateTime.now().difference(woAuto.tuvUntil.value).abs() < 30.days)
+                      if (!woAuto.tuvUntil.value
+                          .difference(DateTime.now())
+                          .isNegative) ...[
+                        if (DateTime.now()
+                                .difference(woAuto.tuvUntil.value)
+                                .abs() <
+                            30.days)
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Card(
-                              color: Theme.of(context).colorScheme.errorContainer,
+                              color:
+                                  Theme.of(context).colorScheme.errorContainer,
                               child: Stack(
                                 children: [
                                   Container(
@@ -888,19 +981,22 @@ class _MeState extends State<Me> {
                                 child: Center(
                                   child: Icon(
                                     Icons.info_outline,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ),
                               Expanded(
                                 flex: 6,
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 12.0),
                                   child: Text(
                                     t.my_car.secure_notice,
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
-                                      color: Theme.of(context).colorScheme.primary,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       fontSize: 12,
                                     ),
                                   ),

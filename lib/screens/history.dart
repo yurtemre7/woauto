@@ -114,7 +114,8 @@ class _HistoryState extends State<History> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Icon(
                                     Icons.navigation_outlined,
-                                    color: Theme.of(context).colorScheme.primary,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                                 title: Text(park.name),
@@ -122,13 +123,15 @@ class _HistoryState extends State<History> {
                                 trailing: Text(
                                   formatDateTimeToTimeAndDate(
                                     DateTime.fromMillisecondsSinceEpoch(
-                                      park.updatedAt ?? DateTime.now().millisecondsSinceEpoch,
+                                      park.updatedAt ??
+                                          DateTime.now().millisecondsSinceEpoch,
                                     ),
                                   ),
                                 ),
                                 onTap: () async {
                                   woAuto.currentIndex.value = 0;
-                                  GoogleMapController controller = woAuto.mapController.value!;
+                                  GoogleMapController controller =
+                                      woAuto.mapController.value!;
                                   await controller.animateCamera(
                                     CameraUpdate.newCameraPosition(
                                       CameraPosition(
@@ -147,13 +150,14 @@ class _HistoryState extends State<History> {
                                       BitmapDescriptor.hueAzure,
                                     ),
                                   );
-                                  woAuto.tempMarkers
-                                      .removeWhere((element) => element.markerId.value == 'temp');
+                                  woAuto.tempMarkers.removeWhere((element) =>
+                                      element.markerId.value == 'temp');
                                   woAuto.tempMarkers.add(m);
                                   woAuto.tempMarkers.refresh();
 
                                   woAuto.currentSelectedCarPark.value = park;
-                                  woAuto.currentSelectedPosition.value = park.latLng;
+                                  woAuto.currentSelectedPosition.value =
+                                      park.latLng;
                                 },
                               ),
                             ),
@@ -163,7 +167,9 @@ class _HistoryState extends State<History> {
                             ListTile(
                               title: Text(
                                 t.history.export.title,
-                                style: TextStyle(color: Theme.of(context).colorScheme.primary),
+                                style: TextStyle(
+                                    color:
+                                        Theme.of(context).colorScheme.primary),
                               ),
                               subtitle: Text(
                                 t.history.export.subtitle,
@@ -189,9 +195,12 @@ class _HistoryState extends State<History> {
                                   rows.add(
                                     [
                                       park.name,
-                                      park.adresse ?? t.constants.default_address,
+                                      park.adresse ??
+                                          t.constants.default_address,
                                       DateTime.fromMillisecondsSinceEpoch(
-                                        park.updatedAt ?? DateTime.now().millisecondsSinceEpoch,
+                                        park.updatedAt ??
+                                            DateTime.now()
+                                                .millisecondsSinceEpoch,
                                       ).toString(),
                                       park.latitude.toString(),
                                       park.longitude.toString(),
@@ -214,16 +223,19 @@ class _HistoryState extends State<History> {
                                   for (List<String> row in rows) {
                                     csv.writeln(
                                       row
-                                          .map((field) => '"${field.replaceAll('"', '""')}"')
+                                          .map((field) =>
+                                              '"${field.replaceAll('"', '""')}"')
                                           .join(','),
                                     ); // Escape double quotes and join
                                   }
 
-                                  return csv.toString(); // Convert StringBuffer to a string
+                                  return csv
+                                      .toString(); // Convert StringBuffer to a string
                                 }
 
                                 String csvString = buildCsvString(header, rows);
-                                await SharePlus.instance.share(ShareParams(text: csvString));
+                                await SharePlus.instance
+                                    .share(ShareParams(text: csvString));
                               },
                             ),
                             ListTile(
@@ -236,7 +248,8 @@ class _HistoryState extends State<History> {
                               ),
                               title: Text(
                                 t.history.delete.title,
-                                style: TextStyle(color: Theme.of(context).colorScheme.error),
+                                style: TextStyle(
+                                    color: Theme.of(context).colorScheme.error),
                               ),
                               subtitle: Text(
                                 t.history.delete.subtitle,
@@ -248,11 +261,14 @@ class _HistoryState extends State<History> {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     title: Text(t.dialog.history.delete.title),
-                                    content: Text(t.dialog.history.delete.subtitle),
+                                    content:
+                                        Text(t.dialog.history.delete.subtitle),
                                     actions: [
                                       TextButton(
                                         style: TextButton.styleFrom(
-                                          foregroundColor: Theme.of(context).colorScheme.error,
+                                          foregroundColor: Theme.of(context)
+                                              .colorScheme
+                                              .error,
                                         ),
                                         child: Text(t.dialog.delete),
                                         onPressed: () async {

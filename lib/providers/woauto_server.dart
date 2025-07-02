@@ -127,7 +127,8 @@ class WoAutoServer extends GetxController {
 
           pb.collection('users').subscribe(
             friend.id,
-            expand: 'friends,friends.position,friends.parkings,parkings,position',
+            expand:
+                'friends,friends.position,friends.parkings,parkings,position',
             (userData) async {
               var fUser = userData.record;
               if (fUser == null) return;
@@ -148,7 +149,8 @@ class WoAutoServer extends GetxController {
               var fParkings = friend.expand['parkings'];
               if (fParkings != null) {
                 for (var fPark in fParkings) {
-                  logMessage('Parking ${fPark.id}: ${fPark.data}', tag: fUser.id);
+                  logMessage('Parking ${fPark.id}: ${fPark.data}',
+                      tag: fUser.id);
                   var fPosition = WaPosition.fromRecord(fPark);
                   woAuto.addFriendCarPosition(
                     newPosition: fPosition.latLng,
@@ -204,7 +206,9 @@ class WoAutoServer extends GetxController {
       if (positionData.isEmpty) {
         record = await pb.collection('simple_position').create(body: body);
       } else {
-        record = await pb.collection('simple_position').update(positionData, body: body);
+        record = await pb
+            .collection('simple_position')
+            .update(positionData, body: body);
       }
 
       await pb.collection('users').update(

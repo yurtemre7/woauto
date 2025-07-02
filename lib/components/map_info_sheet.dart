@@ -27,14 +27,16 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
               width: 49,
             ),
           if (!woAuto.drivingMode.value &&
-              (woAuto.carMarkers.isNotEmpty || woAuto.friendCarMarkers.isNotEmpty))
+              (woAuto.carMarkers.isNotEmpty ||
+                  woAuto.friendCarMarkers.isNotEmpty))
             Badge(
               alignment: Alignment.topCenter,
               label: Text(t.info_sheet.badge_label),
               isLabelVisible: woAutoServer.shareMyParkings.value,
               child: FloatingActionButton(
                 tooltip: t.info_sheet.parkings,
-                onPressed: (woAuto.carMarkers.isNotEmpty || woAuto.friendCarMarkers.isNotEmpty)
+                onPressed: (woAuto.carMarkers.isNotEmpty ||
+                        woAuto.friendCarMarkers.isNotEmpty)
                     ? () {
                         Get.bottomSheet(
                           const CarBottomSheet(),
@@ -57,7 +59,8 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
               }
               await woAuto.onNewParking(pos);
               flutterLocalNotificationsPlugin.cancelAll();
-              woAuto.tempMarkers.removeWhere((element) => element.markerId.value == 'temp');
+              woAuto.tempMarkers
+                  .removeWhere((element) => element.markerId.value == 'temp');
               woAuto.currentSelectedPosition.value = null;
               woAuto.currentSelectedCarPark.value = null;
             },

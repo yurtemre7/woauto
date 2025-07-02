@@ -47,7 +47,8 @@ class WoAuto extends GetxController {
   final friendCarPositions = <CarPark>[].obs;
   RxList<Marker> get friendCarMarkers =>
       friendCarPositions.map((park) => makeCarMarker(park)).toList().obs;
-  RxList<Marker> get carMarkers => carParkings.map((park) => makeCarMarker(park)).toList().obs;
+  RxList<Marker> get carMarkers =>
+      carParkings.map((park) => makeCarMarker(park)).toList().obs;
   final tempMarkers = <Marker>{}.obs;
   final carParkingHistory = <CarPark>[].obs;
 
@@ -122,7 +123,8 @@ class WoAuto extends GetxController {
 
     woAuto.welcome.value = jsonMap['welcome'] ?? true;
     woAuto.timePuffer.value = jsonMap['timePuffer'] ?? 10;
-    woAuto.drivingModeDetectionSpeed.value = jsonMap['drivingModeDetectionSpeed'] ?? 20;
+    woAuto.drivingModeDetectionSpeed.value =
+        jsonMap['drivingModeDetectionSpeed'] ?? 20;
 
     var carParkings = jsonMap['carParkings'] ?? [];
     for (int i = 0; i < carParkings.length; i++) {
@@ -150,12 +152,15 @@ class WoAuto extends GetxController {
     woAuto.subText.value = jsonMap['subText'] ?? t.constants.default_park_title;
     woAuto.kennzeichen.value = jsonMap['kennzeichen'] ?? '';
     woAuto.kilometerStand.value = jsonMap['kilometerStand'] ?? '';
-    woAuto.tuvUntil.value = DateTime.parse(jsonMap['tuvUntil'] ?? DateTime.now().toIso8601String());
+    woAuto.tuvUntil.value =
+        DateTime.parse(jsonMap['tuvUntil'] ?? DateTime.now().toIso8601String());
     woAuto.carPicture.value = jsonMap['carPicture'] ?? '';
-    woAuto.carBaujahr.value = jsonMap['carPictureDate'] ?? DateTime.now().year.toString();
+    woAuto.carBaujahr.value =
+        jsonMap['carPictureDate'] ?? DateTime.now().year.toString();
     // settings
     woAuto.themeMode.value = jsonMap['themeMode'] ?? 0;
-    woAuto.appColor.value = int.parse(jsonMap['appColor'] ?? appColorDefault.getValue.toString());
+    woAuto.appColor.value =
+        int.parse(jsonMap['appColor'] ?? appColorDefault.getValue.toString());
 
     return woAuto;
   }
@@ -271,7 +276,8 @@ class WoAuto extends GetxController {
       woAuto.printWoAuto();
     }
     var textController = TextEditingController();
-    var newNameController = TextEditingController(text: woAuto.subText.value).obs;
+    var newNameController =
+        TextEditingController(text: woAuto.subText.value).obs;
     var tillTime = Rxn<TimeOfDay>();
     var carPicturePath = ''.obs;
 
@@ -338,8 +344,9 @@ class WoAuto extends GetxController {
 
                         List<String> carNames = carParkings
                             .where(
-                              (element) =>
-                                  element.name.toLowerCase().startsWith(search.toLowerCase()),
+                              (element) => element.name
+                                  .toLowerCase()
+                                  .startsWith(search.toLowerCase()),
                             )
                             .map((e) => e.name)
                             .toList();
@@ -379,8 +386,8 @@ class WoAuto extends GetxController {
                                       initialTime: TimeOfDay.now(),
                                       builder: (context, child) {
                                         return MediaQuery(
-                                          data: MediaQuery.of(context)
-                                              .copyWith(alwaysUse24HourFormat: true),
+                                          data: MediaQuery.of(context).copyWith(
+                                              alwaysUse24HourFormat: true),
                                           child: child!,
                                         );
                                       },
@@ -412,22 +419,31 @@ class WoAuto extends GetxController {
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             ListTile(
-                                              title: Text(t.bottom_sheet.camera),
-                                              leading: const Icon(Icons.camera_alt),
+                                              title:
+                                                  Text(t.bottom_sheet.camera),
+                                              leading:
+                                                  const Icon(Icons.camera_alt),
                                               onTap: () async {
                                                 pop();
-                                                XFile? image = await ImagePicker()
-                                                    .pickImage(source: ImageSource.camera);
+                                                XFile? image =
+                                                    await ImagePicker()
+                                                        .pickImage(
+                                                            source: ImageSource
+                                                                .camera);
 
                                                 if (image == null) return;
 
                                                 String duplicateFilePath =
-                                                    (await getApplicationDocumentsDirectory()).path;
+                                                    (await getApplicationDocumentsDirectory())
+                                                        .path;
 
-                                                var fileName = image.path.split('/').last;
-                                                File localImage = await File(image.path)
-                                                    .copy('$duplicateFilePath/$fileName');
-                                                carPicturePath.value = localImage.path;
+                                                var fileName =
+                                                    image.path.split('/').last;
+                                                File localImage =
+                                                    await File(image.path).copy(
+                                                        '$duplicateFilePath/$fileName');
+                                                carPicturePath.value =
+                                                    localImage.path;
                                               },
                                             ),
                                             const Div(),
@@ -436,18 +452,25 @@ class WoAuto extends GetxController {
                                               leading: const Icon(Icons.photo),
                                               onTap: () async {
                                                 pop();
-                                                XFile? image = await ImagePicker()
-                                                    .pickImage(source: ImageSource.gallery);
+                                                XFile? image =
+                                                    await ImagePicker()
+                                                        .pickImage(
+                                                            source: ImageSource
+                                                                .gallery);
 
                                                 if (image == null) return;
 
                                                 String duplicateFilePath =
-                                                    (await getApplicationDocumentsDirectory()).path;
+                                                    (await getApplicationDocumentsDirectory())
+                                                        .path;
 
-                                                var fileName = image.path.split('/').last;
-                                                File localImage = await File(image.path)
-                                                    .copy('$duplicateFilePath/$fileName');
-                                                carPicturePath.value = localImage.path;
+                                                var fileName =
+                                                    image.path.split('/').last;
+                                                File localImage =
+                                                    await File(image.path).copy(
+                                                        '$duplicateFilePath/$fileName');
+                                                carPicturePath.value =
+                                                    localImage.path;
                                               },
                                             ),
                                           ],
@@ -657,13 +680,15 @@ class WoAuto extends GetxController {
             !park.mine
                 ? Text(
                     t.marker_dialog.shared.content(
-                      address: park.adresse ?? 'Adresse konnte nicht gefunden werden.',
+                      address: park.adresse ??
+                          'Adresse konnte nicht gefunden werden.',
                     ),
                   )
                 : Text(
                     t.marker_dialog.mine.content(
                       formattedDate: formatDateTimeAndTime(datum),
-                      address: park.adresse ?? 'Adresse konnte nicht gefunden werden.',
+                      address: park.adresse ??
+                          'Adresse konnte nicht gefunden werden.',
                       description: park.description ?? '',
                     ),
                   ),
@@ -713,7 +738,8 @@ class WoAuto extends GetxController {
     if (carParkings.any((element) => element.name == name && element.mine)) {
       // Update
       logMessage('Update Car Park');
-      var carPark = carParkings.firstWhere((element) => element.name == name && element.mine);
+      var carPark = carParkings
+          .firstWhere((element) => element.name == name && element.mine);
       carPark.latitude = newPosition.latitude;
       carPark.longitude = newPosition.longitude;
       carPark.adresse = adresse;
@@ -764,10 +790,12 @@ class WoAuto extends GetxController {
     var adresse = await getAddress(newPosition);
     var name = newName ?? t.constants.default_shared_title;
 
-    if (friendPositions.any((element) => element.uuid == uuid && !element.mine)) {
+    if (friendPositions
+        .any((element) => element.uuid == uuid && !element.mine)) {
       // Update
       logMessage('Update Friend Position');
-      var carPark = friendPositions.firstWhere((element) => element.uuid == uuid && !element.mine);
+      var carPark = friendPositions
+          .firstWhere((element) => element.uuid == uuid && !element.mine);
       carPark.latitude = newPosition.latitude;
       carPark.longitude = newPosition.longitude;
       carPark.adresse = adresse;
@@ -798,7 +826,8 @@ class WoAuto extends GetxController {
   Future<void> deleteFriendPosition({
     required String uuid,
   }) async {
-    var idx = friendPositions.indexOf((element) => element.uuid == uuid && !element.mine);
+    var idx = friendPositions
+        .indexOf((element) => element.uuid == uuid && !element.mine);
 
     if (idx == -1) {
       return;
@@ -817,11 +846,12 @@ class WoAuto extends GetxController {
     var adresse = await getAddress(newPosition);
     var name = newName ?? t.constants.default_shared_title;
 
-    if (friendCarPositions.any((element) => element.uuid == uuid && !element.mine)) {
+    if (friendCarPositions
+        .any((element) => element.uuid == uuid && !element.mine)) {
       // Update
       logMessage('Update Friend Car Position');
-      var carPark =
-          friendCarPositions.firstWhere((element) => element.uuid == uuid && !element.mine);
+      var carPark = friendCarPositions
+          .firstWhere((element) => element.uuid == uuid && !element.mine);
       carPark.latitude = newPosition.latitude;
       carPark.longitude = newPosition.longitude;
       carPark.adresse = adresse;
@@ -875,7 +905,8 @@ class WoAuto extends GetxController {
 
       if (isIOS()) {
         res = await flutterLocalNotificationsPlugin
-            .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
+            .resolvePlatformSpecificImplementation<
+                IOSFlutterLocalNotificationsPlugin>()
             ?.requestPermissions(
               alert: true,
               badge: true,
@@ -883,11 +914,13 @@ class WoAuto extends GetxController {
             );
       } else if (isAndroid()) {
         res = (await flutterLocalNotificationsPlugin
-                .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+                .resolvePlatformSpecificImplementation<
+                    AndroidFlutterLocalNotificationsPlugin>()
                 ?.requestNotificationsPermission()) ??
             false;
         var res2 = (await flutterLocalNotificationsPlugin
-                .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+                .resolvePlatformSpecificImplementation<
+                    AndroidFlutterLocalNotificationsPlugin>()
                 ?.requestExactAlarmsPermission()) ??
             false;
         res = res && res2;
@@ -976,7 +1009,9 @@ class WoAuto extends GetxController {
       return woAuto.themeMode.value == 2 ? darkMapStyle : lightMapStyle;
     }
 
-    return Get.theme.brightness == Brightness.dark ? darkMapStyle : lightMapStyle;
+    return Get.theme.brightness == Brightness.dark
+        ? darkMapStyle
+        : lightMapStyle;
   }
 
   Future<void> fetchPackageInfo() async {
@@ -1018,6 +1053,7 @@ class WoAuto extends GetxController {
     ).toPrecision(1);
   }
 
-  double calculateDistance(double lat1, double lon1, double lat2, double lon2) =>
+  double calculateDistance(
+          double lat1, double lon1, double lat2, double lon2) =>
       Geolocator.distanceBetween(lat1, lon1, lat2, lon2);
 }

@@ -48,10 +48,10 @@ class _TopHeaderState extends State<TopHeader> {
                     ),
                     Obx(
                       () {
-                        var kmh =
-                            ((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ??
-                                    0) *
-                                3.6);
+                        var kmh = ((double.tryParse(woAuto.currentVelocity.value
+                                    .toStringAsFixed(2)) ??
+                                0) *
+                            3.6);
                         return Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -70,7 +70,8 @@ class _TopHeaderState extends State<TopHeader> {
                                         textStyle: TextStyle(
                                           fontSize: 20.0,
                                           fontWeight: FontWeight.bold,
-                                          color: context.theme.colorScheme.primary,
+                                          color:
+                                              context.theme.colorScheme.primary,
                                         ),
                                         loop: false,
                                       ),
@@ -80,7 +81,8 @@ class _TopHeaderState extends State<TopHeader> {
                                       style: TextStyle(
                                         fontSize: 20.0,
                                         fontWeight: FontWeight.bold,
-                                        color: context.theme.colorScheme.primary,
+                                        color:
+                                            context.theme.colorScheme.primary,
                                       ),
                                     ),
                                   ],
@@ -90,8 +92,10 @@ class _TopHeaderState extends State<TopHeader> {
                             IconButton(
                               tooltip: t.top_header.driving_mode_tooltip,
                               style: IconButton.styleFrom(
-                                foregroundColor: context.theme.colorScheme.primary,
-                                disabledForegroundColor: Colors.grey.withValues(alpha: 0.3),
+                                foregroundColor:
+                                    context.theme.colorScheme.primary,
+                                disabledForegroundColor:
+                                    Colors.grey.withValues(alpha: 0.3),
                               ),
                               onPressed: () {
                                 woAuto.drivingMode.toggle();
@@ -135,13 +139,15 @@ class _TopHeaderState extends State<TopHeader> {
                               color: context.theme.colorScheme.primary,
                             ),
                             onSelected: (value) {
-                              woAuto.showCarParkDialog(woAuto.currentSelectedCarPark.value!);
+                              woAuto.showCarParkDialog(
+                                  woAuto.currentSelectedCarPark.value!);
                             },
                           ),
                         8.w,
                         ChoiceChip(
                           label: Text(
-                            woAuto.getDistanceString(woAuto.currentSelectedPosition.value!),
+                            woAuto.getDistanceString(
+                                woAuto.currentSelectedPosition.value!),
                           ),
                           selected: false,
                           showCheckmark: false,

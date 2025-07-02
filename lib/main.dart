@@ -21,9 +21,11 @@ void main() async {
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   try {
     await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
-    InitializationSettings initializationSettings = const InitializationSettings(
+    InitializationSettings initializationSettings =
+        const InitializationSettings(
       android: AndroidInitializationSettings('ic_launcher_monochrome'),
       iOS: DarwinInitializationSettings(
         requestAlertPermission: false,

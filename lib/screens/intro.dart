@@ -153,20 +153,24 @@ class _IntroState extends State<Intro> {
                               Obx(
                                 () {
                                   var themeMode = woAuto.themeMode.value;
-                                  DropdownButton<int> dropdownButton = DropdownButton<int>(
+                                  DropdownButton<int> dropdownButton =
+                                      DropdownButton<int>(
                                     value: themeMode,
                                     items: [
                                       DropdownMenuItem(
                                         value: 0,
-                                        child: Text(t.settings.theme.dropdown_1),
+                                        child:
+                                            Text(t.settings.theme.dropdown_1),
                                       ),
                                       DropdownMenuItem(
                                         value: 1,
-                                        child: Text(t.settings.theme.dropdown_2),
+                                        child:
+                                            Text(t.settings.theme.dropdown_2),
                                       ),
                                       DropdownMenuItem(
                                         value: 2,
-                                        child: Text(t.settings.theme.dropdown_3),
+                                        child:
+                                            Text(t.settings.theme.dropdown_3),
                                       ),
                                     ],
                                     onChanged: (v) async {
@@ -180,7 +184,9 @@ class _IntroState extends State<Intro> {
                                         SystemChrome.setSystemUIOverlayStyle(
                                           SystemUiOverlayStyle(
                                             systemNavigationBarColor:
-                                                Theme.of(context).colorScheme.surface,
+                                                Theme.of(context)
+                                                    .colorScheme
+                                                    .surface,
                                           ),
                                         );
                                       });
@@ -210,7 +216,8 @@ class _IntroState extends State<Intro> {
                                   ? Text(
                                       t.intro.page_2.location_checkbox_error,
                                       style: TextStyle(
-                                        color: Theme.of(context).colorScheme.error,
+                                        color:
+                                            Theme.of(context).colorScheme.error,
                                       ),
                                     )
                                   : null,
@@ -265,8 +272,10 @@ class _IntroState extends State<Intro> {
                             Obx(
                               () => CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
-                                title: Text(t.intro.page_2.exact_notification_checkbox),
-                                subtitle: Text(t.intro.page_2.exact_notification_description),
+                                title: Text(
+                                    t.intro.page_2.exact_notification_checkbox),
+                                subtitle: Text(t.intro.page_2
+                                    .exact_notification_description),
                                 value: notifExactAllowed.value,
                                 onChanged: (val) async {
                                   if (val == null) return;
@@ -318,7 +327,8 @@ class _IntroState extends State<Intro> {
 
                           woAuto.subText.value = tec.text.trim();
                           if (woAuto.subText.value.isEmpty) {
-                            woAuto.subText.value = t.constants.default_park_title;
+                            woAuto.subText.value =
+                                t.constants.default_park_title;
                           }
 
                           woAuto.welcome.value = false;

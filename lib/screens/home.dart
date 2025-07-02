@@ -61,7 +61,8 @@ class _HomeState extends State<Home> {
       }
 
       NotificationAppLaunchDetails? notificationAppLaunchDetails =
-          await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+          await flutterLocalNotificationsPlugin
+              .getNotificationAppLaunchDetails();
       if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
         logMessage('Notification launched app');
       }
@@ -219,8 +220,9 @@ class _HomeState extends State<Home> {
       }
     });
 
-    positionStream = Geolocator.getPositionStream(locationSettings: locationSettings)
-        .listen((Position? position) async {
+    positionStream =
+        Geolocator.getPositionStream(locationSettings: locationSettings)
+            .listen((Position? position) async {
       if (!mounted || position == null) {
         return;
       }
@@ -255,7 +257,10 @@ class _HomeState extends State<Home> {
       if (!woAuto.drivingMode.value && woAuto.askForDrivingMode.value) {
         if (kDebugMode) return;
         // show dialog to ask the user if he wants to switch to driving mode, IF his velocity is > woAuto.drivingModeDetectionSpeed.value
-        var kmh = ((double.tryParse(woAuto.currentVelocity.value.toStringAsFixed(2)) ?? 0) * 3.6);
+        var kmh = ((double.tryParse(
+                    woAuto.currentVelocity.value.toStringAsFixed(2)) ??
+                0) *
+            3.6);
 
         if (kmh > woAuto.drivingModeDetectionSpeed.value) {
           if (woAuto.currentIndex.value == 0) {
@@ -358,7 +363,8 @@ class _HomeState extends State<Home> {
                 child: const TopHeader(),
               ),
               Visibility(
-                visible: woAuto.currentIndex.value == 0 && !woAuto.drivingMode.value,
+                visible:
+                    woAuto.currentIndex.value == 0 && !woAuto.drivingMode.value,
                 child: const Positioned(
                   bottom: 16,
                   left: 16,
@@ -367,7 +373,8 @@ class _HomeState extends State<Home> {
                 ),
               ),
               Visibility(
-                visible: woAuto.currentIndex.value == 0 && woAuto.drivingMode.value,
+                visible:
+                    woAuto.currentIndex.value == 0 && woAuto.drivingMode.value,
                 child: Positioned(
                   bottom: isIOS() ? 32 : 16,
                   right: 16,
@@ -377,7 +384,9 @@ class _HomeState extends State<Home> {
                       setState(() {});
                     },
                     label: Text(
-                      woAuto.showTraffic.value ? t.maps.traffic.hide : t.maps.traffic.show,
+                      woAuto.showTraffic.value
+                          ? t.maps.traffic.hide
+                          : t.maps.traffic.show,
                     ),
                   ),
                 ),
@@ -418,8 +427,11 @@ class _HomeState extends State<Home> {
                 NavigationDestination(
                   icon: Badge(
                     isLabelVisible:
-                        DateTime.now().difference(woAuto.tuvUntil.value).abs() < 30.days ||
-                            woAuto.tuvUntil.value.difference(DateTime.now()).isNegative ||
+                        DateTime.now().difference(woAuto.tuvUntil.value).abs() <
+                                30.days ||
+                            woAuto.tuvUntil.value
+                                .difference(DateTime.now())
+                                .isNegative ||
                             woAuto.kilometerStand.value.isEmpty ||
                             woAuto.kennzeichen.value.isEmpty ||
                             woAuto.carBaujahr.value.isEmpty,
