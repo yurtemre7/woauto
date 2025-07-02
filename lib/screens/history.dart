@@ -150,8 +150,10 @@ class _HistoryState extends State<History> {
                                       BitmapDescriptor.hueAzure,
                                     ),
                                   );
-                                  woAuto.tempMarkers.removeWhere((element) =>
-                                      element.markerId.value == 'temp');
+                                  woAuto.tempMarkers.removeWhere(
+                                    (element) =>
+                                        element.markerId.value == 'temp',
+                                  );
                                   woAuto.tempMarkers.add(m);
                                   woAuto.tempMarkers.refresh();
 
@@ -168,8 +170,8 @@ class _HistoryState extends State<History> {
                               title: Text(
                                 t.history.export.title,
                                 style: TextStyle(
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                               ),
                               subtitle: Text(
                                 t.history.export.subtitle,
@@ -223,8 +225,10 @@ class _HistoryState extends State<History> {
                                   for (List<String> row in rows) {
                                     csv.writeln(
                                       row
-                                          .map((field) =>
-                                              '"${field.replaceAll('"', '""')}"')
+                                          .map(
+                                            (field) =>
+                                                '"${field.replaceAll('"', '""')}"',
+                                          )
                                           .join(','),
                                     ); // Escape double quotes and join
                                   }
@@ -249,7 +253,8 @@ class _HistoryState extends State<History> {
                               title: Text(
                                 t.history.delete.title,
                                 style: TextStyle(
-                                    color: Theme.of(context).colorScheme.error),
+                                  color: Theme.of(context).colorScheme.error,
+                                ),
                               ),
                               subtitle: Text(
                                 t.history.delete.subtitle,

@@ -149,8 +149,10 @@ class WoAutoServer extends GetxController {
               var fParkings = friend.expand['parkings'];
               if (fParkings != null) {
                 for (var fPark in fParkings) {
-                  logMessage('Parking ${fPark.id}: ${fPark.data}',
-                      tag: fUser.id);
+                  logMessage(
+                    'Parking ${fPark.id}: ${fPark.data}',
+                    tag: fUser.id,
+                  );
                   var fPosition = WaPosition.fromRecord(fPark);
                   woAuto.addFriendCarPosition(
                     newPosition: fPosition.latLng,

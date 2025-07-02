@@ -48,8 +48,10 @@ class _TopHeaderState extends State<TopHeader> {
                     ),
                     Obx(
                       () {
-                        var kmh = ((double.tryParse(woAuto.currentVelocity.value
-                                    .toStringAsFixed(2)) ??
+                        var kmh = ((double.tryParse(
+                                  woAuto.currentVelocity.value
+                                      .toStringAsFixed(2),
+                                ) ??
                                 0) *
                             3.6);
                         return Row(
@@ -140,14 +142,16 @@ class _TopHeaderState extends State<TopHeader> {
                             ),
                             onSelected: (value) {
                               woAuto.showCarParkDialog(
-                                  woAuto.currentSelectedCarPark.value!);
+                                woAuto.currentSelectedCarPark.value!,
+                              );
                             },
                           ),
                         8.w,
                         ChoiceChip(
                           label: Text(
                             woAuto.getDistanceString(
-                                woAuto.currentSelectedPosition.value!),
+                              woAuto.currentSelectedPosition.value!,
+                            ),
                           ),
                           selected: false,
                           showCheckmark: false,

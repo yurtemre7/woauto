@@ -70,17 +70,20 @@ class _GMapState extends State<GMap> {
                 onTap: (pos) {
                   if (woAuto.tempMarkers.isNotEmpty) {
                     woAuto.tempMarkers.removeWhere(
-                        (element) => element.markerId.value == 'temp');
+                      (element) => element.markerId.value == 'temp',
+                    );
                   }
                   woAuto.tempMarkers.add(
                     Marker(
                       markerId: const MarkerId('temp'),
                       position: pos,
                       icon: BitmapDescriptor.defaultMarkerWithHue(
-                          BitmapDescriptor.hueOrange),
+                        BitmapDescriptor.hueOrange,
+                      ),
                       onTap: () {
                         woAuto.tempMarkers.removeWhere(
-                            (element) => element.markerId.value == 'temp');
+                          (element) => element.markerId.value == 'temp',
+                        );
                         woAuto.currentSelectedPosition.value = null;
                         woAuto.currentSelectedCarPark.value = null;
                       },

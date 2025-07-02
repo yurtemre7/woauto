@@ -104,7 +104,8 @@ class _SettingsState extends State<Settings> {
                             title: Text(
                               t.settings.theme.title,
                               style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary),
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
                             subtitle: Text(
                               t.settings.theme.subtitle,
@@ -197,7 +198,8 @@ class _SettingsState extends State<Settings> {
                             title: Text(
                               t.settings.map_type.title,
                               style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary),
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
                             subtitle: Text(
                               t.settings.map_type.subtitle,
@@ -212,7 +214,8 @@ class _SettingsState extends State<Settings> {
                           title: Text(
                             t.settings.traffic.title,
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary),
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                           subtitle: Text(
                             t.settings.traffic.subtitle,
@@ -232,33 +235,45 @@ class _SettingsState extends State<Settings> {
                             items: [
                               DropdownMenuItem(
                                 value: 5,
-                                child: Text(t.settings.park_ticket
-                                    .dropdown_value(value: 5)),
+                                child: Text(
+                                  t.settings.park_ticket
+                                      .dropdown_value(value: 5),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 10,
-                                child: Text(t.settings.park_ticket
-                                    .dropdown_value(value: 10)),
+                                child: Text(
+                                  t.settings.park_ticket
+                                      .dropdown_value(value: 10),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 15,
-                                child: Text(t.settings.park_ticket
-                                    .dropdown_value(value: 15)),
+                                child: Text(
+                                  t.settings.park_ticket
+                                      .dropdown_value(value: 15),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 20,
-                                child: Text(t.settings.park_ticket
-                                    .dropdown_value(value: 20)),
+                                child: Text(
+                                  t.settings.park_ticket
+                                      .dropdown_value(value: 20),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 25,
-                                child: Text(t.settings.park_ticket
-                                    .dropdown_value(value: 25)),
+                                child: Text(
+                                  t.settings.park_ticket
+                                      .dropdown_value(value: 25),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 30,
-                                child: Text(t.settings.park_ticket
-                                    .dropdown_value(value: 30)),
+                                child: Text(
+                                  t.settings.park_ticket
+                                      .dropdown_value(value: 30),
+                                ),
                               ),
                             ],
                             onChanged: (v) {
@@ -272,7 +287,8 @@ class _SettingsState extends State<Settings> {
                             title: Text(
                               t.settings.park_ticket.title,
                               style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary),
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
                             subtitle: Text(
                               t.settings.park_ticket.subtitle,
@@ -290,28 +306,38 @@ class _SettingsState extends State<Settings> {
                             items: [
                               DropdownMenuItem(
                                 value: 20,
-                                child: Text(t.settings.driving_mode
-                                    .dropdown_value(value: 20)),
+                                child: Text(
+                                  t.settings.driving_mode
+                                      .dropdown_value(value: 20),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 25,
-                                child: Text(t.settings.driving_mode
-                                    .dropdown_value(value: 25)),
+                                child: Text(
+                                  t.settings.driving_mode
+                                      .dropdown_value(value: 25),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 30,
-                                child: Text(t.settings.driving_mode
-                                    .dropdown_value(value: 30)),
+                                child: Text(
+                                  t.settings.driving_mode
+                                      .dropdown_value(value: 30),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 35,
-                                child: Text(t.settings.driving_mode
-                                    .dropdown_value(value: 35)),
+                                child: Text(
+                                  t.settings.driving_mode
+                                      .dropdown_value(value: 35),
+                                ),
                               ),
                               DropdownMenuItem(
                                 value: 40,
-                                child: Text(t.settings.driving_mode
-                                    .dropdown_value(value: 40)),
+                                child: Text(
+                                  t.settings.driving_mode
+                                      .dropdown_value(value: 40),
+                                ),
                               ),
                             ],
                             onChanged: (v) {
@@ -325,7 +351,8 @@ class _SettingsState extends State<Settings> {
                             title: Text(
                               t.settings.driving_mode.title,
                               style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary),
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                             ),
                             subtitle: Text(
                               t.settings.driving_mode.subtitle,
@@ -347,7 +374,8 @@ class _SettingsState extends State<Settings> {
                           title: Text(
                             t.settings.app_info.title,
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary),
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                           subtitle: Text(
                             t.settings.app_info.subtitle(
@@ -371,7 +399,8 @@ class _SettingsState extends State<Settings> {
                                     onPressed: () {
                                       launchUrl(
                                         Uri.parse(
-                                            'https://github.com/yurtemre7/woauto'),
+                                          'https://github.com/yurtemre7/woauto',
+                                        ),
                                         mode: LaunchMode.externalApplication,
                                       );
                                     },
@@ -397,7 +426,8 @@ class _SettingsState extends State<Settings> {
                           title: Text(
                             t.settings.woauto_server.title,
                             style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary),
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
                           subtitle: Text(
                             t.settings.woauto_server.subtitle(
@@ -419,7 +449,8 @@ class _SettingsState extends State<Settings> {
                         title: Text(
                           t.settings.credits.title,
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                         subtitle: Text(
                           t.settings.credits.subtitle,
@@ -436,7 +467,8 @@ class _SettingsState extends State<Settings> {
                         title: Text(
                           t.settings.share.title,
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                         subtitle: Text(
                           t.settings.share.subtitle,
@@ -460,7 +492,8 @@ class _SettingsState extends State<Settings> {
                         title: Text(
                           t.settings.feedback.title,
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                         subtitle: Text(t.settings.feedback.subtitle),
                         onTap: () {
@@ -500,7 +533,8 @@ class _SettingsState extends State<Settings> {
                         title: Text(
                           t.settings.data_security.title,
                           style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary),
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
                         ),
                         subtitle: Text(t.settings.data_security.subtitle),
                         onTap: () {
@@ -566,7 +600,8 @@ class _SettingsState extends State<Settings> {
                                   onPressed: () {
                                     launchUrl(
                                       Uri.parse(
-                                          'https://www.yurtemre.de/impressum'),
+                                        'https://www.yurtemre.de/impressum',
+                                      ),
                                       mode: LaunchMode.externalApplication,
                                     );
                                   },
@@ -576,7 +611,8 @@ class _SettingsState extends State<Settings> {
                                   onPressed: () {
                                     launchUrl(
                                       Uri.parse(
-                                          'https://www.yurtemre.de/datenschutz'),
+                                        'https://www.yurtemre.de/datenschutz',
+                                      ),
                                       mode: LaunchMode.externalApplication,
                                     );
                                   },

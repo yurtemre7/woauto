@@ -387,7 +387,8 @@ class WoAuto extends GetxController {
                                       builder: (context, child) {
                                         return MediaQuery(
                                           data: MediaQuery.of(context).copyWith(
-                                              alwaysUse24HourFormat: true),
+                                            alwaysUse24HourFormat: true,
+                                          ),
                                           child: child!,
                                         );
                                       },
@@ -428,8 +429,8 @@ class WoAuto extends GetxController {
                                                 XFile? image =
                                                     await ImagePicker()
                                                         .pickImage(
-                                                            source: ImageSource
-                                                                .camera);
+                                                  source: ImageSource.camera,
+                                                );
 
                                                 if (image == null) return;
 
@@ -441,7 +442,8 @@ class WoAuto extends GetxController {
                                                     image.path.split('/').last;
                                                 File localImage =
                                                     await File(image.path).copy(
-                                                        '$duplicateFilePath/$fileName');
+                                                  '$duplicateFilePath/$fileName',
+                                                );
                                                 carPicturePath.value =
                                                     localImage.path;
                                               },
@@ -455,8 +457,8 @@ class WoAuto extends GetxController {
                                                 XFile? image =
                                                     await ImagePicker()
                                                         .pickImage(
-                                                            source: ImageSource
-                                                                .gallery);
+                                                  source: ImageSource.gallery,
+                                                );
 
                                                 if (image == null) return;
 
@@ -468,7 +470,8 @@ class WoAuto extends GetxController {
                                                     image.path.split('/').last;
                                                 File localImage =
                                                     await File(image.path).copy(
-                                                        '$duplicateFilePath/$fileName');
+                                                  '$duplicateFilePath/$fileName',
+                                                );
                                                 carPicturePath.value =
                                                     localImage.path;
                                               },
@@ -1054,6 +1057,10 @@ class WoAuto extends GetxController {
   }
 
   double calculateDistance(
-          double lat1, double lon1, double lat2, double lon2) =>
+    double lat1,
+    double lon1,
+    double lat2,
+    double lon2,
+  ) =>
       Geolocator.distanceBetween(lat1, lon1, lat2, lon2);
 }

@@ -258,7 +258,8 @@ class _HomeState extends State<Home> {
         if (kDebugMode) return;
         // show dialog to ask the user if he wants to switch to driving mode, IF his velocity is > woAuto.drivingModeDetectionSpeed.value
         var kmh = ((double.tryParse(
-                    woAuto.currentVelocity.value.toStringAsFixed(2)) ??
+                  woAuto.currentVelocity.value.toStringAsFixed(2),
+                ) ??
                 0) *
             3.6);
 

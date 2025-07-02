@@ -273,9 +273,11 @@ class _IntroState extends State<Intro> {
                               () => CheckboxListTile(
                                 contentPadding: EdgeInsets.zero,
                                 title: Text(
-                                    t.intro.page_2.exact_notification_checkbox),
-                                subtitle: Text(t.intro.page_2
-                                    .exact_notification_description),
+                                  t.intro.page_2.exact_notification_checkbox,
+                                ),
+                                subtitle: Text(
+                                  t.intro.page_2.exact_notification_description,
+                                ),
                                 value: notifExactAllowed.value,
                                 onChanged: (val) async {
                                   if (val == null) return;
