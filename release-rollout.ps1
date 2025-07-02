@@ -11,7 +11,7 @@ flutter clean && flutter pub get
 echo "Building for Android.."
 flutter build appbundle --release --build-number="$git_count"
 echo "Fastlane android.."
-cd android && bundle exec fastlane release && cd ..
+cd android && fastlane release && cd ..
 echo "Cleaning.."
 flutter clean && flutter pub get
 echo "Done"

@@ -1,6 +1,6 @@
 #!/bin/sh
 
-git_count=$(git rev-list --count master)
+git_count=$(git rev-list --count main)
 
 echo "Rolling out +$git_count ..."
 
