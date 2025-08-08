@@ -18,7 +18,7 @@ dependencies:
   pocketbase: 0.18.1
 
   google_maps_flutter: 2.12.3
-  google_fonts: 6.2.1
+  google_fonts: 6.3.0
   location: 8.0.1
   geocoding: 4.0.0
   geolocator: 14.0.2
@@ -27,7 +27,7 @@ dependencies:
 
   package_info_plus: 8.3.0
   share_plus: 11.0.0
-  url_launcher: 6.3.1
+  url_launcher: 6.3.2
   shared_preferences: 2.5.3
   add_2_calendar: 3.0.1
   quick_actions: 1.1.0
@@ -41,7 +41,7 @@ dependencies:
   path_provider: 2.1.5
   qr_flutter: 4.1.0
 
-  flutter_local_notifications: 19.3.0
+  flutter_local_notifications: 19.4.0
   # timezone: ^0.9.4
   keep_screen_on: 4.0.0
 
@@ -52,8 +52,8 @@ dependencies:
   efficient_autocomplete_formfield: 0.3.2+1
 
   # Languages
-  slang: 4.7.2
-  slang_flutter: 4.7.0
+  slang: 4.8.1
+  slang_flutter: 4.8.0
   animated_digit: 3.2.3
   # Run: `dart run slang`
 
@@ -83,4 +83,6 @@ flutter:
 
   assets:
     - assets/map_styles/
+    - assets/map_styles/dark.json
+    - assets/map_styles/light.json
     - assets/
