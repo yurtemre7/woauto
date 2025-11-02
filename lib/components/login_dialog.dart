@@ -71,6 +71,7 @@ class _LoginSheetState extends State<LoginSheet> {
                             AutofillHints.username,
                           ],
                           autovalidateMode: AutovalidateMode.onUserInteraction,
+                          keyboardType: TextInputType.emailAddress,
                           textInputAction: TextInputAction.next,
                         ),
                         TextFormField(
@@ -109,6 +110,7 @@ class _LoginSheetState extends State<LoginSheet> {
                             AutofillHints.password,
                             AutofillHints.newPassword,
                           ],
+                          keyboardType: TextInputType.visiblePassword,
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                         ),
                         if (errorText.isNotEmpty) ...[

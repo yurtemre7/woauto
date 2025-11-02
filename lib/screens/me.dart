@@ -436,7 +436,7 @@ class _MeState extends State<Me> {
                         Builder(
                           builder: (context) {
                             var user =
-                                woAutoServer.pb.authStore.model as RecordModel;
+                                woAutoServer.pb.authStore.record as RecordModel;
                             return SelectionArea(
                               child: ListTile(
                                 title: Text(
@@ -462,6 +462,8 @@ class _MeState extends State<Me> {
                                               woAutoServer.pb.authStore.clear();
                                               woAuto.friendPositions.clear();
                                               woAuto.friendCarPositions.clear();
+                                              woAuto.carParkings.clear();
+                                              woAuto.carParkingHistory.clear();
                                               woAutoServer.reset();
                                               woAuto.save();
                                               pop();

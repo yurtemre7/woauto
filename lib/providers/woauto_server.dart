@@ -97,12 +97,12 @@ class WoAutoServer extends GetxController {
 
       if (user == null) return;
 
-      var friends = user.expand['friends'];
+      var friends = user.get<List<RecordModel>?>('expand.friends');
       if (friends != null) {
         woAuto.friendCarMarkers.clear();
         woAuto.friendCarPositions.clear();
         for (var friend in friends) {
-          var fPosition = friend.expand['position']?.first;
+          var fPosition = friend.get<RecordModel?>('expand.position');
           if (fPosition != null) {
             logMessage('Position: ${fPosition.data}', tag: friend.id);
             var simplePosition = WaSimplePosition.fromRecord(fPosition);
@@ -112,7 +112,7 @@ class WoAutoServer extends GetxController {
               newName: friend.data['username'],
             );
           }
-          var fParkings = friend.expand['parkings'];
+          var fParkings = friend.get<List<RecordModel>?>('expand.parkings');
           if (fParkings != null) {
             for (var fPark in fParkings) {
               logMessage('Parking ${fPark.id}: ${fPark.data}', tag: friend.id);
@@ -134,7 +134,7 @@ class WoAutoServer extends GetxController {
               var fUser = userData.record;
               if (fUser == null) return;
               logMessage('Friend updated', tag: fUser.id);
-              var fPosition = fUser.expand['position']?.first;
+              var fPosition = fUser.get<RecordModel?>('expand.position');
               if (fPosition != null) {
                 logMessage('Position: ${fPosition.data}', tag: fUser.id);
                 var simplePosition = WaSimplePosition.fromRecord(fPosition);
@@ -147,7 +147,7 @@ class WoAutoServer extends GetxController {
                 woAuto.deleteFriendPosition(uuid: fUser.id);
               }
 
-              var fParkings = friend.expand['parkings'];
+              var fParkings = friend.get<List<RecordModel>?>('expand.parkings');
               if (fParkings != null) {
                 for (var fPark in fParkings) {
                   logMessage(
@@ -181,7 +181,7 @@ class WoAutoServer extends GetxController {
 
   Future<RecordModel?> getUser({String? id, String? expand}) async {
     RecordModel user;
-    var localUser = pb.authStore.model as RecordModel?;
+    var localUser = pb.authStore.record;
     if (localUser == null || !pb.authStore.isValid) return null;
     id ??= localUser.id;
     user = await pb.collection('users').getOne(id, expand: expand);
@@ -195,7 +195,7 @@ class WoAutoServer extends GetxController {
   Future<void> setUserLocation(LatLng position) async {
     try {
       // example create body
-      var user = pb.authStore.model as RecordModel?;
+      var user = pb.authStore.record;
       if (user == null || !pb.authStore.isValid) return;
       // var user = await pb.collection('users').getOne(userOld.id);
       var positionData = user.data['position'].toString().trim();
@@ -230,7 +230,7 @@ class WoAutoServer extends GetxController {
   Future<void> deleteUserLocation() async {
     try {
       // example create body
-      var user = pb.authStore.model as RecordModel?;
+      var user = pb.authStore.record;
       if (user == null || !pb.authStore.isValid) return;
       // var user = await pb.collection('users').getOne(userOld.id);
       var positionData = user.data['position'].toString().trim();
@@ -265,7 +265,7 @@ class WoAutoServer extends GetxController {
       var user = await getUser(expand: 'parkings');
       if (user == null || !pb.authStore.isValid) return;
       // var user = await pb.collection('users').getOne(userOld.id);
-      var parkingsData = user.expand['parkings'] as List<RecordModel?>? ?? [];
+      var parkingsData = user.get<List<RecordModel?>>('expand.parkings', []);
 
       if (parkingsData.isEmpty) {
         // create parking
@@ -290,9 +290,7 @@ class WoAutoServer extends GetxController {
         // find parking
         RecordModel? foundParking;
         for (var tPark in parkingsData) {
-          if (tPark == null) continue;
-
-          if (tPark.data['uuid'] == park.uuid) {
+          if (tPark != null && tPark.data['uuid'] == park.uuid) {
             foundParking = tPark;
             break;
           }
@@ -344,7 +342,7 @@ class WoAutoServer extends GetxController {
       var user = await getUser(expand: 'parkings');
       if (user == null || !pb.authStore.isValid) return;
       // var user = await pb.collection('users').getOne(userOld.id);
-      var parkingsData = user.expand['parkings'] as List<RecordModel?>? ?? [];
+      var parkingsData = user.get<List<RecordModel?>>('expand.parkings', []);
 
       if (parkingsData.isEmpty) {
         // Cant delete parking, as it is not online.
@@ -371,7 +369,7 @@ class WoAutoServer extends GetxController {
   Future<void> deleteUserParkingLocations() async {
     try {
       // example create body
-      var user = pb.authStore.model as RecordModel?;
+      var user = pb.authStore.record;
       if (user == null || !pb.authStore.isValid) return;
       // var user = await pb.collection('users').getOne(userOld.id);
       var parkingsData = user.data['parkings'] as List<dynamic>;
