@@ -58,34 +58,21 @@ class _TopHeaderState extends State<TopHeader> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             if (woAuto.drivingMode.value) ...[
-                              if (woAuto.currentVelocity.value >= 0.0)
+                              if (woAuto.currentVelocity.value > 0.0)
                                 Row(
                                   children: [
-                                    Container(
-                                      // ! such a stupid hack, cuz the package is
-                                      // ! not centering it properly xD
-                                      margin: const EdgeInsets.only(bottom: 6),
-                                      child: AnimatedDigitWidget(
-                                        boxDecoration: const BoxDecoration(),
-                                        value: kmh,
-                                        fractionDigits: 1,
-                                        textStyle: TextStyle(
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.bold,
-                                          color:
-                                              context.theme.colorScheme.primary,
-                                        ),
-                                        loop: false,
-                                      ),
-                                    ),
-                                    Text(
-                                      ' km/h',
-                                      style: TextStyle(
+                                    AnimatedDigitWidget(
+                                      boxDecoration: const BoxDecoration(),
+                                      value: kmh,
+                                      fractionDigits: 1,
+                                      textStyle: TextStyle(
                                         fontSize: 20.0,
                                         fontWeight: FontWeight.bold,
                                         color:
                                             context.theme.colorScheme.primary,
                                       ),
+                                      loop: false,
+                                      suffix: ' km/h',
                                     ),
                                   ],
                                 ),
