@@ -376,67 +376,69 @@ class WoAuto extends GetxController {
                                       margin: EdgeInsets.zero,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            ListTile(
-                                              title:
-                                                  Text(t.bottom_sheet.camera),
-                                              leading:
-                                                  const Icon(Icons.camera_alt),
-                                              onTap: () async {
-                                                pop();
-                                                XFile? image =
-                                                    await ImagePicker()
-                                                        .pickImage(
-                                                  source: ImageSource.camera,
-                                                );
-
-                                                if (image == null) return;
-
-                                                String duplicateFilePath =
-                                                    (await getApplicationDocumentsDirectory())
-                                                        .path;
-
-                                                var fileName =
-                                                    image.path.split('/').last;
-                                                File localImage =
-                                                    await File(image.path).copy(
-                                                  '$duplicateFilePath/$fileName',
-                                                );
-                                                carPicturePath.value =
-                                                    localImage.path;
-                                              },
-                                            ),
-                                            const Div(),
-                                            ListTile(
-                                              title: Text(t.bottom_sheet.photo),
-                                              leading: const Icon(Icons.photo),
-                                              onTap: () async {
-                                                pop();
-                                                XFile? image =
-                                                    await ImagePicker()
-                                                        .pickImage(
-                                                  source: ImageSource.gallery,
-                                                );
-
-                                                if (image == null) return;
-
-                                                String duplicateFilePath =
-                                                    (await getApplicationDocumentsDirectory())
-                                                        .path;
-
-                                                var fileName =
-                                                    image.path.split('/').last;
-                                                File localImage =
-                                                    await File(image.path).copy(
-                                                  '$duplicateFilePath/$fileName',
-                                                );
-                                                carPicturePath.value =
-                                                    localImage.path;
-                                              },
-                                            ),
-                                          ],
+                                        child: SafeArea(
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              ListTile(
+                                                title:
+                                                    Text(t.bottom_sheet.camera),
+                                                leading:
+                                                    const Icon(Icons.camera_alt),
+                                                onTap: () async {
+                                                  pop();
+                                                  XFile? image =
+                                                      await ImagePicker()
+                                                          .pickImage(
+                                                    source: ImageSource.camera,
+                                                  );
+                                          
+                                                  if (image == null) return;
+                                          
+                                                  String duplicateFilePath =
+                                                      (await getApplicationDocumentsDirectory())
+                                                          .path;
+                                          
+                                                  var fileName =
+                                                      image.path.split('/').last;
+                                                  File localImage =
+                                                      await File(image.path).copy(
+                                                    '$duplicateFilePath/$fileName',
+                                                  );
+                                                  carPicturePath.value =
+                                                      localImage.path;
+                                                },
+                                              ),
+                                              const Div(),
+                                              ListTile(
+                                                title: Text(t.bottom_sheet.photo),
+                                                leading: const Icon(Icons.photo),
+                                                onTap: () async {
+                                                  pop();
+                                                  XFile? image =
+                                                      await ImagePicker()
+                                                          .pickImage(
+                                                    source: ImageSource.gallery,
+                                                  );
+                                          
+                                                  if (image == null) return;
+                                          
+                                                  String duplicateFilePath =
+                                                      (await getApplicationDocumentsDirectory())
+                                                          .path;
+                                          
+                                                  var fileName =
+                                                      image.path.split('/').last;
+                                                  File localImage =
+                                                      await File(image.path).copy(
+                                                    '$duplicateFilePath/$fileName',
+                                                  );
+                                                  carPicturePath.value =
+                                                      localImage.path;
+                                                },
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     ),
