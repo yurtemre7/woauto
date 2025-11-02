@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:efficient_autocomplete_formfield/efficient_autocomplete_formfield.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -272,6 +271,7 @@ class WoAuto extends GetxController {
     var textController = TextEditingController();
     var newNameController =
         TextEditingController(text: woAuto.subText.value).obs;
+    var focusNode = FocusNode();
     var carPicturePath = ''.obs;
 
     await Get.dialog(
@@ -293,46 +293,10 @@ class WoAuto extends GetxController {
                     title: Text(t.park_dialog.content_1),
                   ),
                   ListTile(
-                    title: EfficientAutocompleteFormField<String>(
-                      decoration: InputDecoration(
-                        labelText: t.park_dialog.park_name.label,
-                        hintText: t.constants.default_park_title,
-                        isDense: true,
-                        suffixIcon: IconButton(
-                          padding: EdgeInsets.zero,
-                          visualDensity: VisualDensity.compact,
-                          onPressed: () => newNameController.value.clear(),
-                          icon: const Icon(Icons.clear),
-                        ),
-                      ),
-                      autocorrect: false,
-                      textCapitalization: TextCapitalization.words,
-                      suggestionsBuilder: (context, items) {
-                        return Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: items,
-                          ),
-                        );
-                      },
-                      itemBuilder: (context, carName) {
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 8,
-                              ),
-                              child: Text(carName ?? ''),
-                            ),
-                          ],
-                        );
-                      },
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: newNameController.value,
-                      onSearch: (search) async {
-                        // if (search.isNotEmpty) return [];
+                    title: Autocomplete<String>(
+                      optionsBuilder: (textEditingValue) {
+                        var search = textEditingValue.text;
+                        // print(search);
                         if (search.isEmpty) return [];
 
                         List<String> carNames = carParkings
@@ -346,6 +310,34 @@ class WoAuto extends GetxController {
 
                         return carNames;
                       },
+                      fieldViewBuilder: (
+                        context,
+                        textEditingController,
+                        focusNode,
+                        onFieldSubmitted,
+                      ) {
+                        return TextFormField(
+                          controller: textEditingController,
+                          focusNode: focusNode,
+                          onFieldSubmitted: (s) => onFieldSubmitted,
+                          onChanged: (s) {
+                            newNameController.refresh();
+                          },
+                        );
+                      },
+                      textEditingController: newNameController.value,
+                      focusNode: focusNode,
+                    ),
+                    trailing: IconButton(
+                      padding: EdgeInsets.zero,
+                      visualDensity: VisualDensity.compact,
+                      onPressed: newNameController.value.text.isNotEmpty
+                          ? () {
+                              newNameController.value.clear();
+                              newNameController.refresh();
+                            }
+                          : null,
+                      icon: const Icon(Icons.clear),
                     ),
                   ),
                   10.h,
