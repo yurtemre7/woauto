@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:location/location.dart';
 import 'package:woauto/components/div.dart';
@@ -21,14 +19,12 @@ class _IntroState extends State<Intro> {
   var pageController = PageController();
   var pageIndex = 0.obs;
   final allowed = false.obs;
-  final notifAllowed = false.obs;
-  final notifExactAllowed = false.obs;
   final showError = false.obs;
 
   @override
   void initState() {
     super.initState();
-    Future.delayed(0.seconds, () async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       var permission = await Location().hasPermission();
       allowed.value = permission == PermissionStatus.granted;
     });
@@ -175,21 +171,8 @@ class _IntroState extends State<Intro> {
                                     ],
                                     onChanged: (v) async {
                                       woAuto.themeMode.value = v!;
-
                                       await woAuto.save();
                                       woAuto.setTheme();
-                                      if (!mounted) return;
-                                      Future.delayed(500.milliseconds, () {
-                                        if (!context.mounted) return;
-                                        SystemChrome.setSystemUIOverlayStyle(
-                                          SystemUiOverlayStyle(
-                                            systemNavigationBarColor:
-                                                Theme.of(context)
-                                                    .colorScheme
-                                                    .surface,
-                                          ),
-                                        );
-                                      });
                                     },
                                   );
 
@@ -235,67 +218,6 @@ class _IntroState extends State<Intro> {
                               },
                             ),
                           ),
-                          Obx(
-                            () => CheckboxListTile(
-                              contentPadding: EdgeInsets.zero,
-                              title: Text(t.intro.page_2.notification_checkbox),
-                              value: notifAllowed.value,
-                              onChanged: (val) async {
-                                if (val == null) return;
-
-                                if (!val) {
-                                  notifAllowed.value = val;
-                                  return;
-                                }
-                                if (isIOS()) {
-                                  var result = await flutterLocalNotificationsPlugin
-                                      .resolvePlatformSpecificImplementation<
-                                          IOSFlutterLocalNotificationsPlugin>()
-                                      ?.requestPermissions(
-                                        alert: true,
-                                        badge: true,
-                                        sound: true,
-                                      );
-                                  notifAllowed.value = result ?? false;
-                                  return;
-                                }
-                                var v = await flutterLocalNotificationsPlugin
-                                    .resolvePlatformSpecificImplementation<
-                                        AndroidFlutterLocalNotificationsPlugin>()
-                                    ?.requestNotificationsPermission();
-
-                                notifAllowed.value = v ?? false;
-                              },
-                            ),
-                          ),
-                          if (isAndroid())
-                            Obx(
-                              () => CheckboxListTile(
-                                contentPadding: EdgeInsets.zero,
-                                title: Text(
-                                  t.intro.page_2.exact_notification_checkbox,
-                                ),
-                                subtitle: Text(
-                                  t.intro.page_2.exact_notification_description,
-                                ),
-                                value: notifExactAllowed.value,
-                                onChanged: (val) async {
-                                  if (val == null) return;
-
-                                  if (!val) {
-                                    notifExactAllowed.value = val;
-                                    return;
-                                  }
-
-                                  var v = await flutterLocalNotificationsPlugin
-                                      .resolvePlatformSpecificImplementation<
-                                          AndroidFlutterLocalNotificationsPlugin>()
-                                      ?.requestExactAlarmsPermission();
-
-                                  notifExactAllowed.value = v ?? false;
-                                },
-                              ),
-                            ),
                         ],
                       ),
                     ],

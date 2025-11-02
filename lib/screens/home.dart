@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -21,7 +20,6 @@ import 'package:woauto/screens/intro.dart';
 import 'package:woauto/screens/me.dart';
 import 'package:woauto/screens/settings.dart';
 import 'package:woauto/utils/constants.dart';
-import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 import 'package:location/location.dart' as loc;
 
@@ -45,7 +43,7 @@ class _HomeState extends State<Home> {
     YrtmrDeeplinks.initYrtmrLinks();
     _sub = YrtmrDeeplinks.yrtmrLinksListener();
 
-    Future.delayed(0.seconds, () async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (woAuto.welcome.value) {
         if (!mounted) return;
         await Get.bottomSheet(
@@ -58,13 +56,6 @@ class _HomeState extends State<Home> {
           isDismissible: false,
         );
         await loadPositionData();
-      }
-
-      NotificationAppLaunchDetails? notificationAppLaunchDetails =
-          await flutterLocalNotificationsPlugin
-              .getNotificationAppLaunchDetails();
-      if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
-        logMessage('Notification launched app');
       }
     });
 

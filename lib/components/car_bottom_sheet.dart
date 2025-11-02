@@ -299,8 +299,6 @@ class _CarBottomSheetState extends State<CarBottomSheet>
                   .removeWhere((element) => element.uuid == park.uuid);
               woAuto.carParkings.refresh();
               woAutoServer.deleteUserParking(park.uuid);
-
-              flutterLocalNotificationsPlugin.cancelAll();
               woAuto.save();
           }
           pop();

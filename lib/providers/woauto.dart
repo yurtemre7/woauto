@@ -6,7 +6,6 @@ import 'package:efficient_autocomplete_formfield/efficient_autocomplete_formfiel
 import 'package:expandable/expandable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -67,7 +66,6 @@ class WoAuto extends GetxController {
   final appColor = appColorDefault.getValue.obs;
   final mapType = MapType.normal.obs;
   final showTraffic = false.obs;
-  final timePuffer = 10.obs;
   final drivingModeDetectionSpeed = 20.obs;
 
   // my car data
@@ -110,7 +108,6 @@ class WoAuto extends GetxController {
       'carParkings': carParkings.map((e) => e.toJson()).toList(),
       'carParkHistory': carParkingHistory.map((e) => e.toJson()).toList(),
       'welcome': welcome.value,
-      'timePuffer': timePuffer.value,
       'drivingModeDetectionSpeed': drivingModeDetectionSpeed.value,
     });
   }
@@ -122,7 +119,6 @@ class WoAuto extends GetxController {
     WoAuto woAuto = WoAuto(await SharedPreferences.getInstance());
 
     woAuto.welcome.value = jsonMap['welcome'] ?? true;
-    woAuto.timePuffer.value = jsonMap['timePuffer'] ?? 10;
     woAuto.drivingModeDetectionSpeed.value =
         jsonMap['drivingModeDetectionSpeed'] ?? 20;
 
@@ -221,7 +217,6 @@ class WoAuto extends GetxController {
     logMessage('Theme Mode: $themeMode');
     logMessage('Map Type: $mapType');
     logMessage('Show Traffic: $showTraffic');
-    logMessage('Time Puffer: $timePuffer');
     logMessage('Driving Mode Detection Speed: $drivingModeDetectionSpeed');
 
     logMessage('---' * 15);
@@ -238,7 +233,6 @@ class WoAuto extends GetxController {
 
     themeMode.value = 0;
     appColor.value = appColorDefault.getValue;
-    timePuffer.value = 10;
     drivingModeDetectionSpeed.value = 20;
 
     carParkings.clear();
@@ -278,7 +272,6 @@ class WoAuto extends GetxController {
     var textController = TextEditingController();
     var newNameController =
         TextEditingController(text: woAuto.subText.value).obs;
-    var tillTime = Rxn<TimeOfDay>();
     var carPicturePath = ''.obs;
 
     await Get.dialog(
@@ -378,31 +371,6 @@ class WoAuto extends GetxController {
                           scrollDirection: Axis.horizontal,
                           child: Row(
                             children: [
-                              if (isAndroid())
-                                ElevatedButton.icon(
-                                  onPressed: () async {
-                                    tillTime.value = await showTimePicker(
-                                      context: Get.context!,
-                                      initialTime: TimeOfDay.now(),
-                                      builder: (context, child) {
-                                        return MediaQuery(
-                                          data: MediaQuery.of(context).copyWith(
-                                            alwaysUse24HourFormat: true,
-                                          ),
-                                          child: child!,
-                                        );
-                                      },
-                                      helpText: t.park_dialog.ticket.help,
-                                      confirmText: t.dialog.save,
-                                      cancelText: t.dialog.abort,
-                                    );
-                                  },
-                                  label: Text(
-                                    t.park_dialog.ticket.title,
-                                  ),
-                                  icon: const Icon(Icons.timer_outlined),
-                                ),
-                              8.w,
                               ElevatedButton.icon(
                                 onPressed: () async {
                                   Get.bottomSheet(
@@ -492,17 +460,6 @@ class WoAuto extends GetxController {
                         ),
                         12.h,
                         Obx(
-                          () => Text(
-                            tillTime.value == null
-                                ? ''
-                                : t.park_dialog.ticket.until(
-                                    time:
-                                        "${tillTime.value!.hour.toString().padLeft(2, '0')}:${tillTime.value!.minute.toString().padLeft(2, '0')}",
-                                  ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
-                        Obx(
                           () => carPicturePath.value.isEmpty
                               ? const SizedBox()
                               : Stack(
@@ -574,8 +531,6 @@ class WoAuto extends GetxController {
                   newName: newNameController.value.text,
                   photoPath: carPicturePath.value,
                 );
-
-                woAuto.addParkticketNotification(tillTime.value);
 
                 if (woAuto.mapController.value == null) {
                   return;
@@ -709,7 +664,6 @@ class WoAuto extends GetxController {
               WoAutoServer woAutoServer = Get.find();
               woAutoServer.deleteUserParking(park.uuid);
 
-              flutterLocalNotificationsPlugin.cancelAll();
               woAuto.save();
               Get.back();
             },
@@ -894,117 +848,6 @@ class WoAuto extends GetxController {
     friendCarPositions.removeAt(idx);
     friendCarPositions.refresh();
     save();
-  }
-
-  Future<void> addParkticketNotification(TimeOfDay? tillTime) async {
-    if (tillTime != null) {
-      // var differenceInSecondsFromNow = tillTime.hour * 3600 +
-      //     tillTime.minute * 60 -
-      //     DateTime.now().hour * 3600 -
-      //     DateTime.now().minute * 60 -
-      //     DateTime.now().second;
-
-      bool? res;
-
-      if (isIOS()) {
-        res = await flutterLocalNotificationsPlugin
-            .resolvePlatformSpecificImplementation<
-                IOSFlutterLocalNotificationsPlugin>()
-            ?.requestPermissions(
-              alert: true,
-              badge: true,
-              sound: true,
-            );
-      } else if (isAndroid()) {
-        res = (await flutterLocalNotificationsPlugin
-                .resolvePlatformSpecificImplementation<
-                    AndroidFlutterLocalNotificationsPlugin>()
-                ?.requestNotificationsPermission()) ??
-            false;
-        var res2 = (await flutterLocalNotificationsPlugin
-                .resolvePlatformSpecificImplementation<
-                    AndroidFlutterLocalNotificationsPlugin>()
-                ?.requestExactAlarmsPermission()) ??
-            false;
-        res = res && res2;
-      } else {
-        Get.dialog(
-          AlertDialog(
-            title: Text(t.dialog.notifications.na.title),
-            content: Text(
-              t.dialog.notifications.na.subtitle,
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  pop();
-                },
-                child: Text(t.dialog.ok),
-              ),
-            ],
-          ),
-          name: 'Info Parkticket',
-        );
-        return;
-      }
-
-      if (res == null || res == false) {
-        Get.dialog(
-          AlertDialog(
-            title: Text(t.dialog.notifications.denied.title),
-            content: Text(t.dialog.notifications.denied.subtitle),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  pop();
-                  Geolocator.openAppSettings();
-                },
-                child: Text(t.dialog.ok),
-              ),
-            ],
-          ),
-          name: 'Info Parkticket',
-        );
-        return;
-      }
-
-      await flutterLocalNotificationsPlugin.cancelAll();
-
-      NotificationDetails notificationDetails =
-          NotificationDetails(android: androidNotificationDetailsMAX);
-      await flutterLocalNotificationsPlugin.show(
-        1,
-        t.dialog.notifications.sent.title,
-        t.park_dialog.ticket.until(
-          time:
-              "${tillTime.hour.toString().padLeft(2, '0')}:${tillTime.minute.toString().padLeft(2, '0')}",
-        ),
-        notificationDetails,
-      );
-
-      // int minutesLeft = 0;
-      // int minutes = woAuto.timePuffer.value * 60;
-      // if (differenceInSecondsFromNow > minutes) {
-      //   differenceInSecondsFromNow -= minutes;
-      //   minutesLeft = woAuto.timePuffer.value;
-      // } else if (differenceInSecondsFromNow < 0) {
-      //   differenceInSecondsFromNow += 86400 - minutes;
-      //   minutesLeft = woAuto.timePuffer.value;
-      // } else {
-      //   minutesLeft = differenceInSecondsFromNow ~/ 60;
-      // }
-      // await flutterLocalNotificationsPlugin.zonedSchedule(
-      //   0,
-      //   t.dialog.notifications.expiring.title,
-      //   t.dialog.notifications.expiring.subtitle(minutesLeft: minutesLeft),
-
-      //   NotificationDetails(
-      //     android: androidNotificationDetails,
-      //   ),
-      //   androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      //   uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      // );
-    }
   }
 
   String? getMapStyle() {

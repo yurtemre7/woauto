@@ -58,7 +58,6 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                 pos = woAuto.currentSelectedPosition.value!;
               }
               await woAuto.onNewParking(pos);
-              flutterLocalNotificationsPlugin.cancelAll();
               woAuto.tempMarkers
                   .removeWhere((element) => element.markerId.value == 'temp');
               woAuto.currentSelectedPosition.value = null;

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,40 +6,15 @@ import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/screens/home.dart';
-import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
 
 late WoAuto woAuto;
-late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LocaleSettings.useDeviceLocale();
   woAuto = Get.put(await WoAuto.load());
   Get.put(await WoAutoServer.load());
-  flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  try {
-    await flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-            AndroidFlutterLocalNotificationsPlugin>()
-        ?.createNotificationChannel(channel);
-    InitializationSettings initializationSettings =
-        const InitializationSettings(
-      android: AndroidInitializationSettings('ic_launcher_monochrome'),
-      iOS: DarwinInitializationSettings(
-        requestAlertPermission: false,
-        requestBadgePermission: false,
-        requestSoundPermission: false,
-      ),
-    );
-    await flutterLocalNotificationsPlugin.initialize(
-      initializationSettings,
-    );
-  } catch (e) {
-    logMessage(
-      'Couldn\'t create Notification Channel or Initialize Android Notification Settings: $e',
-    );
-  }
   runApp(TranslationProvider(child: const MyApp()));
 }
 
