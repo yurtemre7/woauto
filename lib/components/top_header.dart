@@ -58,7 +58,7 @@ class _TopHeaderState extends State<TopHeader> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             if (woAuto.drivingMode.value) ...[
-                              if (woAuto.currentVelocity.value > 0.0)
+                              if (woAuto.currentVelocity.value >= 0.0)
                                 Row(
                                   children: [
                                     AnimatedDigitWidget(
