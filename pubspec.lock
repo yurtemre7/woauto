@@ -169,14 +169,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.11"
-  efficient_autocomplete_formfield:
-    dependency: "direct main"
-    description:
-      name: efficient_autocomplete_formfield
-      sha256: "1a4e5357906aa25af4bc34ae56539249fc9a62649cfbb6211dbbb0375685c59d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.2+1"
   expandable:
     dependency: "direct main"
     description:
@@ -1020,14 +1012,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.6"
-  textfield_state:
-    dependency: transitive
-    description:
-      name: textfield_state
-      sha256: "2dc47f3e367cd778b5483c8de6bd108066381c6d9c9347e2fd9b4767007eb5e0"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0"
   typed_data:
     dependency: transitive
     description:

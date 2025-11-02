@@ -47,7 +47,6 @@ dependencies:
   uuid: 4.5.1
 
   # UI
-  efficient_autocomplete_formfield: 0.3.2+1
 
   # Languages
   slang: 4.9.2
