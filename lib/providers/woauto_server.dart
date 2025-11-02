@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pocketbase/pocketbase.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:woauto/classes/car_park.dart';
 import 'package:woauto/classes/wa_position.dart';
 import 'package:woauto/classes/wa_simple_position.dart';
@@ -62,20 +61,22 @@ class WoAutoServer extends GetxController {
     if (jsonString != null) {
       server = WoAutoServer.fromJson(jsonString);
     }
-    var prefs = await SharedPreferences.getInstance();
 
     var store = AsyncAuthStore(
-      save: (String data) async => prefs.setString('pb_auth', data),
-      initial: prefs.getString('pb_auth'),
+      save: (String data) async => sp.setString('pb_auth', data),
+      initial: sp.getString('pb_auth'),
     );
 
     server.pb = PocketBase('https://woauto.yurtemre.de', authStore: store);
-    var hCheck = await server.pb.health.check();
-    var code = hCheck.code;
+    server.pb.health.check().then((checkResult) {
+      var code = checkResult.code;
 
-    if (code >= 200 && code <= 299) {
-      server.serverWorks.value = true;
-    }
+      if (code >= 200 && code <= 299) {
+        server.serverWorks.value = true;
+      }
+    }).catchError((error) {
+      logMessage('Error occured');
+    });
 
     server.initFriendsLocations();
 
