@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
@@ -85,18 +84,6 @@ class _SettingsState extends State<Settings> {
                               woAuto.themeMode.value = v!;
                               woAuto.setTheme();
                               await woAuto.save();
-                              if (!mounted) return;
-                              Future.delayed(500.milliseconds, () {
-                                if (!context.mounted) return;
-                                SystemChrome.setSystemUIOverlayStyle(
-                                  SystemUiOverlayStyle(
-                                    systemNavigationBarColor:
-                                        context.theme.colorScheme.surface,
-                                  ),
-                                );
-                              });
-
-                              // pop();
                             },
                           );
 
@@ -144,18 +131,6 @@ class _SettingsState extends State<Settings> {
                                       woAuto.appColor.value = color.getValue;
                                       woAuto.save();
                                       woAuto.setTheme();
-                                      if (!mounted) return;
-                                      Future.delayed(500.milliseconds, () {
-                                        if (!context.mounted) return;
-                                        SystemChrome.setSystemUIOverlayStyle(
-                                          SystemUiOverlayStyle(
-                                            systemNavigationBarColor:
-                                                Theme.of(context)
-                                                    .colorScheme
-                                                    .surface,
-                                          ),
-                                        );
-                                      });
                                     },
                                   ),
                                 );
@@ -225,77 +200,6 @@ class _SettingsState extends State<Settings> {
                             await woAuto.save();
                           },
                         ),
-                      ),
-                      Obx(
-                        () {
-                          var time = woAuto.timePuffer.value;
-                          DropdownButton<int> dropdownButton =
-                              DropdownButton<int>(
-                            value: time,
-                            items: [
-                              DropdownMenuItem(
-                                value: 5,
-                                child: Text(
-                                  t.settings.park_ticket
-                                      .dropdown_value(value: 5),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 10,
-                                child: Text(
-                                  t.settings.park_ticket
-                                      .dropdown_value(value: 10),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 15,
-                                child: Text(
-                                  t.settings.park_ticket
-                                      .dropdown_value(value: 15),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 20,
-                                child: Text(
-                                  t.settings.park_ticket
-                                      .dropdown_value(value: 20),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 25,
-                                child: Text(
-                                  t.settings.park_ticket
-                                      .dropdown_value(value: 25),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 30,
-                                child: Text(
-                                  t.settings.park_ticket
-                                      .dropdown_value(value: 30),
-                                ),
-                              ),
-                            ],
-                            onChanged: (v) {
-                              woAuto.timePuffer.value = v!;
-                              woAuto.save();
-                              // pop();
-                            },
-                          );
-
-                          return ListTile(
-                            title: Text(
-                              t.settings.park_ticket.title,
-                              style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                            ),
-                            subtitle: Text(
-                              t.settings.park_ticket.subtitle,
-                            ),
-                            trailing: dropdownButton,
-                          );
-                        },
                       ),
                       Obx(
                         () {
