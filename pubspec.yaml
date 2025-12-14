@@ -14,10 +14,9 @@ dependencies:
 
   cupertino_icons: 1.0.8
 
-  get: 4.7.2
+  get: 4.7.3
 
-  google_maps_flutter: 2.13.1
-  google_fonts: 6.3.2
+  google_maps_flutter: 2.14.0
   location: 8.0.1
   geocoding: 4.0.0
   geolocator: 14.0.2
@@ -27,13 +26,13 @@ dependencies:
   package_info_plus: 8.3.1
   share_plus: 12.0.1
   url_launcher: 6.3.2
-  shared_preferences: 2.5.3
+  shared_preferences: 2.5.4
   add_2_calendar: 3.0.1
   quick_actions: 1.1.0
   maps_launcher: 3.0.0+1
-  app_links: 6.4.1
+  app_links: 7.0.0
 
-  image_picker: 1.2.0
+  image_picker: 1.2.1
   path_provider: 2.1.5
   qr_flutter: 4.1.0
   # timezone: ^0.9.4
@@ -45,8 +44,8 @@ dependencies:
   # UI
 
   # Languages
-  slang: 4.9.2
-  slang_flutter: 4.9.0
+  slang: 4.11.1
+  slang_flutter: 4.11.0
   animated_digit: 3.3.2
   # Run: `dart run slang`
 
