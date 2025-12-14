@@ -13,7 +13,6 @@ class MapInfoSheet extends StatefulWidget {
 }
 
 class _MapInfoSheetState extends State<MapInfoSheet> {
-
   @override
   Widget build(BuildContext context) {
     return Obx(

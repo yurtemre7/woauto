@@ -23,7 +23,6 @@ class Me extends StatefulWidget {
 }
 
 class _MeState extends State<Me> {
-
   var maxHeight = 128.0;
   var minHeight = 64.0;
 

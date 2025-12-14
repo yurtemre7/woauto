@@ -22,7 +22,6 @@ class CarBottomSheet extends StatefulWidget {
 
 class _CarBottomSheetState extends State<CarBottomSheet>
     with TickerProviderStateMixin {
-
   late AnimationController _controller;
   late AnimationController _controllerOthers;
   @override

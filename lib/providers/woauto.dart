@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -258,7 +257,6 @@ class WoAuto extends GetxController {
         ),
         useMaterial3: true,
         brightness: brightness,
-        fontFamily: GoogleFonts.roboto().fontFamily,
       ),
     );
   }
@@ -382,8 +380,9 @@ class WoAuto extends GetxController {
                                               ListTile(
                                                 title:
                                                     Text(t.bottom_sheet.camera),
-                                                leading:
-                                                    const Icon(Icons.camera_alt),
+                                                leading: const Icon(
+                                                  Icons.camera_alt,
+                                                ),
                                                 onTap: () async {
                                                   pop();
                                                   XFile? image =
@@ -391,17 +390,19 @@ class WoAuto extends GetxController {
                                                           .pickImage(
                                                     source: ImageSource.camera,
                                                   );
-                                          
+
                                                   if (image == null) return;
-                                          
+
                                                   String duplicateFilePath =
                                                       (await getApplicationDocumentsDirectory())
                                                           .path;
-                                          
-                                                  var fileName =
-                                                      image.path.split('/').last;
+
+                                                  var fileName = image.path
+                                                      .split('/')
+                                                      .last;
                                                   File localImage =
-                                                      await File(image.path).copy(
+                                                      await File(image.path)
+                                                          .copy(
                                                     '$duplicateFilePath/$fileName',
                                                   );
                                                   carPicturePath.value =
@@ -410,8 +411,10 @@ class WoAuto extends GetxController {
                                               ),
                                               const Div(),
                                               ListTile(
-                                                title: Text(t.bottom_sheet.photo),
-                                                leading: const Icon(Icons.photo),
+                                                title:
+                                                    Text(t.bottom_sheet.photo),
+                                                leading:
+                                                    const Icon(Icons.photo),
                                                 onTap: () async {
                                                   pop();
                                                   XFile? image =
@@ -419,17 +422,19 @@ class WoAuto extends GetxController {
                                                           .pickImage(
                                                     source: ImageSource.gallery,
                                                   );
-                                          
+
                                                   if (image == null) return;
-                                          
+
                                                   String duplicateFilePath =
                                                       (await getApplicationDocumentsDirectory())
                                                           .path;
-                                          
-                                                  var fileName =
-                                                      image.path.split('/').last;
+
+                                                  var fileName = image.path
+                                                      .split('/')
+                                                      .last;
                                                   File localImage =
-                                                      await File(image.path).copy(
+                                                      await File(image.path)
+                                                          .copy(
                                                     '$duplicateFilePath/$fileName',
                                                   );
                                                   carPicturePath.value =

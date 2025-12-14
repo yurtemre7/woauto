@@ -18,7 +18,6 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -433,10 +432,6 @@ class _SettingsState extends State<Settings> {
                                     8.h,
                                     Text(
                                       t.dialog.data_security.content_2,
-                                    ),
-                                    5.h,
-                                    Text(
-                                      t.dialog.data_security.content_3,
                                     ),
                                     5.h,
                                     Text(

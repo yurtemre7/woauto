@@ -3,6 +3,7 @@
 ///
 // coverage:ignore-file
 // ignore_for_file: type=lint, unused_import
+// dart format off
 
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +11,8 @@ import 'package:slang/generated.dart';
 import 'translations.g.dart';
 
 // Path: <root>
-class TranslationsEn extends Translations {
+class TranslationsEn extends Translations
+    with BaseTranslations<AppLocale, Translations> {
   /// You can call this constructor and build your own translation instance of this locale.
   /// Constructing via the enum [AppLocale.build] is preferred.
   TranslationsEn(
@@ -1262,13 +1264,10 @@ class _TranslationsDialogDataSecurityEn
   String get title => 'Privacy Policy and Legal Notice';
   @override
   String get content_1 =>
-      'Brief summary of privacy policy in our own words (as of 25/08/2024):';
+      'Brief summary of privacy policy in our own words (as of 14th December 2025):';
   @override
   String get content_2 =>
       '- The app communicates with Google Maps to display the map.';
-  @override
-  String get content_3 =>
-      '- The app communicates with my VPS server on German soil to display, create and manage synchronized parking spots and your location data, only ever if you allow it.';
   @override
   String get content_4 =>
       '- The app does not store any metadata, such as IP address, device name, or operating system version.';
@@ -1279,10 +1278,10 @@ class _TranslationsDialogDataSecurityEn
   String get content_6 => 'not to any third parties.';
   @override
   String get content_7 =>
-      '\n\n A data exchange with my server and with the servers of Google, when providing the Google Maps maps, takes place. ';
+      '\n\n A data exchange with the servers of Google, when providing the Google Maps maps, takes place. ';
   @override
   String get content_8 =>
-      'The app otherwise stores all data only on your device and you can delete them at any time, then they are also deleted from my server (in the settings at the bottom).';
+      'The app otherwise stores all data only on your device and you can delete them at any time.';
   @override
   String get action_1 => 'Imprint';
   @override
@@ -1745,522 +1744,346 @@ class _TranslationsDialogHistoryDeleteEn
   String get subtitle => 'Are you sure you want to delete all entries?';
 }
 
-/// Flat map(s) containing all translations.
+/// The flat map containing all translations for locale <en>.
 /// Only for edge cases! For simple maps, use the map function of this library.
+///
+/// The Dart AOT compiler has issues with very large switch statements,
+/// so the map is split into smaller functions (512 entries each).
 extension on TranslationsEn {
   dynamic _flatMapFunction(String path) {
-    switch (path) {
-      case 'constants.app_name':
-        return 'WoAuto';
-      case 'constants.default_park_title':
-        return 'My Car';
-      case 'constants.default_shared_title':
-        return 'Other Car';
-      case 'constants.default_park_info':
-        return 'e.g., parking level 2';
-      case 'constants.default_address':
-        return 'No address found';
-      case 'constants.address_na':
-        return 'Address was not found.';
-      case 'constants.update':
-        return 'Update';
-      case 'constants.error':
-        return 'Error';
-      case 'constants.error_description':
-        return 'An error occurred.';
-      case 'constants.parked_rn':
-        return 'parked right now';
-      case 'constants.parked_duration_string':
-        return ({required Object duration}) => 'parked since ${duration}';
-      case 'constants.navigate':
-        return 'Navigate';
-      case 'park_duration.hours':
-        return ({required num n}) =>
-            (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(
-              n,
-              one: '${n} hour',
-              other: '${n} hours',
-            );
-      case 'park_duration.minutes':
-        return ({required num n}) =>
-            (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(
-              n,
-              one: '${n} minute',
-              other: '${n} minutes',
-            );
-      case 'park_duration.days':
-        return ({required num n}) =>
-            (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(
-              n,
-              one: '${n} day',
-              other: '${n} days',
-            );
-      case 'login_dialog.email':
-        return 'E-Mail';
-      case 'login_dialog.password':
-        return 'Password';
-      case 'login_dialog.empty_validation':
-        return 'Please enter something in';
-      case 'login_dialog.email_validation':
-        return 'Please enter a valid e-mail address';
-      case 'login_dialog.password_validation':
-        return 'Please enter a secure, >= 10 characters long password';
-      case 'login_dialog.password_forgot':
-        return 'Password forgot';
-      case 'login_dialog.password_generate':
-        return 'Generate password';
-      case 'login_dialog.password_generate_info':
-        return 'Your password will be inserted into the text field when you generate it. It will not be saved by us! Take a look at the code if you are not sure!';
-      case 'login_dialog.register':
-        return 'Register';
-      case 'login_dialog.login':
-        return 'Login';
-      case 'park_dialog.title':
-        return 'New Parking';
-      case 'park_dialog.content_1':
-        return 'Save the new parking?';
-      case 'park_dialog.park_name.label':
-        return 'Name';
-      case 'park_dialog.content_2':
-        return 'Additional information';
-      case 'park_dialog.info.label':
-        return 'Info';
-      case 'park_dialog.ticket.title':
-        return 'Parking ticket';
-      case 'park_dialog.ticket.help':
-        return 'Parking ticket expires at';
-      case 'park_dialog.ticket.until':
-        return ({required Object time}) =>
-            'Parking ticket valid until ${time} o\'clock';
-      case 'park_dialog.photo.title':
-        return 'Photo';
-      case 'marker_dialog.shared.content':
-        return ({required Object address}) =>
-            'This parking spot is being shared with you.\n\nThe car is at the following address:\n${address}.';
-      case 'marker_dialog.mine.content':
-        return (
-                {required Object formattedDate,
-                required Object address,
-                required Object description}) =>
-            'You have ${formattedDate}.\n\nYour car is at the following address:\n${address}.\n${description}';
-      case 'marker_dialog.action_1':
-        return 'Delete parking';
-      case 'home.navigation_1':
-        return 'Map';
-      case 'home.navigation_2':
-        return 'My Car';
-      case 'home.navigation_3':
-        return 'History';
-      case 'home.navigation_4':
-        return 'Settings';
-      case 'home.quick_actions.action_parkings':
-        return 'Open parking spots';
-      case 'home.quick_actions.action_save':
-        return 'Quicksave parking spot';
-      case 'history.title':
-        return 'History';
-      case 'history.empty.title':
-        return 'No entries';
-      case 'history.empty.subtitle':
-        return 'You have no entries in your history.';
-      case 'history.export.title':
-        return 'Export as CSV';
-      case 'history.export.subtitle':
-        return 'Export your history as a CSV file. This will include all of your parking spots.';
-      case 'history.delete.title':
-        return 'Delete all entries';
-      case 'history.delete.subtitle':
-        return 'Delete all entries in your history.';
-      case 'info_sheet.park_save':
-        return 'Save parking spot';
-      case 'info_sheet.current_position':
-        return 'Go to your current position';
-      case 'info_sheet.parkings':
-        return 'Open parking spots';
-      case 'info_sheet.badge_label':
-        return 'Sync';
-      case 'top_header.driving_mode_tooltip':
-        return 'Driving mode';
-      case 'car_bottom_sheet.empty.parkings':
-        return 'You have no parking spots.';
-      case 'car_bottom_sheet.empty.shared_parkings':
-        return 'You have no shared parking spots.';
-      case 'car_bottom_sheet.distance_calculation.title':
-        return 'How are we calculating the distance?';
-      case 'car_bottom_sheet.you.title':
-        return 'You';
-      case 'car_bottom_sheet.you.address':
-        return 'On you';
-      case 'car_bottom_sheet.friends.title':
-        return 'Friends';
-      case 'car_bottom_sheet.friends.park':
-        return 'parking';
-      case 'car_bottom_sheet.menu.open_park_in_maps':
-        return 'Open in a maps app';
-      case 'car_bottom_sheet.menu.share_park':
-        return 'Share parking spot';
-      case 'car_bottom_sheet.menu.to_park':
-        return 'Go to parking spot';
-      case 'car_bottom_sheet.menu.delete_park':
-        return 'Delete parking spot';
-      case 'my_car.title':
-        return 'My Car';
-      case 'my_car.login_register':
-        return 'Login or Register now';
-      case 'my_car.shared_content':
-        return 'This is my car! 🚗';
-      case 'my_car.built.title':
-        return ({required Object baujahr, required Object jahre}) =>
-            'Year of manufacture: ${baujahr} (${jahre} Jahre)';
-      case 'my_car.built.title_short':
-        return ({required Object baujahr}) => 'Year of manufacture: ${baujahr}';
-      case 'my_car.built.title_dialog':
-        return 'Year of manufacture';
-      case 'my_car.built.subtitle':
-        return 'Change the year of manufacture of your car.';
-      case 'my_car.built.default_year':
-        return '2002';
-      case 'my_car.built.validate_null':
-        return 'Please enter a valid year of manufacture.';
-      case 'my_car.built.validate_year':
-        return ({required Object year}) =>
-            'Please enter a valid year of manufacture between 1900 and ${year}';
-      case 'my_car.driven.title':
-        return ({required Object km}) => '${km} km driven';
-      case 'my_car.driven.title_short':
-        return ({required Object km}) => 'Mileage: ${km}';
-      case 'my_car.driven.title_dialog':
-        return 'Mileage';
-      case 'my_car.driven.subtitle':
-        return 'Change the mileage of your car.';
-      case 'my_car.driven.hint':
-        return '123456';
-      case 'my_car.plate.title':
-        return ({required Object plate}) => 'License plate: ${plate}';
-      case 'my_car.plate.subtitle':
-        return 'Change the license plate of your car.';
-      case 'my_car.plate.title_short':
-        return 'License plate';
-      case 'my_car.plate.hint':
-        return 'B-DE-1234';
-      case 'my_car.park_name.title':
-        return ({required Object name}) => 'Title: ${name}';
-      case 'my_car.park_name.subtitle':
-        return 'Change the title of your car, e.g., Mercedes, Audi or BMW.';
-      case 'my_car.park_name.park_title':
-        return 'Name of your car';
-      case 'my_car.tuv.title':
-        return ({required Object date}) => 'MOT until ${date}';
-      case 'my_car.tuv.subtitle':
-        return 'Change the MOT date of your car.';
-      case 'my_car.tuv.help':
-        return 'Choose the "1." of the month, e.g., "1.1.2022"';
-      case 'my_car.tuv.add_to_calender':
-        return 'Add to calendar';
-      case 'my_car.tuv.calender_title':
-        return 'MOT expired';
-      case 'my_car.tuv.calender_content':
-        return 'Your MOT has expired! Please make an appointment.\n\nBest regards,\nYour WoAuto-Team';
-      case 'my_car.tuv.expired_info':
-        return 'Your MOT has expired!';
-      case 'my_car.tuv.expiring_info':
-        return 'Your MOT will expire soon! Please make an appointment.';
-      case 'my_car.share_deactivate_info':
-        return 'If you deactivate these settings, you will be asked to confirm the action again, as switching off always deletes all data from the server first and then prevents it from being saved until you switch it on again.';
-      case 'my_car.share_my_last_location':
-        return 'Share my last location';
-      case 'my_car.share_my_last_location_description':
-        return 'While using the app, your live location is saved on our server and only your friends can view it. As soon as the app is closed, the last set location remains visible.';
-      case 'my_car.share_my_last_location_deactivate':
-        return 'When you end your sharing, your location will first be deleted from our server and saving will be prevented until you reactivate it.';
-      case 'my_car.share_my_parkings':
-        return 'Share my parking spaces';
-      case 'my_car.share_my_parkings_description':
-        return 'This will save your parking spaces in our servers and so your friends, only they, can see your parking spaces, but never your parking history.';
-      case 'my_car.share_my_parkings_deactivate':
-        return 'When you end your sharing, your parking locations will be deleted from our server and saving will be prevented until you reactivate it.';
-      case 'my_car.secure_notice':
-        return 'Your private car data is stored locally on your device. We do not have access to your data. You can also delete your data at any time in the settings.';
-      case 'maps.loading':
-        return 'Loading maps ...';
-      case 'maps.traffic.show':
-        return 'Show traffic';
-      case 'maps.traffic.hide':
-        return 'Hide traffic';
-      case 'intro.page_1.page_title':
-        return 'WoAuto';
-      case 'intro.page_1.title':
-        return 'Welcome to WoAuto';
-      case 'intro.page_1.content_1':
-        return 'With WoAuto you can save your parking spot and view it later, share it with others and even navigate to it.';
-      case 'intro.page_1.content_2':
-        return 'Your parking spot is safe and always stays on your device.';
-      case 'intro.page_1.content_3':
-        return 'Save your parking spot in just 2 clicks.';
-      case 'intro.page_1.action_1':
-        return 'Continue';
-      case 'intro.page_2.page_title':
-        return 'App preferences';
-      case 'intro.page_2.parking_title':
-        return 'Set a name for your car';
-      case 'intro.page_2.parking_content':
-        return 'Give your car a cool name';
-      case 'intro.page_2.parking_hint':
-        return 'My Car';
-      case 'intro.page_2.theme_title':
-        return 'Set the app theme';
-      case 'intro.page_2.theme_content':
-        return 'Choose the theme you like best';
-      case 'intro.page_2.location_title':
-        return 'Allow real-time location permission';
-      case 'intro.page_2.location_content':
-        return 'In order for WoAuto to save your location, you must allow real-time location permission. This is necessary to find your parking spot and load the map.';
-      case 'intro.page_2.location_checkbox':
-        return 'Real-time location permission';
-      case 'intro.page_2.location_checkbox_error':
-        return 'Please allow the app to query your location while using the app.';
-      case 'intro.page_2.notification_checkbox':
-        return 'Notifications (optional)';
-      case 'intro.page_2.exact_notification_checkbox':
-        return 'Scheduled notifications (optional)';
-      case 'intro.page_2.exact_notification_description':
-        return 'Receive a notification when your parking ticket is about to expire.';
-      case 'intro.page_2.action_1':
-        return 'Done';
-      case 'bottom_sheet.photo':
-        return 'Choose photo';
-      case 'bottom_sheet.camera':
-        return 'Take photo';
-      case 'bottom_sheet.photo_delete':
-        return 'Delete photo';
-      case 'snackbar.locked.title':
-        return 'Did you lock your car?';
-      case 'snackbar.locked.subtitle':
-        return 'This is a reminder if you locked your car';
-      case 'snackbar.locked.action':
-        return 'Yes, I did';
-      case 'snackbar.shared_parking.title':
-        return 'A shared online parking space has been added';
-      case 'snackbar.shared_parking.subtitle':
-        return 'Check the map or the list.';
-      case 'snackbar.distance_calculation.title':
-        return 'How is the distance calculated?';
-      case 'snackbar.distance_calculation.subtitle':
-        return 'Distance is calculated using the Haversine formula. The formula is a special form of the Pythagorean formula used to calculate the distance between two points on a sphere. The formula is also known as "sphere distance".';
-      case 'snackbar.distance_calculation.subsubtitle':
-        return 'Click here to know more.';
-      case 'dialog.abort':
-        return 'Cancel';
-      case 'dialog.delete':
-        return 'Delete';
-      case 'dialog.leave':
-        return 'Exit';
-      case 'dialog.logout':
-        return 'Logout';
-      case 'dialog.ok':
-        return 'Ok';
-      case 'dialog.yes':
-        return 'Yes';
-      case 'dialog.no':
-        return 'No';
-      case 'dialog.share':
-        return 'Share';
-      case 'dialog.save':
-        return 'Save';
-      case 'dialog.open_settings':
-        return 'Open settings';
-      case 'dialog.share_location_parkings.title':
-        return 'Deactivate Sharing';
-      case 'dialog.share_location_parkings.content_1':
-        return '';
-      case 'dialog.share_location_parkings.content_2':
-        return 'TODO Wenn du dein Teilen beendest, werden erst deine Standorte deiner Parkplätze von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.';
-      case 'dialog.share_location_parkings.deactivate':
-        return 'Deactivate';
-      case 'dialog.distance.title':
-        return 'Distance calculation';
-      case 'dialog.distance.content':
-        return ({required Object distance}) =>
-            'The calculated distance is ${distance}';
-      case 'dialog.notifications.na.title':
-        return 'Notifications are not available';
-      case 'dialog.notifications.na.subtitle':
-        return 'notifications are not available on your device';
-      case 'dialog.notifications.denied.title':
-        return 'Notifications access denied';
-      case 'dialog.notifications.denied.subtitle':
-        return 'You have denied notifications access. Please go to settings and allow notifications.';
-      case 'dialog.notifications.sent.title':
-        return 'Car parked';
-      case 'dialog.notifications.expiring.title':
-        return 'Your parking ticket is about to expire';
-      case 'dialog.notifications.expiring.subtitle':
-        return ({required Object minutesLeft}) =>
-            'In about ${minutesLeft} minutes your parking ticket will expire, slowly prepare to leave.';
-      case 'dialog.car_bottom_sheet.sync.title':
-        return 'Sync parking spot';
-      case 'dialog.car_bottom_sheet.sync.subtitle':
-        return 'Do you want to sync the parking spot?';
-      case 'dialog.car_bottom_sheet.sync.action_1':
-        return 'Sync';
-      case 'dialog.car_bottom_sheet.synced.title':
-        return 'Parking spot synced';
-      case 'dialog.car_bottom_sheet.synced.subtitle':
-        return 'This parking spot is now on WoAuto\'s servers.\nWould you like to share the parking spot?';
-      case 'dialog.car_bottom_sheet.sharing.title':
-        return 'Sharing parking spot';
-      case 'dialog.car_bottom_sheet.sharing.subtitle':
-        return 'Have this QR code scanned to share your location';
-      case 'dialog.car_bottom_sheet.sharing.action_1':
-        return 'Share link';
-      case 'dialog.car_bottom_sheet.sharing.share_content':
-        return ({required Object woLink}) =>
-            'Here is my synced parking:\n\n${woLink}';
-      case 'dialog.maps.driving_mode.title':
-        return 'Driving mode detected';
-      case 'dialog.maps.driving_mode.subtitle':
-        return 'You are (probably) driving your car right now. Do you want to switch to the driving mode?';
-      case 'dialog.maps.location_denied.title':
-        return 'Location permission denied';
-      case 'dialog.maps.location_denied.subtitle':
-        return 'You have denied location permission. Please go to settings and allow access to your location.';
-      case 'dialog.history.info.title':
-        return 'History';
-      case 'dialog.history.info.subtitle':
-        return 'This will show you the last 15 parking spaces';
-      case 'dialog.history.delete.title':
-        return 'Delete all entries';
-      case 'dialog.history.delete.subtitle':
-        return 'Are you sure you want to delete all entries?';
-      case 'dialog.leave_info.title':
-        return 'Leave App';
-      case 'dialog.leave_info.subtitle':
-        return 'Are you sure you want to leave the app?';
-      case 'dialog.app_info.title':
-        return 'App Info';
-      case 'dialog.app_info.subtitle':
-        return 'This app was developed by Emre Yurtseven, is open-source and of course available on Github.';
-      case 'dialog.app_info.action_1':
-        return 'GitHub';
-      case 'dialog.feedback.title':
-        return 'Feedback';
-      case 'dialog.feedback.subtitle':
-        return 'Feel free to email me, join our Telegram channel, or send me a private message on Telegram:';
-      case 'dialog.feedback.action_1':
-        return 'Telegram';
-      case 'dialog.data_security.title':
-        return 'Privacy Policy and Legal Notice';
-      case 'dialog.data_security.content_1':
-        return 'Brief summary of privacy policy in our own words (as of 25/08/2024):';
-      case 'dialog.data_security.content_2':
-        return '- The app communicates with Google Maps to display the map.';
-      case 'dialog.data_security.content_3':
-        return '- The app communicates with my VPS server on German soil to display, create and manage synchronized parking spots and your location data, only ever if you allow it.';
-      case 'dialog.data_security.content_4':
-        return '- The app does not store any metadata, such as IP address, device name, or operating system version.';
-      case 'dialog.data_security.content_5':
-        return '- The app stores, of course, among other things, your location, the name of the parking lot and the coordinates, but gives them ';
-      case 'dialog.data_security.content_6':
-        return 'not to any third parties.';
-      case 'dialog.data_security.content_7':
-        return '\n\n A data exchange with my server and with the servers of Google, when providing the Google Maps maps, takes place. ';
-      case 'dialog.data_security.content_8':
-        return 'The app otherwise stores all data only on your device and you can delete them at any time, then they are also deleted from my server (in the settings at the bottom).';
-      case 'dialog.data_security.action_1':
-        return 'Imprint';
-      case 'dialog.data_security.action_2':
-        return 'Privacy';
-      case 'dialog.app_data.title':
-        return 'Delete App Data';
-      case 'dialog.app_data.subtitle':
-        return 'Are you sure you want to delete all app data?';
-      case 'dialog.account_data.title':
-        return 'Delete Account & Data';
-      case 'dialog.account_data.content':
-        return 'This will delete your account, all the data associated with you, parkings, locations etc. It will also reset all of app-data on device.';
-      case 'dialog.logout_confirm':
-        return 'Are you sure you want to logout?';
-      case 'settings.title':
-        return 'Settings';
-      case 'settings.theme.title':
-        return 'Theme';
-      case 'settings.theme.subtitle':
-        return 'Choose the theme you like best.';
-      case 'settings.theme.dropdown_1':
-        return 'System';
-      case 'settings.theme.dropdown_2':
-        return 'Light';
-      case 'settings.theme.dropdown_3':
-        return 'Dark';
-      case 'settings.color.choice':
-        return 'Color';
-      case 'settings.map_type.title':
-        return 'Map type';
-      case 'settings.map_type.subtitle':
-        return 'Choose the map type you like best.';
-      case 'settings.map_type.dropdown_1':
-        return 'Normal';
-      case 'settings.map_type.dropdown_2':
-        return 'Satellite';
-      case 'settings.map_type.dropdown_3':
-        return 'Hybrid';
-      case 'settings.map_type.dropdown_4':
-        return 'Terrain';
-      case 'settings.traffic.title':
-        return 'Traffic';
-      case 'settings.traffic.subtitle':
-        return 'Show the current traffic situation on the map.';
-      case 'settings.new_ios.title':
-        return 'iOS only design';
-      case 'settings.new_ios.subtitle':
-        return 'Use the iOS only design with Cupertino widgets.';
-      case 'settings.park_ticket.title':
-        return 'Parking ticket time buffer';
-      case 'settings.park_ticket.subtitle':
-        return 'Set a time buffer so you have time to renew the ticket or return to the car before the parking ticket expires.';
-      case 'settings.park_ticket.dropdown_value':
-        return ({required Object value}) => '${value} minutes';
-      case 'settings.driving_mode.title':
-        return 'Driving Mode Detection';
-      case 'settings.driving_mode.subtitle':
-        return 'Set how fast you need to drive for the app to detect driving mode.';
-      case 'settings.driving_mode.dropdown_value':
-        return ({required Object value}) => '${value} km/h';
-      case 'settings.app_info.title':
-        return 'App Info';
-      case 'settings.app_info.subtitle':
-        return ({required Object appVersion, required Object buildNumber}) =>
-            'Version ${appVersion}+${buildNumber}';
-      case 'settings.credits.title':
-        return 'Credits';
-      case 'settings.credits.subtitle':
-        return 'Thanks to Google Maps API and of course to the Flutter community.';
-      case 'settings.woauto_server.title':
-        return 'WoAuto Server (PocketBase)';
-      case 'settings.woauto_server.subtitle':
-        return ({required Object status}) => 'Server status: ${status}';
-      case 'settings.share.title':
-        return 'Share App';
-      case 'settings.share.subtitle':
-        return 'Why not share the app with your friends and family?';
-      case 'settings.share.share_content':
-        return 'Did you also forget where you parked last? No more. With WoAuto you can easily save your parking spot and view it later, share it with others and even navigate to it.\nYour parking spot is safe and always stays on your device.\n\nWhy don\'t you download it and try it out for yourself? https://play.google.com/store/apps/details?id=de.emredev.woauto';
-      case 'settings.feedback.title':
-        return 'Feedback';
-      case 'settings.feedback.subtitle':
-        return 'Do you have any suggestions for improvement, bugs or anything else to say?';
-      case 'settings.data_security.title':
-        return 'Privacy and Legal Notice';
-      case 'settings.data_security.subtitle':
-        return 'Learn how your data is protected.';
-      case 'settings.app_data.title':
-        return 'Delete all app data';
-      case 'settings.app_data.subtitle':
-        return 'Press and hold here to delete all your app data.';
-      case 'settings.app_data.subtitle_ios':
-        return 'Tap here to delete all your app data.';
-      default:
-        return null;
-    }
+    return switch (path) {
+      'constants.app_name' => 'WoAuto',
+      'constants.default_park_title' => 'My Car',
+      'constants.default_shared_title' => 'Other Car',
+      'constants.default_park_info' => 'e.g., parking level 2',
+      'constants.default_address' => 'No address found',
+      'constants.address_na' => 'Address was not found.',
+      'constants.update' => 'Update',
+      'constants.error' => 'Error',
+      'constants.error_description' => 'An error occurred.',
+      'constants.parked_rn' => 'parked right now',
+      'constants.parked_duration_string' => ({required Object duration}) =>
+          'parked since ${duration}',
+      'constants.navigate' => 'Navigate',
+      'park_duration.hours' => ({required num n}) =>
+          (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(
+            n,
+            one: '${n} hour',
+            other: '${n} hours',
+          ),
+      'park_duration.minutes' => ({required num n}) =>
+          (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(
+            n,
+            one: '${n} minute',
+            other: '${n} minutes',
+          ),
+      'park_duration.days' => ({required num n}) =>
+          (_root.$meta.cardinalResolver ?? PluralResolvers.cardinal('en'))(
+            n,
+            one: '${n} day',
+            other: '${n} days',
+          ),
+      'login_dialog.email' => 'E-Mail',
+      'login_dialog.password' => 'Password',
+      'login_dialog.empty_validation' => 'Please enter something in',
+      'login_dialog.email_validation' => 'Please enter a valid e-mail address',
+      'login_dialog.password_validation' =>
+        'Please enter a secure, >= 10 characters long password',
+      'login_dialog.password_forgot' => 'Password forgot',
+      'login_dialog.password_generate' => 'Generate password',
+      'login_dialog.password_generate_info' =>
+        'Your password will be inserted into the text field when you generate it. It will not be saved by us! Take a look at the code if you are not sure!',
+      'login_dialog.register' => 'Register',
+      'login_dialog.login' => 'Login',
+      'park_dialog.title' => 'New Parking',
+      'park_dialog.content_1' => 'Save the new parking?',
+      'park_dialog.park_name.label' => 'Name',
+      'park_dialog.content_2' => 'Additional information',
+      'park_dialog.info.label' => 'Info',
+      'park_dialog.ticket.title' => 'Parking ticket',
+      'park_dialog.ticket.help' => 'Parking ticket expires at',
+      'park_dialog.ticket.until' => ({required Object time}) =>
+          'Parking ticket valid until ${time} o\'clock',
+      'park_dialog.photo.title' => 'Photo',
+      'marker_dialog.shared.content' => ({required Object address}) =>
+          'This parking spot is being shared with you.\n\nThe car is at the following address:\n${address}.',
+      'marker_dialog.mine.content' => (
+              {required Object formattedDate,
+              required Object address,
+              required Object description}) =>
+          'You have ${formattedDate}.\n\nYour car is at the following address:\n${address}.\n${description}',
+      'marker_dialog.action_1' => 'Delete parking',
+      'home.navigation_1' => 'Map',
+      'home.navigation_2' => 'My Car',
+      'home.navigation_3' => 'History',
+      'home.navigation_4' => 'Settings',
+      'home.quick_actions.action_parkings' => 'Open parking spots',
+      'home.quick_actions.action_save' => 'Quicksave parking spot',
+      'history.title' => 'History',
+      'history.empty.title' => 'No entries',
+      'history.empty.subtitle' => 'You have no entries in your history.',
+      'history.export.title' => 'Export as CSV',
+      'history.export.subtitle' =>
+        'Export your history as a CSV file. This will include all of your parking spots.',
+      'history.delete.title' => 'Delete all entries',
+      'history.delete.subtitle' => 'Delete all entries in your history.',
+      'info_sheet.park_save' => 'Save parking spot',
+      'info_sheet.current_position' => 'Go to your current position',
+      'info_sheet.parkings' => 'Open parking spots',
+      'info_sheet.badge_label' => 'Sync',
+      'top_header.driving_mode_tooltip' => 'Driving mode',
+      'car_bottom_sheet.empty.parkings' => 'You have no parking spots.',
+      'car_bottom_sheet.empty.shared_parkings' =>
+        'You have no shared parking spots.',
+      'car_bottom_sheet.distance_calculation.title' =>
+        'How are we calculating the distance?',
+      'car_bottom_sheet.you.title' => 'You',
+      'car_bottom_sheet.you.address' => 'On you',
+      'car_bottom_sheet.friends.title' => 'Friends',
+      'car_bottom_sheet.friends.park' => 'parking',
+      'car_bottom_sheet.menu.open_park_in_maps' => 'Open in a maps app',
+      'car_bottom_sheet.menu.share_park' => 'Share parking spot',
+      'car_bottom_sheet.menu.to_park' => 'Go to parking spot',
+      'car_bottom_sheet.menu.delete_park' => 'Delete parking spot',
+      'my_car.title' => 'My Car',
+      'my_car.login_register' => 'Login or Register now',
+      'my_car.shared_content' => 'This is my car! 🚗',
+      'my_car.built.title' => (
+              {required Object baujahr, required Object jahre}) =>
+          'Year of manufacture: ${baujahr} (${jahre} Jahre)',
+      'my_car.built.title_short' => ({required Object baujahr}) =>
+          'Year of manufacture: ${baujahr}',
+      'my_car.built.title_dialog' => 'Year of manufacture',
+      'my_car.built.subtitle' => 'Change the year of manufacture of your car.',
+      'my_car.built.default_year' => '2002',
+      'my_car.built.validate_null' =>
+        'Please enter a valid year of manufacture.',
+      'my_car.built.validate_year' => ({required Object year}) =>
+          'Please enter a valid year of manufacture between 1900 and ${year}',
+      'my_car.driven.title' => ({required Object km}) => '${km} km driven',
+      'my_car.driven.title_short' => ({required Object km}) => 'Mileage: ${km}',
+      'my_car.driven.title_dialog' => 'Mileage',
+      'my_car.driven.subtitle' => 'Change the mileage of your car.',
+      'my_car.driven.hint' => '123456',
+      'my_car.plate.title' => ({required Object plate}) =>
+          'License plate: ${plate}',
+      'my_car.plate.subtitle' => 'Change the license plate of your car.',
+      'my_car.plate.title_short' => 'License plate',
+      'my_car.plate.hint' => 'B-DE-1234',
+      'my_car.park_name.title' => ({required Object name}) => 'Title: ${name}',
+      'my_car.park_name.subtitle' =>
+        'Change the title of your car, e.g., Mercedes, Audi or BMW.',
+      'my_car.park_name.park_title' => 'Name of your car',
+      'my_car.tuv.title' => ({required Object date}) => 'MOT until ${date}',
+      'my_car.tuv.subtitle' => 'Change the MOT date of your car.',
+      'my_car.tuv.help' => 'Choose the "1." of the month, e.g., "1.1.2022"',
+      'my_car.tuv.add_to_calender' => 'Add to calendar',
+      'my_car.tuv.calender_title' => 'MOT expired',
+      'my_car.tuv.calender_content' =>
+        'Your MOT has expired! Please make an appointment.\n\nBest regards,\nYour WoAuto-Team',
+      'my_car.tuv.expired_info' => 'Your MOT has expired!',
+      'my_car.tuv.expiring_info' =>
+        'Your MOT will expire soon! Please make an appointment.',
+      'my_car.share_deactivate_info' =>
+        'If you deactivate these settings, you will be asked to confirm the action again, as switching off always deletes all data from the server first and then prevents it from being saved until you switch it on again.',
+      'my_car.share_my_last_location' => 'Share my last location',
+      'my_car.share_my_last_location_description' =>
+        'While using the app, your live location is saved on our server and only your friends can view it. As soon as the app is closed, the last set location remains visible.',
+      'my_car.share_my_last_location_deactivate' =>
+        'When you end your sharing, your location will first be deleted from our server and saving will be prevented until you reactivate it.',
+      'my_car.share_my_parkings' => 'Share my parking spaces',
+      'my_car.share_my_parkings_description' =>
+        'This will save your parking spaces in our servers and so your friends, only they, can see your parking spaces, but never your parking history.',
+      'my_car.share_my_parkings_deactivate' =>
+        'When you end your sharing, your parking locations will be deleted from our server and saving will be prevented until you reactivate it.',
+      'my_car.secure_notice' =>
+        'Your private car data is stored locally on your device. We do not have access to your data. You can also delete your data at any time in the settings.',
+      'maps.loading' => 'Loading maps ...',
+      'maps.traffic.show' => 'Show traffic',
+      'maps.traffic.hide' => 'Hide traffic',
+      'intro.page_1.page_title' => 'WoAuto',
+      'intro.page_1.title' => 'Welcome to WoAuto',
+      'intro.page_1.content_1' =>
+        'With WoAuto you can save your parking spot and view it later, share it with others and even navigate to it.',
+      'intro.page_1.content_2' =>
+        'Your parking spot is safe and always stays on your device.',
+      'intro.page_1.content_3' => 'Save your parking spot in just 2 clicks.',
+      'intro.page_1.action_1' => 'Continue',
+      'intro.page_2.page_title' => 'App preferences',
+      'intro.page_2.parking_title' => 'Set a name for your car',
+      'intro.page_2.parking_content' => 'Give your car a cool name',
+      'intro.page_2.parking_hint' => 'My Car',
+      'intro.page_2.theme_title' => 'Set the app theme',
+      'intro.page_2.theme_content' => 'Choose the theme you like best',
+      'intro.page_2.location_title' => 'Allow real-time location permission',
+      'intro.page_2.location_content' =>
+        'In order for WoAuto to save your location, you must allow real-time location permission. This is necessary to find your parking spot and load the map.',
+      'intro.page_2.location_checkbox' => 'Real-time location permission',
+      'intro.page_2.location_checkbox_error' =>
+        'Please allow the app to query your location while using the app.',
+      'intro.page_2.notification_checkbox' => 'Notifications (optional)',
+      'intro.page_2.exact_notification_checkbox' =>
+        'Scheduled notifications (optional)',
+      'intro.page_2.exact_notification_description' =>
+        'Receive a notification when your parking ticket is about to expire.',
+      'intro.page_2.action_1' => 'Done',
+      'bottom_sheet.photo' => 'Choose photo',
+      'bottom_sheet.camera' => 'Take photo',
+      'bottom_sheet.photo_delete' => 'Delete photo',
+      'snackbar.locked.title' => 'Did you lock your car?',
+      'snackbar.locked.subtitle' => 'This is a reminder if you locked your car',
+      'snackbar.locked.action' => 'Yes, I did',
+      'snackbar.shared_parking.title' =>
+        'A shared online parking space has been added',
+      'snackbar.shared_parking.subtitle' => 'Check the map or the list.',
+      'snackbar.distance_calculation.title' =>
+        'How is the distance calculated?',
+      'snackbar.distance_calculation.subtitle' =>
+        'Distance is calculated using the Haversine formula. The formula is a special form of the Pythagorean formula used to calculate the distance between two points on a sphere. The formula is also known as "sphere distance".',
+      'snackbar.distance_calculation.subsubtitle' => 'Click here to know more.',
+      'dialog.abort' => 'Cancel',
+      'dialog.delete' => 'Delete',
+      'dialog.leave' => 'Exit',
+      'dialog.logout' => 'Logout',
+      'dialog.ok' => 'Ok',
+      'dialog.yes' => 'Yes',
+      'dialog.no' => 'No',
+      'dialog.share' => 'Share',
+      'dialog.save' => 'Save',
+      'dialog.open_settings' => 'Open settings',
+      'dialog.share_location_parkings.title' => 'Deactivate Sharing',
+      'dialog.share_location_parkings.content_1' => '',
+      'dialog.share_location_parkings.content_2' =>
+        'TODO Wenn du dein Teilen beendest, werden erst deine Standorte deiner Parkplätze von unserem Server gelöscht und das Speichern unterbunden, bis du es wieder einschaltest.',
+      'dialog.share_location_parkings.deactivate' => 'Deactivate',
+      'dialog.distance.title' => 'Distance calculation',
+      'dialog.distance.content' => ({required Object distance}) =>
+          'The calculated distance is ${distance}',
+      'dialog.notifications.na.title' => 'Notifications are not available',
+      'dialog.notifications.na.subtitle' =>
+        'notifications are not available on your device',
+      'dialog.notifications.denied.title' => 'Notifications access denied',
+      'dialog.notifications.denied.subtitle' =>
+        'You have denied notifications access. Please go to settings and allow notifications.',
+      'dialog.notifications.sent.title' => 'Car parked',
+      'dialog.notifications.expiring.title' =>
+        'Your parking ticket is about to expire',
+      'dialog.notifications.expiring.subtitle' => (
+              {required Object minutesLeft}) =>
+          'In about ${minutesLeft} minutes your parking ticket will expire, slowly prepare to leave.',
+      'dialog.car_bottom_sheet.sync.title' => 'Sync parking spot',
+      'dialog.car_bottom_sheet.sync.subtitle' =>
+        'Do you want to sync the parking spot?',
+      'dialog.car_bottom_sheet.sync.action_1' => 'Sync',
+      'dialog.car_bottom_sheet.synced.title' => 'Parking spot synced',
+      'dialog.car_bottom_sheet.synced.subtitle' =>
+        'This parking spot is now on WoAuto\'s servers.\nWould you like to share the parking spot?',
+      'dialog.car_bottom_sheet.sharing.title' => 'Sharing parking spot',
+      'dialog.car_bottom_sheet.sharing.subtitle' =>
+        'Have this QR code scanned to share your location',
+      'dialog.car_bottom_sheet.sharing.action_1' => 'Share link',
+      'dialog.car_bottom_sheet.sharing.share_content' =>
+        ({required Object woLink}) => 'Here is my synced parking:\n\n${woLink}',
+      'dialog.maps.driving_mode.title' => 'Driving mode detected',
+      'dialog.maps.driving_mode.subtitle' =>
+        'You are (probably) driving your car right now. Do you want to switch to the driving mode?',
+      'dialog.maps.location_denied.title' => 'Location permission denied',
+      'dialog.maps.location_denied.subtitle' =>
+        'You have denied location permission. Please go to settings and allow access to your location.',
+      'dialog.history.info.title' => 'History',
+      'dialog.history.info.subtitle' =>
+        'This will show you the last 15 parking spaces',
+      'dialog.history.delete.title' => 'Delete all entries',
+      'dialog.history.delete.subtitle' =>
+        'Are you sure you want to delete all entries?',
+      'dialog.leave_info.title' => 'Leave App',
+      'dialog.leave_info.subtitle' => 'Are you sure you want to leave the app?',
+      'dialog.app_info.title' => 'App Info',
+      'dialog.app_info.subtitle' =>
+        'This app was developed by Emre Yurtseven, is open-source and of course available on Github.',
+      'dialog.app_info.action_1' => 'GitHub',
+      'dialog.feedback.title' => 'Feedback',
+      'dialog.feedback.subtitle' =>
+        'Feel free to email me, join our Telegram channel, or send me a private message on Telegram:',
+      'dialog.feedback.action_1' => 'Telegram',
+      'dialog.data_security.title' => 'Privacy Policy and Legal Notice',
+      'dialog.data_security.content_1' =>
+        'Brief summary of privacy policy in our own words (as of 14th December 2025):',
+      'dialog.data_security.content_2' =>
+        '- The app communicates with Google Maps to display the map.',
+      'dialog.data_security.content_4' =>
+        '- The app does not store any metadata, such as IP address, device name, or operating system version.',
+      'dialog.data_security.content_5' =>
+        '- The app stores, of course, among other things, your location, the name of the parking lot and the coordinates, but gives them ',
+      'dialog.data_security.content_6' => 'not to any third parties.',
+      'dialog.data_security.content_7' =>
+        '\n\n A data exchange with the servers of Google, when providing the Google Maps maps, takes place. ',
+      'dialog.data_security.content_8' =>
+        'The app otherwise stores all data only on your device and you can delete them at any time.',
+      'dialog.data_security.action_1' => 'Imprint',
+      'dialog.data_security.action_2' => 'Privacy',
+      'dialog.app_data.title' => 'Delete App Data',
+      'dialog.app_data.subtitle' =>
+        'Are you sure you want to delete all app data?',
+      'dialog.account_data.title' => 'Delete Account & Data',
+      'dialog.account_data.content' =>
+        'This will delete your account, all the data associated with you, parkings, locations etc. It will also reset all of app-data on device.',
+      'dialog.logout_confirm' => 'Are you sure you want to logout?',
+      'settings.title' => 'Settings',
+      'settings.theme.title' => 'Theme',
+      'settings.theme.subtitle' => 'Choose the theme you like best.',
+      'settings.theme.dropdown_1' => 'System',
+      'settings.theme.dropdown_2' => 'Light',
+      'settings.theme.dropdown_3' => 'Dark',
+      'settings.color.choice' => 'Color',
+      'settings.map_type.title' => 'Map type',
+      'settings.map_type.subtitle' => 'Choose the map type you like best.',
+      'settings.map_type.dropdown_1' => 'Normal',
+      'settings.map_type.dropdown_2' => 'Satellite',
+      'settings.map_type.dropdown_3' => 'Hybrid',
+      'settings.map_type.dropdown_4' => 'Terrain',
+      'settings.traffic.title' => 'Traffic',
+      'settings.traffic.subtitle' =>
+        'Show the current traffic situation on the map.',
+      'settings.new_ios.title' => 'iOS only design',
+      'settings.new_ios.subtitle' =>
+        'Use the iOS only design with Cupertino widgets.',
+      'settings.park_ticket.title' => 'Parking ticket time buffer',
+      'settings.park_ticket.subtitle' =>
+        'Set a time buffer so you have time to renew the ticket or return to the car before the parking ticket expires.',
+      'settings.park_ticket.dropdown_value' => ({required Object value}) =>
+          '${value} minutes',
+      'settings.driving_mode.title' => 'Driving Mode Detection',
+      'settings.driving_mode.subtitle' =>
+        'Set how fast you need to drive for the app to detect driving mode.',
+      'settings.driving_mode.dropdown_value' => ({required Object value}) =>
+          '${value} km/h',
+      'settings.app_info.title' => 'App Info',
+      'settings.app_info.subtitle' => (
+              {required Object appVersion, required Object buildNumber}) =>
+          'Version ${appVersion}+${buildNumber}',
+      'settings.credits.title' => 'Credits',
+      'settings.credits.subtitle' =>
+        'Thanks to Google Maps API and of course to the Flutter community.',
+      'settings.woauto_server.title' => 'WoAuto Server (PocketBase)',
+      'settings.woauto_server.subtitle' => ({required Object status}) =>
+          'Server status: ${status}',
+      'settings.share.title' => 'Share App',
+      'settings.share.subtitle' =>
+        'Why not share the app with your friends and family?',
+      'settings.share.share_content' =>
+        'Did you also forget where you parked last? No more. With WoAuto you can easily save your parking spot and view it later, share it with others and even navigate to it.\nYour parking spot is safe and always stays on your device.\n\nWhy don\'t you download it and try it out for yourself? https://play.google.com/store/apps/details?id=de.emredev.woauto',
+      'settings.feedback.title' => 'Feedback',
+      'settings.feedback.subtitle' =>
+        'Do you have any suggestions for improvement, bugs or anything else to say?',
+      'settings.data_security.title' => 'Privacy and Legal Notice',
+      'settings.data_security.subtitle' => 'Learn how your data is protected.',
+      'settings.app_data.title' => 'Delete all app data',
+      'settings.app_data.subtitle' =>
+        'Press and hold here to delete all your app data.',
+      'settings.app_data.subtitle_ios' =>
+        'Tap here to delete all your app data.',
+      _ => null,
+    };
   }
 }

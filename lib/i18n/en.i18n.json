@@ -320,14 +320,13 @@
     },
     "data_security": {
       "title": "Privacy Policy and Legal Notice",
-      "content_1": "Brief summary of privacy policy in our own words (as of 25/08/2024):",
+      "content_1": "Brief summary of privacy policy in our own words (as of 14th December 2025):",
       "content_2": "- The app communicates with Google Maps to display the map.",
-      "content_3": "- The app communicates with my VPS server on German soil to display, create and manage synchronized parking spots and your location data, only ever if you allow it.",
       "content_4": "- The app does not store any metadata, such as IP address, device name, or operating system version.",
       "content_5": "- The app stores, of course, among other things, your location, the name of the parking lot and the coordinates, but gives them ",
       "content_6": "not to any third parties.",
-      "content_7": "\n\n A data exchange with my server and with the servers of Google, when providing the Google Maps maps, takes place. ",
-      "content_8": "The app otherwise stores all data only on your device and you can delete them at any time, then they are also deleted from my server (in the settings at the bottom).",
+      "content_7": "\n\n A data exchange with the servers of Google, when providing the Google Maps maps, takes place. ",
+      "content_8": "The app otherwise stores all data only on your device and you can delete them at any time.",
       "action_1": "Imprint",
       "action_2": "Privacy"
     },

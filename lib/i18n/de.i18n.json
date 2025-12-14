@@ -319,14 +319,13 @@
     },
     "data_security": {
       "title": "Datenschutz und Impressum",
-      "content_1": "Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 25.08.2024):",
+      "content_1": "Kurze Zusammenfassung der Datenschutzerklärung in eigenen Worten (Stand 14. Dezember 2025):",
       "content_2": "- Die App kommuniziert mit Google Maps, um die Karte anzuzeigen.",
-      "content_3": "- Die App kommuniziert mit meinem VPS Server auf Deutschem Boden, um synchronisierte Parkplätze anzuzeigen, anzulegen und zu verwalten. Zusätzlich deinen letzten Live Standort, aber auch nur sobald du es erlaubst.",
       "content_4": "- Die App speichert keine Metadaten, wie z.B. die IP-Adresse, Gerätename oder Betriebssystemversion.",
       "content_5": "- Die App speichert natürlich, unter anderem, deinen Standort, den Namen des Parkplatzes und die Koordinaten, gibt diese aber ",
       "content_6": "nicht an Dritte weiter.",
-      "content_7": "\n\nEs findet ein Datenaustausch mit meinem Server und mit den Servern von Google bei der Bereitstellung der Google Maps Karten statt. ",
-      "content_8": "Die App speichert sont alle Daten nur auf deinem Gerät und du kannst sie jederzeit löschen, dann sind sie auch aus meinem Server gelöscht (in den Einstellungen ganz unten).",
+      "content_7": "\n\nEs findet ein Datenaustausch mit den Servern von Google bei der Bereitstellung der Google Maps Karten statt. ",
+      "content_8": "Die App speichert alle Daten nur auf deinem Gerät und du kannst sie jederzeit löschen.",
       "action_1": "Impressum",
       "action_2": "Datenschutz"
     },

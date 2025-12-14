@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/providers/woauto.dart';
 import 'package:woauto/screens/home.dart';
@@ -31,7 +30,6 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(
               seedColor: Color(woAuto.appColor.value),
             ),
-            fontFamily: GoogleFonts.roboto().fontFamily,
           ),
           darkTheme: ThemeData(
             brightness: Brightness.dark,
@@ -39,7 +37,6 @@ class MyApp extends StatelessWidget {
               seedColor: Color(woAuto.appColor.value),
               brightness: Brightness.dark,
             ),
-            fontFamily: GoogleFonts.roboto().fontFamily,
           ),
           home: const Home(),
           locale: TranslationProvider.of(context).flutterLocale,
