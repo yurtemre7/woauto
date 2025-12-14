@@ -15,7 +15,6 @@ dependencies:
   cupertino_icons: 1.0.8
 
   get: 4.7.2
-  pocketbase: 0.23.0+1
 
   google_maps_flutter: 2.13.1
   google_fonts: 6.3.2
@@ -31,10 +30,7 @@ dependencies:
   shared_preferences: 2.5.3
   add_2_calendar: 3.0.1
   quick_actions: 1.1.0
-  maps_launcher:
-    git:
-      url: https://github.com/EmreDET/flutter-maps-launcher.git
-      tag: master
+  maps_launcher: 3.0.0+1
   app_links: 6.4.1
 
   image_picker: 1.2.0
@@ -44,7 +40,7 @@ dependencies:
   keep_screen_on: 5.0.0
 
   # Data & Internet
-  uuid: 4.5.1
+  uuid: 4.5.2
 
   # UI
 

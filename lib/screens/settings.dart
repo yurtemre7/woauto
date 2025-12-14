@@ -7,7 +7,6 @@ import 'package:woauto/components/div.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/wa_ext.dart';
-import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -19,7 +18,6 @@ class Settings extends StatefulWidget {
 }
 
 class _SettingsState extends State<Settings> {
-  final WoAutoServer woAutoServer = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -316,32 +314,6 @@ class _SettingsState extends State<Settings> {
                           },
                         ),
                       ),
-                      Obx(
-                        () => ListTile(
-                          leading: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              woAutoServer.serverWorks.value
-                                  ? Icons.wifi_outlined
-                                  : Icons.wifi_off_outlined,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                          title: Text(
-                            t.settings.woauto_server.title,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                          subtitle: Text(
-                            t.settings.woauto_server.subtitle(
-                              status: woAutoServer.serverWorks.value
-                                  ? 'Online'
-                                  : 'Offline',
-                            ),
-                          ),
-                        ),
-                      ),
                       ListTile(
                         leading: Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -559,14 +531,9 @@ class _SettingsState extends State<Settings> {
                                   ),
                                   child: Text(t.dialog.delete),
                                   onPressed: () async {
-                                    await woAutoServer.deleteUserLocation();
-                                    await woAutoServer
-                                        .deleteUserParkingLocations();
-                                    woAutoServer.pb.authStore.clear();
                                     // pop();
                                     pop();
                                     await woAuto.reset();
-                                    woAutoServer.reset();
                                     setState(() {});
                                   },
                                 ),

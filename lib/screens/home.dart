@@ -13,7 +13,6 @@ import 'package:woauto/components/map_info_sheet.dart';
 import 'package:woauto/components/top_header.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
-import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/providers/yrtmr.dart';
 import 'package:woauto/screens/history.dart';
 import 'package:woauto/screens/intro.dart';
@@ -32,9 +31,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   StreamSubscription? _sub;
-  late Timer timer;
   StreamSubscription<Position>? positionStream;
-  final WoAutoServer woAutoServer = Get.find();
 
   @override
   void initState() {
@@ -198,19 +195,6 @@ class _HomeState extends State<Home> {
       );
     }
 
-    timer = Timer.periodic(10.seconds, (t) async {
-      var currentPosition = woAuto.currentPosition.value.target;
-
-      if (woAutoServer.shareMyLastLiveLocation.value) {
-        woAutoServer.setUserLocation(
-          LatLng(
-            currentPosition.latitude,
-            currentPosition.longitude,
-          ),
-        );
-      }
-    });
-
     positionStream =
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position? position) async {
@@ -302,6 +286,7 @@ class _HomeState extends State<Home> {
   @override
   void dispose() {
     _sub?.cancel();
+    positionStream?.cancel();
     KeepScreenOn.turnOff();
     woAuto.mapController.value?.dispose();
     super.dispose();

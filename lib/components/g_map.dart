@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
-import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
@@ -20,23 +19,6 @@ class GMap extends StatefulWidget {
 
 class _GMapState extends State<GMap> {
   final mapLoading = true.obs;
-  final WoAutoServer woAutoServer = Get.find();
-
-  late Timer timer;
-
-  StreamSubscription<Position>? positionStream;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    positionStream?.cancel();
-    timer.cancel();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

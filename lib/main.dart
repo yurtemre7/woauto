@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/providers/woauto.dart';
-import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/screens/home.dart';
 import 'package:woauto/utils/utilities.dart';
 
@@ -14,7 +13,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LocaleSettings.useDeviceLocale();
   woAuto = Get.put(await WoAuto.load());
-  Get.put(await WoAutoServer.load());
   runApp(TranslationProvider(child: const MyApp()));
 }
 

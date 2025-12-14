@@ -18,7 +18,6 @@ import 'package:woauto/components/div.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/providers/wa_ext.dart';
-import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/logger.dart';
@@ -655,9 +654,6 @@ class WoAuto extends GetxController {
               carParkings.removeWhere((element) => element.uuid == park.uuid);
               carParkings.refresh();
 
-              WoAutoServer woAutoServer = Get.find();
-              woAutoServer.deleteUserParking(park.uuid);
-
               woAuto.save();
               Get.back();
             },
@@ -700,11 +696,6 @@ class WoAuto extends GetxController {
       woAuto.carParkingHistory.add(carPark);
       woAuto.carParkings.refresh();
       woAuto.save();
-
-      // safe to WoAutoServer
-      WoAutoServer woAutoServer = Get.find();
-      woAutoServer.addUserParkingLocation(carPark);
-
       return;
     }
     logMessage('Add first Car Park');
@@ -727,10 +718,6 @@ class WoAuto extends GetxController {
     woAuto.carParkingHistory.add(carPark);
     woAuto.carParkings.refresh();
     woAuto.save();
-
-    // safe to WoAutoServer
-    WoAutoServer woAutoServer = Get.find();
-    woAutoServer.addUserParkingLocation(carPark);
   }
 
   Future<void> addFriendPosition({

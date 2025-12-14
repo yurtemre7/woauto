@@ -9,7 +9,6 @@ import 'package:woauto/components/div.dart';
 import 'package:woauto/components/text_icon.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
-import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/utilities.dart';
@@ -23,7 +22,6 @@ class CarBottomSheet extends StatefulWidget {
 
 class _CarBottomSheetState extends State<CarBottomSheet>
     with TickerProviderStateMixin {
-  final WoAutoServer woAutoServer = Get.find();
 
   late AnimationController _controller;
   late AnimationController _controllerOthers;
@@ -212,20 +210,6 @@ class _CarBottomSheetState extends State<CarBottomSheet>
             fontSize: 20,
           ),
         ),
-        const Spacer(),
-        TextButton.icon(
-          onPressed: () async {
-            _controllerOthers
-                .forward()
-                .whenComplete(() => _controllerOthers.reset());
-            woAutoServer.initFriendsLocations();
-          },
-          icon: RotationTransition(
-            turns: Tween(begin: 0.0, end: 1.0).animate(_controllerOthers),
-            child: const Icon(Icons.refresh),
-          ),
-          label: Text(t.constants.update),
-        ),
       ],
     );
   }
@@ -298,7 +282,6 @@ class _CarBottomSheetState extends State<CarBottomSheet>
               woAuto.carParkings
                   .removeWhere((element) => element.uuid == park.uuid);
               woAuto.carParkings.refresh();
-              woAutoServer.deleteUserParking(park.uuid);
               woAuto.save();
           }
           pop();

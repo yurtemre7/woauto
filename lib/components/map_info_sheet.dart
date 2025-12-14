@@ -4,7 +4,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:woauto/components/car_bottom_sheet.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
-import 'package:woauto/providers/woauto_server.dart';
 
 class MapInfoSheet extends StatefulWidget {
   const MapInfoSheet({super.key});
@@ -14,7 +13,6 @@ class MapInfoSheet extends StatefulWidget {
 }
 
 class _MapInfoSheetState extends State<MapInfoSheet> {
-  final WoAutoServer woAutoServer = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -29,26 +27,21 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
           if (!woAuto.drivingMode.value &&
               (woAuto.carMarkers.isNotEmpty ||
                   woAuto.friendCarMarkers.isNotEmpty))
-            Badge(
-              alignment: Alignment.topCenter,
-              label: Text(t.info_sheet.badge_label),
-              isLabelVisible: woAutoServer.shareMyParkings.value,
-              child: FloatingActionButton(
-                tooltip: t.info_sheet.parkings,
-                onPressed: (woAuto.carMarkers.isNotEmpty ||
-                        woAuto.friendCarMarkers.isNotEmpty)
-                    ? () {
-                        Get.bottomSheet(
-                          const CarBottomSheet(),
-                          settings: const RouteSettings(
-                            name: 'CarBottomSheet',
-                          ),
-                        );
-                      }
-                    : null,
-                child: const Icon(
-                  Icons.local_parking_outlined,
-                ),
+            FloatingActionButton(
+              tooltip: t.info_sheet.parkings,
+              onPressed: (woAuto.carMarkers.isNotEmpty ||
+                      woAuto.friendCarMarkers.isNotEmpty)
+                  ? () {
+                      Get.bottomSheet(
+                        const CarBottomSheet(),
+                        settings: const RouteSettings(
+                          name: 'CarBottomSheet',
+                        ),
+                      );
+                    }
+                  : null,
+              child: const Icon(
+                Icons.local_parking_outlined,
               ),
             ),
           FloatingActionButton.extended(

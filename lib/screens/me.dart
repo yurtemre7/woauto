@@ -7,13 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:pocketbase/pocketbase.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:woauto/components/div.dart';
-import 'package:woauto/components/login_dialog.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
-import 'package:woauto/providers/woauto_server.dart';
 import 'package:woauto/utils/extensions.dart';
 import 'package:woauto/utils/logger.dart';
 import 'package:woauto/utils/utilities.dart';
@@ -26,7 +23,6 @@ class Me extends StatefulWidget {
 }
 
 class _MeState extends State<Me> {
-  final WoAutoServer woAutoServer = Get.find();
 
   var maxHeight = 128.0;
   var minHeight = 64.0;
@@ -183,15 +179,8 @@ class _MeState extends State<Me> {
                               context.theme.colorScheme.errorContainer,
                         ),
                         onPressed: () async {
-                          var user = await woAutoServer.getUser();
-                          if (user == null) return;
-                          await woAutoServer.pb
-                              .collection('users')
-                              .delete(user.id);
-                          woAutoServer.pb.authStore.clear();
                           woAuto.friendPositions.clear();
                           woAuto.friendCarPositions.clear();
-                          woAutoServer.reset();
                           await woAuto.reset();
                           woAuto.save();
                           pop();
@@ -432,206 +421,6 @@ class _MeState extends State<Me> {
                         ),
                       ),
                       16.h,
-                      if (woAutoServer.pb.authStore.isValid) ...[
-                        Builder(
-                          builder: (context) {
-                            var user =
-                                woAutoServer.pb.authStore.record as RecordModel;
-                            return SelectionArea(
-                              child: ListTile(
-                                title: Text(
-                                  '@${user.data['username']}',
-                                  style: TextStyle(
-                                    color: context.theme.colorScheme.primary,
-                                  ),
-                                ),
-                                subtitle: Text('${user.data['email']}'),
-                                trailing: IconButton(
-                                  onPressed: () async {
-                                    return await Get.dialog(
-                                      AlertDialog(
-                                        title: Text(t.dialog.logout),
-                                        content: Text(t.dialog.logout_confirm),
-                                        actions: [
-                                          OutlinedButton(
-                                            style: OutlinedButton.styleFrom(
-                                              foregroundColor: context
-                                                  .theme.colorScheme.error,
-                                            ),
-                                            onPressed: () {
-                                              woAutoServer.pb.authStore.clear();
-                                              woAuto.friendPositions.clear();
-                                              woAuto.friendCarPositions.clear();
-                                              woAuto.carParkings.clear();
-                                              woAuto.carParkingHistory.clear();
-                                              woAutoServer.reset();
-                                              woAuto.save();
-                                              pop();
-                                              setState(() {});
-                                            },
-                                            child: Text(t.dialog.logout),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                  icon: const Icon(
-                                    Icons.logout_outlined,
-                                  ),
-                                  iconSize: 38,
-                                  style: IconButton.styleFrom(
-                                    foregroundColor:
-                                        context.theme.colorScheme.error,
-                                    disabledForegroundColor:
-                                        Colors.grey.withValues(alpha: 0.3),
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                        SwitchListTile(
-                          title: Text(
-                            t.my_car.share_my_last_location,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                          subtitle: Text(
-                            t.my_car.share_my_last_location_description,
-                          ),
-                          value: woAutoServer.shareMyLastLiveLocation.value,
-                          onChanged: (s) async {
-                            if (s == false) {
-                              var res = await Get.dialog(
-                                    AlertDialog(
-                                      title: Text(
-                                        t.dialog.share_location_parkings.title,
-                                      ),
-                                      content: Text(
-                                        t.my_car
-                                            .share_my_last_location_deactivate,
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            pop(result: false);
-                                          },
-                                          child: Text(t.dialog.abort),
-                                        ),
-                                        OutlinedButton(
-                                          onPressed: () async {
-                                            // delete
-                                            await woAutoServer
-                                                .deleteUserLocation();
-                                            pop(result: true);
-                                          },
-                                          child: Text(
-                                            t.dialog.share_location_parkings
-                                                .deactivate,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ) ??
-                                  false;
-
-                              if (res == false) return;
-                            }
-                            woAutoServer.shareMyLastLiveLocation.toggle();
-                            woAutoServer.save();
-                          },
-                        ),
-                        SwitchListTile(
-                          title: Text(
-                            t.my_car.share_my_parkings,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
-                          subtitle:
-                              Text(t.my_car.share_my_parkings_description),
-                          value: woAutoServer.shareMyParkings.value,
-                          onChanged: (s) async {
-                            if (s == false) {
-                              var res = await Get.dialog(
-                                    AlertDialog(
-                                      title: Text(
-                                        t.dialog.share_location_parkings.title,
-                                      ),
-                                      content: Text(
-                                        t.my_car.share_my_parkings_deactivate,
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            pop(result: false);
-                                          },
-                                          child: Text(t.dialog.abort),
-                                        ),
-                                        OutlinedButton(
-                                          onPressed: () async {
-                                            await woAutoServer
-                                                .deleteUserParkingLocations();
-                                            pop(result: true);
-                                          },
-                                          child: Text(
-                                            t.dialog.share_location_parkings
-                                                .deactivate,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ) ??
-                                  false;
-
-                              if (res == false) return;
-                            }
-                            woAutoServer.shareMyParkings.toggle();
-                            woAutoServer.save();
-                          },
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Text(
-                            t.my_car.share_deactivate_info,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 12,
-                            ),
-                          ),
-                        ),
-                        Center(
-                          child: OutlinedButton(
-                            style: OutlinedButton.styleFrom(
-                              foregroundColor: context.theme.colorScheme.error,
-                              backgroundColor:
-                                  context.theme.colorScheme.errorContainer,
-                            ),
-                            onPressed: () async {
-                              showDeleteAccountSheet();
-                            },
-                            child: Text(t.dialog.account_data.title),
-                          ),
-                        ),
-                        const Divider(),
-                      ] else ...[
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: OutlinedButton(
-                            onPressed: () async {
-                              await Get.bottomSheet(
-                                const LoginSheet(),
-                                isScrollControlled: true,
-                              );
-
-                              setState(() {});
-                            },
-                            child: Text(t.my_car.login_register),
-                          ),
-                        ),
-                      ],
                       ListTile(
                         title: Text(
                           t.my_car.park_name.title(name: woAuto.subText.value),
