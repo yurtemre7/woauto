@@ -14,7 +14,9 @@ dependencies:
 
   cupertino_icons: 1.0.8
 
-  get: 4.7.3
+  get: 
+    git:
+      url: https://github.com/yurtemre7/flutter-get
 
   google_maps_flutter: 2.14.0
   location: 8.0.1
