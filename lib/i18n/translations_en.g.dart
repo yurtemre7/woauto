@@ -55,55 +55,56 @@ class TranslationsEn extends Translations
 
   // Translations
   @override
-  late final _TranslationsConstantsEn constants =
-      _TranslationsConstantsEn._(_root);
+  late final _Translations$constants$en constants =
+      _Translations$constants$en._(_root);
   @override
-  late final _TranslationsParkDurationEn park_duration =
-      _TranslationsParkDurationEn._(_root);
+  late final _Translations$park_duration$en park_duration =
+      _Translations$park_duration$en._(_root);
   @override
-  late final _TranslationsLoginDialogEn login_dialog =
-      _TranslationsLoginDialogEn._(_root);
+  late final _Translations$login_dialog$en login_dialog =
+      _Translations$login_dialog$en._(_root);
   @override
-  late final _TranslationsParkDialogEn park_dialog =
-      _TranslationsParkDialogEn._(_root);
+  late final _Translations$park_dialog$en park_dialog =
+      _Translations$park_dialog$en._(_root);
   @override
-  late final _TranslationsMarkerDialogEn marker_dialog =
-      _TranslationsMarkerDialogEn._(_root);
+  late final _Translations$marker_dialog$en marker_dialog =
+      _Translations$marker_dialog$en._(_root);
   @override
-  late final _TranslationsHomeEn home = _TranslationsHomeEn._(_root);
+  late final _Translations$home$en home = _Translations$home$en._(_root);
   @override
-  late final _TranslationsHistoryEn history = _TranslationsHistoryEn._(_root);
+  late final _Translations$history$en history =
+      _Translations$history$en._(_root);
   @override
-  late final _TranslationsInfoSheetEn info_sheet =
-      _TranslationsInfoSheetEn._(_root);
+  late final _Translations$info_sheet$en info_sheet =
+      _Translations$info_sheet$en._(_root);
   @override
-  late final _TranslationsTopHeaderEn top_header =
-      _TranslationsTopHeaderEn._(_root);
+  late final _Translations$top_header$en top_header =
+      _Translations$top_header$en._(_root);
   @override
-  late final _TranslationsCarBottomSheetEn car_bottom_sheet =
-      _TranslationsCarBottomSheetEn._(_root);
+  late final _Translations$car_bottom_sheet$en car_bottom_sheet =
+      _Translations$car_bottom_sheet$en._(_root);
   @override
-  late final _TranslationsMyCarEn my_car = _TranslationsMyCarEn._(_root);
+  late final _Translations$my_car$en my_car = _Translations$my_car$en._(_root);
   @override
-  late final _TranslationsMapsEn maps = _TranslationsMapsEn._(_root);
+  late final _Translations$maps$en maps = _Translations$maps$en._(_root);
   @override
-  late final _TranslationsIntroEn intro = _TranslationsIntroEn._(_root);
+  late final _Translations$intro$en intro = _Translations$intro$en._(_root);
   @override
-  late final _TranslationsBottomSheetEn bottom_sheet =
-      _TranslationsBottomSheetEn._(_root);
+  late final _Translations$bottom_sheet$en bottom_sheet =
+      _Translations$bottom_sheet$en._(_root);
   @override
-  late final _TranslationsSnackbarEn snackbar =
-      _TranslationsSnackbarEn._(_root);
+  late final _Translations$snackbar$en snackbar =
+      _Translations$snackbar$en._(_root);
   @override
-  late final _TranslationsDialogEn dialog = _TranslationsDialogEn._(_root);
+  late final _Translations$dialog$en dialog = _Translations$dialog$en._(_root);
   @override
-  late final _TranslationsSettingsEn settings =
-      _TranslationsSettingsEn._(_root);
+  late final _Translations$settings$en settings =
+      _Translations$settings$en._(_root);
 }
 
 // Path: constants
-class _TranslationsConstantsEn extends TranslationsConstantsDe {
-  _TranslationsConstantsEn._(TranslationsEn root)
+class _Translations$constants$en extends Translations$constants$de {
+  _Translations$constants$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -138,8 +139,8 @@ class _TranslationsConstantsEn extends TranslationsConstantsDe {
 }
 
 // Path: park_duration
-class _TranslationsParkDurationEn extends TranslationsParkDurationDe {
-  _TranslationsParkDurationEn._(TranslationsEn root)
+class _Translations$park_duration$en extends Translations$park_duration$de {
+  _Translations$park_duration$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -170,8 +171,8 @@ class _TranslationsParkDurationEn extends TranslationsParkDurationDe {
 }
 
 // Path: login_dialog
-class _TranslationsLoginDialogEn extends TranslationsLoginDialogDe {
-  _TranslationsLoginDialogEn._(TranslationsEn root)
+class _Translations$login_dialog$en extends Translations$login_dialog$de {
+  _Translations$login_dialog$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -203,8 +204,8 @@ class _TranslationsLoginDialogEn extends TranslationsLoginDialogDe {
 }
 
 // Path: park_dialog
-class _TranslationsParkDialogEn extends TranslationsParkDialogDe {
-  _TranslationsParkDialogEn._(TranslationsEn root)
+class _Translations$park_dialog$en extends Translations$park_dialog$de {
+  _Translations$park_dialog$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -216,24 +217,24 @@ class _TranslationsParkDialogEn extends TranslationsParkDialogDe {
   @override
   String get content_1 => 'Save the new parking?';
   @override
-  late final _TranslationsParkDialogParkNameEn park_name =
-      _TranslationsParkDialogParkNameEn._(_root);
+  late final _Translations$park_dialog$park_name$en park_name =
+      _Translations$park_dialog$park_name$en._(_root);
   @override
   String get content_2 => 'Additional information';
   @override
-  late final _TranslationsParkDialogInfoEn info =
-      _TranslationsParkDialogInfoEn._(_root);
+  late final _Translations$park_dialog$info$en info =
+      _Translations$park_dialog$info$en._(_root);
   @override
-  late final _TranslationsParkDialogTicketEn ticket =
-      _TranslationsParkDialogTicketEn._(_root);
+  late final _Translations$park_dialog$ticket$en ticket =
+      _Translations$park_dialog$ticket$en._(_root);
   @override
-  late final _TranslationsParkDialogPhotoEn photo =
-      _TranslationsParkDialogPhotoEn._(_root);
+  late final _Translations$park_dialog$photo$en photo =
+      _Translations$park_dialog$photo$en._(_root);
 }
 
 // Path: marker_dialog
-class _TranslationsMarkerDialogEn extends TranslationsMarkerDialogDe {
-  _TranslationsMarkerDialogEn._(TranslationsEn root)
+class _Translations$marker_dialog$en extends Translations$marker_dialog$de {
+  _Translations$marker_dialog$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -241,18 +242,18 @@ class _TranslationsMarkerDialogEn extends TranslationsMarkerDialogDe {
 
   // Translations
   @override
-  late final _TranslationsMarkerDialogSharedEn shared =
-      _TranslationsMarkerDialogSharedEn._(_root);
+  late final _Translations$marker_dialog$shared$en shared =
+      _Translations$marker_dialog$shared$en._(_root);
   @override
-  late final _TranslationsMarkerDialogMineEn mine =
-      _TranslationsMarkerDialogMineEn._(_root);
+  late final _Translations$marker_dialog$mine$en mine =
+      _Translations$marker_dialog$mine$en._(_root);
   @override
   String get action_1 => 'Delete parking';
 }
 
 // Path: home
-class _TranslationsHomeEn extends TranslationsHomeDe {
-  _TranslationsHomeEn._(TranslationsEn root)
+class _Translations$home$en extends Translations$home$de {
+  _Translations$home$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -268,13 +269,13 @@ class _TranslationsHomeEn extends TranslationsHomeDe {
   @override
   String get navigation_4 => 'Settings';
   @override
-  late final _TranslationsHomeQuickActionsEn quick_actions =
-      _TranslationsHomeQuickActionsEn._(_root);
+  late final _Translations$home$quick_actions$en quick_actions =
+      _Translations$home$quick_actions$en._(_root);
 }
 
 // Path: history
-class _TranslationsHistoryEn extends TranslationsHistoryDe {
-  _TranslationsHistoryEn._(TranslationsEn root)
+class _Translations$history$en extends Translations$history$de {
+  _Translations$history$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -284,19 +285,19 @@ class _TranslationsHistoryEn extends TranslationsHistoryDe {
   @override
   String get title => 'History';
   @override
-  late final _TranslationsHistoryEmptyEn empty =
-      _TranslationsHistoryEmptyEn._(_root);
+  late final _Translations$history$empty$en empty =
+      _Translations$history$empty$en._(_root);
   @override
-  late final _TranslationsHistoryExportEn export =
-      _TranslationsHistoryExportEn._(_root);
+  late final _Translations$history$export$en export =
+      _Translations$history$export$en._(_root);
   @override
-  late final _TranslationsHistoryDeleteEn delete =
-      _TranslationsHistoryDeleteEn._(_root);
+  late final _Translations$history$delete$en delete =
+      _Translations$history$delete$en._(_root);
 }
 
 // Path: info_sheet
-class _TranslationsInfoSheetEn extends TranslationsInfoSheetDe {
-  _TranslationsInfoSheetEn._(TranslationsEn root)
+class _Translations$info_sheet$en extends Translations$info_sheet$de {
+  _Translations$info_sheet$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -314,8 +315,8 @@ class _TranslationsInfoSheetEn extends TranslationsInfoSheetDe {
 }
 
 // Path: top_header
-class _TranslationsTopHeaderEn extends TranslationsTopHeaderDe {
-  _TranslationsTopHeaderEn._(TranslationsEn root)
+class _Translations$top_header$en extends Translations$top_header$de {
+  _Translations$top_header$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -327,8 +328,9 @@ class _TranslationsTopHeaderEn extends TranslationsTopHeaderDe {
 }
 
 // Path: car_bottom_sheet
-class _TranslationsCarBottomSheetEn extends TranslationsCarBottomSheetDe {
-  _TranslationsCarBottomSheetEn._(TranslationsEn root)
+class _Translations$car_bottom_sheet$en
+    extends Translations$car_bottom_sheet$de {
+  _Translations$car_bottom_sheet$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -336,26 +338,26 @@ class _TranslationsCarBottomSheetEn extends TranslationsCarBottomSheetDe {
 
   // Translations
   @override
-  late final _TranslationsCarBottomSheetEmptyEn empty =
-      _TranslationsCarBottomSheetEmptyEn._(_root);
+  late final _Translations$car_bottom_sheet$empty$en empty =
+      _Translations$car_bottom_sheet$empty$en._(_root);
   @override
-  late final _TranslationsCarBottomSheetDistanceCalculationEn
+  late final _Translations$car_bottom_sheet$distance_calculation$en
       distance_calculation =
-      _TranslationsCarBottomSheetDistanceCalculationEn._(_root);
+      _Translations$car_bottom_sheet$distance_calculation$en._(_root);
   @override
-  late final _TranslationsCarBottomSheetYouEn you =
-      _TranslationsCarBottomSheetYouEn._(_root);
+  late final _Translations$car_bottom_sheet$you$en you =
+      _Translations$car_bottom_sheet$you$en._(_root);
   @override
-  late final _TranslationsCarBottomSheetFriendsEn friends =
-      _TranslationsCarBottomSheetFriendsEn._(_root);
+  late final _Translations$car_bottom_sheet$friends$en friends =
+      _Translations$car_bottom_sheet$friends$en._(_root);
   @override
-  late final _TranslationsCarBottomSheetMenuEn menu =
-      _TranslationsCarBottomSheetMenuEn._(_root);
+  late final _Translations$car_bottom_sheet$menu$en menu =
+      _Translations$car_bottom_sheet$menu$en._(_root);
 }
 
 // Path: my_car
-class _TranslationsMyCarEn extends TranslationsMyCarDe {
-  _TranslationsMyCarEn._(TranslationsEn root)
+class _Translations$my_car$en extends Translations$my_car$de {
+  _Translations$my_car$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -369,19 +371,20 @@ class _TranslationsMyCarEn extends TranslationsMyCarDe {
   @override
   String get shared_content => 'This is my car! 🚗';
   @override
-  late final _TranslationsMyCarBuiltEn built =
-      _TranslationsMyCarBuiltEn._(_root);
+  late final _Translations$my_car$built$en built =
+      _Translations$my_car$built$en._(_root);
   @override
-  late final _TranslationsMyCarDrivenEn driven =
-      _TranslationsMyCarDrivenEn._(_root);
+  late final _Translations$my_car$driven$en driven =
+      _Translations$my_car$driven$en._(_root);
   @override
-  late final _TranslationsMyCarPlateEn plate =
-      _TranslationsMyCarPlateEn._(_root);
+  late final _Translations$my_car$plate$en plate =
+      _Translations$my_car$plate$en._(_root);
   @override
-  late final _TranslationsMyCarParkNameEn park_name =
-      _TranslationsMyCarParkNameEn._(_root);
+  late final _Translations$my_car$park_name$en park_name =
+      _Translations$my_car$park_name$en._(_root);
   @override
-  late final _TranslationsMyCarTuvEn tuv = _TranslationsMyCarTuvEn._(_root);
+  late final _Translations$my_car$tuv$en tuv =
+      _Translations$my_car$tuv$en._(_root);
   @override
   String get share_deactivate_info =>
       'If you deactivate these settings, you will be asked to confirm the action again, as switching off always deletes all data from the server first and then prevents it from being saved until you switch it on again.';
@@ -407,8 +410,8 @@ class _TranslationsMyCarEn extends TranslationsMyCarDe {
 }
 
 // Path: maps
-class _TranslationsMapsEn extends TranslationsMapsDe {
-  _TranslationsMapsEn._(TranslationsEn root)
+class _Translations$maps$en extends Translations$maps$de {
+  _Translations$maps$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -418,13 +421,13 @@ class _TranslationsMapsEn extends TranslationsMapsDe {
   @override
   String get loading => 'Loading maps ...';
   @override
-  late final _TranslationsMapsTrafficEn traffic =
-      _TranslationsMapsTrafficEn._(_root);
+  late final _Translations$maps$traffic$en traffic =
+      _Translations$maps$traffic$en._(_root);
 }
 
 // Path: intro
-class _TranslationsIntroEn extends TranslationsIntroDe {
-  _TranslationsIntroEn._(TranslationsEn root)
+class _Translations$intro$en extends Translations$intro$de {
+  _Translations$intro$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -432,16 +435,16 @@ class _TranslationsIntroEn extends TranslationsIntroDe {
 
   // Translations
   @override
-  late final _TranslationsIntroPage1En page_1 =
-      _TranslationsIntroPage1En._(_root);
+  late final _Translations$intro$page_1$en page_1 =
+      _Translations$intro$page_1$en._(_root);
   @override
-  late final _TranslationsIntroPage2En page_2 =
-      _TranslationsIntroPage2En._(_root);
+  late final _Translations$intro$page_2$en page_2 =
+      _Translations$intro$page_2$en._(_root);
 }
 
 // Path: bottom_sheet
-class _TranslationsBottomSheetEn extends TranslationsBottomSheetDe {
-  _TranslationsBottomSheetEn._(TranslationsEn root)
+class _Translations$bottom_sheet$en extends Translations$bottom_sheet$de {
+  _Translations$bottom_sheet$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -457,8 +460,8 @@ class _TranslationsBottomSheetEn extends TranslationsBottomSheetDe {
 }
 
 // Path: snackbar
-class _TranslationsSnackbarEn extends TranslationsSnackbarDe {
-  _TranslationsSnackbarEn._(TranslationsEn root)
+class _Translations$snackbar$en extends Translations$snackbar$de {
+  _Translations$snackbar$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -466,19 +469,20 @@ class _TranslationsSnackbarEn extends TranslationsSnackbarDe {
 
   // Translations
   @override
-  late final _TranslationsSnackbarLockedEn locked =
-      _TranslationsSnackbarLockedEn._(_root);
+  late final _Translations$snackbar$locked$en locked =
+      _Translations$snackbar$locked$en._(_root);
   @override
-  late final _TranslationsSnackbarSharedParkingEn shared_parking =
-      _TranslationsSnackbarSharedParkingEn._(_root);
+  late final _Translations$snackbar$shared_parking$en shared_parking =
+      _Translations$snackbar$shared_parking$en._(_root);
   @override
-  late final _TranslationsSnackbarDistanceCalculationEn distance_calculation =
-      _TranslationsSnackbarDistanceCalculationEn._(_root);
+  late final _Translations$snackbar$distance_calculation$en
+      distance_calculation =
+      _Translations$snackbar$distance_calculation$en._(_root);
 }
 
 // Path: dialog
-class _TranslationsDialogEn extends TranslationsDialogDe {
-  _TranslationsDialogEn._(TranslationsEn root)
+class _Translations$dialog$en extends Translations$dialog$de {
+  _Translations$dialog$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -506,49 +510,49 @@ class _TranslationsDialogEn extends TranslationsDialogDe {
   @override
   String get open_settings => 'Open settings';
   @override
-  late final _TranslationsDialogShareLocationParkingsEn
+  late final _Translations$dialog$share_location_parkings$en
       share_location_parkings =
-      _TranslationsDialogShareLocationParkingsEn._(_root);
+      _Translations$dialog$share_location_parkings$en._(_root);
   @override
-  late final _TranslationsDialogDistanceEn distance =
-      _TranslationsDialogDistanceEn._(_root);
+  late final _Translations$dialog$distance$en distance =
+      _Translations$dialog$distance$en._(_root);
   @override
-  late final _TranslationsDialogNotificationsEn notifications =
-      _TranslationsDialogNotificationsEn._(_root);
+  late final _Translations$dialog$notifications$en notifications =
+      _Translations$dialog$notifications$en._(_root);
   @override
-  late final _TranslationsDialogCarBottomSheetEn car_bottom_sheet =
-      _TranslationsDialogCarBottomSheetEn._(_root);
+  late final _Translations$dialog$car_bottom_sheet$en car_bottom_sheet =
+      _Translations$dialog$car_bottom_sheet$en._(_root);
   @override
-  late final _TranslationsDialogMapsEn maps =
-      _TranslationsDialogMapsEn._(_root);
+  late final _Translations$dialog$maps$en maps =
+      _Translations$dialog$maps$en._(_root);
   @override
-  late final _TranslationsDialogHistoryEn history =
-      _TranslationsDialogHistoryEn._(_root);
+  late final _Translations$dialog$history$en history =
+      _Translations$dialog$history$en._(_root);
   @override
-  late final _TranslationsDialogLeaveInfoEn leave_info =
-      _TranslationsDialogLeaveInfoEn._(_root);
+  late final _Translations$dialog$leave_info$en leave_info =
+      _Translations$dialog$leave_info$en._(_root);
   @override
-  late final _TranslationsDialogAppInfoEn app_info =
-      _TranslationsDialogAppInfoEn._(_root);
+  late final _Translations$dialog$app_info$en app_info =
+      _Translations$dialog$app_info$en._(_root);
   @override
-  late final _TranslationsDialogFeedbackEn feedback =
-      _TranslationsDialogFeedbackEn._(_root);
+  late final _Translations$dialog$feedback$en feedback =
+      _Translations$dialog$feedback$en._(_root);
   @override
-  late final _TranslationsDialogDataSecurityEn data_security =
-      _TranslationsDialogDataSecurityEn._(_root);
+  late final _Translations$dialog$data_security$en data_security =
+      _Translations$dialog$data_security$en._(_root);
   @override
-  late final _TranslationsDialogAppDataEn app_data =
-      _TranslationsDialogAppDataEn._(_root);
+  late final _Translations$dialog$app_data$en app_data =
+      _Translations$dialog$app_data$en._(_root);
   @override
-  late final _TranslationsDialogAccountDataEn account_data =
-      _TranslationsDialogAccountDataEn._(_root);
+  late final _Translations$dialog$account_data$en account_data =
+      _Translations$dialog$account_data$en._(_root);
   @override
   String get logout_confirm => 'Are you sure you want to logout?';
 }
 
 // Path: settings
-class _TranslationsSettingsEn extends TranslationsSettingsDe {
-  _TranslationsSettingsEn._(TranslationsEn root)
+class _Translations$settings$en extends Translations$settings$de {
+  _Translations$settings$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -558,53 +562,53 @@ class _TranslationsSettingsEn extends TranslationsSettingsDe {
   @override
   String get title => 'Settings';
   @override
-  late final _TranslationsSettingsThemeEn theme =
-      _TranslationsSettingsThemeEn._(_root);
+  late final _Translations$settings$theme$en theme =
+      _Translations$settings$theme$en._(_root);
   @override
-  late final _TranslationsSettingsColorEn color =
-      _TranslationsSettingsColorEn._(_root);
+  late final _Translations$settings$color$en color =
+      _Translations$settings$color$en._(_root);
   @override
-  late final _TranslationsSettingsMapTypeEn map_type =
-      _TranslationsSettingsMapTypeEn._(_root);
+  late final _Translations$settings$map_type$en map_type =
+      _Translations$settings$map_type$en._(_root);
   @override
-  late final _TranslationsSettingsTrafficEn traffic =
-      _TranslationsSettingsTrafficEn._(_root);
+  late final _Translations$settings$traffic$en traffic =
+      _Translations$settings$traffic$en._(_root);
   @override
-  late final _TranslationsSettingsNewIosEn new_ios =
-      _TranslationsSettingsNewIosEn._(_root);
+  late final _Translations$settings$new_ios$en new_ios =
+      _Translations$settings$new_ios$en._(_root);
   @override
-  late final _TranslationsSettingsParkTicketEn park_ticket =
-      _TranslationsSettingsParkTicketEn._(_root);
+  late final _Translations$settings$park_ticket$en park_ticket =
+      _Translations$settings$park_ticket$en._(_root);
   @override
-  late final _TranslationsSettingsDrivingModeEn driving_mode =
-      _TranslationsSettingsDrivingModeEn._(_root);
+  late final _Translations$settings$driving_mode$en driving_mode =
+      _Translations$settings$driving_mode$en._(_root);
   @override
-  late final _TranslationsSettingsAppInfoEn app_info =
-      _TranslationsSettingsAppInfoEn._(_root);
+  late final _Translations$settings$app_info$en app_info =
+      _Translations$settings$app_info$en._(_root);
   @override
-  late final _TranslationsSettingsCreditsEn credits =
-      _TranslationsSettingsCreditsEn._(_root);
+  late final _Translations$settings$credits$en credits =
+      _Translations$settings$credits$en._(_root);
   @override
-  late final _TranslationsSettingsWoautoServerEn woauto_server =
-      _TranslationsSettingsWoautoServerEn._(_root);
+  late final _Translations$settings$woauto_server$en woauto_server =
+      _Translations$settings$woauto_server$en._(_root);
   @override
-  late final _TranslationsSettingsShareEn share =
-      _TranslationsSettingsShareEn._(_root);
+  late final _Translations$settings$share$en share =
+      _Translations$settings$share$en._(_root);
   @override
-  late final _TranslationsSettingsFeedbackEn feedback =
-      _TranslationsSettingsFeedbackEn._(_root);
+  late final _Translations$settings$feedback$en feedback =
+      _Translations$settings$feedback$en._(_root);
   @override
-  late final _TranslationsSettingsDataSecurityEn data_security =
-      _TranslationsSettingsDataSecurityEn._(_root);
+  late final _Translations$settings$data_security$en data_security =
+      _Translations$settings$data_security$en._(_root);
   @override
-  late final _TranslationsSettingsAppDataEn app_data =
-      _TranslationsSettingsAppDataEn._(_root);
+  late final _Translations$settings$app_data$en app_data =
+      _Translations$settings$app_data$en._(_root);
 }
 
 // Path: park_dialog.park_name
-class _TranslationsParkDialogParkNameEn
-    extends TranslationsParkDialogParkNameDe {
-  _TranslationsParkDialogParkNameEn._(TranslationsEn root)
+class _Translations$park_dialog$park_name$en
+    extends Translations$park_dialog$park_name$de {
+  _Translations$park_dialog$park_name$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -616,8 +620,9 @@ class _TranslationsParkDialogParkNameEn
 }
 
 // Path: park_dialog.info
-class _TranslationsParkDialogInfoEn extends TranslationsParkDialogInfoDe {
-  _TranslationsParkDialogInfoEn._(TranslationsEn root)
+class _Translations$park_dialog$info$en
+    extends Translations$park_dialog$info$de {
+  _Translations$park_dialog$info$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -629,8 +634,9 @@ class _TranslationsParkDialogInfoEn extends TranslationsParkDialogInfoDe {
 }
 
 // Path: park_dialog.ticket
-class _TranslationsParkDialogTicketEn extends TranslationsParkDialogTicketDe {
-  _TranslationsParkDialogTicketEn._(TranslationsEn root)
+class _Translations$park_dialog$ticket$en
+    extends Translations$park_dialog$ticket$de {
+  _Translations$park_dialog$ticket$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -647,8 +653,9 @@ class _TranslationsParkDialogTicketEn extends TranslationsParkDialogTicketDe {
 }
 
 // Path: park_dialog.photo
-class _TranslationsParkDialogPhotoEn extends TranslationsParkDialogPhotoDe {
-  _TranslationsParkDialogPhotoEn._(TranslationsEn root)
+class _Translations$park_dialog$photo$en
+    extends Translations$park_dialog$photo$de {
+  _Translations$park_dialog$photo$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -660,9 +667,9 @@ class _TranslationsParkDialogPhotoEn extends TranslationsParkDialogPhotoDe {
 }
 
 // Path: marker_dialog.shared
-class _TranslationsMarkerDialogSharedEn
-    extends TranslationsMarkerDialogSharedDe {
-  _TranslationsMarkerDialogSharedEn._(TranslationsEn root)
+class _Translations$marker_dialog$shared$en
+    extends Translations$marker_dialog$shared$de {
+  _Translations$marker_dialog$shared$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -675,8 +682,9 @@ class _TranslationsMarkerDialogSharedEn
 }
 
 // Path: marker_dialog.mine
-class _TranslationsMarkerDialogMineEn extends TranslationsMarkerDialogMineDe {
-  _TranslationsMarkerDialogMineEn._(TranslationsEn root)
+class _Translations$marker_dialog$mine$en
+    extends Translations$marker_dialog$mine$de {
+  _Translations$marker_dialog$mine$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -692,8 +700,9 @@ class _TranslationsMarkerDialogMineEn extends TranslationsMarkerDialogMineDe {
 }
 
 // Path: home.quick_actions
-class _TranslationsHomeQuickActionsEn extends TranslationsHomeQuickActionsDe {
-  _TranslationsHomeQuickActionsEn._(TranslationsEn root)
+class _Translations$home$quick_actions$en
+    extends Translations$home$quick_actions$de {
+  _Translations$home$quick_actions$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -707,8 +716,8 @@ class _TranslationsHomeQuickActionsEn extends TranslationsHomeQuickActionsDe {
 }
 
 // Path: history.empty
-class _TranslationsHistoryEmptyEn extends TranslationsHistoryEmptyDe {
-  _TranslationsHistoryEmptyEn._(TranslationsEn root)
+class _Translations$history$empty$en extends Translations$history$empty$de {
+  _Translations$history$empty$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -722,8 +731,8 @@ class _TranslationsHistoryEmptyEn extends TranslationsHistoryEmptyDe {
 }
 
 // Path: history.export
-class _TranslationsHistoryExportEn extends TranslationsHistoryExportDe {
-  _TranslationsHistoryExportEn._(TranslationsEn root)
+class _Translations$history$export$en extends Translations$history$export$de {
+  _Translations$history$export$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -738,8 +747,8 @@ class _TranslationsHistoryExportEn extends TranslationsHistoryExportDe {
 }
 
 // Path: history.delete
-class _TranslationsHistoryDeleteEn extends TranslationsHistoryDeleteDe {
-  _TranslationsHistoryDeleteEn._(TranslationsEn root)
+class _Translations$history$delete$en extends Translations$history$delete$de {
+  _Translations$history$delete$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -753,9 +762,9 @@ class _TranslationsHistoryDeleteEn extends TranslationsHistoryDeleteDe {
 }
 
 // Path: car_bottom_sheet.empty
-class _TranslationsCarBottomSheetEmptyEn
-    extends TranslationsCarBottomSheetEmptyDe {
-  _TranslationsCarBottomSheetEmptyEn._(TranslationsEn root)
+class _Translations$car_bottom_sheet$empty$en
+    extends Translations$car_bottom_sheet$empty$de {
+  _Translations$car_bottom_sheet$empty$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -769,9 +778,9 @@ class _TranslationsCarBottomSheetEmptyEn
 }
 
 // Path: car_bottom_sheet.distance_calculation
-class _TranslationsCarBottomSheetDistanceCalculationEn
-    extends TranslationsCarBottomSheetDistanceCalculationDe {
-  _TranslationsCarBottomSheetDistanceCalculationEn._(TranslationsEn root)
+class _Translations$car_bottom_sheet$distance_calculation$en
+    extends Translations$car_bottom_sheet$distance_calculation$de {
+  _Translations$car_bottom_sheet$distance_calculation$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -783,8 +792,9 @@ class _TranslationsCarBottomSheetDistanceCalculationEn
 }
 
 // Path: car_bottom_sheet.you
-class _TranslationsCarBottomSheetYouEn extends TranslationsCarBottomSheetYouDe {
-  _TranslationsCarBottomSheetYouEn._(TranslationsEn root)
+class _Translations$car_bottom_sheet$you$en
+    extends Translations$car_bottom_sheet$you$de {
+  _Translations$car_bottom_sheet$you$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -798,9 +808,9 @@ class _TranslationsCarBottomSheetYouEn extends TranslationsCarBottomSheetYouDe {
 }
 
 // Path: car_bottom_sheet.friends
-class _TranslationsCarBottomSheetFriendsEn
-    extends TranslationsCarBottomSheetFriendsDe {
-  _TranslationsCarBottomSheetFriendsEn._(TranslationsEn root)
+class _Translations$car_bottom_sheet$friends$en
+    extends Translations$car_bottom_sheet$friends$de {
+  _Translations$car_bottom_sheet$friends$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -814,9 +824,9 @@ class _TranslationsCarBottomSheetFriendsEn
 }
 
 // Path: car_bottom_sheet.menu
-class _TranslationsCarBottomSheetMenuEn
-    extends TranslationsCarBottomSheetMenuDe {
-  _TranslationsCarBottomSheetMenuEn._(TranslationsEn root)
+class _Translations$car_bottom_sheet$menu$en
+    extends Translations$car_bottom_sheet$menu$de {
+  _Translations$car_bottom_sheet$menu$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -834,8 +844,8 @@ class _TranslationsCarBottomSheetMenuEn
 }
 
 // Path: my_car.built
-class _TranslationsMyCarBuiltEn extends TranslationsMyCarBuiltDe {
-  _TranslationsMyCarBuiltEn._(TranslationsEn root)
+class _Translations$my_car$built$en extends Translations$my_car$built$de {
+  _Translations$my_car$built$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -862,8 +872,8 @@ class _TranslationsMyCarBuiltEn extends TranslationsMyCarBuiltDe {
 }
 
 // Path: my_car.driven
-class _TranslationsMyCarDrivenEn extends TranslationsMyCarDrivenDe {
-  _TranslationsMyCarDrivenEn._(TranslationsEn root)
+class _Translations$my_car$driven$en extends Translations$my_car$driven$de {
+  _Translations$my_car$driven$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -883,8 +893,8 @@ class _TranslationsMyCarDrivenEn extends TranslationsMyCarDrivenDe {
 }
 
 // Path: my_car.plate
-class _TranslationsMyCarPlateEn extends TranslationsMyCarPlateDe {
-  _TranslationsMyCarPlateEn._(TranslationsEn root)
+class _Translations$my_car$plate$en extends Translations$my_car$plate$de {
+  _Translations$my_car$plate$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -902,8 +912,9 @@ class _TranslationsMyCarPlateEn extends TranslationsMyCarPlateDe {
 }
 
 // Path: my_car.park_name
-class _TranslationsMyCarParkNameEn extends TranslationsMyCarParkNameDe {
-  _TranslationsMyCarParkNameEn._(TranslationsEn root)
+class _Translations$my_car$park_name$en
+    extends Translations$my_car$park_name$de {
+  _Translations$my_car$park_name$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -920,8 +931,8 @@ class _TranslationsMyCarParkNameEn extends TranslationsMyCarParkNameDe {
 }
 
 // Path: my_car.tuv
-class _TranslationsMyCarTuvEn extends TranslationsMyCarTuvDe {
-  _TranslationsMyCarTuvEn._(TranslationsEn root)
+class _Translations$my_car$tuv$en extends Translations$my_car$tuv$de {
+  _Translations$my_car$tuv$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -949,8 +960,8 @@ class _TranslationsMyCarTuvEn extends TranslationsMyCarTuvDe {
 }
 
 // Path: maps.traffic
-class _TranslationsMapsTrafficEn extends TranslationsMapsTrafficDe {
-  _TranslationsMapsTrafficEn._(TranslationsEn root)
+class _Translations$maps$traffic$en extends Translations$maps$traffic$de {
+  _Translations$maps$traffic$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -964,8 +975,8 @@ class _TranslationsMapsTrafficEn extends TranslationsMapsTrafficDe {
 }
 
 // Path: intro.page_1
-class _TranslationsIntroPage1En extends TranslationsIntroPage1De {
-  _TranslationsIntroPage1En._(TranslationsEn root)
+class _Translations$intro$page_1$en extends Translations$intro$page_1$de {
+  _Translations$intro$page_1$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -989,8 +1000,8 @@ class _TranslationsIntroPage1En extends TranslationsIntroPage1De {
 }
 
 // Path: intro.page_2
-class _TranslationsIntroPage2En extends TranslationsIntroPage2De {
-  _TranslationsIntroPage2En._(TranslationsEn root)
+class _Translations$intro$page_2$en extends Translations$intro$page_2$de {
+  _Translations$intro$page_2$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1032,8 +1043,8 @@ class _TranslationsIntroPage2En extends TranslationsIntroPage2De {
 }
 
 // Path: snackbar.locked
-class _TranslationsSnackbarLockedEn extends TranslationsSnackbarLockedDe {
-  _TranslationsSnackbarLockedEn._(TranslationsEn root)
+class _Translations$snackbar$locked$en extends Translations$snackbar$locked$de {
+  _Translations$snackbar$locked$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1049,9 +1060,9 @@ class _TranslationsSnackbarLockedEn extends TranslationsSnackbarLockedDe {
 }
 
 // Path: snackbar.shared_parking
-class _TranslationsSnackbarSharedParkingEn
-    extends TranslationsSnackbarSharedParkingDe {
-  _TranslationsSnackbarSharedParkingEn._(TranslationsEn root)
+class _Translations$snackbar$shared_parking$en
+    extends Translations$snackbar$shared_parking$de {
+  _Translations$snackbar$shared_parking$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1065,9 +1076,9 @@ class _TranslationsSnackbarSharedParkingEn
 }
 
 // Path: snackbar.distance_calculation
-class _TranslationsSnackbarDistanceCalculationEn
-    extends TranslationsSnackbarDistanceCalculationDe {
-  _TranslationsSnackbarDistanceCalculationEn._(TranslationsEn root)
+class _Translations$snackbar$distance_calculation$en
+    extends Translations$snackbar$distance_calculation$de {
+  _Translations$snackbar$distance_calculation$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1084,9 +1095,9 @@ class _TranslationsSnackbarDistanceCalculationEn
 }
 
 // Path: dialog.share_location_parkings
-class _TranslationsDialogShareLocationParkingsEn
-    extends TranslationsDialogShareLocationParkingsDe {
-  _TranslationsDialogShareLocationParkingsEn._(TranslationsEn root)
+class _Translations$dialog$share_location_parkings$en
+    extends Translations$dialog$share_location_parkings$de {
+  _Translations$dialog$share_location_parkings$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1105,8 +1116,8 @@ class _TranslationsDialogShareLocationParkingsEn
 }
 
 // Path: dialog.distance
-class _TranslationsDialogDistanceEn extends TranslationsDialogDistanceDe {
-  _TranslationsDialogDistanceEn._(TranslationsEn root)
+class _Translations$dialog$distance$en extends Translations$dialog$distance$de {
+  _Translations$dialog$distance$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1121,9 +1132,9 @@ class _TranslationsDialogDistanceEn extends TranslationsDialogDistanceDe {
 }
 
 // Path: dialog.notifications
-class _TranslationsDialogNotificationsEn
-    extends TranslationsDialogNotificationsDe {
-  _TranslationsDialogNotificationsEn._(TranslationsEn root)
+class _Translations$dialog$notifications$en
+    extends Translations$dialog$notifications$de {
+  _Translations$dialog$notifications$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1131,23 +1142,23 @@ class _TranslationsDialogNotificationsEn
 
   // Translations
   @override
-  late final _TranslationsDialogNotificationsNaEn na =
-      _TranslationsDialogNotificationsNaEn._(_root);
+  late final _Translations$dialog$notifications$na$en na =
+      _Translations$dialog$notifications$na$en._(_root);
   @override
-  late final _TranslationsDialogNotificationsDeniedEn denied =
-      _TranslationsDialogNotificationsDeniedEn._(_root);
+  late final _Translations$dialog$notifications$denied$en denied =
+      _Translations$dialog$notifications$denied$en._(_root);
   @override
-  late final _TranslationsDialogNotificationsSentEn sent =
-      _TranslationsDialogNotificationsSentEn._(_root);
+  late final _Translations$dialog$notifications$sent$en sent =
+      _Translations$dialog$notifications$sent$en._(_root);
   @override
-  late final _TranslationsDialogNotificationsExpiringEn expiring =
-      _TranslationsDialogNotificationsExpiringEn._(_root);
+  late final _Translations$dialog$notifications$expiring$en expiring =
+      _Translations$dialog$notifications$expiring$en._(_root);
 }
 
 // Path: dialog.car_bottom_sheet
-class _TranslationsDialogCarBottomSheetEn
-    extends TranslationsDialogCarBottomSheetDe {
-  _TranslationsDialogCarBottomSheetEn._(TranslationsEn root)
+class _Translations$dialog$car_bottom_sheet$en
+    extends Translations$dialog$car_bottom_sheet$de {
+  _Translations$dialog$car_bottom_sheet$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1155,19 +1166,19 @@ class _TranslationsDialogCarBottomSheetEn
 
   // Translations
   @override
-  late final _TranslationsDialogCarBottomSheetSyncEn sync =
-      _TranslationsDialogCarBottomSheetSyncEn._(_root);
+  late final _Translations$dialog$car_bottom_sheet$sync$en sync =
+      _Translations$dialog$car_bottom_sheet$sync$en._(_root);
   @override
-  late final _TranslationsDialogCarBottomSheetSyncedEn synced =
-      _TranslationsDialogCarBottomSheetSyncedEn._(_root);
+  late final _Translations$dialog$car_bottom_sheet$synced$en synced =
+      _Translations$dialog$car_bottom_sheet$synced$en._(_root);
   @override
-  late final _TranslationsDialogCarBottomSheetSharingEn sharing =
-      _TranslationsDialogCarBottomSheetSharingEn._(_root);
+  late final _Translations$dialog$car_bottom_sheet$sharing$en sharing =
+      _Translations$dialog$car_bottom_sheet$sharing$en._(_root);
 }
 
 // Path: dialog.maps
-class _TranslationsDialogMapsEn extends TranslationsDialogMapsDe {
-  _TranslationsDialogMapsEn._(TranslationsEn root)
+class _Translations$dialog$maps$en extends Translations$dialog$maps$de {
+  _Translations$dialog$maps$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1175,16 +1186,16 @@ class _TranslationsDialogMapsEn extends TranslationsDialogMapsDe {
 
   // Translations
   @override
-  late final _TranslationsDialogMapsDrivingModeEn driving_mode =
-      _TranslationsDialogMapsDrivingModeEn._(_root);
+  late final _Translations$dialog$maps$driving_mode$en driving_mode =
+      _Translations$dialog$maps$driving_mode$en._(_root);
   @override
-  late final _TranslationsDialogMapsLocationDeniedEn location_denied =
-      _TranslationsDialogMapsLocationDeniedEn._(_root);
+  late final _Translations$dialog$maps$location_denied$en location_denied =
+      _Translations$dialog$maps$location_denied$en._(_root);
 }
 
 // Path: dialog.history
-class _TranslationsDialogHistoryEn extends TranslationsDialogHistoryDe {
-  _TranslationsDialogHistoryEn._(TranslationsEn root)
+class _Translations$dialog$history$en extends Translations$dialog$history$de {
+  _Translations$dialog$history$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1192,16 +1203,17 @@ class _TranslationsDialogHistoryEn extends TranslationsDialogHistoryDe {
 
   // Translations
   @override
-  late final _TranslationsDialogHistoryInfoEn info =
-      _TranslationsDialogHistoryInfoEn._(_root);
+  late final _Translations$dialog$history$info$en info =
+      _Translations$dialog$history$info$en._(_root);
   @override
-  late final _TranslationsDialogHistoryDeleteEn delete =
-      _TranslationsDialogHistoryDeleteEn._(_root);
+  late final _Translations$dialog$history$delete$en delete =
+      _Translations$dialog$history$delete$en._(_root);
 }
 
 // Path: dialog.leave_info
-class _TranslationsDialogLeaveInfoEn extends TranslationsDialogLeaveInfoDe {
-  _TranslationsDialogLeaveInfoEn._(TranslationsEn root)
+class _Translations$dialog$leave_info$en
+    extends Translations$dialog$leave_info$de {
+  _Translations$dialog$leave_info$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1215,8 +1227,8 @@ class _TranslationsDialogLeaveInfoEn extends TranslationsDialogLeaveInfoDe {
 }
 
 // Path: dialog.app_info
-class _TranslationsDialogAppInfoEn extends TranslationsDialogAppInfoDe {
-  _TranslationsDialogAppInfoEn._(TranslationsEn root)
+class _Translations$dialog$app_info$en extends Translations$dialog$app_info$de {
+  _Translations$dialog$app_info$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1233,8 +1245,8 @@ class _TranslationsDialogAppInfoEn extends TranslationsDialogAppInfoDe {
 }
 
 // Path: dialog.feedback
-class _TranslationsDialogFeedbackEn extends TranslationsDialogFeedbackDe {
-  _TranslationsDialogFeedbackEn._(TranslationsEn root)
+class _Translations$dialog$feedback$en extends Translations$dialog$feedback$de {
+  _Translations$dialog$feedback$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1251,9 +1263,9 @@ class _TranslationsDialogFeedbackEn extends TranslationsDialogFeedbackDe {
 }
 
 // Path: dialog.data_security
-class _TranslationsDialogDataSecurityEn
-    extends TranslationsDialogDataSecurityDe {
-  _TranslationsDialogDataSecurityEn._(TranslationsEn root)
+class _Translations$dialog$data_security$en
+    extends Translations$dialog$data_security$de {
+  _Translations$dialog$data_security$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1289,8 +1301,8 @@ class _TranslationsDialogDataSecurityEn
 }
 
 // Path: dialog.app_data
-class _TranslationsDialogAppDataEn extends TranslationsDialogAppDataDe {
-  _TranslationsDialogAppDataEn._(TranslationsEn root)
+class _Translations$dialog$app_data$en extends Translations$dialog$app_data$de {
+  _Translations$dialog$app_data$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1304,8 +1316,9 @@ class _TranslationsDialogAppDataEn extends TranslationsDialogAppDataDe {
 }
 
 // Path: dialog.account_data
-class _TranslationsDialogAccountDataEn extends TranslationsDialogAccountDataDe {
-  _TranslationsDialogAccountDataEn._(TranslationsEn root)
+class _Translations$dialog$account_data$en
+    extends Translations$dialog$account_data$de {
+  _Translations$dialog$account_data$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1320,8 +1333,8 @@ class _TranslationsDialogAccountDataEn extends TranslationsDialogAccountDataDe {
 }
 
 // Path: settings.theme
-class _TranslationsSettingsThemeEn extends TranslationsSettingsThemeDe {
-  _TranslationsSettingsThemeEn._(TranslationsEn root)
+class _Translations$settings$theme$en extends Translations$settings$theme$de {
+  _Translations$settings$theme$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1341,8 +1354,8 @@ class _TranslationsSettingsThemeEn extends TranslationsSettingsThemeDe {
 }
 
 // Path: settings.color
-class _TranslationsSettingsColorEn extends TranslationsSettingsColorDe {
-  _TranslationsSettingsColorEn._(TranslationsEn root)
+class _Translations$settings$color$en extends Translations$settings$color$de {
+  _Translations$settings$color$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1354,8 +1367,9 @@ class _TranslationsSettingsColorEn extends TranslationsSettingsColorDe {
 }
 
 // Path: settings.map_type
-class _TranslationsSettingsMapTypeEn extends TranslationsSettingsMapTypeDe {
-  _TranslationsSettingsMapTypeEn._(TranslationsEn root)
+class _Translations$settings$map_type$en
+    extends Translations$settings$map_type$de {
+  _Translations$settings$map_type$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1377,8 +1391,9 @@ class _TranslationsSettingsMapTypeEn extends TranslationsSettingsMapTypeDe {
 }
 
 // Path: settings.traffic
-class _TranslationsSettingsTrafficEn extends TranslationsSettingsTrafficDe {
-  _TranslationsSettingsTrafficEn._(TranslationsEn root)
+class _Translations$settings$traffic$en
+    extends Translations$settings$traffic$de {
+  _Translations$settings$traffic$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1392,8 +1407,9 @@ class _TranslationsSettingsTrafficEn extends TranslationsSettingsTrafficDe {
 }
 
 // Path: settings.new_ios
-class _TranslationsSettingsNewIosEn extends TranslationsSettingsNewIosDe {
-  _TranslationsSettingsNewIosEn._(TranslationsEn root)
+class _Translations$settings$new_ios$en
+    extends Translations$settings$new_ios$de {
+  _Translations$settings$new_ios$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1407,9 +1423,9 @@ class _TranslationsSettingsNewIosEn extends TranslationsSettingsNewIosDe {
 }
 
 // Path: settings.park_ticket
-class _TranslationsSettingsParkTicketEn
-    extends TranslationsSettingsParkTicketDe {
-  _TranslationsSettingsParkTicketEn._(TranslationsEn root)
+class _Translations$settings$park_ticket$en
+    extends Translations$settings$park_ticket$de {
+  _Translations$settings$park_ticket$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1426,9 +1442,9 @@ class _TranslationsSettingsParkTicketEn
 }
 
 // Path: settings.driving_mode
-class _TranslationsSettingsDrivingModeEn
-    extends TranslationsSettingsDrivingModeDe {
-  _TranslationsSettingsDrivingModeEn._(TranslationsEn root)
+class _Translations$settings$driving_mode$en
+    extends Translations$settings$driving_mode$de {
+  _Translations$settings$driving_mode$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1445,8 +1461,9 @@ class _TranslationsSettingsDrivingModeEn
 }
 
 // Path: settings.app_info
-class _TranslationsSettingsAppInfoEn extends TranslationsSettingsAppInfoDe {
-  _TranslationsSettingsAppInfoEn._(TranslationsEn root)
+class _Translations$settings$app_info$en
+    extends Translations$settings$app_info$de {
+  _Translations$settings$app_info$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1461,8 +1478,9 @@ class _TranslationsSettingsAppInfoEn extends TranslationsSettingsAppInfoDe {
 }
 
 // Path: settings.credits
-class _TranslationsSettingsCreditsEn extends TranslationsSettingsCreditsDe {
-  _TranslationsSettingsCreditsEn._(TranslationsEn root)
+class _Translations$settings$credits$en
+    extends Translations$settings$credits$de {
+  _Translations$settings$credits$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1477,9 +1495,9 @@ class _TranslationsSettingsCreditsEn extends TranslationsSettingsCreditsDe {
 }
 
 // Path: settings.woauto_server
-class _TranslationsSettingsWoautoServerEn
-    extends TranslationsSettingsWoautoServerDe {
-  _TranslationsSettingsWoautoServerEn._(TranslationsEn root)
+class _Translations$settings$woauto_server$en
+    extends Translations$settings$woauto_server$de {
+  _Translations$settings$woauto_server$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1493,8 +1511,8 @@ class _TranslationsSettingsWoautoServerEn
 }
 
 // Path: settings.share
-class _TranslationsSettingsShareEn extends TranslationsSettingsShareDe {
-  _TranslationsSettingsShareEn._(TranslationsEn root)
+class _Translations$settings$share$en extends Translations$settings$share$de {
+  _Translations$settings$share$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1511,8 +1529,9 @@ class _TranslationsSettingsShareEn extends TranslationsSettingsShareDe {
 }
 
 // Path: settings.feedback
-class _TranslationsSettingsFeedbackEn extends TranslationsSettingsFeedbackDe {
-  _TranslationsSettingsFeedbackEn._(TranslationsEn root)
+class _Translations$settings$feedback$en
+    extends Translations$settings$feedback$de {
+  _Translations$settings$feedback$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1527,9 +1546,9 @@ class _TranslationsSettingsFeedbackEn extends TranslationsSettingsFeedbackDe {
 }
 
 // Path: settings.data_security
-class _TranslationsSettingsDataSecurityEn
-    extends TranslationsSettingsDataSecurityDe {
-  _TranslationsSettingsDataSecurityEn._(TranslationsEn root)
+class _Translations$settings$data_security$en
+    extends Translations$settings$data_security$de {
+  _Translations$settings$data_security$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1543,8 +1562,9 @@ class _TranslationsSettingsDataSecurityEn
 }
 
 // Path: settings.app_data
-class _TranslationsSettingsAppDataEn extends TranslationsSettingsAppDataDe {
-  _TranslationsSettingsAppDataEn._(TranslationsEn root)
+class _Translations$settings$app_data$en
+    extends Translations$settings$app_data$de {
+  _Translations$settings$app_data$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1560,9 +1580,9 @@ class _TranslationsSettingsAppDataEn extends TranslationsSettingsAppDataDe {
 }
 
 // Path: dialog.notifications.na
-class _TranslationsDialogNotificationsNaEn
-    extends TranslationsDialogNotificationsNaDe {
-  _TranslationsDialogNotificationsNaEn._(TranslationsEn root)
+class _Translations$dialog$notifications$na$en
+    extends Translations$dialog$notifications$na$de {
+  _Translations$dialog$notifications$na$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1576,9 +1596,9 @@ class _TranslationsDialogNotificationsNaEn
 }
 
 // Path: dialog.notifications.denied
-class _TranslationsDialogNotificationsDeniedEn
-    extends TranslationsDialogNotificationsDeniedDe {
-  _TranslationsDialogNotificationsDeniedEn._(TranslationsEn root)
+class _Translations$dialog$notifications$denied$en
+    extends Translations$dialog$notifications$denied$de {
+  _Translations$dialog$notifications$denied$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1593,9 +1613,9 @@ class _TranslationsDialogNotificationsDeniedEn
 }
 
 // Path: dialog.notifications.sent
-class _TranslationsDialogNotificationsSentEn
-    extends TranslationsDialogNotificationsSentDe {
-  _TranslationsDialogNotificationsSentEn._(TranslationsEn root)
+class _Translations$dialog$notifications$sent$en
+    extends Translations$dialog$notifications$sent$de {
+  _Translations$dialog$notifications$sent$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1607,9 +1627,9 @@ class _TranslationsDialogNotificationsSentEn
 }
 
 // Path: dialog.notifications.expiring
-class _TranslationsDialogNotificationsExpiringEn
-    extends TranslationsDialogNotificationsExpiringDe {
-  _TranslationsDialogNotificationsExpiringEn._(TranslationsEn root)
+class _Translations$dialog$notifications$expiring$en
+    extends Translations$dialog$notifications$expiring$de {
+  _Translations$dialog$notifications$expiring$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1624,9 +1644,9 @@ class _TranslationsDialogNotificationsExpiringEn
 }
 
 // Path: dialog.car_bottom_sheet.sync
-class _TranslationsDialogCarBottomSheetSyncEn
-    extends TranslationsDialogCarBottomSheetSyncDe {
-  _TranslationsDialogCarBottomSheetSyncEn._(TranslationsEn root)
+class _Translations$dialog$car_bottom_sheet$sync$en
+    extends Translations$dialog$car_bottom_sheet$sync$de {
+  _Translations$dialog$car_bottom_sheet$sync$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1642,9 +1662,9 @@ class _TranslationsDialogCarBottomSheetSyncEn
 }
 
 // Path: dialog.car_bottom_sheet.synced
-class _TranslationsDialogCarBottomSheetSyncedEn
-    extends TranslationsDialogCarBottomSheetSyncedDe {
-  _TranslationsDialogCarBottomSheetSyncedEn._(TranslationsEn root)
+class _Translations$dialog$car_bottom_sheet$synced$en
+    extends Translations$dialog$car_bottom_sheet$synced$de {
+  _Translations$dialog$car_bottom_sheet$synced$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1659,9 +1679,9 @@ class _TranslationsDialogCarBottomSheetSyncedEn
 }
 
 // Path: dialog.car_bottom_sheet.sharing
-class _TranslationsDialogCarBottomSheetSharingEn
-    extends TranslationsDialogCarBottomSheetSharingDe {
-  _TranslationsDialogCarBottomSheetSharingEn._(TranslationsEn root)
+class _Translations$dialog$car_bottom_sheet$sharing$en
+    extends Translations$dialog$car_bottom_sheet$sharing$de {
+  _Translations$dialog$car_bottom_sheet$sharing$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1680,9 +1700,9 @@ class _TranslationsDialogCarBottomSheetSharingEn
 }
 
 // Path: dialog.maps.driving_mode
-class _TranslationsDialogMapsDrivingModeEn
-    extends TranslationsDialogMapsDrivingModeDe {
-  _TranslationsDialogMapsDrivingModeEn._(TranslationsEn root)
+class _Translations$dialog$maps$driving_mode$en
+    extends Translations$dialog$maps$driving_mode$de {
+  _Translations$dialog$maps$driving_mode$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1697,9 +1717,9 @@ class _TranslationsDialogMapsDrivingModeEn
 }
 
 // Path: dialog.maps.location_denied
-class _TranslationsDialogMapsLocationDeniedEn
-    extends TranslationsDialogMapsLocationDeniedDe {
-  _TranslationsDialogMapsLocationDeniedEn._(TranslationsEn root)
+class _Translations$dialog$maps$location_denied$en
+    extends Translations$dialog$maps$location_denied$de {
+  _Translations$dialog$maps$location_denied$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1714,8 +1734,9 @@ class _TranslationsDialogMapsLocationDeniedEn
 }
 
 // Path: dialog.history.info
-class _TranslationsDialogHistoryInfoEn extends TranslationsDialogHistoryInfoDe {
-  _TranslationsDialogHistoryInfoEn._(TranslationsEn root)
+class _Translations$dialog$history$info$en
+    extends Translations$dialog$history$info$de {
+  _Translations$dialog$history$info$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 
@@ -1729,9 +1750,9 @@ class _TranslationsDialogHistoryInfoEn extends TranslationsDialogHistoryInfoDe {
 }
 
 // Path: dialog.history.delete
-class _TranslationsDialogHistoryDeleteEn
-    extends TranslationsDialogHistoryDeleteDe {
-  _TranslationsDialogHistoryDeleteEn._(TranslationsEn root)
+class _Translations$dialog$history$delete$en
+    extends Translations$dialog$history$delete$de {
+  _Translations$dialog$history$delete$en._(TranslationsEn root)
       : this._root = root,
         super.internal(root);
 

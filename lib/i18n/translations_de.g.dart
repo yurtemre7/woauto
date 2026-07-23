@@ -51,40 +51,43 @@ class Translations with BaseTranslations<AppLocale, Translations> {
       Translations(meta: meta ?? this.$meta);
 
   // Translations
-  late final TranslationsConstantsDe constants =
-      TranslationsConstantsDe.internal(_root);
-  late final TranslationsParkDurationDe park_duration =
-      TranslationsParkDurationDe.internal(_root);
-  late final TranslationsLoginDialogDe login_dialog =
-      TranslationsLoginDialogDe.internal(_root);
-  late final TranslationsParkDialogDe park_dialog =
-      TranslationsParkDialogDe.internal(_root);
-  late final TranslationsMarkerDialogDe marker_dialog =
-      TranslationsMarkerDialogDe.internal(_root);
-  late final TranslationsHomeDe home = TranslationsHomeDe.internal(_root);
-  late final TranslationsHistoryDe history =
-      TranslationsHistoryDe.internal(_root);
-  late final TranslationsInfoSheetDe info_sheet =
-      TranslationsInfoSheetDe.internal(_root);
-  late final TranslationsTopHeaderDe top_header =
-      TranslationsTopHeaderDe.internal(_root);
-  late final TranslationsCarBottomSheetDe car_bottom_sheet =
-      TranslationsCarBottomSheetDe.internal(_root);
-  late final TranslationsMyCarDe my_car = TranslationsMyCarDe.internal(_root);
-  late final TranslationsMapsDe maps = TranslationsMapsDe.internal(_root);
-  late final TranslationsIntroDe intro = TranslationsIntroDe.internal(_root);
-  late final TranslationsBottomSheetDe bottom_sheet =
-      TranslationsBottomSheetDe.internal(_root);
-  late final TranslationsSnackbarDe snackbar =
-      TranslationsSnackbarDe.internal(_root);
-  late final TranslationsDialogDe dialog = TranslationsDialogDe.internal(_root);
-  late final TranslationsSettingsDe settings =
-      TranslationsSettingsDe.internal(_root);
+  late final Translations$constants$de constants =
+      Translations$constants$de.internal(_root);
+  late final Translations$park_duration$de park_duration =
+      Translations$park_duration$de.internal(_root);
+  late final Translations$login_dialog$de login_dialog =
+      Translations$login_dialog$de.internal(_root);
+  late final Translations$park_dialog$de park_dialog =
+      Translations$park_dialog$de.internal(_root);
+  late final Translations$marker_dialog$de marker_dialog =
+      Translations$marker_dialog$de.internal(_root);
+  late final Translations$home$de home = Translations$home$de.internal(_root);
+  late final Translations$history$de history =
+      Translations$history$de.internal(_root);
+  late final Translations$info_sheet$de info_sheet =
+      Translations$info_sheet$de.internal(_root);
+  late final Translations$top_header$de top_header =
+      Translations$top_header$de.internal(_root);
+  late final Translations$car_bottom_sheet$de car_bottom_sheet =
+      Translations$car_bottom_sheet$de.internal(_root);
+  late final Translations$my_car$de my_car =
+      Translations$my_car$de.internal(_root);
+  late final Translations$maps$de maps = Translations$maps$de.internal(_root);
+  late final Translations$intro$de intro =
+      Translations$intro$de.internal(_root);
+  late final Translations$bottom_sheet$de bottom_sheet =
+      Translations$bottom_sheet$de.internal(_root);
+  late final Translations$snackbar$de snackbar =
+      Translations$snackbar$de.internal(_root);
+  late final Translations$dialog$de dialog =
+      Translations$dialog$de.internal(_root);
+  late final Translations$settings$de settings =
+      Translations$settings$de.internal(_root);
 }
 
 // Path: constants
-class TranslationsConstantsDe {
-  TranslationsConstantsDe.internal(this._root);
+class Translations$constants$de {
+  Translations$constants$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -129,8 +132,8 @@ class TranslationsConstantsDe {
 }
 
 // Path: park_duration
-class TranslationsParkDurationDe {
-  TranslationsParkDurationDe.internal(this._root);
+class Translations$park_duration$de {
+  Translations$park_duration$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -162,8 +165,8 @@ class TranslationsParkDurationDe {
 }
 
 // Path: login_dialog
-class TranslationsLoginDialogDe {
-  TranslationsLoginDialogDe.internal(this._root);
+class Translations$login_dialog$de {
+  Translations$login_dialog$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -203,8 +206,8 @@ class TranslationsLoginDialogDe {
 }
 
 // Path: park_dialog
-class TranslationsParkDialogDe {
-  TranslationsParkDialogDe.internal(this._root);
+class Translations$park_dialog$de {
+  Translations$park_dialog$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -216,39 +219,39 @@ class TranslationsParkDialogDe {
   /// de: 'Neuen Parkplatz speichern?'
   String get content_1 => 'Neuen Parkplatz speichern?';
 
-  late final TranslationsParkDialogParkNameDe park_name =
-      TranslationsParkDialogParkNameDe.internal(_root);
+  late final Translations$park_dialog$park_name$de park_name =
+      Translations$park_dialog$park_name$de.internal(_root);
 
   /// de: 'Zusätzliche Infos'
   String get content_2 => 'Zusätzliche Infos';
 
-  late final TranslationsParkDialogInfoDe info =
-      TranslationsParkDialogInfoDe.internal(_root);
-  late final TranslationsParkDialogTicketDe ticket =
-      TranslationsParkDialogTicketDe.internal(_root);
-  late final TranslationsParkDialogPhotoDe photo =
-      TranslationsParkDialogPhotoDe.internal(_root);
+  late final Translations$park_dialog$info$de info =
+      Translations$park_dialog$info$de.internal(_root);
+  late final Translations$park_dialog$ticket$de ticket =
+      Translations$park_dialog$ticket$de.internal(_root);
+  late final Translations$park_dialog$photo$de photo =
+      Translations$park_dialog$photo$de.internal(_root);
 }
 
 // Path: marker_dialog
-class TranslationsMarkerDialogDe {
-  TranslationsMarkerDialogDe.internal(this._root);
+class Translations$marker_dialog$de {
+  Translations$marker_dialog$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
   // Translations
-  late final TranslationsMarkerDialogSharedDe shared =
-      TranslationsMarkerDialogSharedDe.internal(_root);
-  late final TranslationsMarkerDialogMineDe mine =
-      TranslationsMarkerDialogMineDe.internal(_root);
+  late final Translations$marker_dialog$shared$de shared =
+      Translations$marker_dialog$shared$de.internal(_root);
+  late final Translations$marker_dialog$mine$de mine =
+      Translations$marker_dialog$mine$de.internal(_root);
 
   /// de: 'Parkplatz löschen'
   String get action_1 => 'Parkplatz löschen';
 }
 
 // Path: home
-class TranslationsHomeDe {
-  TranslationsHomeDe.internal(this._root);
+class Translations$home$de {
+  Translations$home$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -266,13 +269,13 @@ class TranslationsHomeDe {
   /// de: 'Einstellungen'
   String get navigation_4 => 'Einstellungen';
 
-  late final TranslationsHomeQuickActionsDe quick_actions =
-      TranslationsHomeQuickActionsDe.internal(_root);
+  late final Translations$home$quick_actions$de quick_actions =
+      Translations$home$quick_actions$de.internal(_root);
 }
 
 // Path: history
-class TranslationsHistoryDe {
-  TranslationsHistoryDe.internal(this._root);
+class Translations$history$de {
+  Translations$history$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -281,17 +284,17 @@ class TranslationsHistoryDe {
   /// de: 'Historie'
   String get title => 'Historie';
 
-  late final TranslationsHistoryEmptyDe empty =
-      TranslationsHistoryEmptyDe.internal(_root);
-  late final TranslationsHistoryExportDe export =
-      TranslationsHistoryExportDe.internal(_root);
-  late final TranslationsHistoryDeleteDe delete =
-      TranslationsHistoryDeleteDe.internal(_root);
+  late final Translations$history$empty$de empty =
+      Translations$history$empty$de.internal(_root);
+  late final Translations$history$export$de export =
+      Translations$history$export$de.internal(_root);
+  late final Translations$history$delete$de delete =
+      Translations$history$delete$de.internal(_root);
 }
 
 // Path: info_sheet
-class TranslationsInfoSheetDe {
-  TranslationsInfoSheetDe.internal(this._root);
+class Translations$info_sheet$de {
+  Translations$info_sheet$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -311,8 +314,8 @@ class TranslationsInfoSheetDe {
 }
 
 // Path: top_header
-class TranslationsTopHeaderDe {
-  TranslationsTopHeaderDe.internal(this._root);
+class Translations$top_header$de {
+  Translations$top_header$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -323,28 +326,28 @@ class TranslationsTopHeaderDe {
 }
 
 // Path: car_bottom_sheet
-class TranslationsCarBottomSheetDe {
-  TranslationsCarBottomSheetDe.internal(this._root);
+class Translations$car_bottom_sheet$de {
+  Translations$car_bottom_sheet$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
   // Translations
-  late final TranslationsCarBottomSheetEmptyDe empty =
-      TranslationsCarBottomSheetEmptyDe.internal(_root);
-  late final TranslationsCarBottomSheetDistanceCalculationDe
+  late final Translations$car_bottom_sheet$empty$de empty =
+      Translations$car_bottom_sheet$empty$de.internal(_root);
+  late final Translations$car_bottom_sheet$distance_calculation$de
       distance_calculation =
-      TranslationsCarBottomSheetDistanceCalculationDe.internal(_root);
-  late final TranslationsCarBottomSheetYouDe you =
-      TranslationsCarBottomSheetYouDe.internal(_root);
-  late final TranslationsCarBottomSheetFriendsDe friends =
-      TranslationsCarBottomSheetFriendsDe.internal(_root);
-  late final TranslationsCarBottomSheetMenuDe menu =
-      TranslationsCarBottomSheetMenuDe.internal(_root);
+      Translations$car_bottom_sheet$distance_calculation$de.internal(_root);
+  late final Translations$car_bottom_sheet$you$de you =
+      Translations$car_bottom_sheet$you$de.internal(_root);
+  late final Translations$car_bottom_sheet$friends$de friends =
+      Translations$car_bottom_sheet$friends$de.internal(_root);
+  late final Translations$car_bottom_sheet$menu$de menu =
+      Translations$car_bottom_sheet$menu$de.internal(_root);
 }
 
 // Path: my_car
-class TranslationsMyCarDe {
-  TranslationsMyCarDe.internal(this._root);
+class Translations$my_car$de {
+  Translations$my_car$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -359,16 +362,16 @@ class TranslationsMyCarDe {
   /// de: 'Das ist mein Auto! 🚗'
   String get shared_content => 'Das ist mein Auto! 🚗';
 
-  late final TranslationsMyCarBuiltDe built =
-      TranslationsMyCarBuiltDe.internal(_root);
-  late final TranslationsMyCarDrivenDe driven =
-      TranslationsMyCarDrivenDe.internal(_root);
-  late final TranslationsMyCarPlateDe plate =
-      TranslationsMyCarPlateDe.internal(_root);
-  late final TranslationsMyCarParkNameDe park_name =
-      TranslationsMyCarParkNameDe.internal(_root);
-  late final TranslationsMyCarTuvDe tuv =
-      TranslationsMyCarTuvDe.internal(_root);
+  late final Translations$my_car$built$de built =
+      Translations$my_car$built$de.internal(_root);
+  late final Translations$my_car$driven$de driven =
+      Translations$my_car$driven$de.internal(_root);
+  late final Translations$my_car$plate$de plate =
+      Translations$my_car$plate$de.internal(_root);
+  late final Translations$my_car$park_name$de park_name =
+      Translations$my_car$park_name$de.internal(_root);
+  late final Translations$my_car$tuv$de tuv =
+      Translations$my_car$tuv$de.internal(_root);
 
   /// de: 'Wenn du diese Einstellungen deaktivierst, wirst du nochmal nach einer Bestätigung der Aktion gefragt, da das ausschalten immer alle Daten vom Server zuerst löscht und dann das Speichern unterbindet, bis du es wieder einschaltest.'
   String get share_deactivate_info =>
@@ -402,8 +405,8 @@ class TranslationsMyCarDe {
 }
 
 // Path: maps
-class TranslationsMapsDe {
-  TranslationsMapsDe.internal(this._root);
+class Translations$maps$de {
+  Translations$maps$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -412,26 +415,26 @@ class TranslationsMapsDe {
   /// de: 'Lädt Karte...'
   String get loading => 'Lädt Karte...';
 
-  late final TranslationsMapsTrafficDe traffic =
-      TranslationsMapsTrafficDe.internal(_root);
+  late final Translations$maps$traffic$de traffic =
+      Translations$maps$traffic$de.internal(_root);
 }
 
 // Path: intro
-class TranslationsIntroDe {
-  TranslationsIntroDe.internal(this._root);
+class Translations$intro$de {
+  Translations$intro$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
   // Translations
-  late final TranslationsIntroPage1De page_1 =
-      TranslationsIntroPage1De.internal(_root);
-  late final TranslationsIntroPage2De page_2 =
-      TranslationsIntroPage2De.internal(_root);
+  late final Translations$intro$page_1$de page_1 =
+      Translations$intro$page_1$de.internal(_root);
+  late final Translations$intro$page_2$de page_2 =
+      Translations$intro$page_2$de.internal(_root);
 }
 
 // Path: bottom_sheet
-class TranslationsBottomSheetDe {
-  TranslationsBottomSheetDe.internal(this._root);
+class Translations$bottom_sheet$de {
+  Translations$bottom_sheet$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -448,23 +451,24 @@ class TranslationsBottomSheetDe {
 }
 
 // Path: snackbar
-class TranslationsSnackbarDe {
-  TranslationsSnackbarDe.internal(this._root);
+class Translations$snackbar$de {
+  Translations$snackbar$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
   // Translations
-  late final TranslationsSnackbarLockedDe locked =
-      TranslationsSnackbarLockedDe.internal(_root);
-  late final TranslationsSnackbarSharedParkingDe shared_parking =
-      TranslationsSnackbarSharedParkingDe.internal(_root);
-  late final TranslationsSnackbarDistanceCalculationDe distance_calculation =
-      TranslationsSnackbarDistanceCalculationDe.internal(_root);
+  late final Translations$snackbar$locked$de locked =
+      Translations$snackbar$locked$de.internal(_root);
+  late final Translations$snackbar$shared_parking$de shared_parking =
+      Translations$snackbar$shared_parking$de.internal(_root);
+  late final Translations$snackbar$distance_calculation$de
+      distance_calculation =
+      Translations$snackbar$distance_calculation$de.internal(_root);
 }
 
 // Path: dialog
-class TranslationsDialogDe {
-  TranslationsDialogDe.internal(this._root);
+class Translations$dialog$de {
+  Translations$dialog$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -500,30 +504,31 @@ class TranslationsDialogDe {
   /// de: 'Einstellungen öffnen'
   String get open_settings => 'Einstellungen öffnen';
 
-  late final TranslationsDialogShareLocationParkingsDe share_location_parkings =
-      TranslationsDialogShareLocationParkingsDe.internal(_root);
-  late final TranslationsDialogDistanceDe distance =
-      TranslationsDialogDistanceDe.internal(_root);
-  late final TranslationsDialogNotificationsDe notifications =
-      TranslationsDialogNotificationsDe.internal(_root);
-  late final TranslationsDialogCarBottomSheetDe car_bottom_sheet =
-      TranslationsDialogCarBottomSheetDe.internal(_root);
-  late final TranslationsDialogMapsDe maps =
-      TranslationsDialogMapsDe.internal(_root);
-  late final TranslationsDialogHistoryDe history =
-      TranslationsDialogHistoryDe.internal(_root);
-  late final TranslationsDialogLeaveInfoDe leave_info =
-      TranslationsDialogLeaveInfoDe.internal(_root);
-  late final TranslationsDialogAppInfoDe app_info =
-      TranslationsDialogAppInfoDe.internal(_root);
-  late final TranslationsDialogFeedbackDe feedback =
-      TranslationsDialogFeedbackDe.internal(_root);
-  late final TranslationsDialogDataSecurityDe data_security =
-      TranslationsDialogDataSecurityDe.internal(_root);
-  late final TranslationsDialogAppDataDe app_data =
-      TranslationsDialogAppDataDe.internal(_root);
-  late final TranslationsDialogAccountDataDe account_data =
-      TranslationsDialogAccountDataDe.internal(_root);
+  late final Translations$dialog$share_location_parkings$de
+      share_location_parkings =
+      Translations$dialog$share_location_parkings$de.internal(_root);
+  late final Translations$dialog$distance$de distance =
+      Translations$dialog$distance$de.internal(_root);
+  late final Translations$dialog$notifications$de notifications =
+      Translations$dialog$notifications$de.internal(_root);
+  late final Translations$dialog$car_bottom_sheet$de car_bottom_sheet =
+      Translations$dialog$car_bottom_sheet$de.internal(_root);
+  late final Translations$dialog$maps$de maps =
+      Translations$dialog$maps$de.internal(_root);
+  late final Translations$dialog$history$de history =
+      Translations$dialog$history$de.internal(_root);
+  late final Translations$dialog$leave_info$de leave_info =
+      Translations$dialog$leave_info$de.internal(_root);
+  late final Translations$dialog$app_info$de app_info =
+      Translations$dialog$app_info$de.internal(_root);
+  late final Translations$dialog$feedback$de feedback =
+      Translations$dialog$feedback$de.internal(_root);
+  late final Translations$dialog$data_security$de data_security =
+      Translations$dialog$data_security$de.internal(_root);
+  late final Translations$dialog$app_data$de app_data =
+      Translations$dialog$app_data$de.internal(_root);
+  late final Translations$dialog$account_data$de account_data =
+      Translations$dialog$account_data$de.internal(_root);
 
   /// de: 'Bist du dir sicher, dass du dich ausloggen möchtest?'
   String get logout_confirm =>
@@ -531,8 +536,8 @@ class TranslationsDialogDe {
 }
 
 // Path: settings
-class TranslationsSettingsDe {
-  TranslationsSettingsDe.internal(this._root);
+class Translations$settings$de {
+  Translations$settings$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -541,39 +546,39 @@ class TranslationsSettingsDe {
   /// de: 'Einstellungen'
   String get title => 'Einstellungen';
 
-  late final TranslationsSettingsThemeDe theme =
-      TranslationsSettingsThemeDe.internal(_root);
-  late final TranslationsSettingsColorDe color =
-      TranslationsSettingsColorDe.internal(_root);
-  late final TranslationsSettingsMapTypeDe map_type =
-      TranslationsSettingsMapTypeDe.internal(_root);
-  late final TranslationsSettingsTrafficDe traffic =
-      TranslationsSettingsTrafficDe.internal(_root);
-  late final TranslationsSettingsNewIosDe new_ios =
-      TranslationsSettingsNewIosDe.internal(_root);
-  late final TranslationsSettingsParkTicketDe park_ticket =
-      TranslationsSettingsParkTicketDe.internal(_root);
-  late final TranslationsSettingsDrivingModeDe driving_mode =
-      TranslationsSettingsDrivingModeDe.internal(_root);
-  late final TranslationsSettingsAppInfoDe app_info =
-      TranslationsSettingsAppInfoDe.internal(_root);
-  late final TranslationsSettingsCreditsDe credits =
-      TranslationsSettingsCreditsDe.internal(_root);
-  late final TranslationsSettingsWoautoServerDe woauto_server =
-      TranslationsSettingsWoautoServerDe.internal(_root);
-  late final TranslationsSettingsShareDe share =
-      TranslationsSettingsShareDe.internal(_root);
-  late final TranslationsSettingsFeedbackDe feedback =
-      TranslationsSettingsFeedbackDe.internal(_root);
-  late final TranslationsSettingsDataSecurityDe data_security =
-      TranslationsSettingsDataSecurityDe.internal(_root);
-  late final TranslationsSettingsAppDataDe app_data =
-      TranslationsSettingsAppDataDe.internal(_root);
+  late final Translations$settings$theme$de theme =
+      Translations$settings$theme$de.internal(_root);
+  late final Translations$settings$color$de color =
+      Translations$settings$color$de.internal(_root);
+  late final Translations$settings$map_type$de map_type =
+      Translations$settings$map_type$de.internal(_root);
+  late final Translations$settings$traffic$de traffic =
+      Translations$settings$traffic$de.internal(_root);
+  late final Translations$settings$new_ios$de new_ios =
+      Translations$settings$new_ios$de.internal(_root);
+  late final Translations$settings$park_ticket$de park_ticket =
+      Translations$settings$park_ticket$de.internal(_root);
+  late final Translations$settings$driving_mode$de driving_mode =
+      Translations$settings$driving_mode$de.internal(_root);
+  late final Translations$settings$app_info$de app_info =
+      Translations$settings$app_info$de.internal(_root);
+  late final Translations$settings$credits$de credits =
+      Translations$settings$credits$de.internal(_root);
+  late final Translations$settings$woauto_server$de woauto_server =
+      Translations$settings$woauto_server$de.internal(_root);
+  late final Translations$settings$share$de share =
+      Translations$settings$share$de.internal(_root);
+  late final Translations$settings$feedback$de feedback =
+      Translations$settings$feedback$de.internal(_root);
+  late final Translations$settings$data_security$de data_security =
+      Translations$settings$data_security$de.internal(_root);
+  late final Translations$settings$app_data$de app_data =
+      Translations$settings$app_data$de.internal(_root);
 }
 
 // Path: park_dialog.park_name
-class TranslationsParkDialogParkNameDe {
-  TranslationsParkDialogParkNameDe.internal(this._root);
+class Translations$park_dialog$park_name$de {
+  Translations$park_dialog$park_name$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -584,8 +589,8 @@ class TranslationsParkDialogParkNameDe {
 }
 
 // Path: park_dialog.info
-class TranslationsParkDialogInfoDe {
-  TranslationsParkDialogInfoDe.internal(this._root);
+class Translations$park_dialog$info$de {
+  Translations$park_dialog$info$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -596,8 +601,8 @@ class TranslationsParkDialogInfoDe {
 }
 
 // Path: park_dialog.ticket
-class TranslationsParkDialogTicketDe {
-  TranslationsParkDialogTicketDe.internal(this._root);
+class Translations$park_dialog$ticket$de {
+  Translations$park_dialog$ticket$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -614,8 +619,8 @@ class TranslationsParkDialogTicketDe {
 }
 
 // Path: park_dialog.photo
-class TranslationsParkDialogPhotoDe {
-  TranslationsParkDialogPhotoDe.internal(this._root);
+class Translations$park_dialog$photo$de {
+  Translations$park_dialog$photo$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -626,8 +631,8 @@ class TranslationsParkDialogPhotoDe {
 }
 
 // Path: marker_dialog.shared
-class TranslationsMarkerDialogSharedDe {
-  TranslationsMarkerDialogSharedDe.internal(this._root);
+class Translations$marker_dialog$shared$de {
+  Translations$marker_dialog$shared$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -639,8 +644,8 @@ class TranslationsMarkerDialogSharedDe {
 }
 
 // Path: marker_dialog.mine
-class TranslationsMarkerDialogMineDe {
-  TranslationsMarkerDialogMineDe.internal(this._root);
+class Translations$marker_dialog$mine$de {
+  Translations$marker_dialog$mine$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -655,8 +660,8 @@ class TranslationsMarkerDialogMineDe {
 }
 
 // Path: home.quick_actions
-class TranslationsHomeQuickActionsDe {
-  TranslationsHomeQuickActionsDe.internal(this._root);
+class Translations$home$quick_actions$de {
+  Translations$home$quick_actions$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -670,8 +675,8 @@ class TranslationsHomeQuickActionsDe {
 }
 
 // Path: history.empty
-class TranslationsHistoryEmptyDe {
-  TranslationsHistoryEmptyDe.internal(this._root);
+class Translations$history$empty$de {
+  Translations$history$empty$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -685,8 +690,8 @@ class TranslationsHistoryEmptyDe {
 }
 
 // Path: history.export
-class TranslationsHistoryExportDe {
-  TranslationsHistoryExportDe.internal(this._root);
+class Translations$history$export$de {
+  Translations$history$export$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -701,8 +706,8 @@ class TranslationsHistoryExportDe {
 }
 
 // Path: history.delete
-class TranslationsHistoryDeleteDe {
-  TranslationsHistoryDeleteDe.internal(this._root);
+class Translations$history$delete$de {
+  Translations$history$delete$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -716,8 +721,8 @@ class TranslationsHistoryDeleteDe {
 }
 
 // Path: car_bottom_sheet.empty
-class TranslationsCarBottomSheetEmptyDe {
-  TranslationsCarBottomSheetEmptyDe.internal(this._root);
+class Translations$car_bottom_sheet$empty$de {
+  Translations$car_bottom_sheet$empty$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -731,8 +736,8 @@ class TranslationsCarBottomSheetEmptyDe {
 }
 
 // Path: car_bottom_sheet.distance_calculation
-class TranslationsCarBottomSheetDistanceCalculationDe {
-  TranslationsCarBottomSheetDistanceCalculationDe.internal(this._root);
+class Translations$car_bottom_sheet$distance_calculation$de {
+  Translations$car_bottom_sheet$distance_calculation$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -743,8 +748,8 @@ class TranslationsCarBottomSheetDistanceCalculationDe {
 }
 
 // Path: car_bottom_sheet.you
-class TranslationsCarBottomSheetYouDe {
-  TranslationsCarBottomSheetYouDe.internal(this._root);
+class Translations$car_bottom_sheet$you$de {
+  Translations$car_bottom_sheet$you$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -758,8 +763,8 @@ class TranslationsCarBottomSheetYouDe {
 }
 
 // Path: car_bottom_sheet.friends
-class TranslationsCarBottomSheetFriendsDe {
-  TranslationsCarBottomSheetFriendsDe.internal(this._root);
+class Translations$car_bottom_sheet$friends$de {
+  Translations$car_bottom_sheet$friends$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -773,8 +778,8 @@ class TranslationsCarBottomSheetFriendsDe {
 }
 
 // Path: car_bottom_sheet.menu
-class TranslationsCarBottomSheetMenuDe {
-  TranslationsCarBottomSheetMenuDe.internal(this._root);
+class Translations$car_bottom_sheet$menu$de {
+  Translations$car_bottom_sheet$menu$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -794,8 +799,8 @@ class TranslationsCarBottomSheetMenuDe {
 }
 
 // Path: my_car.built
-class TranslationsMyCarBuiltDe {
-  TranslationsMyCarBuiltDe.internal(this._root);
+class Translations$my_car$built$de {
+  Translations$my_car$built$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -826,8 +831,8 @@ class TranslationsMyCarBuiltDe {
 }
 
 // Path: my_car.driven
-class TranslationsMyCarDrivenDe {
-  TranslationsMyCarDrivenDe.internal(this._root);
+class Translations$my_car$driven$de {
+  Translations$my_car$driven$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -850,8 +855,8 @@ class TranslationsMyCarDrivenDe {
 }
 
 // Path: my_car.plate
-class TranslationsMyCarPlateDe {
-  TranslationsMyCarPlateDe.internal(this._root);
+class Translations$my_car$plate$de {
+  Translations$my_car$plate$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -871,8 +876,8 @@ class TranslationsMyCarPlateDe {
 }
 
 // Path: my_car.park_name
-class TranslationsMyCarParkNameDe {
-  TranslationsMyCarParkNameDe.internal(this._root);
+class Translations$my_car$park_name$de {
+  Translations$my_car$park_name$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -890,8 +895,8 @@ class TranslationsMyCarParkNameDe {
 }
 
 // Path: my_car.tuv
-class TranslationsMyCarTuvDe {
-  TranslationsMyCarTuvDe.internal(this._root);
+class Translations$my_car$tuv$de {
+  Translations$my_car$tuv$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -925,8 +930,8 @@ class TranslationsMyCarTuvDe {
 }
 
 // Path: maps.traffic
-class TranslationsMapsTrafficDe {
-  TranslationsMapsTrafficDe.internal(this._root);
+class Translations$maps$traffic$de {
+  Translations$maps$traffic$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -940,8 +945,8 @@ class TranslationsMapsTrafficDe {
 }
 
 // Path: intro.page_1
-class TranslationsIntroPage1De {
-  TranslationsIntroPage1De.internal(this._root);
+class Translations$intro$page_1$de {
+  Translations$intro$page_1$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -969,8 +974,8 @@ class TranslationsIntroPage1De {
 }
 
 // Path: intro.page_2
-class TranslationsIntroPage2De {
-  TranslationsIntroPage2De.internal(this._root);
+class Translations$intro$page_2$de {
+  Translations$intro$page_2$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1024,8 +1029,8 @@ class TranslationsIntroPage2De {
 }
 
 // Path: snackbar.locked
-class TranslationsSnackbarLockedDe {
-  TranslationsSnackbarLockedDe.internal(this._root);
+class Translations$snackbar$locked$de {
+  Translations$snackbar$locked$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1043,8 +1048,8 @@ class TranslationsSnackbarLockedDe {
 }
 
 // Path: snackbar.shared_parking
-class TranslationsSnackbarSharedParkingDe {
-  TranslationsSnackbarSharedParkingDe.internal(this._root);
+class Translations$snackbar$shared_parking$de {
+  Translations$snackbar$shared_parking$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1058,8 +1063,8 @@ class TranslationsSnackbarSharedParkingDe {
 }
 
 // Path: snackbar.distance_calculation
-class TranslationsSnackbarDistanceCalculationDe {
-  TranslationsSnackbarDistanceCalculationDe.internal(this._root);
+class Translations$snackbar$distance_calculation$de {
+  Translations$snackbar$distance_calculation$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1077,8 +1082,8 @@ class TranslationsSnackbarDistanceCalculationDe {
 }
 
 // Path: dialog.share_location_parkings
-class TranslationsDialogShareLocationParkingsDe {
-  TranslationsDialogShareLocationParkingsDe.internal(this._root);
+class Translations$dialog$share_location_parkings$de {
+  Translations$dialog$share_location_parkings$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1099,8 +1104,8 @@ class TranslationsDialogShareLocationParkingsDe {
 }
 
 // Path: dialog.distance
-class TranslationsDialogDistanceDe {
-  TranslationsDialogDistanceDe.internal(this._root);
+class Translations$dialog$distance$de {
+  Translations$dialog$distance$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1115,66 +1120,66 @@ class TranslationsDialogDistanceDe {
 }
 
 // Path: dialog.notifications
-class TranslationsDialogNotificationsDe {
-  TranslationsDialogNotificationsDe.internal(this._root);
+class Translations$dialog$notifications$de {
+  Translations$dialog$notifications$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
   // Translations
-  late final TranslationsDialogNotificationsNaDe na =
-      TranslationsDialogNotificationsNaDe.internal(_root);
-  late final TranslationsDialogNotificationsDeniedDe denied =
-      TranslationsDialogNotificationsDeniedDe.internal(_root);
-  late final TranslationsDialogNotificationsSentDe sent =
-      TranslationsDialogNotificationsSentDe.internal(_root);
-  late final TranslationsDialogNotificationsExpiringDe expiring =
-      TranslationsDialogNotificationsExpiringDe.internal(_root);
+  late final Translations$dialog$notifications$na$de na =
+      Translations$dialog$notifications$na$de.internal(_root);
+  late final Translations$dialog$notifications$denied$de denied =
+      Translations$dialog$notifications$denied$de.internal(_root);
+  late final Translations$dialog$notifications$sent$de sent =
+      Translations$dialog$notifications$sent$de.internal(_root);
+  late final Translations$dialog$notifications$expiring$de expiring =
+      Translations$dialog$notifications$expiring$de.internal(_root);
 }
 
 // Path: dialog.car_bottom_sheet
-class TranslationsDialogCarBottomSheetDe {
-  TranslationsDialogCarBottomSheetDe.internal(this._root);
+class Translations$dialog$car_bottom_sheet$de {
+  Translations$dialog$car_bottom_sheet$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
   // Translations
-  late final TranslationsDialogCarBottomSheetSyncDe sync =
-      TranslationsDialogCarBottomSheetSyncDe.internal(_root);
-  late final TranslationsDialogCarBottomSheetSyncedDe synced =
-      TranslationsDialogCarBottomSheetSyncedDe.internal(_root);
-  late final TranslationsDialogCarBottomSheetSharingDe sharing =
-      TranslationsDialogCarBottomSheetSharingDe.internal(_root);
+  late final Translations$dialog$car_bottom_sheet$sync$de sync =
+      Translations$dialog$car_bottom_sheet$sync$de.internal(_root);
+  late final Translations$dialog$car_bottom_sheet$synced$de synced =
+      Translations$dialog$car_bottom_sheet$synced$de.internal(_root);
+  late final Translations$dialog$car_bottom_sheet$sharing$de sharing =
+      Translations$dialog$car_bottom_sheet$sharing$de.internal(_root);
 }
 
 // Path: dialog.maps
-class TranslationsDialogMapsDe {
-  TranslationsDialogMapsDe.internal(this._root);
+class Translations$dialog$maps$de {
+  Translations$dialog$maps$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
   // Translations
-  late final TranslationsDialogMapsDrivingModeDe driving_mode =
-      TranslationsDialogMapsDrivingModeDe.internal(_root);
-  late final TranslationsDialogMapsLocationDeniedDe location_denied =
-      TranslationsDialogMapsLocationDeniedDe.internal(_root);
+  late final Translations$dialog$maps$driving_mode$de driving_mode =
+      Translations$dialog$maps$driving_mode$de.internal(_root);
+  late final Translations$dialog$maps$location_denied$de location_denied =
+      Translations$dialog$maps$location_denied$de.internal(_root);
 }
 
 // Path: dialog.history
-class TranslationsDialogHistoryDe {
-  TranslationsDialogHistoryDe.internal(this._root);
+class Translations$dialog$history$de {
+  Translations$dialog$history$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
   // Translations
-  late final TranslationsDialogHistoryInfoDe info =
-      TranslationsDialogHistoryInfoDe.internal(_root);
-  late final TranslationsDialogHistoryDeleteDe delete =
-      TranslationsDialogHistoryDeleteDe.internal(_root);
+  late final Translations$dialog$history$info$de info =
+      Translations$dialog$history$info$de.internal(_root);
+  late final Translations$dialog$history$delete$de delete =
+      Translations$dialog$history$delete$de.internal(_root);
 }
 
 // Path: dialog.leave_info
-class TranslationsDialogLeaveInfoDe {
-  TranslationsDialogLeaveInfoDe.internal(this._root);
+class Translations$dialog$leave_info$de {
+  Translations$dialog$leave_info$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1188,8 +1193,8 @@ class TranslationsDialogLeaveInfoDe {
 }
 
 // Path: dialog.app_info
-class TranslationsDialogAppInfoDe {
-  TranslationsDialogAppInfoDe.internal(this._root);
+class Translations$dialog$app_info$de {
+  Translations$dialog$app_info$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1207,8 +1212,8 @@ class TranslationsDialogAppInfoDe {
 }
 
 // Path: dialog.feedback
-class TranslationsDialogFeedbackDe {
-  TranslationsDialogFeedbackDe.internal(this._root);
+class Translations$dialog$feedback$de {
+  Translations$dialog$feedback$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1226,8 +1231,8 @@ class TranslationsDialogFeedbackDe {
 }
 
 // Path: dialog.data_security
-class TranslationsDialogDataSecurityDe {
-  TranslationsDialogDataSecurityDe.internal(this._root);
+class Translations$dialog$data_security$de {
+  Translations$dialog$data_security$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1271,8 +1276,8 @@ class TranslationsDialogDataSecurityDe {
 }
 
 // Path: dialog.app_data
-class TranslationsDialogAppDataDe {
-  TranslationsDialogAppDataDe.internal(this._root);
+class Translations$dialog$app_data$de {
+  Translations$dialog$app_data$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1287,8 +1292,8 @@ class TranslationsDialogAppDataDe {
 }
 
 // Path: dialog.account_data
-class TranslationsDialogAccountDataDe {
-  TranslationsDialogAccountDataDe.internal(this._root);
+class Translations$dialog$account_data$de {
+  Translations$dialog$account_data$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1303,8 +1308,8 @@ class TranslationsDialogAccountDataDe {
 }
 
 // Path: settings.theme
-class TranslationsSettingsThemeDe {
-  TranslationsSettingsThemeDe.internal(this._root);
+class Translations$settings$theme$de {
+  Translations$settings$theme$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1327,8 +1332,8 @@ class TranslationsSettingsThemeDe {
 }
 
 // Path: settings.color
-class TranslationsSettingsColorDe {
-  TranslationsSettingsColorDe.internal(this._root);
+class Translations$settings$color$de {
+  Translations$settings$color$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1339,8 +1344,8 @@ class TranslationsSettingsColorDe {
 }
 
 // Path: settings.map_type
-class TranslationsSettingsMapTypeDe {
-  TranslationsSettingsMapTypeDe.internal(this._root);
+class Translations$settings$map_type$de {
+  Translations$settings$map_type$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1366,8 +1371,8 @@ class TranslationsSettingsMapTypeDe {
 }
 
 // Path: settings.traffic
-class TranslationsSettingsTrafficDe {
-  TranslationsSettingsTrafficDe.internal(this._root);
+class Translations$settings$traffic$de {
+  Translations$settings$traffic$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1381,8 +1386,8 @@ class TranslationsSettingsTrafficDe {
 }
 
 // Path: settings.new_ios
-class TranslationsSettingsNewIosDe {
-  TranslationsSettingsNewIosDe.internal(this._root);
+class Translations$settings$new_ios$de {
+  Translations$settings$new_ios$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1396,8 +1401,8 @@ class TranslationsSettingsNewIosDe {
 }
 
 // Path: settings.park_ticket
-class TranslationsSettingsParkTicketDe {
-  TranslationsSettingsParkTicketDe.internal(this._root);
+class Translations$settings$park_ticket$de {
+  Translations$settings$park_ticket$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1415,8 +1420,8 @@ class TranslationsSettingsParkTicketDe {
 }
 
 // Path: settings.driving_mode
-class TranslationsSettingsDrivingModeDe {
-  TranslationsSettingsDrivingModeDe.internal(this._root);
+class Translations$settings$driving_mode$de {
+  Translations$settings$driving_mode$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1434,8 +1439,8 @@ class TranslationsSettingsDrivingModeDe {
 }
 
 // Path: settings.app_info
-class TranslationsSettingsAppInfoDe {
-  TranslationsSettingsAppInfoDe.internal(this._root);
+class Translations$settings$app_info$de {
+  Translations$settings$app_info$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1450,8 +1455,8 @@ class TranslationsSettingsAppInfoDe {
 }
 
 // Path: settings.credits
-class TranslationsSettingsCreditsDe {
-  TranslationsSettingsCreditsDe.internal(this._root);
+class Translations$settings$credits$de {
+  Translations$settings$credits$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1466,8 +1471,8 @@ class TranslationsSettingsCreditsDe {
 }
 
 // Path: settings.woauto_server
-class TranslationsSettingsWoautoServerDe {
-  TranslationsSettingsWoautoServerDe.internal(this._root);
+class Translations$settings$woauto_server$de {
+  Translations$settings$woauto_server$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1481,8 +1486,8 @@ class TranslationsSettingsWoautoServerDe {
 }
 
 // Path: settings.share
-class TranslationsSettingsShareDe {
-  TranslationsSettingsShareDe.internal(this._root);
+class Translations$settings$share$de {
+  Translations$settings$share$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1501,8 +1506,8 @@ class TranslationsSettingsShareDe {
 }
 
 // Path: settings.feedback
-class TranslationsSettingsFeedbackDe {
-  TranslationsSettingsFeedbackDe.internal(this._root);
+class Translations$settings$feedback$de {
+  Translations$settings$feedback$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1517,8 +1522,8 @@ class TranslationsSettingsFeedbackDe {
 }
 
 // Path: settings.data_security
-class TranslationsSettingsDataSecurityDe {
-  TranslationsSettingsDataSecurityDe.internal(this._root);
+class Translations$settings$data_security$de {
+  Translations$settings$data_security$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1532,8 +1537,8 @@ class TranslationsSettingsDataSecurityDe {
 }
 
 // Path: settings.app_data
-class TranslationsSettingsAppDataDe {
-  TranslationsSettingsAppDataDe.internal(this._root);
+class Translations$settings$app_data$de {
+  Translations$settings$app_data$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1551,8 +1556,8 @@ class TranslationsSettingsAppDataDe {
 }
 
 // Path: dialog.notifications.na
-class TranslationsDialogNotificationsNaDe {
-  TranslationsDialogNotificationsNaDe.internal(this._root);
+class Translations$dialog$notifications$na$de {
+  Translations$dialog$notifications$na$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1567,8 +1572,8 @@ class TranslationsDialogNotificationsNaDe {
 }
 
 // Path: dialog.notifications.denied
-class TranslationsDialogNotificationsDeniedDe {
-  TranslationsDialogNotificationsDeniedDe.internal(this._root);
+class Translations$dialog$notifications$denied$de {
+  Translations$dialog$notifications$denied$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1583,8 +1588,8 @@ class TranslationsDialogNotificationsDeniedDe {
 }
 
 // Path: dialog.notifications.sent
-class TranslationsDialogNotificationsSentDe {
-  TranslationsDialogNotificationsSentDe.internal(this._root);
+class Translations$dialog$notifications$sent$de {
+  Translations$dialog$notifications$sent$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1595,8 +1600,8 @@ class TranslationsDialogNotificationsSentDe {
 }
 
 // Path: dialog.notifications.expiring
-class TranslationsDialogNotificationsExpiringDe {
-  TranslationsDialogNotificationsExpiringDe.internal(this._root);
+class Translations$dialog$notifications$expiring$de {
+  Translations$dialog$notifications$expiring$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1611,8 +1616,8 @@ class TranslationsDialogNotificationsExpiringDe {
 }
 
 // Path: dialog.car_bottom_sheet.sync
-class TranslationsDialogCarBottomSheetSyncDe {
-  TranslationsDialogCarBottomSheetSyncDe.internal(this._root);
+class Translations$dialog$car_bottom_sheet$sync$de {
+  Translations$dialog$car_bottom_sheet$sync$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1629,8 +1634,8 @@ class TranslationsDialogCarBottomSheetSyncDe {
 }
 
 // Path: dialog.car_bottom_sheet.synced
-class TranslationsDialogCarBottomSheetSyncedDe {
-  TranslationsDialogCarBottomSheetSyncedDe.internal(this._root);
+class Translations$dialog$car_bottom_sheet$synced$de {
+  Translations$dialog$car_bottom_sheet$synced$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1645,8 +1650,8 @@ class TranslationsDialogCarBottomSheetSyncedDe {
 }
 
 // Path: dialog.car_bottom_sheet.sharing
-class TranslationsDialogCarBottomSheetSharingDe {
-  TranslationsDialogCarBottomSheetSharingDe.internal(this._root);
+class Translations$dialog$car_bottom_sheet$sharing$de {
+  Translations$dialog$car_bottom_sheet$sharing$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1668,8 +1673,8 @@ class TranslationsDialogCarBottomSheetSharingDe {
 }
 
 // Path: dialog.maps.driving_mode
-class TranslationsDialogMapsDrivingModeDe {
-  TranslationsDialogMapsDrivingModeDe.internal(this._root);
+class Translations$dialog$maps$driving_mode$de {
+  Translations$dialog$maps$driving_mode$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1684,8 +1689,8 @@ class TranslationsDialogMapsDrivingModeDe {
 }
 
 // Path: dialog.maps.location_denied
-class TranslationsDialogMapsLocationDeniedDe {
-  TranslationsDialogMapsLocationDeniedDe.internal(this._root);
+class Translations$dialog$maps$location_denied$de {
+  Translations$dialog$maps$location_denied$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1700,8 +1705,8 @@ class TranslationsDialogMapsLocationDeniedDe {
 }
 
 // Path: dialog.history.info
-class TranslationsDialogHistoryInfoDe {
-  TranslationsDialogHistoryInfoDe.internal(this._root);
+class Translations$dialog$history$info$de {
+  Translations$dialog$history$info$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
@@ -1715,8 +1720,8 @@ class TranslationsDialogHistoryInfoDe {
 }
 
 // Path: dialog.history.delete
-class TranslationsDialogHistoryDeleteDe {
-  TranslationsDialogHistoryDeleteDe.internal(this._root);
+class Translations$dialog$history$delete$de {
+  Translations$dialog$history$delete$de.internal(this._root);
 
   final Translations _root; // ignore: unused_field
 
