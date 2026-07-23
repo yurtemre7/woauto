@@ -50,9 +50,11 @@
 		<key>CADisableMinimumFrameDurationOnPhone</key>
 		<true />
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>Damit die App deinen eigenen Standord herausfinden kann und auf der Karte anzeigen kann. Dies wird dann nur während die App geöffnet ist genutzt.</string>
+		<string>Damit die App deinen eigenen Standord herausfinden kann und auf der Karte anzeigen
+			kann. Dies wird dann nur während die App geöffnet ist genutzt.</string>
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-		<string>Damit die App deinen eigenen Standord herausfinden kann und auf der Karte anzeigen kann. Dies kann immer und während der Appnutzung benutzt werden.</string>
+		<string>Damit die App deinen eigenen Standord herausfinden kann und auf der Karte anzeigen
+			kann. Dies kann immer und während der Appnutzung benutzt werden.</string>
 		<key>UIApplicationSupportsIndirectInputEvents</key>
 		<true />
 		<key>NSPhotoLibraryUsageDescription</key>
@@ -64,7 +66,8 @@
 		<key>NSCalendarsUsageDescription</key>
 		<string>Damit die App zu deinem Kalender das Ablaufdatum deines TÜVs eintragen kann.</string>
 		<key>NSContactsUsageDescription</key>
-		<string>Damit die App im Kalender deine Kontakte lesen kann, falls diese auch relevant zum Event sind.</string>
+		<string>Damit die App im Kalender deine Kontakte lesen kann, falls diese auch relevant zum
+			Event sind.</string>
 		<key>ITSAppUsesNonExemptEncryption</key>
 		<false />
 		<key>CFBundleURLTypes</key>
@@ -85,5 +88,26 @@
 			<string>en</string>
 			<string>de</string>
 		</array>
+		<key>UIApplicationSceneManifest</key>
+		<dict>
+			<key>UIApplicationSupportsMultipleScenes</key>
+			<false />
+			<key>UISceneConfigurations</key>
+			<dict>
+				<key>UIWindowSceneSessionRoleApplication</key>
+				<array>
+					<dict>
+						<key>UISceneClassName</key>
+						<string>UIWindowScene</string>
+						<key>UISceneDelegateClassName</key>
+						<string>FlutterSceneDelegate</string>
+						<key>UISceneConfigurationName</key>
+						<string>flutter</string>
+						<key>UISceneStoryboardFile</key>
+						<string>Main</string>
+					</dict>
+				</array>
+			</dict>
+		</dict>
 	</dict>
 </plist>
