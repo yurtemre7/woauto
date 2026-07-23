@@ -48,10 +48,12 @@ Color getForegroundColor(BuildContext context) {
 
 Future<String?> getAddress(LatLng position) async {
   try {
-    await setLocaleIdentifier(
-      '${Get.locale?.languageCode ?? 'de'}_${Get.locale?.countryCode ?? 'DE'}',
+    Geocoding geocoding = Geocoding(
+      locale: Locale(
+        '${Get.locale?.languageCode ?? 'de'}_${Get.locale?.countryCode ?? 'DE'}',
+      ),
     );
-    List<Placemark> placemarks = await placemarkFromCoordinates(
+    List<Placemark> placemarks = await geocoding.placemarkFromCoordinates(
       position.latitude,
       position.longitude,
     );
