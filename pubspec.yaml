@@ -12,43 +12,43 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  cupertino_icons: 1.0.8
+  cupertino_icons: 1.0.9
 
   get: 
     git:
       url: https://github.com/yurtemre7/flutter-get
 
-  google_maps_flutter: 2.14.0
-  location: 8.0.1
-  geocoding: 4.0.0
-  geolocator: 14.0.2
+  google_maps_flutter: 2.18.0
+  location: 10.0.2
+  geocoding: 5.0.0
+  geolocator: 14.0.3
 
   expandable: 5.0.1
 
-  package_info_plus: 8.3.1
-  share_plus: 12.0.1
+  package_info_plus: 10.2.1
+  share_plus: 13.2.1
   url_launcher: 6.3.2
-  shared_preferences: 2.5.4
-  add_2_calendar: 3.0.1
+  shared_preferences: 2.5.5
+  add_2_calendar: 3.1.1
   quick_actions: 1.1.0
   maps_launcher: 3.0.0+1
-  app_links: 7.0.0
+  app_links: 7.2.1
 
-  image_picker: 1.2.1
-  path_provider: 2.1.5
+  image_picker: 1.2.3
+  path_provider: 2.1.6
   qr_flutter: 4.1.0
   # timezone: ^0.9.4
-  keep_screen_on: 5.0.0
+  keep_screen_on: 6.0.0
 
   # Data & Internet
-  uuid: 4.5.2
+  uuid: 4.6.0
 
   # UI
 
   # Languages
-  slang: 4.11.1
-  slang_flutter: 4.11.0
-  animated_digit: 3.3.2
+  slang: 4.18.0
+  slang_flutter: 4.18.0
+  animated_digit: 3.3.3
   # Run: `dart run slang`
 
 dev_dependencies:
