@@ -44,13 +44,18 @@ class _HomeState extends State<Home> {
       if (woAuto.welcome.value) {
         if (!mounted) return;
         await Get.bottomSheet(
-          ClipRRect(
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(20),
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(20),
+              ),
+              child: const Intro(),
             ),
-            child: const Intro(),
           ),
           isDismissible: false,
+          isScrollControlled: true,
+          ignoreSafeArea: false,
         );
         await loadPositionData();
       }
@@ -120,59 +125,26 @@ class _HomeState extends State<Home> {
   Future<void> loadPositionData() async {
     var location = loc.Location();
 
-    bool serviceEnabled;
-    serviceEnabled = await location.serviceEnabled();
+    bool serviceEnabled = false;
+    try {
+      serviceEnabled = await location.serviceEnabled();
+    } catch (e) {
+      serviceEnabled = false;
+    }
+
     if (!serviceEnabled) {
-      serviceEnabled = await location.requestService();
-      if (!serviceEnabled) {
-        return;
-      }
+      woAuto.hasLocationPermission.value = false;
+      return;
     }
+
     var permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        await Get.dialog(
-          AlertDialog(
-            title: Text(t.dialog.maps.location_denied.title),
-            content: Text(t.dialog.maps.location_denied.subtitle),
-            actions: [
-              TextButton(
-                onPressed: () async {
-                  await Geolocator.openAppSettings();
-                  pop();
-                },
-                child: Text(t.dialog.open_settings),
-              ),
-            ],
-          ),
-          name: 'Standort Berechtigung',
-        );
-
-        return loadPositionData();
-      }
+    if (permission != LocationPermission.always &&
+        permission != LocationPermission.whileInUse) {
+      woAuto.hasLocationPermission.value = false;
+      return;
     }
 
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are denied forever, handle appropriately.
-      await Get.dialog(
-        AlertDialog(
-          title: Text(t.dialog.maps.location_denied.title),
-          content: Text(t.dialog.maps.location_denied.subtitle),
-          actions: [
-            TextButton(
-              onPressed: () async {
-                await Geolocator.openAppSettings();
-                pop();
-              },
-              child: Text(t.dialog.open_settings),
-            ),
-          ],
-        ),
-        name: 'Standort Berechtigung',
-      );
-      return loadPositionData();
-    }
+    woAuto.hasLocationPermission.value = true;
 
     late LocationSettings locationSettings;
 
@@ -247,6 +219,7 @@ class _HomeState extends State<Home> {
                 content: Text(
                   t.dialog.maps.driving_mode.subtitle,
                 ),
+                actionsAlignment: MainAxisAlignment.spaceBetween,
                 actions: [
                   TextButton(
                     onPressed: () {

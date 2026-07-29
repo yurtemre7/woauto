@@ -41,7 +41,7 @@ class _GMapState extends State<GMap> {
                 onMapCreated: _onMapCreated,
                 compassEnabled: false,
                 mapType: woAuto.mapType.value,
-                myLocationEnabled: true,
+                myLocationEnabled: woAuto.hasLocationPermission.value,
                 myLocationButtonEnabled: false,
                 zoomControlsEnabled: false,
                 padding: const EdgeInsets.only(left: 10, right: 10),
@@ -103,6 +103,10 @@ class _GMapState extends State<GMap> {
     await loadMapStyles();
     await Future.delayed(2.seconds);
     mapLoading.value = false;
+
+    if (!woAuto.hasLocationPermission.value) {
+      return;
+    }
 
     Position? locationData;
     try {

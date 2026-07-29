@@ -197,8 +197,8 @@
       "parking_hint": "Mein Auto",
       "theme_title": "App-Theme einstellen",
       "theme_content": "Wähle das Theme aus, das dir am besten gefällt.",
-      "location_title": "Echtzeit-Standortberechtigung erlauben",
-      "location_content": "Damit WoAuto deinen Standort speichern kann, musst du die Echtzeit-Standortberechtigung erlauben. Dies ist notwendig, um deinen Parkplatz zu finden und die Karte zu laden.",
+      "location_title": "Echtzeit-Standortberechtigung erlauben (optional)",
+      "location_content": "Damit WoAuto deinen Standort automatisch speichern kann, kannst du die Echtzeit-Standortberechtigung erlauben. Dies hilft, deinen Parkplatz automatisch zu finden.",
       "location_checkbox": "Echtzeit-Standortberechtigung",
       "location_checkbox_error": "Bitte erlaube der App, deinen Standort während der App-Nutzung abzufragen.",
       "notification_checkbox": "Benachrichtigungen (optional)",
@@ -362,6 +362,10 @@
     "traffic": {
       "title": "Verkehrslage",
       "subtitle": "Zeige die aktuelle Verkehrslage auf der Karte an."
+    },
+    "location": {
+      "title": "Echtzeit-Standort",
+      "subtitle": "Schalte die Standortberechtigung ein oder öffne die Einstellungen, um sie anzupassen."
     },
     "new_ios": {
       "title": "iOS Design",

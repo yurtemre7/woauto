@@ -66,12 +66,17 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
           ),
           FloatingActionButton(
             onPressed: () async {
-              GoogleMapController controller = woAuto.mapController.value!;
-              controller.animateCamera(
-                CameraUpdate.newCameraPosition(
-                  woAuto.currentPosition.value,
-                ),
-              );
+              if (!woAuto.hasLocationPermission.value) {
+                await woAuto.handleUserLocationRequest();
+              }
+              if (woAuto.hasLocationPermission.value &&
+                  woAuto.mapController.value != null) {
+                woAuto.mapController.value!.animateCamera(
+                  CameraUpdate.newCameraPosition(
+                    woAuto.currentPosition.value,
+                  ),
+                );
+              }
             },
             tooltip: t.info_sheet.current_position,
             child: Icon(

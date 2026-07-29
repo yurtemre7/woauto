@@ -198,8 +198,8 @@
       "parking_hint": "My Car",
       "theme_title": "Set the app theme",
       "theme_content": "Choose the theme you like best",
-      "location_title": "Allow real-time location permission",
-      "location_content": "In order for WoAuto to save your location, you must allow real-time location permission. This is necessary to find your parking spot and load the map.",
+      "location_title": "Allow real-time location permission (optional)",
+      "location_content": "In order for WoAuto to automatically save your location, you can allow real-time location permission. This helps automatically locate your parking spot.",
       "location_checkbox": "Real-time location permission",
       "location_checkbox_error": "Please allow the app to query your location while using the app.",
       "notification_checkbox": "Notifications (optional)",
@@ -363,6 +363,10 @@
     "traffic": {
       "title": "Traffic",
       "subtitle": "Show the current traffic situation on the map."
+    },
+    "location": {
+      "title": "Real-time Location",
+      "subtitle": "Toggle location permission or open system settings to adjust."
     },
     "new_ios": {
       "title": "iOS only design",

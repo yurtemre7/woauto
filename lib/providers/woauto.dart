@@ -33,6 +33,70 @@ class WoAuto extends GetxController {
     zoom: 16,
   ).obs;
 
+  final hasLocationPermission = false.obs;
+
+  Future<void> handleUserLocationRequest() async {
+    var permission = await Geolocator.checkPermission();
+
+    if (permission == LocationPermission.always ||
+        permission == LocationPermission.whileInUse) {
+      hasLocationPermission.value = true;
+      return;
+    }
+
+    if (permission == LocationPermission.denied) {
+      bool? shouldRequest = await Get.dialog<bool>(
+        AlertDialog(
+          title: Text(t.dialog.maps.location_denied.title),
+          content: Text(t.dialog.maps.location_denied.subtitle),
+          actionsAlignment: MainAxisAlignment.spaceBetween,
+          actions: [
+            TextButton(
+              onPressed: () => pop(result: false),
+              child: Text(t.dialog.abort),
+            ),
+            OutlinedButton(
+              onPressed: () => pop(result: true),
+              child: Text(t.dialog.yes),
+            ),
+          ],
+        ),
+        name: 'Standort Berechtigung',
+      );
+
+      if (shouldRequest == true) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.always ||
+            permission == LocationPermission.whileInUse) {
+          hasLocationPermission.value = true;
+        } else {
+          hasLocationPermission.value = false;
+        }
+      }
+    } else if (permission == LocationPermission.deniedForever) {
+      await Get.dialog(
+        AlertDialog(
+          title: Text(t.dialog.maps.location_denied.title),
+          content: Text(t.dialog.maps.location_denied.subtitle),
+          actions: [
+            TextButton(
+              onPressed: () => pop(),
+              child: Text(t.dialog.abort),
+            ),
+            OutlinedButton(
+              onPressed: () async {
+                pop();
+                await Geolocator.openAppSettings();
+              },
+              child: Text(t.dialog.open_settings),
+            ),
+          ],
+        ),
+        name: 'Standort Berechtigung',
+      );
+    }
+  }
+
   final currentSelectedPosition = Rxn<LatLng>();
   final currentSelectedCarPark = Rxn<CarPark>();
 

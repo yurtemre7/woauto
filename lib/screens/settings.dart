@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -195,6 +196,27 @@ class _SettingsState extends State<Settings> {
                           onChanged: (v) async {
                             woAuto.showTraffic.value = v;
                             await woAuto.save();
+                          },
+                        ),
+                      ),
+                      Obx(
+                        () => SwitchListTile(
+                          value: woAuto.hasLocationPermission.value,
+                          title: Text(
+                            t.settings.location.title,
+                            style: TextStyle(
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                          subtitle: Text(
+                            t.settings.location.subtitle,
+                          ),
+                          onChanged: (v) async {
+                            if (v) {
+                              await woAuto.handleUserLocationRequest();
+                            } else {
+                              await Geolocator.openAppSettings();
+                            }
                           },
                         ),
                       ),

@@ -210,11 +210,14 @@ class _IntroState extends State<Intro> {
 
                                 if (!val) {
                                   allowed.value = val;
+                                  woAuto.hasLocationPermission.value = false;
                                   return;
                                 }
                                 var v = await Location().requestPermission();
                                 allowed.value = v == PermissionStatus.granted;
-                                showError.value = !allowed.value;
+                                woAuto.hasLocationPermission.value =
+                                    allowed.value;
+                                showError.value = false;
                               },
                             ),
                           ),
@@ -243,11 +246,8 @@ class _IntroState extends State<Intro> {
                           )
                       : () async {
                           FocusScope.of(context).requestFocus(FocusNode());
-                          if (!allowed.value) {
-                            showError.value = true;
-                            return;
-                          }
                           showError.value = false;
+                          woAuto.hasLocationPermission.value = allowed.value;
 
                           woAuto.subText.value = tec.text.trim();
                           if (woAuto.subText.value.isEmpty) {
