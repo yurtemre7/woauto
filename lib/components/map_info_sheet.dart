@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:woauto/components/car_bottom_sheet.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
+import 'package:woauto/utils/constants.dart';
 
 class MapInfoSheet extends StatefulWidget {
   const MapInfoSheet({super.key});
@@ -68,6 +70,14 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
             onPressed: () async {
               if (!woAuto.hasLocationPermission.value) {
                 await woAuto.handleUserLocationRequest();
+              } else {
+                try {
+                  Position pos = await Geolocator.getCurrentPosition();
+                  woAuto.currentPosition.value = CameraPosition(
+                    target: LatLng(pos.latitude, pos.longitude),
+                    zoom: CAM_ZOOM,
+                  );
+                } catch (_) {}
               }
               if (woAuto.hasLocationPermission.value &&
                   woAuto.mapController.value != null) {

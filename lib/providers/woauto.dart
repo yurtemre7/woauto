@@ -34,13 +34,32 @@ class WoAuto extends GetxController {
   ).obs;
 
   final hasLocationPermission = false.obs;
+  Future<void> Function()? refreshPositionData;
 
   Future<void> handleUserLocationRequest() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      await Geolocator.openLocationSettings();
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        hasLocationPermission.value = false;
+        return;
+      }
+    }
+
     var permission = await Geolocator.checkPermission();
 
     if (permission == LocationPermission.always ||
         permission == LocationPermission.whileInUse) {
       hasLocationPermission.value = true;
+      await refreshPositionData?.call();
+      if (mapController.value != null) {
+        mapController.value!.animateCamera(
+          CameraUpdate.newCameraPosition(
+            currentPosition.value,
+          ),
+        );
+      }
       return;
     }
 
@@ -69,6 +88,14 @@ class WoAuto extends GetxController {
         if (permission == LocationPermission.always ||
             permission == LocationPermission.whileInUse) {
           hasLocationPermission.value = true;
+          await refreshPositionData?.call();
+          if (mapController.value != null) {
+            mapController.value!.animateCamera(
+              CameraUpdate.newCameraPosition(
+                currentPosition.value,
+              ),
+            );
+          }
         } else {
           hasLocationPermission.value = false;
         }

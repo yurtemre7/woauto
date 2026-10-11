@@ -19,7 +19,6 @@ dependencies:
       url: https://github.com/yurtemre7/flutter-get
 
   google_maps_flutter: 2.18.2
-  location: 10.0.2
   geocoding: 5.0.0
   geolocator: 14.1.1
 

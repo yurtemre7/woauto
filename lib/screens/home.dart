@@ -20,7 +20,6 @@ import 'package:woauto/screens/me.dart';
 import 'package:woauto/screens/settings.dart';
 import 'package:woauto/utils/constants.dart';
 import 'package:woauto/utils/utilities.dart';
-import 'package:location/location.dart' as loc;
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -40,6 +39,8 @@ class _HomeState extends State<Home> {
     YrtmrDeeplinks.initYrtmrLinks();
     _sub = YrtmrDeeplinks.yrtmrLinksListener();
 
+    woAuto.refreshPositionData = loadPositionData;
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       if (woAuto.welcome.value) {
         if (!mounted) return;
@@ -57,8 +58,8 @@ class _HomeState extends State<Home> {
           isScrollControlled: true,
           ignoreSafeArea: false,
         );
-        await loadPositionData();
       }
+      await loadPositionData();
     });
 
     const QuickActions quickActions = QuickActions();
@@ -123,11 +124,9 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> loadPositionData() async {
-    var location = loc.Location();
-
     bool serviceEnabled = false;
     try {
-      serviceEnabled = await location.serviceEnabled();
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
     } catch (e) {
       serviceEnabled = false;
     }
@@ -146,12 +145,31 @@ class _HomeState extends State<Home> {
 
     woAuto.hasLocationPermission.value = true;
 
+    try {
+      Position position = await Geolocator.getCurrentPosition();
+      if (mounted) {
+        woAuto.currentPosition.value = CameraPosition(
+          target: LatLng(
+            position.latitude,
+            position.longitude,
+          ),
+          zoom: CAM_ZOOM,
+        );
+        if (woAuto.mapController.value != null) {
+          woAuto.mapController.value!.animateCamera(
+            CameraUpdate.newCameraPosition(
+              woAuto.currentPosition.value,
+            ),
+          );
+        }
+      }
+    } catch (_) {}
+
     late LocationSettings locationSettings;
 
     if (isAndroid()) {
       locationSettings = AndroidSettings(
         accuracy: LocationAccuracy.bestForNavigation,
-        forceLocationManager: true,
         intervalDuration: 500.milliseconds,
       );
     } else if (isIOS()) {
@@ -167,6 +185,7 @@ class _HomeState extends State<Home> {
       );
     }
 
+    await positionStream?.cancel();
     positionStream =
         Geolocator.getPositionStream(locationSettings: locationSettings)
             .listen((Position? position) async {
@@ -260,6 +279,7 @@ class _HomeState extends State<Home> {
   void dispose() {
     _sub?.cancel();
     positionStream?.cancel();
+    woAuto.refreshPositionData = null;
     KeepScreenOn.turnOff();
     woAuto.mapController.value?.dispose();
     super.dispose();

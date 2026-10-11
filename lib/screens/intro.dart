@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:location/location.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:woauto/components/div.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
@@ -25,8 +25,9 @@ class _IntroState extends State<Intro> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      var permission = await Location().hasPermission();
-      allowed.value = permission == PermissionStatus.granted;
+      var permission = await Geolocator.checkPermission();
+      allowed.value = permission == LocationPermission.always ||
+          permission == LocationPermission.whileInUse;
     });
   }
 
@@ -213,8 +214,10 @@ class _IntroState extends State<Intro> {
                                   woAuto.hasLocationPermission.value = false;
                                   return;
                                 }
-                                var v = await Location().requestPermission();
-                                allowed.value = v == PermissionStatus.granted;
+                                var v = await Geolocator.requestPermission();
+                                allowed.value =
+                                    v == LocationPermission.always ||
+                                        v == LocationPermission.whileInUse;
                                 woAuto.hasLocationPermission.value =
                                     allowed.value;
                                 showError.value = false;
