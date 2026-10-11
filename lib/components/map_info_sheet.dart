@@ -6,6 +6,7 @@ import 'package:woauto/components/car_bottom_sheet.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/constants.dart';
+import 'package:woauto/utils/utilities.dart';
 
 class MapInfoSheet extends StatefulWidget {
   const MapInfoSheet({super.key});
@@ -47,10 +48,43 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
             ),
           FloatingActionButton.extended(
             onPressed: () async {
-              var pos = woAuto.currentPosition.value.target;
-              if (woAuto.currentSelectedPosition.value != null) {
-                pos = woAuto.currentSelectedPosition.value!;
+              LatLng? pos = woAuto.currentSelectedPosition.value;
+              if (pos == null) {
+                if (woAuto.hasLocationPermission.value) {
+                  pos = woAuto.currentPosition.value.target;
+                } else {
+                  var action = await Get.dialog<String>(
+                    AlertDialog(
+                      title: Text(t.dialog.maps.no_location.title),
+                      content: Text(t.dialog.maps.no_location.subtitle),
+                      actionsAlignment: MainAxisAlignment.spaceBetween,
+                      actions: [
+                        TextButton(
+                          onPressed: () => pop(result: 'map'),
+                          child: Text(t.dialog.maps.no_location.select_on_map),
+                        ),
+                        OutlinedButton(
+                          onPressed: () => pop(result: 'enable'),
+                          child: Text(t.dialog.maps.no_location.enable_location),
+                        ),
+                      ],
+                    ),
+                    name: 'Kein Standort',
+                  );
+
+                  if (action == 'enable') {
+                    await woAuto.handleUserLocationRequest();
+                    if (woAuto.hasLocationPermission.value) {
+                      pos = woAuto.currentPosition.value.target;
+                    } else {
+                      return;
+                    }
+                  } else {
+                    return;
+                  }
+                }
               }
+
               await woAuto.onNewParking(pos);
               woAuto.tempMarkers
                   .removeWhere((element) => element.markerId.value == 'temp');
@@ -90,8 +124,12 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
             },
             tooltip: t.info_sheet.current_position,
             child: Icon(
-              Icons.location_searching_outlined,
-              color: Theme.of(context).colorScheme.primary,
+              woAuto.hasLocationPermission.value
+                  ? Icons.location_searching_outlined
+                  : Icons.location_disabled_outlined,
+              color: woAuto.hasLocationPermission.value
+                  ? Theme.of(context).colorScheme.primary
+                  : Theme.of(context).colorScheme.outline,
             ),
           ),
         ],

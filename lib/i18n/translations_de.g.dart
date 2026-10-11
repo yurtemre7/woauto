@@ -1166,6 +1166,8 @@ class Translations$dialog$maps$de {
       Translations$dialog$maps$driving_mode$de.internal(_root);
   late final Translations$dialog$maps$location_denied$de location_denied =
       Translations$dialog$maps$location_denied$de.internal(_root);
+  late final Translations$dialog$maps$no_location$de no_location =
+      Translations$dialog$maps$no_location$de.internal(_root);
 }
 
 // Path: dialog.history
@@ -1724,6 +1726,28 @@ class Translations$dialog$maps$location_denied$de {
       'Du hast die Standortberechtigung verweigert. Bitte gehe in die Einstellungen und erlaube den Zugriff auf deinen Standort.';
 }
 
+// Path: dialog.maps.no_location
+class Translations$dialog$maps$no_location$de {
+  Translations$dialog$maps$no_location$de.internal(this._root);
+
+  final Translations _root; // ignore: unused_field
+
+  // Translations
+
+  /// de: 'Kein Standort gewählt'
+  String get title => 'Kein Standort gewählt';
+
+  /// de: 'Tippe auf die Karte, um deinen Parkplatz manuell zu markieren, oder aktiviere den Standortzugriff.'
+  String get subtitle =>
+      'Tippe auf die Karte, um deinen Parkplatz manuell zu markieren, oder aktiviere den Standortzugriff.';
+
+  /// de: 'Auf Karte wählen'
+  String get select_on_map => 'Auf Karte wählen';
+
+  /// de: 'Standort aktivieren'
+  String get enable_location => 'Standort aktivieren';
+}
+
 // Path: dialog.history.info
 class Translations$dialog$history$info$de {
   Translations$dialog$history$info$de.internal(this._root);
@@ -2008,6 +2032,11 @@ extension on Translations {
       'dialog.maps.location_denied.title' => 'Standortberechtigung verweigert',
       'dialog.maps.location_denied.subtitle' =>
         'Du hast die Standortberechtigung verweigert. Bitte gehe in die Einstellungen und erlaube den Zugriff auf deinen Standort.',
+      'dialog.maps.no_location.title' => 'Kein Standort gewählt',
+      'dialog.maps.no_location.subtitle' =>
+        'Tippe auf die Karte, um deinen Parkplatz manuell zu markieren, oder aktiviere den Standortzugriff.',
+      'dialog.maps.no_location.select_on_map' => 'Auf Karte wählen',
+      'dialog.maps.no_location.enable_location' => 'Standort aktivieren',
       'dialog.history.info.title' => 'Historie',
       'dialog.history.info.subtitle' =>
         'Hier werden dir die letzten 15 Parkplätze angezeigt',

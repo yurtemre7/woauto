@@ -292,6 +292,12 @@
       "location_denied": {
         "title": "Location permission denied",
         "subtitle": "You have denied location permission. Please go to settings and allow access to your location."
+      },
+      "no_location": {
+        "title": "No location selected",
+        "subtitle": "Tap on the map to manually mark your parking spot, or enable location access.",
+        "select_on_map": "Choose on map",
+        "enable_location": "Enable location"
       }
     },
     "history": {

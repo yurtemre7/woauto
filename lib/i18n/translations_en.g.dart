@@ -1192,6 +1192,9 @@ class _Translations$dialog$maps$en extends Translations$dialog$maps$de {
   @override
   late final _Translations$dialog$maps$location_denied$en location_denied =
       _Translations$dialog$maps$location_denied$en._(_root);
+  @override
+  late final _Translations$dialog$maps$no_location$en no_location =
+      _Translations$dialog$maps$no_location$en._(_root);
 }
 
 // Path: dialog.history
@@ -1751,6 +1754,27 @@ class _Translations$dialog$maps$location_denied$en
       'You have denied location permission. Please go to settings and allow access to your location.';
 }
 
+// Path: dialog.maps.no_location
+class _Translations$dialog$maps$no_location$en
+    extends Translations$dialog$maps$no_location$de {
+  _Translations$dialog$maps$no_location$en._(TranslationsEn root)
+      : this._root = root,
+        super.internal(root);
+
+  final TranslationsEn _root; // ignore: unused_field
+
+  // Translations
+  @override
+  String get title => 'No location selected';
+  @override
+  String get subtitle =>
+      'Tap on the map to manually mark your parking spot, or enable location access.';
+  @override
+  String get select_on_map => 'Choose on map';
+  @override
+  String get enable_location => 'Enable location';
+}
+
 // Path: dialog.history.info
 class _Translations$dialog$history$info$en
     extends Translations$dialog$history$info$de {
@@ -2030,6 +2054,11 @@ extension on TranslationsEn {
       'dialog.maps.location_denied.title' => 'Location permission denied',
       'dialog.maps.location_denied.subtitle' =>
         'You have denied location permission. Please go to settings and allow access to your location.',
+      'dialog.maps.no_location.title' => 'No location selected',
+      'dialog.maps.no_location.subtitle' =>
+        'Tap on the map to manually mark your parking spot, or enable location access.',
+      'dialog.maps.no_location.select_on_map' => 'Choose on map',
+      'dialog.maps.no_location.enable_location' => 'Enable location',
       'dialog.history.info.title' => 'History',
       'dialog.history.info.subtitle' =>
         'This will show you the last 15 parking spaces',
