@@ -65,7 +65,8 @@ class _MapInfoSheetState extends State<MapInfoSheet> {
                         ),
                         OutlinedButton(
                           onPressed: () => pop(result: 'enable'),
-                          child: Text(t.dialog.maps.no_location.enable_location),
+                          child:
+                              Text(t.dialog.maps.no_location.enable_location),
                         ),
                       ],
                     ),

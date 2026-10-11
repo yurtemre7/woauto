@@ -1,7 +1,7 @@
 import 'package:animated_digit/animated_digit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:maps_launcher/maps_launcher.dart';
+import 'package:woauto/utils/maps_launcher.dart';
 import 'package:woauto/i18n/translations.g.dart';
 import 'package:woauto/main.dart';
 import 'package:woauto/utils/extensions.dart';

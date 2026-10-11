@@ -14,9 +14,7 @@ dependencies:
 
   cupertino_icons: 2.0.0
 
-  get:
-    git:
-      url: https://github.com/yurtemre7/flutter-get
+  get: 4.7.3
 
   google_maps_flutter: 2.18.2
   geocoding: 5.0.0
@@ -30,7 +28,6 @@ dependencies:
   shared_preferences: 2.5.6
   add_2_calendar: 3.1.1
   quick_actions: 1.1.1
-  maps_launcher: 3.0.0+1
   app_links: 7.2.2
 
   image_picker: 1.2.4
